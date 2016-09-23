@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['register_5f',['register_',['../structQDiscordUtilities.html#a67cb2811daf1fbf33fb00ec11043e4a2',1,'QDiscordUtilities::EndPoints']]]
+  ['gateway',['gateway',['../structQDiscordUtilities.html#a929531b132f7dc6f8ba028ec22bdb74d',1,'QDiscordUtilities::EndPoints']]],
+  ['gestureflags',['GestureFlags',['https://doc.qt.io/qt-5/qt.html#GestureFlag-enum',1,'Qt']]]
 ];

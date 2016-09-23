@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>QDiscord: QDiscord/qdiscord/qdiscordmember.cpp Source File</title>
+<title>QDiscord: qdiscord/qdiscordmember.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c8184fdc65139715a192bae2aa7af815.html">QDiscord</a></li><li class="navelem"><a class="el" href="dir_24889ee63cfbfc1450622185f21ca68b.html">qdiscord</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_85ab9307918a6c5a5bb869028d019dc1.html">qdiscord</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -109,12 +109,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;qdiscordmember.hpp&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;qdiscordguild.hpp&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classQDiscordMember.html#a0fb82f021c5cb1cdf71081daa8b714c4">   22</a></span>&#160;<a class="code" href="classQDiscordMember.html#a0fb82f021c5cb1cdf71081daa8b714c4">QDiscordMember::QDiscordMember</a>(<span class="keyword">const</span> QJsonObject&amp; <span class="keywordtype">object</span>, <a class="code" href="classQDiscordGuild.html">QDiscordGuild</a>* guild)</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classQDiscordMember.html#a0fb82f021c5cb1cdf71081daa8b714c4">   22</a></span>&#160;<a class="code" href="classQDiscordMember.html#a0fb82f021c5cb1cdf71081daa8b714c4">QDiscordMember::QDiscordMember</a>(<span class="keyword">const</span> <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a>&amp; <span class="keywordtype">object</span>, <a class="code" href="classQDiscordGuild.html">QDiscordGuild</a>* guild)</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    _deaf = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;deaf&quot;</span>].toBool(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    _mute = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;mute&quot;</span>].toBool(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    _nickname = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;nick&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    _joinedAt = QDateTime::fromString(<span class="keywordtype">object</span>[<span class="stringliteral">&quot;joined_at&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>), Qt::ISODate);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    _joinedAt = <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qdatetime.html#fromString">QDateTime::fromString</a>(<span class="keywordtype">object</span>[<span class="stringliteral">&quot;joined_at&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>), Qt::ISODate);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    _user = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    _guild = <a class="code" href="classQDiscordMember.html#aea9cc047d0b5874da65bfb5f080a89ae">guild</a>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>[<span class="stringliteral">&quot;user&quot;</span>].isObject())</div>
@@ -141,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">delete</span> _user;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classQDiscordMember.html#a55a64970ecf4cde3f75f58af7bc3c431">   54</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classQDiscordMember.html#a55a64970ecf4cde3f75f58af7bc3c431">QDiscordMember::update</a>(<span class="keyword">const</span> QJsonObject&amp; <span class="keywordtype">object</span>, <a class="code" href="classQDiscordGuild.html">QDiscordGuild</a>* guild)</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classQDiscordMember.html#a55a64970ecf4cde3f75f58af7bc3c431">   54</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classQDiscordMember.html#a55a64970ecf4cde3f75f58af7bc3c431">QDiscordMember::update</a>(<span class="keyword">const</span> <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a>&amp; <span class="keywordtype">object</span>, <a class="code" href="classQDiscordGuild.html">QDiscordGuild</a>* guild)</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;deaf&quot;</span>))</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        _deaf = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;deaf&quot;</span>].toBool(<span class="keyword">false</span>);</div>
@@ -150,7 +150,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;nick&quot;</span>))</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        _nickname = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;nick&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;joined_at&quot;</span>))</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        _joinedAt = QDateTime::fromString(<span class="keywordtype">object</span>[<span class="stringliteral">&quot;joined_at&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>), Qt::ISODate);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        _joinedAt = <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qdatetime.html#fromString">QDateTime::fromString</a>(<span class="keywordtype">object</span>[<span class="stringliteral">&quot;joined_at&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>), Qt::ISODate);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span>(guild)</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        _guild = <a class="code" href="classQDiscordMember.html#aea9cc047d0b5874da65bfb5f080a89ae">guild</a>;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(_user)</div>
@@ -166,6 +166,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classQDiscordMember_html_aa4ba8f479cdb1a4111ef0e7bb100c897"><div class="ttname"><a href="classQDiscordMember.html#aa4ba8f479cdb1a4111ef0e7bb100c897">QDiscordMember::joinedAt</a></div><div class="ttdeci">QDateTime joinedAt()</div><div class="ttdoc">Returns the date at which the member has joined the guild. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordmember_8hpp_source.html#l00053">qdiscordmember.hpp:53</a></div></div>
 <div class="ttc" id="classQDiscordMember_html_a55a64970ecf4cde3f75f58af7bc3c431"><div class="ttname"><a href="classQDiscordMember.html#a55a64970ecf4cde3f75f58af7bc3c431">QDiscordMember::update</a></div><div class="ttdeci">void update(const QJsonObject &amp;object, QDiscordGuild *guild)</div><div class="ttdoc">Updates the current instance from the provided parameters. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordmember_8cpp_source.html#l00054">qdiscordmember.cpp:54</a></div></div>
 <div class="ttc" id="classQDiscordMember_html_a2f583a0c353b44ce245babc253377631"><div class="ttname"><a href="classQDiscordMember.html#a2f583a0c353b44ce245babc253377631">QDiscordMember::user</a></div><div class="ttdeci">QDiscordUser * user()</div><div class="ttdoc">Returns a pointer to the user object contained by this object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordmember_8hpp_source.html#l00055">qdiscordmember.hpp:55</a></div></div>
+<div class="ttc" id="qdatetime_html_fromString"><div class="ttname"><a href="https://doc.qt.io/qt-5/qdatetime.html#fromString">QDateTime::fromString</a></div><div class="ttdeci">QDateTime fromString(const QString &amp;string, Qt::DateFormat format)</div></div>
+<div class="ttc" id="qjsonobject_html"><div class="ttname"><a href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></div></div>
 <div class="ttc" id="classQDiscordGuild_html"><div class="ttname"><a href="classQDiscordGuild.html">QDiscordGuild</a></div><div class="ttdoc">Represents a guild in the Discord API. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordguild_8hpp_source.html#l00031">qdiscordguild.hpp:31</a></div></div>
 <div class="ttc" id="classQDiscordMember_html_aa99d415c2a23560de0cf08742d80846c"><div class="ttname"><a href="classQDiscordMember.html#aa99d415c2a23560de0cf08742d80846c">QDiscordMember::deaf</a></div><div class="ttdeci">bool deaf()</div><div class="ttdoc">Returns whether the member has disabled their speakers. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordmember_8hpp_source.html#l00049">qdiscordmember.hpp:49</a></div></div>
 <div class="ttc" id="classQDiscordUser_html"><div class="ttname"><a href="classQDiscordUser.html">QDiscordUser</a></div><div class="ttdoc">Represents a user in the Discord API. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscorduser_8hpp_source.html#l00026">qdiscorduser.hpp:26</a></div></div>
@@ -173,7 +175,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 11 2016 20:14:17 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 23 2016 15:06:02 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Properties</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -122,7 +122,7 @@ Signals</h2></td></tr>
 <tr class="memitem:a51dd5bceee8f944723e40fdba69b9503"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a51dd5bceee8f944723e40fdba69b9503">connected</a> ()</td></tr>
 <tr class="memdesc:a51dd5bceee8f944723e40fdba69b9503"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the WebSocket successfully connects to the endpoint.  <a href="#a51dd5bceee8f944723e40fdba69b9503">More...</a><br /></td></tr>
 <tr class="separator:a51dd5bceee8f944723e40fdba69b9503"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37693c22249d098c013abd174b3f44d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a37693c22249d098c013abd174b3f44d8">disconnected</a> (QString reason, int reasonCode)</td></tr>
+<tr class="memitem:a37693c22249d098c013abd174b3f44d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a37693c22249d098c013abd174b3f44d8">disconnected</a> (<a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a> reason, int reasonCode)</td></tr>
 <tr class="memdesc:a37693c22249d098c013abd174b3f44d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the WebSocket has been disconnected from the endpoint.  <a href="#a37693c22249d098c013abd174b3f44d8">More...</a><br /></td></tr>
 <tr class="separator:a37693c22249d098c013abd174b3f44d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ab8d625b5572b997ef94187eeff5c48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a3ab8d625b5572b997ef94187eeff5c48">attemptingReconnect</a> ()</td></tr>
@@ -135,81 +135,81 @@ Signals</h2></td></tr>
 <tr class="memdesc:af500a1a681170331148d9897f24d487a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the WebSocket encounters an error.  <a href="#af500a1a681170331148d9897f24d487a">More...</a><br /></td></tr>
 <tr class="separator:af500a1a681170331148d9897f24d487a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29b3ce70c6d581329b8a293c249d6568"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29b3ce70c6d581329b8a293c249d6568"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>readyReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>readyReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a29b3ce70c6d581329b8a293c249d6568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88a1cebe58123b9a438da4106de20054"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88a1cebe58123b9a438da4106de20054"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildCreateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildCreateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a88a1cebe58123b9a438da4106de20054"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cff0759596602c631590f32cb845468"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cff0759596602c631590f32cb845468"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildDeleteReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildDeleteReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a4cff0759596602c631590f32cb845468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf8a01453efe4c6b8b4de6c25cfa07c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf8a01453efe4c6b8b4de6c25cfa07c2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildBanAddReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildBanAddReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:acf8a01453efe4c6b8b4de6c25cfa07c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecdb5573459931217af3bd2a1792fbd8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecdb5573459931217af3bd2a1792fbd8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildBanRemoveReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildBanRemoveReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:aecdb5573459931217af3bd2a1792fbd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a706a9467053f8b2063159e7364718055"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a706a9467053f8b2063159e7364718055"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildIntegrationsUpdateRecevied</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildIntegrationsUpdateRecevied</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a706a9467053f8b2063159e7364718055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31bbf0d0e2736da4412533ad3258ffad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31bbf0d0e2736da4412533ad3258ffad"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildMemberAddReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildMemberAddReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a31bbf0d0e2736da4412533ad3258ffad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89c80778a8bf73f56846b5383a3922c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89c80778a8bf73f56846b5383a3922c7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildMemberRemoveReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildMemberRemoveReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a89c80778a8bf73f56846b5383a3922c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae074c31ee6605f59ac818510cefc4ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae074c31ee6605f59ac818510cefc4ef"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildMemberUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildMemberUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:aae074c31ee6605f59ac818510cefc4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed7eadb56a17e43e5018a08b97fe0988"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed7eadb56a17e43e5018a08b97fe0988"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildRoleCreateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildRoleCreateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:aed7eadb56a17e43e5018a08b97fe0988"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2a7089774de76e59777e5cb2f7fce36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2a7089774de76e59777e5cb2f7fce36"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildRoleDeleteReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildRoleDeleteReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:af2a7089774de76e59777e5cb2f7fce36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a576a92ffb85891836c7f97efb99d6c99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a576a92ffb85891836c7f97efb99d6c99"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildRoleUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildRoleUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a576a92ffb85891836c7f97efb99d6c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac93acd80261319a5566cc762f88b9edd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac93acd80261319a5566cc762f88b9edd"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>guildUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guildUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:ac93acd80261319a5566cc762f88b9edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acffc94128c6d2f65f2e498f63877b100"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acffc94128c6d2f65f2e498f63877b100"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>messageCreateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>messageCreateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:acffc94128c6d2f65f2e498f63877b100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a918deaa1d2109ecc97782504932c1d02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a918deaa1d2109ecc97782504932c1d02"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>messageDeleteReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>messageDeleteReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a918deaa1d2109ecc97782504932c1d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a7db9b5af9c6c1ce0d41f0b2cafff33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a7db9b5af9c6c1ce0d41f0b2cafff33"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>messageUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>messageUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a9a7db9b5af9c6c1ce0d41f0b2cafff33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a5965dca1b5c19b6d9caa8345031b93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a5965dca1b5c19b6d9caa8345031b93"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>presenceUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>presenceUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a0a5965dca1b5c19b6d9caa8345031b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e59a4cf622cdf67af921190b97f52fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e59a4cf622cdf67af921190b97f52fa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>typingStartReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>typingStartReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a0e59a4cf622cdf67af921190b97f52fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a677d491d539d793edeabb79d1e51e050"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a677d491d539d793edeabb79d1e51e050"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>userSettingsUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>userSettingsUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a677d491d539d793edeabb79d1e51e050"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4ca10acbd6007a79fc9a3f491703bb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4ca10acbd6007a79fc9a3f491703bb4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>voiceStateUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>voiceStateUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:aa4ca10acbd6007a79fc9a3f491703bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2066b70bf0351233155266510537a3f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2066b70bf0351233155266510537a3f2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>channelCreateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>channelCreateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a2066b70bf0351233155266510537a3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85a82288161f6ecac656638e1c1f99df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85a82288161f6ecac656638e1c1f99df"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>channelDeleteReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>channelDeleteReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a85a82288161f6ecac656638e1c1f99df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a811016834b32abf718bc059d880de5d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a811016834b32abf718bc059d880de5d1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>channelUpdateReceived</b> (const QJsonObject &amp;object)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>channelUpdateReceived</b> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> &amp;object)</td></tr>
 <tr class="separator:a811016834b32abf718bc059d880de5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2d5d519936c53f4bb5dda9e1ea905d35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a2d5d519936c53f4bb5dda9e1ea905d35">QDiscordWsComponent</a> (QObject *parent=0)</td></tr>
-<tr class="memdesc:a2d5d519936c53f4bb5dda9e1ea905d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard QObject constructor.  <a href="#a2d5d519936c53f4bb5dda9e1ea905d35">More...</a><br /></td></tr>
+<tr class="memitem:a2d5d519936c53f4bb5dda9e1ea905d35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a2d5d519936c53f4bb5dda9e1ea905d35">QDiscordWsComponent</a> (<a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html">QObject</a> *<a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#parent">parent</a>=0)</td></tr>
+<tr class="memdesc:a2d5d519936c53f4bb5dda9e1ea905d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html">QObject</a> constructor.  <a href="#a2d5d519936c53f4bb5dda9e1ea905d35">More...</a><br /></td></tr>
 <tr class="separator:a2d5d519936c53f4bb5dda9e1ea905d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a986f04abb61d308c3e791dd45dfe9b40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a986f04abb61d308c3e791dd45dfe9b40">connectToEndpoint</a> (const QString &amp;endpoint, const QString &amp;token)</td></tr>
+<tr class="memitem:a986f04abb61d308c3e791dd45dfe9b40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a986f04abb61d308c3e791dd45dfe9b40">connectToEndpoint</a> (const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a> &amp;endpoint, const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a> &amp;token)</td></tr>
 <tr class="memdesc:a986f04abb61d308c3e791dd45dfe9b40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the WebSocket connect to the specified endpoint.  <a href="#a986f04abb61d308c3e791dd45dfe9b40">More...</a><br /></td></tr>
 <tr class="separator:a986f04abb61d308c3e791dd45dfe9b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72b29bdc0fb58b92adf76fa75543e536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classQDiscordWsComponent.html#a72b29bdc0fb58b92adf76fa75543e536">close</a> ()</td></tr>
@@ -250,7 +250,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">QDiscordWsComponent::QDiscordWsComponent </td>
           <td>(</td>
-          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramtype"><a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html">QObject</a> *&#160;</td>
           <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
           <td></td>
         </tr>
@@ -262,18 +262,18 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Standard QObject constructor. </p>
+<p>Standard <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html">QObject</a> constructor. </p>
 
 <p>Definition at line <a class="el" href="qdiscordwscomponent_8cpp_source.html#l00021">21</a> of file <a class="el" href="qdiscordwscomponent_8cpp_source.html">qdiscordwscomponent.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                                        : QObject(parent)</div>
+<div class="fragment"><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                                        : <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#QObject">QObject</a>(parent)</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    connect(&amp;_socket, &amp;QWebSocket::connected, <span class="keyword">this</span>, &amp;QDiscordWsComponent::connected_);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    connect(&amp;_socket, &amp;QWebSocket::disconnected, <span class="keyword">this</span>, &amp;QDiscordWsComponent::disconnected_);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    connect(&amp;_socket, <span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span> (QWebSocket::*)(QAbstractSocket::SocketError)<span class="keyword">&gt;</span>(&amp;QWebSocket::error), <span class="keyword">this</span>, &amp;QDiscordWsComponent::error_);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    connect(&amp;_socket, &amp;QWebSocket::textMessageReceived, <span class="keyword">this</span>, &amp;QDiscordWsComponent::textMessageReceived);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    connect(&amp;_heartbeatTimer, &amp;QTimer::timeout, <span class="keyword">this</span>, &amp;QDiscordWsComponent::heartbeat);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    _reconnectTimer.setSingleShot(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    connect(&amp;_reconnectTimer, &amp;QTimer::timeout, <span class="keyword">this</span>, &amp;QDiscordWsComponent::reconnect);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#connect">connect</a>(&amp;_socket, &amp;<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html#connected">QWebSocket::connected</a>, <span class="keyword">this</span>, &amp;QDiscordWsComponent::connected_);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#connect">connect</a>(&amp;_socket, &amp;<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html#disconnected">QWebSocket::disconnected</a>, <span class="keyword">this</span>, &amp;QDiscordWsComponent::disconnected_);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#connect">connect</a>(&amp;_socket, <span class="keyword">static_cast&lt;</span><span class="keywordtype">void</span> (<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html">QWebSocket</a>::*)(QAbstractSocket::SocketError)<span class="keyword">&gt;</span>(&amp;<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html#error">QWebSocket::error</a>), <span class="keyword">this</span>, &amp;QDiscordWsComponent::error_);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#connect">connect</a>(&amp;_socket, &amp;<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html#textMessageReceived">QWebSocket::textMessageReceived</a>, <span class="keyword">this</span>, &amp;QDiscordWsComponent::textMessageReceived);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#connect">connect</a>(&amp;_heartbeatTimer, &amp;<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qtimer.html#timeout">QTimer::timeout</a>, <span class="keyword">this</span>, &amp;QDiscordWsComponent::heartbeat);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    _reconnectTimer.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qtimer.html#singleShot-prop">setSingleShot</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qobject.html#connect">connect</a>(&amp;_reconnectTimer, &amp;<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qtimer.html#timeout">QTimer::timeout</a>, <span class="keyword">this</span>, &amp;QDiscordWsComponent::reconnect);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    _tryReconnecting = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    _useDumpfile = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    _reconnectAttempts = 0;</div>
@@ -282,6 +282,15 @@ Public Member Functions</h2></td></tr>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">if</span>(QDiscordUtilities::debugMode)</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        qDebug()&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="stringliteral">&quot;constructed&quot;</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="ttc" id="qwebsocket_html_connected"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html#connected">QWebSocket::connected</a></div><div class="ttdeci">void connected()</div></div>
+<div class="ttc" id="qwebsocket_html_disconnected"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html#disconnected">QWebSocket::disconnected</a></div><div class="ttdeci">void disconnected()</div></div>
+<div class="ttc" id="qwebsocket_html_textMessageReceived"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html#textMessageReceived">QWebSocket::textMessageReceived</a></div><div class="ttdeci">void textMessageReceived(const QString &amp;message)</div></div>
+<div class="ttc" id="qwebsocket_html_error"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html#error">QWebSocket::error</a></div><div class="ttdeci">QAbstractSocket::SocketError error() const</div></div>
+<div class="ttc" id="qtimer_html_timeout"><div class="ttname"><a href="https://doc.qt.io/qt-5/qtimer.html#timeout">QTimer::timeout</a></div><div class="ttdeci">void timeout()</div></div>
+<div class="ttc" id="qwebsocket_html"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html">QWebSocket</a></div></div>
+<div class="ttc" id="qobject_html_QObject"><div class="ttname"><a href="https://doc.qt.io/qt-5/qobject.html#QObject">QObject::QObject</a></div><div class="ttdeci">QObject(QObject *parent)</div></div>
+<div class="ttc" id="qobject_html_connect"><div class="ttname"><a href="https://doc.qt.io/qt-5/qobject.html#connect">QObject::connect</a></div><div class="ttdeci">QMetaObject::Connection connect(const QObject *sender, const char *signal, const QObject *receiver, const char *method, Qt::ConnectionType type)</div></div>
+<div class="ttc" id="qtimer_html_singleShot-prop"><div class="ttname"><a href="https://doc.qt.io/qt-5/qtimer.html#singleShot-prop">QTimer::setSingleShot</a></div><div class="ttdeci">void setSingleShot(bool singleShot)</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -293,13 +302,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void QDiscordWsComponent::connectToEndpoint </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramtype">const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a> &amp;&#160;</td>
           <td class="paramname"><em>endpoint</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramtype">const <a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a> &amp;&#160;</td>
           <td class="paramname"><em>token</em>&#160;</td>
         </tr>
         <tr>
@@ -321,15 +330,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="qdiscordwscomponent_8cpp_source.html#l00039">39</a> of file <a class="el" href="qdiscordwscomponent_8cpp_source.html">qdiscordwscomponent.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span>(_reconnectTimer.isActive())</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        _reconnectTimer.stop();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span>(_reconnectTimer.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qtimer.html#isActive">isActive</a>())</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        _reconnectTimer.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qtimer.html#stop">stop</a>();</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    _gateway = endpoint;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    _token = token;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    _socket.open(endpoint);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    _socket.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html#open">open</a>(endpoint);</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">if</span>(QDiscordUtilities::debugMode)</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        qDebug()&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="stringliteral">&quot;connecting to&quot;</span>&lt;&lt;endpoint;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="ttc" id="qwebsocket_html_open"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html#open">QWebSocket::open</a></div><div class="ttdeci">void open(const QUrl &amp;url)</div></div>
+<div class="ttc" id="qtimer_html_isActive"><div class="ttname"><a href="https://doc.qt.io/qt-5/qtimer.html#isActive">QTimer::isActive</a></div><div class="ttdeci">bool isActive() const</div></div>
+<div class="ttc" id="qtimer_html_stop"><div class="ttname"><a href="https://doc.qt.io/qt-5/qtimer.html#stop">QTimer::stop</a></div><div class="ttdeci">void stop()</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -350,14 +362,17 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="qdiscordwscomponent_8cpp_source.html#l00051">51</a> of file <a class="el" href="qdiscordwscomponent_8cpp_source.html">qdiscordwscomponent.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span>(_reconnectTimer.isActive())</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        _reconnectTimer.stop();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span>(_reconnectTimer.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qtimer.html#isActive">isActive</a>())</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        _reconnectTimer.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qtimer.html#stop">stop</a>();</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    _tryReconnecting = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    _gateway = <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    _token = <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    _reconnectAttempts = 0;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    _socket.close();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    _socket.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html#close">close</a>();</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="ttc" id="qtimer_html_isActive"><div class="ttname"><a href="https://doc.qt.io/qt-5/qtimer.html#isActive">QTimer::isActive</a></div><div class="ttdeci">bool isActive() const</div></div>
+<div class="ttc" id="qtimer_html_stop"><div class="ttname"><a href="https://doc.qt.io/qt-5/qtimer.html#stop">QTimer::stop</a></div><div class="ttdeci">void stop()</div></div>
+<div class="ttc" id="qwebsocket_html_close"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html#close">QWebSocket::close</a></div><div class="ttdeci">void close(QWebSocketProtocol::CloseCode closeCode, const QString &amp;reason)</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -547,27 +562,34 @@ Public Member Functions</h2></td></tr>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(_gateway == <span class="stringliteral">&quot;&quot;</span>)</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    QJsonDocument document;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    QJsonObject object;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsondocument.html">QJsonDocument</a> document;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> object;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">object</span>[<span class="stringliteral">&quot;op&quot;</span>] = 3;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    QJsonObject presenceObject;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    presenceObject[<span class="stringliteral">&quot;idle_since&quot;</span>] = idle?QDateTime::currentMSecsSinceEpoch():QJsonValue();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> presenceObject;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    presenceObject[<span class="stringliteral">&quot;idle_since&quot;</span>] = idle?<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qdatetime.html#currentMSecsSinceEpoch">QDateTime::currentMSecsSinceEpoch</a>():<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonvalue.html">QJsonValue</a>();</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span>(game.<a class="code" href="classQDiscordGame.html#ad028b5303ce54db19f7bb48748f8c6a0">name</a>() != <span class="stringliteral">&quot;&quot;</span>)</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        QJsonObject gameObject;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a> gameObject;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        gameObject[<span class="stringliteral">&quot;name&quot;</span>] = game.<a class="code" href="classQDiscordGame.html#ad028b5303ce54db19f7bb48748f8c6a0">name</a>();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        gameObject[<span class="stringliteral">&quot;url&quot;</span>] = game.<a class="code" href="classQDiscordGame.html#a742c1a7326dd42d057ebd835ee279c61">url</a>()==<span class="stringliteral">&quot;&quot;</span>?QJsonValue():game.url();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        gameObject[<span class="stringliteral">&quot;url&quot;</span>] = game.<a class="code" href="classQDiscordGame.html#a742c1a7326dd42d057ebd835ee279c61">url</a>()==<span class="stringliteral">&quot;&quot;</span>?<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonvalue.html">QJsonValue</a>():game.url();</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        gameObject[<span class="stringliteral">&quot;type&quot;</span>] = game.<a class="code" href="classQDiscordGame.html#a71fcba58cac03542a2bb84722a86e789">type</a>();</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        presenceObject[<span class="stringliteral">&quot;game&quot;</span>] = gameObject;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        presenceObject[<span class="stringliteral">&quot;game&quot;</span>] = QJsonValue();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        presenceObject[<span class="stringliteral">&quot;game&quot;</span>] = <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsonvalue.html">QJsonValue</a>();</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">object</span>[<span class="stringliteral">&quot;d&quot;</span>] = presenceObject;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    document.setObject(<span class="keywordtype">object</span>);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    _socket.sendTextMessage(document.toJson(QJsonDocument::Compact));</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    document.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsondocument.html#setObject">setObject</a>(<span class="keywordtype">object</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    _socket.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtwebsockets/qtwebsockets.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qwebsocket.html#sendTextMessage">sendTextMessage</a>(document.<a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qjsondocument.html#toJson">toJson</a>(QJsonDocument::Compact));</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="ttc" id="qwebsocket_html_sendTextMessage"><div class="ttname"><a href="https://doc.qt.io/qt-5/qwebsocket.html#sendTextMessage">QWebSocket::sendTextMessage</a></div><div class="ttdeci">qint64 sendTextMessage(const QString &amp;message)</div></div>
+<div class="ttc" id="qjsondocument_html_toJson"><div class="ttname"><a href="https://doc.qt.io/qt-5/qjsondocument.html#toJson">QJsonDocument::toJson</a></div><div class="ttdeci">QByteArray toJson(JsonFormat format) const</div></div>
+<div class="ttc" id="qjsonvalue_html"><div class="ttname"><a href="https://doc.qt.io/qt-5/qjsonvalue.html">QJsonValue</a></div></div>
+<div class="ttc" id="qjsondocument_html"><div class="ttname"><a href="https://doc.qt.io/qt-5/qjsondocument.html">QJsonDocument</a></div></div>
+<div class="ttc" id="qdatetime_html_currentMSecsSinceEpoch"><div class="ttname"><a href="https://doc.qt.io/qt-5/qdatetime.html#currentMSecsSinceEpoch">QDateTime::currentMSecsSinceEpoch</a></div><div class="ttdeci">qint64 currentMSecsSinceEpoch()</div></div>
+<div class="ttc" id="qjsonobject_html"><div class="ttname"><a href="https://doc.qt.io/qt-5/qjsonobject.html">QJsonObject</a></div></div>
 <div class="ttc" id="classQDiscordGame_html_a742c1a7326dd42d057ebd835ee279c61"><div class="ttname"><a href="classQDiscordGame.html#a742c1a7326dd42d057ebd835ee279c61">QDiscordGame::url</a></div><div class="ttdeci">QString url()</div><div class="ttdoc">Returns the URL of this game object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00053">qdiscordgame.hpp:53</a></div></div>
 <div class="ttc" id="classQDiscordGame_html_a71fcba58cac03542a2bb84722a86e789"><div class="ttname"><a href="classQDiscordGame.html#a71fcba58cac03542a2bb84722a86e789">QDiscordGame::type</a></div><div class="ttdeci">GameType type()</div><div class="ttdoc">Returns the type of this game object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00055">qdiscordgame.hpp:55</a></div></div>
+<div class="ttc" id="qjsondocument_html_setObject"><div class="ttname"><a href="https://doc.qt.io/qt-5/qjsondocument.html#setObject">QJsonDocument::setObject</a></div><div class="ttdeci">void setObject(const QJsonObject &amp;object)</div></div>
 <div class="ttc" id="classQDiscordGame_html_ad028b5303ce54db19f7bb48748f8c6a0"><div class="ttname"><a href="classQDiscordGame.html#ad028b5303ce54db19f7bb48748f8c6a0">QDiscordGame::name</a></div><div class="ttdeci">QString name()</div><div class="ttdoc">Returns the game name of this object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00051">qdiscordgame.hpp:51</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -659,7 +681,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void QDiscordWsComponent::disconnected </td>
           <td>(</td>
-          <td class="paramtype">QString&#160;</td>
+          <td class="paramtype"><a class="elRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a>&#160;</td>
           <td class="paramname"><em>reason</em>, </td>
         </tr>
         <tr>
@@ -768,13 +790,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>QDiscord/qdiscord/<a class="el" href="qdiscordwscomponent_8hpp_source.html">qdiscordwscomponent.hpp</a></li>
-<li>QDiscord/qdiscord/<a class="el" href="qdiscordwscomponent_8cpp_source.html">qdiscordwscomponent.cpp</a></li>
+<li>qdiscord/<a class="el" href="qdiscordwscomponent_8hpp_source.html">qdiscordwscomponent.hpp</a></li>
+<li>qdiscord/<a class="el" href="qdiscordwscomponent_8cpp_source.html">qdiscordwscomponent.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 11 2016 20:14:17 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 23 2016 15:06:02 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

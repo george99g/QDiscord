@@ -4,12 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += network websockets
-QT       -= gui
+QT += network websockets
+QT -= gui
 
 TARGET = QDiscord
 TEMPLATE = lib
-CONFIG += staticlib c++11
+CONFIG += staticlib c++11 create_prl link_prl
 
 SOURCES += qdiscord/qdiscord.cpp \
     qdiscord/qdiscordrestcomponent.cpp \
@@ -23,7 +23,7 @@ SOURCES += qdiscord/qdiscord.cpp \
     qdiscord/qdiscordmessage.cpp \
     qdiscord/qdiscordgame.cpp
     
-TOPHEADERS += QDiscord
+TOPHEADERS += qdiscord/QDiscord
 
 DIRHEADERS += qdiscord/qdiscord.hpp \
     qdiscord/qdiscordrestcomponent.hpp \
@@ -51,11 +51,15 @@ isEmpty(PREFIX) {
 OTHER_FILES += Doxyfile
 include(doc/doc.pri)
 
-unix {
+unix | mingw {
     target.path = $$PREFIX/lib
+    dirheaders.files = $$HEADERS
+    dirheaders.path = $$PREFIX/include/qdiscord
+	INSTALLS += target dirheaders
+}
+
+unix {
     topheaders.files = $$TOPHEADERS
     topheaders.path = $$PREFIX/include
-    dirheaders.files = $$DIRHEADERS
-    dirheaders.path = $$PREFIX/include/qdiscord
-    INSTALLS += target topheaders dirheaders
+	INSTALLS += topheaders
 }

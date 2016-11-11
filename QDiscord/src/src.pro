@@ -42,7 +42,7 @@ isEmpty(PREFIX) {
     }
 }
 
-unix {
+unix | mingw {
     target.path = $$PREFIX/lib
     topheaders.files = $$TOPHEADERS
     topheaders.path = $$PREFIX/include

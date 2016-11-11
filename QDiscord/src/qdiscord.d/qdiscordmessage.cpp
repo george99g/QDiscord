@@ -31,6 +31,9 @@ QDiscordMessage::QDiscordMessage(const QJsonObject& object, QDiscordChannel* cha
 	_tts = object["tts"].toBool(false);
 	_timestamp = QDateTime::fromString(object["timestamp"].toString(""), Qt::ISODate);;
 
+	for(auto mention : object["mentions"].toArray())
+		_mentions << new QDiscordUser(mention.toObject());
+
 	if(QDiscordUtilities::debugMode)
 		qDebug()<<"QDiscordMessage("<<this<<") constructed";
 }
@@ -63,6 +66,7 @@ QDiscordMessage::QDiscordMessage(const QDiscordMessage& other)
 	_channelId = other.channelId();
 	_tts = other.tts();
 	_timestamp = other.timestamp();
+	_mentions = other.mentions();
 }
 
 QDiscordMessage::~QDiscordMessage()

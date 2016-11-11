@@ -31,7 +31,7 @@
  *
  * This class contains and manages all information related to the current state of the client.
  */
-class QDiscordStateComponent : public QObject
+class QDISCORD_API QDiscordStateComponent : public QObject
 {
 	Q_OBJECT
 	friend class QDiscord;

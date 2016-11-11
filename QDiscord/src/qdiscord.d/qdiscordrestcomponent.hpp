@@ -30,14 +30,14 @@
 #include "qdiscordchannel.hpp"
 #include "qdiscorduser.hpp"
 
-class QDiscord;
+class QDISCORD_API QDiscord;
 
 /*!
  * \brief The REST component of QDiscord.
  *
  * This class handles all REST operations to the Discord API.
  */
-class QDiscordRestComponent : public QObject
+class QDISCORD_API QDiscordRestComponent : public QObject
 {
 	friend class QDiscord;
 	Q_OBJECT

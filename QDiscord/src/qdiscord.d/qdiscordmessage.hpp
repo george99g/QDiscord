@@ -19,6 +19,7 @@
 #ifndef QDISCORDMESSAGE_HPP
 #define QDISCORDMESSAGE_HPP
 
+#include <QList>
 #include "qdiscordmember.hpp"
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
@@ -27,7 +28,7 @@
 /*!
  * \brief Represents a message in the Discord API.
  */
-class QDiscordMessage
+class QDISCORD_API QDiscordMessage
 {
 public:
 	/*!
@@ -57,6 +58,8 @@ public:
 	QDiscordChannel* channel() const {return _channel;}
 	///\brief Returns a pointer to the user that sent this message.
 	QDiscordUser* author() const {return _author;}
+	///\brief Returns list of mentioned users.
+	QList<QDiscordUser*> mentions() const {return _mentions;}
 	/*!
 	 * \brief Returns a pointer to the guild this message was sent in using
 	 * the channel parameter provided in the class' constructor.
@@ -73,6 +76,7 @@ private:
 	QString _channelId;
 	QDiscordChannel* _channel;
 	QDiscordUser* _author;
+	QList<QDiscordUser*> _mentions;
 };
 
 Q_DECLARE_METATYPE(QDiscordMessage)

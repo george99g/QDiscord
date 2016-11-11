@@ -3,7 +3,13 @@ QT       -= gui
 
 TARGET = QDiscord
 TEMPLATE = lib
-CONFIG += staticlib c++11
+CONFIG += c++11
+
+DEFINES += QDISCORD_LIBRARY
+CONFIG(static) {
+    DEFINES += QDISCORD_STATIC
+    CONFIG += staticlib
+}
 
 SOURCES += qdiscord.d/qdiscord.cpp \
     qdiscord.d/qdiscordrestcomponent.cpp \
@@ -20,6 +26,7 @@ SOURCES += qdiscord.d/qdiscord.cpp \
 TOPHEADERS += QDiscord
 
 DIRHEADERS += qdiscord.d/qdiscord.hpp \
+    qdiscord.d/qdiscord_global.hpp \
     qdiscord.d/qdiscordrestcomponent.hpp \
     qdiscord.d/qdiscordutilities.hpp \
     qdiscord.d/qdiscordwscomponent.hpp \
@@ -32,7 +39,7 @@ DIRHEADERS += qdiscord.d/qdiscord.hpp \
     qdiscord.d/qdiscordgame.hpp
     
 HEADERS += $$TOPHEADERS \
-    $$DIRHEADERS
+    $$DIRHEADERS 
 
 isEmpty(PREFIX) {
     PREFIX=/usr
@@ -42,7 +49,7 @@ isEmpty(PREFIX) {
     }
 }
 
-unix {
+unix | mingw {
     target.path = $$PREFIX/lib
     topheaders.files = $$TOPHEADERS
     topheaders.path = $$PREFIX/include

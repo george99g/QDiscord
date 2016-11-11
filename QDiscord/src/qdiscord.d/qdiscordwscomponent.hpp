@@ -34,7 +34,7 @@
  *
  * This class handles all WebSocket-related operations to the Discord API.
  */
-class QDiscordWsComponent : public QObject
+class QDISCORD_API QDiscordWsComponent : public QObject
 {
 	Q_OBJECT
 public:

@@ -28,7 +28,7 @@
 #include "qdiscordutilities.hpp"
 
 ///\brief Represents a guild in the Discord API.
-class QDiscordGuild
+class QDISCORD_API QDiscordGuild
 {
 public:
 	/*!

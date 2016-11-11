@@ -13,8 +13,8 @@ var searchData=
   ['variant',['variant',['https://doc.qt.io/qt-5/quuid.html#variant',1,'QUuid']]],
   ['vasprintf',['vasprintf',['https://doc.qt.io/qt-5/qstring.html#vasprintf',1,'QString']]],
   ['verbosity',['verbosity',['https://doc.qt.io/qt-5/qdebug.html#verbosity',1,'QDebug']]],
-  ['verificationlevel',['verificationLevel',['../classQDiscordGuild.html#af054bdf7d6e1e18ab9b692324aaf4e7e',1,'QDiscordGuild']]],
-  ['verified',['verified',['../classQDiscordUser.html#a77e72bf31593711da1f76651825b2dd2',1,'QDiscordUser']]],
+  ['verificationlevel',['verificationLevel',['../classQDiscordGuild.html#a3734c5edc9ad028aa38f6436649d28ba',1,'QDiscordGuild']]],
+  ['verified',['verified',['../classQDiscordUser.html#afba8d90654360356ad64e2eaa8b22724',1,'QDiscordUser']]],
   ['verify',['verify',['https://doc.qt.io/qt-5/qsslcertificate.html#verify',1,'QSslCertificate']]],
   ['version',['version',['https://doc.qt.io/qt-5/qdatastream.html#version',1,'QDataStream::version()'],['https://doc.qt.io/qt-5/quuid.html#version',1,'QUuid::version()'],['https://doc.qt.io/qt-5/qsslcertificate.html#version',1,'QSslCertificate::version()'],['https://doc.qt.io/qt-5/qwebsocket.html#version',1,'QWebSocket::version()']]],
   ['vsprintf',['vsprintf',['https://doc.qt.io/qt-5/qstring-obsolete.html#vsprintf',1,'QString']]]

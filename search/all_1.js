@@ -25,7 +25,7 @@ var searchData=
   ['bindmode',['BindMode',['https://doc.qt.io/qt-5/qabstractsocket.html#BindFlag-enum',1,'QAbstractSocket']]],
   ['blocksignals',['blockSignals',['https://doc.qt.io/qt-5/qobject.html#blockSignals',1,'QObject']]],
   ['blocksize',['blockSize',['https://doc.qt.io/qt-5/qstorageinfo.html#blockSize',1,'QStorageInfo']]],
-  ['bot',['bot',['../classQDiscordUser.html#a99731602ef371a9ab06a9888f7b93779',1,'QDiscordUser']]],
+  ['bot',['bot',['../classQDiscordUser.html#ac2dfd4a190ecf19bd73f5484e19303a2',1,'QDiscordUser']]],
   ['botname',['botName',['../structQDiscordUtilities.html#ae1c8e2cd13596c6487a4d295f9bf4784',1,'QDiscordUtilities']]],
   ['bottom',['bottom',['https://doc.qt.io/qt-5/qitemselectionrange.html#bottom',1,'QItemSelectionRange::bottom()'],['https://doc.qt.io/qt-5/qmargins.html#bottom',1,'QMargins::bottom()'],['https://doc.qt.io/qt-5/qmarginsf.html#bottom',1,'QMarginsF::bottom()'],['https://doc.qt.io/qt-5/qrect.html#bottom',1,'QRect::bottom()'],['https://doc.qt.io/qt-5/qrectf.html#bottom',1,'QRectF::bottom()']]],
   ['bottomleft',['bottomLeft',['https://doc.qt.io/qt-5/qrect.html#bottomLeft',1,'QRect::bottomLeft()'],['https://doc.qt.io/qt-5/qrectf.html#bottomLeft',1,'QRectF::bottomLeft()']]],

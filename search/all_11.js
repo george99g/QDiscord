@@ -41,7 +41,7 @@ var searchData=
   ['realnumberprecision',['realNumberPrecision',['https://doc.qt.io/qt-5/qtextstream.html#realNumberPrecision',1,'QTextStream']]],
   ['reblock',['reblock',['https://doc.qt.io/qt-5/qsignalblocker.html#reblock',1,'QSignalBlocker']]],
   ['receivers',['receivers',['https://doc.qt.io/qt-5/qobject.html#receivers',1,'QObject']]],
-  ['recipient',['recipient',['../classQDiscordChannel.html#a1e8f1bebbc7dd63bf2dae091c25c894c',1,'QDiscordChannel']]],
+  ['recipient',['recipient',['../classQDiscordChannel.html#ac93b4cbe6f64bbabbc4da5a6e5238b6f',1,'QDiscordChannel']]],
   ['reconnectimpossible',['reconnectImpossible',['../classQDiscordWsComponent.html#acc6617f6b667977548a4d54ab04b252b',1,'QDiscordWsComponent']]],
   ['reconnecttime',['reconnectTime',['../classQDiscordWsComponent.html#aa26e100bc46cc46d103b78687b1a2c10',1,'QDiscordWsComponent']]],
   ['redirected',['redirected',['https://doc.qt.io/qt-5/qnetworkreply.html#redirected',1,'QNetworkReply']]],

@@ -22,9 +22,10 @@
 #include <QString>
 #include <QNetworkReply>
 #include <stdlib.h>
+#include "qdiscord_global.hpp"
 
 ///\brief A class containing configuration variables and static functions used in QDiscord.
-class QDiscordUtilities
+class QDISCORD_API QDiscordUtilities
 {
 public:
 	///\brief A struct used for storing the Discord API endpoints.

@@ -31,7 +31,7 @@ class QDiscordGuild;
  * This class contains a QDiscordUser object which provides more information about the guild member.
  * You may acquire a pointer to it using QDiscordMember::user().
  */
-class QDiscordMember
+class QDISCORD_API QDiscordMember
 {
 public:
 	/*!

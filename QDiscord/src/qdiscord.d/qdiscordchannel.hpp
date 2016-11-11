@@ -25,7 +25,7 @@
 class QDiscordGuild;
 
 ///\brief Represents either a private or guild channel in the Discord API.
-class QDiscordChannel
+class QDISCORD_API QDiscordChannel
 {
 public:
 	/*!

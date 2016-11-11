@@ -27,7 +27,7 @@
 /*!
  * \brief Represents a message in the Discord API.
  */
-class QDiscordMessage
+class QDISCORD_API QDiscordMessage
 {
 public:
 	/*!

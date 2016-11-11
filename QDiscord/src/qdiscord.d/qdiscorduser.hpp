@@ -21,9 +21,10 @@
 
 #include <QDebug>
 #include <QJsonObject>
+#include "qdiscord_global.hpp"
 
 ///\brief Represents a user in the Discord API.
-class QDiscordUser
+class QDISCORD_API QDiscordUser
 {
 public:
 	/*!

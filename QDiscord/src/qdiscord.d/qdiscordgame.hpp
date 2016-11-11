@@ -24,7 +24,7 @@
 #include "qdiscordutilities.hpp"
 
 ///\brief Represents a game. Used in statuses.
-class QDiscordGame
+class QDISCORD_API QDiscordGame
 {
 public:
 	/*!

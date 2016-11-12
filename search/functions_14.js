@@ -40,7 +40,7 @@ var searchData=
   ['usedbits',['usedBits',['https://doc.qt.io/qt-5/qsslcipher.html#usedBits',1,'QSslCipher']]],
   ['user',['user',['https://doc.qt.io/qt-5/qauthenticator.html#user',1,'QAuthenticator::user()'],['https://doc.qt.io/qt-5/qnetworkproxy.html#user',1,'QNetworkProxy::user()'],['../classQDiscordMember.html#a62ab27efbf95acdb4e044f93a2a7c7e8',1,'QDiscordMember::user()']]],
   ['userinfo',['userInfo',['https://doc.qt.io/qt-5/qurl.html#userInfo',1,'QUrl']]],
-  ['username',['username',['../classQDiscordUser.html#a41b9e736bf4a32fd2696a0381e9c1d92',1,'QDiscordUser::username()'],['https://doc.qt.io/qt-5/qurl.html#userName',1,'QUrl::userName()']]],
+  ['username',['userName',['https://doc.qt.io/qt-5/qurl.html#userName',1,'QUrl::userName()'],['../classQDiscordUser.html#a41b9e736bf4a32fd2696a0381e9c1d92',1,'QDiscordUser::username()']]],
   ['userproperty',['userProperty',['https://doc.qt.io/qt-5/qmetaobject.html#userProperty',1,'QMetaObject']]],
   ['usertype',['userType',['https://doc.qt.io/qt-5/qmetaproperty.html#userType',1,'QMetaProperty::userType()'],['https://doc.qt.io/qt-5/qvariant.html#userType',1,'QVariant::userType()']]],
   ['usleep',['usleep',['https://doc.qt.io/qt-5/qthread.html#usleep',1,'QThread']]],

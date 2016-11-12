@@ -47,6 +47,8 @@ var searchData=
   ['mention',['mention',['../classQDiscordChannel.html#a72ba26cd472fcbbc61b2113af8d493f0',1,'QDiscordChannel::mention()'],['../classQDiscordUser.html#a2e5734b0f97ac5bae7b3163f35086228',1,'QDiscordUser::mention()']]],
   ['mentioneveryone',['mentionEveryone',['../classQDiscordMessage.html#ac890d2bcd1a9bccde02be1a89b3ae3c3',1,'QDiscordMessage']]],
   ['mentionnickname',['mentionNickname',['../classQDiscordMember.html#a26ee5d13563b544c7ff434a0ea680a4b',1,'QDiscordMember']]],
+  ['mentions',['mentions',['../classQDiscordMessage.html#ab5810f877d1366ffb02429e1e2e0debb',1,'QDiscordMessage']]],
+  ['mentionswithownership',['mentionsWithOwnership',['../classQDiscordMessage.html#abd62824e983eba730b363c1240c7556b',1,'QDiscordMessage']]],
   ['mentionusername',['mentionUsername',['../classQDiscordMember.html#ab146ddd9847ff50488843952bece27e6',1,'QDiscordMember']]],
   ['merge',['merge',['https://doc.qt.io/qt-5/qitemselection.html#merge',1,'QItemSelection']]],
   ['messagecreated',['messageCreated',['../classQDiscordStateComponent.html#a7ab8ce48212e843e45fd3115d4ebe6f7',1,'QDiscordStateComponent']]],

@@ -119,6 +119,7 @@ var searchData=
   ['qlockfile',['QLockFile',['https://doc.qt.io/qt-5/qlockfile.html',1,'']]],
   ['qloggingcategory',['QLoggingCategory',['https://doc.qt.io/qt-5/qloggingcategory.html',1,'']]],
   ['qmap',['QMap',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
+  ['qmap_3c_20qdiscorduser_20_2a_2c_20bool_20_3e',['QMap&lt; QDiscordUser *, bool &gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmap_3c_20qstring_2c_20qdiscordchannel_20_2a_3e',['QMap&lt; QString, QDiscordChannel *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmap_3c_20qstring_2c_20qdiscordguild_20_2a_3e',['QMap&lt; QString, QDiscordGuild *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmap_3c_20qstring_2c_20qdiscordmember_20_2a_3e',['QMap&lt; QString, QDiscordMember *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],

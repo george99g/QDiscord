@@ -123,6 +123,7 @@ var searchData=
   ['qmap_3c_20qstring_2c_20qdiscordchannel_20_2a_3e',['QMap&lt; QString, QDiscordChannel *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmap_3c_20qstring_2c_20qdiscordguild_20_2a_3e',['QMap&lt; QString, QDiscordGuild *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmap_3c_20qstring_2c_20qdiscordmember_20_2a_3e',['QMap&lt; QString, QDiscordMember *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
+  ['qmap_3c_20qstring_2c_20std_3a_3afunction_3c_20void_28const_20qjsonobject_20_26_29_3e_20_3e',['QMap&lt; QString, std::function&lt; void(const QJsonObject &amp;)&gt; &gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmapiterator',['QMapIterator',['https://doc.qt.io/qt-5/qmapiterator.html',1,'']]],
   ['qmargins',['QMargins',['https://doc.qt.io/qt-5/qmargins.html',1,'']]],
   ['qmarginsf',['QMarginsF',['https://doc.qt.io/qt-5/qmarginsf.html',1,'']]],

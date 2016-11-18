@@ -123,6 +123,7 @@ var searchData=
   ['qmap_3c_20qstring_2c_20qdiscordchannel_20_2a_3e',['QMap&lt; QString, QDiscordChannel *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmap_3c_20qstring_2c_20qdiscordguild_20_2a_3e',['QMap&lt; QString, QDiscordGuild *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmap_3c_20qstring_2c_20qdiscordmember_20_2a_3e',['QMap&lt; QString, QDiscordMember *&gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
+  ['qmap_3c_20qstring_2c_20std_3a_3afunction_3c_20void_28const_20qjsonobject_20_26_29_3e_20_3e',['QMap&lt; QString, std::function&lt; void(const QJsonObject &amp;)&gt; &gt;',['https://doc.qt.io/qt-5/qmap.html',1,'']]],
   ['qmapiterator',['QMapIterator',['https://doc.qt.io/qt-5/qmapiterator.html',1,'QMapIterator'],['https://doc.qt.io/qt-5/qmapiterator.html#QMapIterator',1,'QMapIterator::QMapIterator()']]],
   ['qmargins',['QMargins',['https://doc.qt.io/qt-5/qmargins.html',1,'QMargins'],['https://doc.qt.io/qt-5/qmargins.html#QMargins',1,'QMargins::QMargins()'],['https://doc.qt.io/qt-5/qmargins.html#QMargins-1',1,'QMargins::QMargins(int left, int top, int right, int bottom)']]],
   ['qmarginsf',['QMarginsF',['https://doc.qt.io/qt-5/qmarginsf.html',1,'QMarginsF'],['https://doc.qt.io/qt-5/qmarginsf.html#QMarginsF',1,'QMarginsF::QMarginsF()'],['https://doc.qt.io/qt-5/qmarginsf.html#QMarginsF-1',1,'QMarginsF::QMarginsF(qreal left, qreal top, qreal right, qreal bottom)'],['https://doc.qt.io/qt-5/qmarginsf.html#QMarginsF-2',1,'QMarginsF::QMarginsF(const QMargins &amp;margins)']]],

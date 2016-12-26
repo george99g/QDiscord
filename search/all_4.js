@@ -36,7 +36,7 @@ var searchData=
   ['endmoverows',['endMoveRows',['https://doc.qt.io/qt-5/qabstractitemmodel.html#endMoveRows',1,'QAbstractItemModel']]],
   ['endpointacquired',['endpointAcquired',['../classQDiscordRestComponent.html#a6460fa079938dc49343404d3052226db',1,'QDiscordRestComponent']]],
   ['endpointacquirefailed',['endpointAcquireFailed',['../classQDiscordRestComponent.html#a8d32be9f77fbca3e0b038ad3f161bbae',1,'QDiscordRestComponent']]],
-  ['endpoints',['EndPoints',['../structQDiscordUtilities.html#structQDiscordUtilities_1_1EndPoints',1,'QDiscordUtilities']]],
+  ['endpoints',['EndPoints',['../namespaceQDiscordUtilities.html#structQDiscordUtilities_1_1EndPoints',1,'QDiscordUtilities']]],
   ['endremovecolumns',['endRemoveColumns',['https://doc.qt.io/qt-5/qabstractitemmodel.html#endRemoveColumns',1,'QAbstractItemModel']]],
   ['endremoverows',['endRemoveRows',['https://doc.qt.io/qt-5/qabstractitemmodel.html#endRemoveRows',1,'QAbstractItemModel']]],
   ['endresetmodel',['endResetModel',['https://doc.qt.io/qt-5/qabstractitemmodel.html#endResetModel',1,'QAbstractItemModel']]],

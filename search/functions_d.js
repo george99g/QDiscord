@@ -22,7 +22,7 @@ var searchData=
   ['networkaccessible',['networkAccessible',['https://doc.qt.io/qt-5/qnetworkaccessmanager.html#networkAccessible',1,'QNetworkAccessManager']]],
   ['networkaccessiblechanged',['networkAccessibleChanged',['https://doc.qt.io/qt-5/qnetworkaccessmanager.html#networkAccessibleChanged',1,'QNetworkAccessManager']]],
   ['networkconfiguration',['networkConfiguration',['https://doc.qt.io/qt-5/qnetworkproxyquery.html#networkConfiguration',1,'QNetworkProxyQuery']]],
-  ['networkerrortostring',['networkErrorToString',['../structQDiscordUtilities.html#a5b0f389ea679282492a33acd39420a5d',1,'QDiscordUtilities']]],
+  ['networkerrortostring',['networkErrorToString',['../namespaceQDiscordUtilities.html#a5b0f389ea679282492a33acd39420a5d',1,'QDiscordUtilities']]],
   ['newconfigurationactivated',['newConfigurationActivated',['https://doc.qt.io/qt-5/qnetworksession.html#newConfigurationActivated',1,'QNetworkSession']]],
   ['newconnection',['newConnection',['https://doc.qt.io/qt-5/qlocalserver.html#newConnection',1,'QLocalServer::newConnection()'],['https://doc.qt.io/qt-5/qtcpserver.html#newConnection',1,'QTcpServer::newConnection()'],['https://doc.qt.io/qt-5/qwebsocketserver.html#newConnection',1,'QWebSocketServer::newConnection()']]],
   ['newinstance',['newInstance',['https://doc.qt.io/qt-5/qmetaobject.html#newInstance',1,'QMetaObject']]],

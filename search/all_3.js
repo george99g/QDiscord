@@ -62,6 +62,7 @@ var searchData=
   ['disconnectfromhost',['disconnectFromHost',['https://doc.qt.io/qt-5/qabstractsocket.html#disconnectFromHost',1,'QAbstractSocket']]],
   ['disconnectfromserver',['disconnectFromServer',['https://doc.qt.io/qt-5/qlocalsocket.html#disconnectFromServer',1,'QLocalSocket']]],
   ['disconnectnotify',['disconnectNotify',['https://doc.qt.io/qt-5/qobject.html#disconnectNotify',1,'QObject']]],
+  ['discordepoch',['discordEpoch',['../namespaceQDiscordUtilities.html#a13ad8e11b3ffc2f09febe632436c1cd1',1,'QDiscordUtilities']]],
   ['discriminator',['discriminator',['../classQDiscordUser.html#aafa93b70bfdb7abeb7eaf9928733fccf',1,'QDiscordUser']]],
   ['displayname',['displayName',['https://doc.qt.io/qt-5/qstandardpaths.html#displayName',1,'QStandardPaths::displayName()'],['https://doc.qt.io/qt-5/qstorageinfo.html#displayName',1,'QStorageInfo::displayName()'],['https://doc.qt.io/qt-5/qtimezone.html#displayName',1,'QTimeZone::displayName(const QDateTime &amp;atDateTime, QTimeZone::NameType nameType, const QLocale &amp;locale) const'],['https://doc.qt.io/qt-5/qtimezone.html#displayName-1',1,'QTimeZone::displayName(QTimeZone::TimeType timeType, QTimeZone::NameType nameType, const QLocale &amp;locale) const']]],
   ['dockwidgetareas',['DockWidgetAreas',['https://doc.qt.io/qt-5/qt.html#DockWidgetArea-enum',1,'Qt']]],

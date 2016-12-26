@@ -1,7 +1,7 @@
 var searchData=
 [
   ['back',['back',['https://doc.qt.io/qt-5/qlinkedlist.html#back',1,'QLinkedList::back()'],['https://doc.qt.io/qt-5/qlinkedlist.html#back-1',1,'QLinkedList::back() const'],['https://doc.qt.io/qt-5/qlist.html#back',1,'QList::back()'],['https://doc.qt.io/qt-5/qlist.html#back-1',1,'QList::back() const'],['https://doc.qt.io/qt-5/qvarlengtharray.html#back',1,'QVarLengthArray::back()'],['https://doc.qt.io/qt-5/qvarlengtharray.html#back-1',1,'QVarLengthArray::back() const'],['https://doc.qt.io/qt-5/qvector.html#back',1,'QVector::back()'],['https://doc.qt.io/qt-5/qvector.html#back-1',1,'QVector::back() const']]],
-  ['base',['base',['../structQDiscordUtilities.html#a6ec4f92f5c9b5567f83c6fe4a8ba548d',1,'QDiscordUtilities::EndPoints::base()'],['https://doc.qt.io/qt-5/qhash-key-iterator.html#base',1,'QHash::key_iterator::base()'],['https://doc.qt.io/qt-5/qmap-key-iterator.html#base',1,'QMap::key_iterator::base()']]],
+  ['base',['base',['../namespaceQDiscordUtilities.html#a6ec4f92f5c9b5567f83c6fe4a8ba548d',1,'QDiscordUtilities::EndPoints::base()'],['https://doc.qt.io/qt-5/qhash-key-iterator.html#base',1,'QHash::key_iterator::base()'],['https://doc.qt.io/qt-5/qmap-key-iterator.html#base',1,'QMap::key_iterator::base()']]],
   ['base64options',['Base64Options',['https://doc.qt.io/qt-5/qbytearray.html#Base64Option-enum',1,'QByteArray']]],
   ['basename',['baseName',['https://doc.qt.io/qt-5/qfileinfo.html#baseName',1,'QFileInfo']]],
   ['bcp47name',['bcp47Name',['https://doc.qt.io/qt-5/qlocale.html#bcp47Name',1,'QLocale']]],
@@ -26,7 +26,7 @@ var searchData=
   ['blocksignals',['blockSignals',['https://doc.qt.io/qt-5/qobject.html#blockSignals',1,'QObject']]],
   ['blocksize',['blockSize',['https://doc.qt.io/qt-5/qstorageinfo.html#blockSize',1,'QStorageInfo']]],
   ['bot',['bot',['../classQDiscordUser.html#ac2dfd4a190ecf19bd73f5484e19303a2',1,'QDiscordUser']]],
-  ['botname',['botName',['../structQDiscordUtilities.html#ae1c8e2cd13596c6487a4d295f9bf4784',1,'QDiscordUtilities']]],
+  ['botname',['botName',['../namespaceQDiscordUtilities.html#a845777dc96f8d89785294a04d599664b',1,'QDiscordUtilities']]],
   ['bottom',['bottom',['https://doc.qt.io/qt-5/qitemselectionrange.html#bottom',1,'QItemSelectionRange::bottom()'],['https://doc.qt.io/qt-5/qmargins.html#bottom',1,'QMargins::bottom()'],['https://doc.qt.io/qt-5/qmarginsf.html#bottom',1,'QMarginsF::bottom()'],['https://doc.qt.io/qt-5/qrect.html#bottom',1,'QRect::bottom()'],['https://doc.qt.io/qt-5/qrectf.html#bottom',1,'QRectF::bottom()']]],
   ['bottomleft',['bottomLeft',['https://doc.qt.io/qt-5/qrect.html#bottomLeft',1,'QRect::bottomLeft()'],['https://doc.qt.io/qt-5/qrectf.html#bottomLeft',1,'QRectF::bottomLeft()']]],
   ['bottomright',['bottomRight',['https://doc.qt.io/qt-5/qitemselectionrange.html#bottomRight',1,'QItemSelectionRange::bottomRight()'],['https://doc.qt.io/qt-5/qrect.html#bottomRight',1,'QRect::bottomRight()'],['https://doc.qt.io/qt-5/qrectf.html#bottomRight',1,'QRectF::bottomRight()']]],

@@ -187,8 +187,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Updates the current instance from the provided parameters. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8cpp_source.html#l00052">52</a> of file <a class="el" href="qdiscorduser_8cpp_source.html">qdiscorduser.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;{</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;id&quot;</span>))</div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        _id = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;id&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;bot&quot;</span>))</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        _bot = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;bot&quot;</span>].toBool(<span class="keyword">false</span>);</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;discriminator&quot;</span>))</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        _discriminator = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;discriminator&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;email&quot;</span>))</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        _email = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;email&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;username&quot;</span>))</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        _username = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;username&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;verified&quot;</span>))</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        _verified = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;verified&quot;</span>].toBool(<span class="keyword">false</span>);</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;avatar&quot;</span>))</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        _avatar = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;avatar&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#ifdef QDISCORD_LIBRARY_DEBUG</span></div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    qDebug()&lt;&lt;<span class="stringliteral">&quot;QDiscordUser(&quot;</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="stringliteral">&quot;) updated&quot;</span>;</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8cpp_source.html#l00059">59</a> of file <a class="el" href="qdiscorduser_8cpp_source.html">qdiscorduser.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;{</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;id&quot;</span>))</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        _id = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;id&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;bot&quot;</span>))</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        _bot = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;bot&quot;</span>].toBool(<span class="keyword">false</span>);</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;discriminator&quot;</span>))</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        _discriminator = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;discriminator&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;email&quot;</span>))</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        _email = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;email&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;username&quot;</span>))</div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        _username = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;username&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;verified&quot;</span>))</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        _verified = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;verified&quot;</span>].toBool(<span class="keyword">false</span>);</div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">object</span>.contains(<span class="stringliteral">&quot;avatar&quot;</span>))</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        _avatar = <span class="keywordtype">object</span>[<span class="stringliteral">&quot;avatar&quot;</span>].toString(<span class="stringliteral">&quot;&quot;</span>);</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#ifdef QDISCORD_LIBRARY_DEBUG</span></div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    qDebug()&lt;&lt;<span class="stringliteral">&quot;QDiscordUser(&quot;</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="stringliteral">&quot;) updated&quot;</span>;</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div><div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="aa43f1d96f7826e8b177ee2383459b940"></a>
@@ -216,8 +216,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the user's ID. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00039">39</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{<span class="keywordflow">return</span> _id;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00040">40</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{<span class="keywordflow">return</span> _id;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a73041d1373e32315d5e48a92abea912a"></a>
@@ -245,8 +245,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the user's avatar string. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00041">41</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{<span class="keywordflow">return</span> _avatar;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00042">42</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{<span class="keywordflow">return</span> _avatar;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="ac2dfd4a190ecf19bd73f5484e19303a2"></a>
@@ -274,8 +274,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns whether the user is a bot. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00043">43</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;{<span class="keywordflow">return</span> _bot;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00044">44</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{<span class="keywordflow">return</span> _bot;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="aafa93b70bfdb7abeb7eaf9928733fccf"></a>
@@ -303,8 +303,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the user's discriminator. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00045">45</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{<span class="keywordflow">return</span> _discriminator;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00046">46</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{<span class="keywordflow">return</span> _discriminator;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a71a69cb76b289b170ab05280e5e32327"></a>
@@ -332,8 +332,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the user's e-mail, if it can be determined. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00047">47</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{<span class="keywordflow">return</span> _email;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00048">48</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{<span class="keywordflow">return</span> _email;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a41b9e736bf4a32fd2696a0381e9c1d92"></a>
@@ -361,8 +361,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the user's username. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00049">49</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{<span class="keywordflow">return</span> _username;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00050">50</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{<span class="keywordflow">return</span> _username;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="afba8d90654360356ad64e2eaa8b22724"></a>
@@ -390,8 +390,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns whether the user has verified their e-mail. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00051">51</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{<span class="keywordflow">return</span> _verified;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00052">52</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;{<span class="keywordflow">return</span> _verified;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a2e5734b0f97ac5bae7b3163f35086228"></a>
@@ -419,8 +419,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns a string which allows you to mention this user using their username. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00053">53</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;{<span class="keywordflow">return</span> <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a>(<span class="stringliteral">&quot;&lt;@&quot;</span>+_id+<span class="stringliteral">&quot;&gt;&quot;</span>);}</div><div class="ttc" id="qstring_html"><div class="ttname"><a href="https://doc.qt.io/qt-5/qstring.html">QString</a></div></div>
+<p>Definition at line <a class="el" href="qdiscorduser_8hpp_source.html#l00054">54</a> of file <a class="el" href="qdiscorduser_8hpp_source.html">qdiscorduser.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;{<span class="keywordflow">return</span> <a class="codeRef" doxygen="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags:https://doc.qt.io/qt-5/" href="https://doc.qt.io/qt-5/qstring.html">QString</a>(<span class="stringliteral">&quot;&lt;@&quot;</span>+_id+<span class="stringliteral">&quot;&gt;&quot;</span>);}</div><div class="ttc" id="qstring_html"><div class="ttname"><a href="https://doc.qt.io/qt-5/qstring.html">QString</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -442,8 +442,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Compares two users based on their ID. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8cpp_source.html#l00074">74</a> of file <a class="el" href="qdiscorduser_8cpp_source.html">qdiscorduser.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;{</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">return</span> other.<a class="code" href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">id</a>() == _id;</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div><div class="ttc" id="classQDiscordUser_html_aa43f1d96f7826e8b177ee2383459b940"><div class="ttname"><a href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">QDiscordUser::id</a></div><div class="ttdeci">QString id() const</div><div class="ttdoc">Returns the user&amp;#39;s ID. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscorduser_8hpp_source.html#l00039">qdiscorduser.hpp:39</a></div></div>
+<p>Definition at line <a class="el" href="qdiscorduser_8cpp_source.html#l00081">81</a> of file <a class="el" href="qdiscorduser_8cpp_source.html">qdiscorduser.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;{</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">return</span> other.<a class="code" href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">id</a>() == _id;</div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}</div><div class="ttc" id="classQDiscordUser_html_aa43f1d96f7826e8b177ee2383459b940"><div class="ttname"><a href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">QDiscordUser::id</a></div><div class="ttdeci">QString id() const</div><div class="ttdoc">Returns the user&amp;#39;s ID. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscorduser_8hpp_source.html#l00040">qdiscorduser.hpp:40</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -465,8 +465,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Compares two users based on their ID. </p>
 
-<p>Definition at line <a class="el" href="qdiscorduser_8cpp_source.html#l00079">79</a> of file <a class="el" href="qdiscorduser_8cpp_source.html">qdiscorduser.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;{</div><div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> other.<a class="code" href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">id</a>() != _id;</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div><div class="ttc" id="classQDiscordUser_html_aa43f1d96f7826e8b177ee2383459b940"><div class="ttname"><a href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">QDiscordUser::id</a></div><div class="ttdeci">QString id() const</div><div class="ttdoc">Returns the user&amp;#39;s ID. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscorduser_8hpp_source.html#l00039">qdiscorduser.hpp:39</a></div></div>
+<p>Definition at line <a class="el" href="qdiscorduser_8cpp_source.html#l00086">86</a> of file <a class="el" href="qdiscorduser_8cpp_source.html">qdiscorduser.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> other.<a class="code" href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">id</a>() != _id;</div><div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div><div class="ttc" id="classQDiscordUser_html_aa43f1d96f7826e8b177ee2383459b940"><div class="ttname"><a href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">QDiscordUser::id</a></div><div class="ttdeci">QString id() const</div><div class="ttdoc">Returns the user&amp;#39;s ID. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscorduser_8hpp_source.html#l00040">qdiscorduser.hpp:40</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -477,7 +477,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 26 2016 15:28:52 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 7 2017 17:16:25 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

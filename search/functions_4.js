@@ -1,6 +1,7 @@
 var searchData=
 [
   ['easingcurve',['easingCurve',['https://doc.qt.io/qt-5/qvariantanimation.html#easingCurve-prop',1,'QVariantAnimation::easingCurve()'],['https://doc.qt.io/qt-5/qtimeline.html#easingCurve-prop',1,'QTimeLine::easingCurve()']]],
+  ['editmessage',['editMessage',['../classQDiscordRestComponent.html#a9b6dd0d496f0dd23ddf341a57c44fec5',1,'QDiscordRestComponent::editMessage(QDiscordMessage message, const QString &amp;newContent)'],['../classQDiscordRestComponent.html#a8d0cbb56b1bf5c0b54d109986c218f41',1,'QDiscordRestComponent::editMessage(const QString &amp;messageId, const QString &amp;channelId, const QString &amp;newContent)']]],
   ['effectivedate',['effectiveDate',['https://doc.qt.io/qt-5/qsslcertificate.html#effectiveDate',1,'QSslCertificate']]],
   ['elapsed',['elapsed',['https://doc.qt.io/qt-5/qtime.html#elapsed',1,'QTime::elapsed()'],['https://doc.qt.io/qt-5/qelapsedtimer.html#elapsed',1,'QElapsedTimer::elapsed()']]],
   ['ellipticcurves',['ellipticCurves',['https://doc.qt.io/qt-5/qsslconfiguration.html#ellipticCurves',1,'QSslConfiguration']]],

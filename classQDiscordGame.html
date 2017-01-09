@@ -22,6 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">QDiscord
+   &#160;<span id="projectnumber">v0:9</span>
    </div>
    <div id="projectbrief">An unofficial C++ and Qt wrapper for the Discord API.</div>
   </td>
@@ -68,7 +69,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a game. Used in statuses.  
+<p>Represents a game object in the Discord API.  
  <a href="classQDiscordGame.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>&gt;</code></p>
@@ -101,7 +102,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afa348ba82e4220e9d8e44461798d4f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents a game. Used in statuses. </p>
+<div class="textblock"><p>Represents a game object in the Discord API. </p>
 
 <p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00026">26</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
@@ -110,18 +111,26 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">enum <a class="el" href="classQDiscordGame.html#a52ffa1468b86accdfe311bfae0223121">QDiscordGame::GameType</a> : int</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>An enum holding different game types. </p>
 <p>Usually set when streaming. If an enum is not contained here, UnknownType will be set. </p>
 
-<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00034">34</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                  : <span class="keywordtype">int</span></div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        None = 0,</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        Streaming = 1,</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        UnknownType = -1</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    };</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00035">35</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                        : <span class="keywordtype">int</span></div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    {</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        None = 0,</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        Streaming = 1,</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        UnknownType = -1</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div></div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -168,9 +177,9 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Definition at line <a class="el" href="qdiscordgame_8cpp_source.html#l00021">21</a> of file <a class="el" href="qdiscordgame_8cpp_source.html">qdiscordgame.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    _name = <a class="code" href="classQDiscordGame.html#a100e3e493812cc400d11a357cd028fe4">name</a>;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    _url = <a class="code" href="classQDiscordGame.html#a63f53ee5217314e929af7e34b7f3856a">url</a>;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    _type = <a class="code" href="classQDiscordGame.html#afa348ba82e4220e9d8e44461798d4f69">type</a>;</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifdef QDISCORD_LIBRARY_DEBUG</span></div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    qDebug()&lt;&lt;<span class="stringliteral">&quot;QDiscordGame(&quot;</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="stringliteral">&quot;) constructed&quot;</span>;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif</span></div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div><div class="ttc" id="classQDiscordGame_html_afa348ba82e4220e9d8e44461798d4f69"><div class="ttname"><a href="classQDiscordGame.html#afa348ba82e4220e9d8e44461798d4f69">QDiscordGame::type</a></div><div class="ttdeci">GameType type() const</div><div class="ttdoc">Returns the type of this game object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00055">qdiscordgame.hpp:55</a></div></div>
-<div class="ttc" id="classQDiscordGame_html_a63f53ee5217314e929af7e34b7f3856a"><div class="ttname"><a href="classQDiscordGame.html#a63f53ee5217314e929af7e34b7f3856a">QDiscordGame::url</a></div><div class="ttdeci">QString url() const</div><div class="ttdoc">Returns the URL of this game object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00053">qdiscordgame.hpp:53</a></div></div>
-<div class="ttc" id="classQDiscordGame_html_a100e3e493812cc400d11a357cd028fe4"><div class="ttname"><a href="classQDiscordGame.html#a100e3e493812cc400d11a357cd028fe4">QDiscordGame::name</a></div><div class="ttdeci">QString name() const</div><div class="ttdoc">Returns the game name of this object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00051">qdiscordgame.hpp:51</a></div></div>
+<div class="fragment"><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    _name = <a class="code" href="classQDiscordGame.html#a100e3e493812cc400d11a357cd028fe4">name</a>;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    _url = <a class="code" href="classQDiscordGame.html#a63f53ee5217314e929af7e34b7f3856a">url</a>;</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    _type = <a class="code" href="classQDiscordGame.html#afa348ba82e4220e9d8e44461798d4f69">type</a>;</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#ifdef QDISCORD_LIBRARY_DEBUG</span></div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    qDebug()&lt;&lt;<span class="stringliteral">&quot;QDiscordGame(&quot;</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="stringliteral">&quot;) constructed&quot;</span>;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif</span></div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div><div class="ttc" id="classQDiscordGame_html_afa348ba82e4220e9d8e44461798d4f69"><div class="ttname"><a href="classQDiscordGame.html#afa348ba82e4220e9d8e44461798d4f69">QDiscordGame::type</a></div><div class="ttdeci">GameType type() const</div><div class="ttdoc">Returns the type of this game object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00058">qdiscordgame.hpp:58</a></div></div>
+<div class="ttc" id="classQDiscordGame_html_a63f53ee5217314e929af7e34b7f3856a"><div class="ttname"><a href="classQDiscordGame.html#a63f53ee5217314e929af7e34b7f3856a">QDiscordGame::url</a></div><div class="ttdeci">QString url() const</div><div class="ttdoc">Returns the URL of this game object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00056">qdiscordgame.hpp:56</a></div></div>
+<div class="ttc" id="classQDiscordGame_html_a100e3e493812cc400d11a357cd028fe4"><div class="ttname"><a href="classQDiscordGame.html#a100e3e493812cc400d11a357cd028fe4">QDiscordGame::name</a></div><div class="ttdeci">QString name() const</div><div class="ttdoc">Returns the game name of this object. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordgame_8hpp_source.html#l00054">qdiscordgame.hpp:54</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -222,8 +231,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the game name of this object. </p>
 
-<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00051">51</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{<span class="keywordflow">return</span> _name;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00054">54</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;{<span class="keywordflow">return</span> _name;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="a63f53ee5217314e929af7e34b7f3856a"></a>
@@ -251,8 +260,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the URL of this game object. </p>
 
-<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00053">53</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;{<span class="keywordflow">return</span> _url;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00056">56</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{<span class="keywordflow">return</span> _url;}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="afa348ba82e4220e9d8e44461798d4f69"></a>
@@ -280,8 +289,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the type of this game object. </p>
 
-<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00055">55</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{<span class="keywordflow">return</span> _type;}</div></div><!-- fragment -->
+<p>Definition at line <a class="el" href="qdiscordgame_8hpp_source.html#l00058">58</a> of file <a class="el" href="qdiscordgame_8hpp_source.html">qdiscordgame.hpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{<span class="keywordflow">return</span> _type;}</div></div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -291,7 +300,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 7 2017 17:16:24 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jan 9 2017 21:54:47 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

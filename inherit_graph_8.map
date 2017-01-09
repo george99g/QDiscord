@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$namespaceQDiscordUtilities.html#structQDiscordUtilities_1_1EndPoints" title="A struct used for storing the Discord API endpoints. " alt="" coords="5,5,140,47"/>
+<area shape="rect" id="node1" href="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags$qenablesharedfromthis.html" title="QEnableSharedFromThis\l\&lt; QDiscordGuild \&gt;" alt="" coords="5,5,184,47"/>
+<area shape="rect" id="node2" href="$classQDiscordGuild.html" title="Represents a guild in the Discord API. " alt="" coords="232,13,344,39"/>
 </map>

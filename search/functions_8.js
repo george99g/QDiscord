@@ -85,6 +85,8 @@ var searchData=
   ['iscolumnselected',['isColumnSelected',['https://doc.qt.io/qt-5/qitemselectionmodel.html#isColumnSelected',1,'QItemSelectionModel']]],
   ['iscomment',['isComment',['https://doc.qt.io/qt-5/qxmlstreamreader.html#isComment',1,'QXmlStreamReader']]],
   ['iscompressed',['isCompressed',['https://doc.qt.io/qt-5/qresource.html#isCompressed',1,'QResource']]],
+  ['isconnected',['isConnected',['../classQDiscord.html#aecc10ab8535a92bd7d0b760e3d8ab623',1,'QDiscord']]],
+  ['isconnecting',['isConnecting',['../classQDiscord.html#a68eba91f929c0be93bb21ed56cf73ca6',1,'QDiscord']]],
   ['isconstant',['isConstant',['https://doc.qt.io/qt-5/qmetaproperty.html#isConstant',1,'QMetaProperty']]],
   ['iscritical',['isCritical',['https://doc.qt.io/qt-5/qsslcertificateextension.html#isCritical',1,'QSslCertificateExtension']]],
   ['iscriticalenabled',['isCriticalEnabled',['https://doc.qt.io/qt-5/qloggingcategory.html#isCriticalEnabled',1,'QLoggingCategory']]],

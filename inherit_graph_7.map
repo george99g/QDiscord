@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classQDiscordUser.html" title="Represents a user in the Discord API. " alt="" coords="5,5,116,32"/>
+<area shape="rect" id="node1" href="/home/user/qt/Docs/Qt-5.7/qtcore/qtcore.tags$qobject.html" title="QObject" alt="" coords="5,81,79,108"/>
+<area shape="rect" id="node2" href="$classQDiscord.html" title="This class helps the user interface with QDiscord&#39;s components. " alt="" coords="182,5,262,32"/>
+<area shape="rect" id="node3" href="$classQDiscordRestComponent.html" title="The REST component of QDiscord. " alt="" coords="131,56,313,83"/>
+<area shape="rect" id="node4" href="$classQDiscordStateComponent.html" title="The state component of QDiscord. " alt="" coords="127,107,317,133"/>
+<area shape="rect" id="node5" href="$classQDiscordWsComponent.html" title="The WebSocket component of QDiscord. " alt="" coords="135,157,309,184"/>
 </map>

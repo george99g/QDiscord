@@ -53,5 +53,6 @@ var searchData=
   ['hostname',['hostName',['https://doc.qt.io/qt-5/qhostinfo.html#hostName',1,'QHostInfo::hostName()'],['https://doc.qt.io/qt-5/qnetworkproxy.html#hostName',1,'QNetworkProxy::hostName()']]],
   ['hour',['hour',['https://doc.qt.io/qt-5/qtime.html#hour',1,'QTime']]],
   ['html',['html',['https://doc.qt.io/qt-5/qmimedata.html#html',1,'QMimeData']]],
-  ['humanreadablename',['humanReadableName',['https://doc.qt.io/qt-5/qnetworkinterface.html#humanReadableName',1,'QNetworkInterface']]]
+  ['humanreadablename',['humanReadableName',['https://doc.qt.io/qt-5/qnetworkinterface.html#humanReadableName',1,'QNetworkInterface']]],
+  ['how_20the_20library_27s_20versioning_20works',['How the library&apos;s versioning works',['../versioning.html',1,'']]]
 ];

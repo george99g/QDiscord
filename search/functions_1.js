@@ -21,6 +21,7 @@ var searchData=
   ['binaryframereceived',['binaryFrameReceived',['https://doc.qt.io/qt-5/qwebsocket.html#binaryFrameReceived',1,'QWebSocket']]],
   ['binarymessagereceived',['binaryMessageReceived',['https://doc.qt.io/qt-5/qwebsocket.html#binaryMessageReceived',1,'QWebSocket']]],
   ['bind',['bind',['https://doc.qt.io/qt-5/qabstractsocket.html#bind',1,'QAbstractSocket::bind(const QHostAddress &amp;address, quint16 port, BindMode mode)'],['https://doc.qt.io/qt-5/qabstractsocket.html#bind-1',1,'QAbstractSocket::bind(quint16 port, BindMode mode)']]],
+  ['bitrate',['bitrate',['../classQDiscordChannel.html#ab34255a21179c804dc1938c08a7b8d19',1,'QDiscordChannel']]],
   ['blocksignals',['blockSignals',['https://doc.qt.io/qt-5/qobject.html#blockSignals',1,'QObject']]],
   ['blocksize',['blockSize',['https://doc.qt.io/qt-5/qstorageinfo.html#blockSize',1,'QStorageInfo']]],
   ['bot',['bot',['../classQDiscordUser.html#ac2dfd4a190ecf19bd73f5484e19303a2',1,'QDiscordUser']]],

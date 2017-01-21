@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">QDiscord
-   &#160;<span id="projectnumber">v0:9</span>
+   &#160;<span id="projectnumber">v0:12</span>
    </div>
    <div id="projectbrief">An unofficial C++ and Qt wrapper for the Discord API.</div>
   </td>
@@ -443,7 +443,7 @@ Public Member Functions</h2></td></tr>
 <p>Compares two users based on their ID. </p>
 
 <p>Definition at line <a class="el" href="qdiscorduser_8cpp_source.html#l00086">86</a> of file <a class="el" href="qdiscorduser_8cpp_source.html">qdiscorduser.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> other.<a class="code" href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">id</a>() != _id;</div><div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div><div class="ttc" id="classQDiscordUser_html_aa43f1d96f7826e8b177ee2383459b940"><div class="ttname"><a href="classQDiscordUser.html#aa43f1d96f7826e8b177ee2383459b940">QDiscordUser::id</a></div><div class="ttdeci">QString id() const</div><div class="ttdoc">Returns the user&amp;#39;s ID. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscorduser_8hpp_source.html#l00039">qdiscorduser.hpp:39</a></div></div>
+<div class="fragment"><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> !<a class="code" href="classQDiscordUser.html#abead964fbf47b0753e6817d25bec759b">operator ==</a>(other);</div><div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div><div class="ttc" id="classQDiscordUser_html_abead964fbf47b0753e6817d25bec759b"><div class="ttname"><a href="classQDiscordUser.html#abead964fbf47b0753e6817d25bec759b">QDiscordUser::operator==</a></div><div class="ttdeci">bool operator==(const QDiscordUser &amp;other) const</div><div class="ttdoc">Compares two users based on their ID. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscorduser_8cpp_source.html#l00081">qdiscorduser.cpp:81</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -454,7 +454,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 9 2017 21:54:47 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 21 2017 17:20:13 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

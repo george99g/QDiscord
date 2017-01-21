@@ -36,7 +36,7 @@ var searchData=
   ['defaultvalues',['defaultValues',['https://doc.qt.io/qt-5/qcommandlineoption.html#defaultValues',1,'QCommandLineOption']]],
   ['deletecookie',['deleteCookie',['https://doc.qt.io/qt-5/qnetworkcookiejar.html#deleteCookie',1,'QNetworkCookieJar']]],
   ['deletelater',['deleteLater',['https://doc.qt.io/qt-5/qobject.html#deleteLater',1,'QObject']]],
-  ['deletemessage',['deleteMessage',['../classQDiscordRestComponent.html#afb840b95699912209c372916953fd208',1,'QDiscordRestComponent::deleteMessage(QDiscordMessage message)'],['../classQDiscordRestComponent.html#ac27be532b96e3fca87c1628a0f6e6102',1,'QDiscordRestComponent::deleteMessage(const QString &amp;messageId, const QString &amp;channelId)']]],
+  ['deletemessage',['deleteMessage',['../classQDiscordRestComponent.html#afb840b95699912209c372916953fd208',1,'QDiscordRestComponent::deleteMessage(QDiscordMessage message)'],['../classQDiscordRestComponent.html#a33270f7fbcb08359d0ab57f28329b03f',1,'QDiscordRestComponent::deleteMessage(const QString &amp;channelId, const QString &amp;messageId)']]],
   ['deleteresource',['deleteResource',['https://doc.qt.io/qt-5/qnetworkaccessmanager.html#deleteResource',1,'QNetworkAccessManager']]],
   ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
   ['dequeue',['dequeue',['https://doc.qt.io/qt-5/qqueue.html#dequeue',1,'QQueue']]],

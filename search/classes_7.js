@@ -265,6 +265,7 @@ var searchData=
   ['qversionnumber',['QVersionNumber',['https://doc.qt.io/qt-5/qversionnumber.html',1,'']]],
   ['qwaitcondition',['QWaitCondition',['https://doc.qt.io/qt-5/qwaitcondition.html',1,'']]],
   ['qweakpointer',['QWeakPointer',['https://doc.qt.io/qt-5/qweakpointer.html',1,'']]],
+  ['qweakpointer_3c_20qdiscordguild_20_3e',['QWeakPointer&lt; QDiscordGuild &gt;',['https://doc.qt.io/qt-5/qweakpointer.html',1,'']]],
   ['qwebsocket',['QWebSocket',['https://doc.qt.io/qt-5/qwebsocket.html',1,'']]],
   ['qwebsocketcorsauthenticator',['QWebSocketCorsAuthenticator',['https://doc.qt.io/qt-5/qwebsocketcorsauthenticator.html',1,'']]],
   ['qwebsocketserver',['QWebSocketServer',['https://doc.qt.io/qt-5/qwebsocketserver.html',1,'']]],

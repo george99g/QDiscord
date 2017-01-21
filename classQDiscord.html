@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">QDiscord
-   &#160;<span id="projectnumber">v0:9</span>
+   &#160;<span id="projectnumber">v0:12</span>
    </div>
    <div id="projectbrief">An unofficial C++ and Qt wrapper for the Discord API.</div>
   </td>
@@ -437,7 +437,7 @@ and <a href="https://github.com/hammerandchisel/discord-api-docs/issues/69">http
 
 <p>Definition at line <a class="el" href="qdiscord_8cpp_source.html#l00086">86</a> of file <a class="el" href="qdiscord_8cpp_source.html">qdiscord.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{</div><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#ifdef QDISCORD_LIBRARY_DEBUG</span></div><div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    qDebug()&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="stringliteral">&quot;disconnecting&quot;</span>;</div><div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#endif</span></div><div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    _ws.<a class="code" href="classQDiscordWsComponent.html#a72b29bdc0fb58b92adf76fa75543e536">close</a>();</div><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    _rest.<a class="code" href="classQDiscordRestComponent.html#a3aff92864a5eef9bf2d38d49d21558d1">logout</a>();</div><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    _connected = <span class="keyword">false</span>;</div><div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    _connecting = <span class="keyword">false</span>;</div><div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div><div class="ttc" id="classQDiscordWsComponent_html_a72b29bdc0fb58b92adf76fa75543e536"><div class="ttname"><a href="classQDiscordWsComponent.html#a72b29bdc0fb58b92adf76fa75543e536">QDiscordWsComponent::close</a></div><div class="ttdeci">void close()</div><div class="ttdoc">Makes the WebSocket disconnect from the endpoint. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordwscomponent_8cpp_source.html#l00078">qdiscordwscomponent.cpp:78</a></div></div>
-<div class="ttc" id="classQDiscordRestComponent_html_a3aff92864a5eef9bf2d38d49d21558d1"><div class="ttname"><a href="classQDiscordRestComponent.html#a3aff92864a5eef9bf2d38d49d21558d1">QDiscordRestComponent::logout</a></div><div class="ttdeci">void logout()</div><div class="ttdoc">Logs out using the stored token. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordrestcomponent_8cpp_source.html#l00261">qdiscordrestcomponent.cpp:261</a></div></div>
+<div class="ttc" id="classQDiscordRestComponent_html_a3aff92864a5eef9bf2d38d49d21558d1"><div class="ttname"><a href="classQDiscordRestComponent.html#a3aff92864a5eef9bf2d38d49d21558d1">QDiscordRestComponent::logout</a></div><div class="ttdeci">void logout()</div><div class="ttdoc">Logs out using the stored token. </div><div class="ttdef"><b>Definition:</b> <a href="qdiscordrestcomponent_8cpp_source.html#l00260">qdiscordrestcomponent.cpp:260</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -706,7 +706,7 @@ and <a href="https://github.com/hammerandchisel/discord-api-docs/issues/69">http
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 9 2017 21:54:47 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 21 2017 17:20:13 for QDiscord by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.12
 </small></address>

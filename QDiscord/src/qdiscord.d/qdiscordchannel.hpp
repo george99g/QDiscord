@@ -19,6 +19,7 @@
 #ifndef QDISCORDCHANNEL_HPP
 #define QDISCORDCHANNEL_HPP
 
+#include <QSharedPointer>
 #include <QJsonObject>
 #include <QDateTime>
 #include "qdiscorduser.hpp"

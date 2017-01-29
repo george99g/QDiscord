@@ -55,11 +55,11 @@ const QDiscordUtilities::EndPoints QDiscordUtilities::endPoints =
 []() -> QDiscordUtilities::EndPoints {
 	QDiscordUtilities::EndPoints init;
 	init.base = "https://discordapp.com";
-	init.apiBase = init.base + "/api/v" + QDiscordUtilities::apiVersion;
+	init.apiBase = init.base + "/api/v" + apiVersion;
 	init.gateway =
 		init.apiBase +
 		"/gateway?encoding=json&v=" +
-		QDiscordUtilities::apiVersion;
+		apiVersion;
 	init.users = init.apiBase + "/users";
 	init.me = init.users + "/@me";
 	init.auth = init.apiBase + "/auth";
@@ -127,4 +127,10 @@ QString QDiscordUtilities::convertTokenToType(QString token,
 	default:
 		return token;
 	}
+}
+
+QString QDiscordUtilities::userAgent()
+{
+	return "DiscordBot (" + libLink + ", v" +
+			libMajor + ":" + libMinor + "); " + botName;
 }

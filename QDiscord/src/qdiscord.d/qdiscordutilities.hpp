@@ -58,6 +58,8 @@ namespace QDiscordUtilities
 	QDateTime snowflakeTime(QString snowflake);
 	///\brief Converts the specified token to a token of type `tokenType`
 	QString convertTokenToType(QString token, QDiscordTokenType tokenType);
+	///\brief Generates a user-agent from the information in this namespace.
+	QString userAgent();
 	///\brief Discord's epoch value for snowflake generation.
 	extern const qlonglong discordEpoch;
 	/*!

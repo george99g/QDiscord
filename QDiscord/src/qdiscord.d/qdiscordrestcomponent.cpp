@@ -659,8 +659,9 @@ void QDiscordRestComponent::setSelf(QSharedPointer<QDiscordUser> self)
 	_self = self;
 }
 
+template<class Functor>
 void QDiscordRestComponent::deleteResource(const QUrl& url,
-										   std::function<void()> function)
+										   Functor function)
 {
 	QNetworkRequest request(url);
 	if(_authentication != "")
@@ -673,7 +674,8 @@ void QDiscordRestComponent::deleteResource(const QUrl& url,
 #endif
 }
 
-void QDiscordRestComponent::patch(const QJsonObject &object, const QUrl &url, std::function<void ()> function)
+template<class Functor>
+void QDiscordRestComponent::patch(const QJsonObject &object, const QUrl &url, Functor function)
 {
 	QJsonDocument document;
 	document.setObject(object);
@@ -696,7 +698,8 @@ void QDiscordRestComponent::patch(const QJsonObject &object, const QUrl &url, st
 #endif
 }
 
-void QDiscordRestComponent::patch(const QJsonArray &array, const QUrl &url, std::function<void ()> function)
+template<class Functor>
+void QDiscordRestComponent::patch(const QJsonArray &array, const QUrl &url, Functor function)
 {
 	QJsonDocument document;
 	document.setArray(array);
@@ -719,9 +722,10 @@ void QDiscordRestComponent::patch(const QJsonArray &array, const QUrl &url, std:
 #endif
 }
 
+template<class Functor>
 void QDiscordRestComponent::post(const QJsonObject& object,
 								 const QUrl& url,
-								 std::function<void()> function)
+								 Functor function)
 {
 	QJsonDocument document;
 	document.setObject(object);
@@ -739,9 +743,10 @@ void QDiscordRestComponent::post(const QJsonObject& object,
 #endif
 }
 
+template<class Functor>
 void QDiscordRestComponent::post(const QJsonArray& array,
 								 const QUrl& url,
-								 std::function<void()> function)
+								 Functor function)
 {
 	QJsonDocument document;
 	document.setArray(array);
@@ -759,8 +764,9 @@ void QDiscordRestComponent::post(const QJsonArray& array,
 #endif
 }
 
+template<class Functor>
 void QDiscordRestComponent::get(const QUrl& url,
-								std::function<void()> function)
+								Functor function)
 {
 	QNetworkRequest request(url);
 	if(_authentication != "")

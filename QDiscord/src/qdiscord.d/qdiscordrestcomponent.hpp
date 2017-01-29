@@ -24,7 +24,6 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QNetworkAccessManager>
-#include <functional>
 #include "qdiscordmessage.hpp"
 #include "qdiscordutilities.hpp"
 #include "qdiscordchannel.hpp"
@@ -207,12 +206,18 @@ signals:
 	 */
 	void channelUpdateFailed(QNetworkReply::NetworkError error);
 private:
-	void deleteResource(const QUrl& url, std::function<void()> function);
-	void patch(const QJsonObject& object, const QUrl& url, std::function<void()> function);
-	void patch(const QJsonArray& array, const QUrl& url, std::function<void ()> function);
-	void post(const QJsonObject& object, const QUrl& url, std::function<void()> function);
-	void post(const QJsonArray& array, const QUrl& url, std::function<void ()> function);
-	void get(const QUrl& url, std::function<void ()> function);
+	template<class Functor>
+	void deleteResource(const QUrl& url, Functor function);
+	template<class Functor>
+	void patch(const QJsonObject& object, const QUrl& url, Functor function);
+	template<class Functor>
+	void patch(const QJsonArray& array, const QUrl& url, Functor function);
+	template<class Functor>
+	void post(const QJsonObject& object, const QUrl& url, Functor function);
+	template<class Functor>
+	void post(const QJsonArray& array, const QUrl& url, Functor function);
+	template<class Functor>
+	void get(const QUrl& url, Functor function);
 	QSharedPointer<QDiscordUser> _self;
 	QString _authentication;
 	QNetworkAccessManager _manager;

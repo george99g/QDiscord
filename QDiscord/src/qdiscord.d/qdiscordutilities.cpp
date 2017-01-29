@@ -104,9 +104,15 @@ QString QDiscordUtilities::networkErrorToString(QNetworkReply::NetworkError erro
 
 QDateTime QDiscordUtilities::snowflakeTime(QString snowflake)
 {
+#if QT_VERSION_MAJOR >= 5 && QT_VERSION_MINOR >= 8
+	return QDateTime::fromSecsSinceEpoch(
+					((snowflake.toLongLong() >> 22) + discordEpoch) / 1000
+				);
+#else
 	return QDateTime::fromTime_t(
 					((snowflake.toLongLong() >> 22) + discordEpoch) / 1000
 				);
+#endif
 }
 
 QString QDiscordUtilities::convertTokenToType(QString token,

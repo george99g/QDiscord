@@ -45,20 +45,31 @@ const QString QDiscordUtilities::libMinor = QDISCORD_LIBRARY_MINOR;
 #else
 const QString QDiscordUtilities::libMinor = "8";
 #endif
+#ifdef QDISCORD_DISCORD_API_VERSION
+const QString QDiscordUtilities::apiVersion = QDISCORD_DISCORD_API_VERSION;
+#else
+const QString QDiscordUtilities::apiVersion = "6";
+#endif
 
 const QDiscordUtilities::EndPoints QDiscordUtilities::endPoints =
-{
-	"https://discordapp.com",
-	"https://discordapp.com/api",
-	"https://discordapp.com/api/gateway?encoding=json&v=4",
-	"https://discordapp.com/api/users",
-	"https://discordapp.com/api/users/@me",
-	"https://discordapp.com/api/auth/register",
-	"https://discordapp.com/api/auth/login",
-	"https://discordapp.com/api/auth/logout",
-	"https://discordapp.com/api/guilds",
-	"https://discordapp.com/api/channels"
-};
+[]() -> QDiscordUtilities::EndPoints {
+	QDiscordUtilities::EndPoints init;
+	init.base = "https://discordapp.com";
+	init.apiBase = init.base + "/api/v" + apiVersion;
+	init.gateway =
+		init.apiBase +
+		"/gateway?encoding=json&v=" +
+		apiVersion;
+	init.users = init.apiBase + "/users";
+	init.me = init.users + "/@me";
+	init.auth = init.apiBase + "/auth";
+	init.register_ = init.auth + "/register";
+	init.login = init.auth + "/login";
+	init.logout = init.auth + "/logout";
+	init.servers = init.apiBase + "/guilds";
+	init.channels = init.apiBase + "/channels";
+	return init;
+}();
 
 QString QDiscordUtilities::networkErrorToString(QNetworkReply::NetworkError error)
 {
@@ -93,9 +104,15 @@ QString QDiscordUtilities::networkErrorToString(QNetworkReply::NetworkError erro
 
 QDateTime QDiscordUtilities::snowflakeTime(QString snowflake)
 {
+#if QT_VERSION_MAJOR >= 5 && QT_VERSION_MINOR >= 8
+	return QDateTime::fromSecsSinceEpoch(
+					((snowflake.toLongLong() >> 22) + discordEpoch) / 1000
+				);
+#else
 	return QDateTime::fromTime_t(
 					((snowflake.toLongLong() >> 22) + discordEpoch) / 1000
 				);
+#endif
 }
 
 QString QDiscordUtilities::convertTokenToType(QString token,
@@ -110,4 +127,10 @@ QString QDiscordUtilities::convertTokenToType(QString token,
 	default:
 		return token;
 	}
+}
+
+QString QDiscordUtilities::userAgent()
+{
+	return "DiscordBot (" + libLink + ", v" +
+			libMajor + ":" + libMinor + "); " + botName;
 }

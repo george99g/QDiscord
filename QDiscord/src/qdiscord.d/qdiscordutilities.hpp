@@ -38,6 +38,7 @@ namespace QDiscordUtilities
 		QString gateway;  ///<\brief The gateway endpoint.
 		QString users;	  ///<\brief The users endpoint.
 		QString me;		  ///<\brief The user/\@me endpoint.
+		QString auth;	  ///<\brief The auth endpoint.
 		QString register_;///<\brief The registration endpoint.
 		QString login;	  ///<\brief The auth/login endpoint.
 		QString logout;	  ///<\brief The auth/logout endpoint.
@@ -57,6 +58,8 @@ namespace QDiscordUtilities
 	QDateTime snowflakeTime(QString snowflake);
 	///\brief Converts the specified token to a token of type `tokenType`
 	QString convertTokenToType(QString token, QDiscordTokenType tokenType);
+	///\brief Generates a user-agent from the information in this namespace.
+	QString userAgent();
 	///\brief Discord's epoch value for snowflake generation.
 	extern const qlonglong discordEpoch;
 	/*!
@@ -84,6 +87,8 @@ namespace QDiscordUtilities
 	extern const QString libMinor;
 	///\brief A link to where the library repository is located.
 	extern const QString libLink;
+	///\brief The Discord API version in use.
+	extern const QString apiVersion;
 }
 
 #endif // QDISCORDUTILITIES_HPP

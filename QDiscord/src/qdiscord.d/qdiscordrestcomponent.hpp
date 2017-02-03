@@ -28,6 +28,7 @@
 #include "qdiscordutilities.hpp"
 #include "qdiscordchannel.hpp"
 #include "qdiscorduser.hpp"
+#include "qdiscordroute.hpp"
 
 /*!
  * \brief The REST component of QDiscord.

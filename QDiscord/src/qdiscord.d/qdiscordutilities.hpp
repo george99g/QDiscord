@@ -37,7 +37,8 @@ namespace QDiscordUtilities
 		QString apiBase;  ///<\brief The base Discord API endpoint.
 		QString gateway;  ///<\brief The gateway endpoint.
 		QString users;	  ///<\brief The users endpoint.
-		QString me;		  ///<\brief The user/\@me endpoint.
+		QString me;		  ///<\brief The users/\@me endpoint.
+		QString guilds;   ///<\brief THe guilds endpoint.
 		QString auth;	  ///<\brief The auth endpoint.
 		QString register_;///<\brief The registration endpoint.
 		QString login;	  ///<\brief The auth/login endpoint.

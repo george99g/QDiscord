@@ -62,6 +62,7 @@ const QDiscordUtilities::EndPoints QDiscordUtilities::endPoints =
 		apiVersion;
 	init.users = init.apiBase + "/users";
 	init.me = init.users + "/@me";
+	init.guilds = init.apiBase + "/guilds";
 	init.auth = init.apiBase + "/auth";
 	init.register_ = init.auth + "/register";
 	init.login = init.auth + "/login";

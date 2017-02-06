@@ -208,17 +208,15 @@ signals:
 	void channelUpdateFailed(QNetworkReply::NetworkError error);
 private:
 	template<class Functor>
-	void deleteResource(const QUrl& url, Functor function);
+	void doRequest(const QDiscordRoute& url, Functor function);
 	template<class Functor>
-	void patch(const QJsonObject& object, const QUrl& url, Functor function);
+	void doRequest(const QJsonObject& object,
+				   const QDiscordRoute& url,
+				   Functor function);
 	template<class Functor>
-	void patch(const QJsonArray& array, const QUrl& url, Functor function);
-	template<class Functor>
-	void post(const QJsonObject& object, const QUrl& url, Functor function);
-	template<class Functor>
-	void post(const QJsonArray& array, const QUrl& url, Functor function);
-	template<class Functor>
-	void get(const QUrl& url, Functor function);
+	void doRequest(const QJsonArray& array,
+				   const QDiscordRoute& url,
+				   Functor function);
 	QSharedPointer<QDiscordUser> _self;
 	QString _authentication;
 	QNetworkAccessManager _manager;

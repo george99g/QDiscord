@@ -721,3 +721,36 @@ QDiscordRoute QDiscordRoutes::Invites::acceptInvite(const QString& code)
 				code
 				);
 }
+
+#ifdef QDISCORD_LIBRARY_DEBUG
+QDebug& operator<<(QDebug& d, const QDiscordRoute& route)
+{
+	d.nospace() << "QDiscordRoute(Method: ";
+	switch(route.method())
+	{
+	case QDiscordRoute::Method::DELETE:
+		d << "DELETE";
+		break;
+	case QDiscordRoute::Method::GET:
+		d << "GET";
+		break;
+	case QDiscordRoute::Method::PATCH:
+		d << "PATCH";
+		break;
+	case QDiscordRoute::Method::POST:
+		d << "POST";
+		break;
+	case QDiscordRoute::Method::PUT:
+		d << "PUT";
+		break;
+	default:
+		d << "?";
+	}
+
+	d << " Full URL: " << route.fullUrl();
+	d << " Bucket URL: " << route.bucketUrl();
+	d << ")";
+
+	return d.maybeSpace();
+}
+#endif

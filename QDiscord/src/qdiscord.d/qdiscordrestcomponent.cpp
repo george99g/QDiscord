@@ -509,7 +509,7 @@ void QDiscordRestComponent::doRequest(const QDiscordRoute& url,
 		reply->deleteLater();
 	});
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"did"<<static_cast<int>(url.method())<<"to"<<url.fullUrl();
+	qDebug()<<this<<"did"<<url;
 #endif
 }
 
@@ -568,7 +568,7 @@ void QDiscordRestComponent::doRequest(const QJsonObject& object,
 		reply->deleteLater();
 	});
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"did"<<static_cast<int>(url.method())<<"to"<<url.fullUrl();
+	qDebug()<<this<<"did"<<url;
 #endif
 }
 
@@ -626,6 +626,6 @@ void QDiscordRestComponent::doRequest(const QJsonArray& array,
 		reply->deleteLater();
 	});
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"did"<<static_cast<int>(url.method())<<"to"<<url.fullUrl();
+	qDebug()<<this<<"did"<<url;
 #endif
 }

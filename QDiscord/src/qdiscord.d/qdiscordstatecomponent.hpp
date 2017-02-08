@@ -46,18 +46,18 @@ public:
 	 * \brief Returns a pointer to the guild that has the provided ID.
 	 * Returns `nullptr` if nothing was found.
 	 */
-	QSharedPointer<QDiscordGuild> guild(const QString& id) {
+	QSharedPointer<QDiscordGuild> guild(const QDiscordID& id) {
 		return _guilds.value(id, QSharedPointer<QDiscordGuild>());
 	}
 	///\brief Returns a map of pointers to all guilds and their IDs.
-	QMap<QString, QSharedPointer<QDiscordGuild>> guilds() {return _guilds;}
+	QMap<QDiscordID, QSharedPointer<QDiscordGuild>> guilds() {return _guilds;}
 	/*!
 	 * \brief Returns a pointer to the channel that has the provided ID.
 	 * Returns `nullptr` if nothing was found.
 	 */
-	QSharedPointer<QDiscordChannel> channel(const QString& id);
+	QSharedPointer<QDiscordChannel> channel(const QDiscordID& id);
 	///\brief Returns a map of pointers to all private channels and their IDs.
-	QMap<QString, QSharedPointer<QDiscordChannel>> privateChannels() {
+	QMap<QDiscordID, QSharedPointer<QDiscordChannel>> privateChannels() {
 		return _privateChannels;
 	}
 	///\brief Returns a pointer to this client's information.
@@ -183,8 +183,8 @@ private:
 	void channelCreateReceived(const QJsonObject& object);
 	void channelDeleteReceived(const QJsonObject& object);
 	void channelUpdateReceived(const QJsonObject& object);
-	QMap<QString, QSharedPointer<QDiscordGuild>> _guilds;
-	QMap<QString, QSharedPointer<QDiscordChannel>> _privateChannels;
+	QMap<QDiscordID, QSharedPointer<QDiscordGuild>> _guilds;
+	QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _privateChannels;
 	QSharedPointer<QDiscordUser> _self;
 };
 

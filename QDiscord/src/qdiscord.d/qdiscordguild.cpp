@@ -21,7 +21,7 @@
 
 QDiscordGuild::QDiscordGuild(const QJsonObject& object)
 {
-	_id = object["id"].toString("");
+	_id = QDiscordID(object["id"].toString(""));
 	_unavailable = object["unavailable"].toBool(false);
 	_name = object["name"].toString("");
 	_verificationLevel = object["verification_level"].toInt(0);
@@ -77,7 +77,6 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other):
 
 QDiscordGuild::QDiscordGuild()
 {
-	_id = "";
 	_unavailable = false;
 	_name = "";
 	_verificationLevel = 0;

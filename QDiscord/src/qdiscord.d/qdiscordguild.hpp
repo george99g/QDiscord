@@ -39,7 +39,7 @@ public:
 	QDiscordGuild();
 	~QDiscordGuild();
 	///\brief Returns the guild's ID.
-	QString id() const {return _id;}
+	QDiscordID id() const {return _id;}
 	///\brief Returns the guild's name.
 	QString name() const {return _name;}
 	/*!
@@ -60,10 +60,10 @@ public:
 	///\brief Returns the date the current user joined this guild.
 	QDateTime joinedAt() const {return _joinedAt;}
 	///\brief Returns a map of pointers to the guild's channels and their IDs.
-	QMap<QString, QSharedPointer<QDiscordChannel>>
+	QMap<QDiscordID, QSharedPointer<QDiscordChannel>>
 	channels() const {return _channels;}
 	///\brief Returns a map of pointers to the guild's members and their IDs.
-	QMap<QString, QSharedPointer<QDiscordMember>>
+	QMap<QDiscordID, QSharedPointer<QDiscordMember>>
 	members() const {return _members;}
 	/*!
 	 * \brief Returns a pointer to a guild channel that has the provided ID.
@@ -71,7 +71,7 @@ public:
 	 * Returns `nullptr` if the channel was not found.
 	 */
 	QSharedPointer<QDiscordChannel>
-	channel(const QString& id) const {
+	channel(const QDiscordID& id) const {
 		return _channels.value(id, QSharedPointer<QDiscordChannel>());
 	}
 	/*!
@@ -80,7 +80,7 @@ public:
 	 * Returns `nullptr` if the member was not found.
 	 */
 	QSharedPointer<QDiscordMember>
-	member(const QString& id) const {
+	member(const QDiscordID& id) const {
 		return _members.value(id, QSharedPointer<QDiscordMember>());
 	}
 	///\brief Adds the provided channel to the guild.
@@ -102,15 +102,15 @@ public:
 	 */
 	bool removeMember(QSharedPointer<QDiscordMember> member);
 private:
-	QString _id;
+	QDiscordID _id;
 	QString _name;
 	bool _unavailable;
 	int _verificationLevel;
 	int _afkTimeout;
 	int _memberCount;
 	QDateTime _joinedAt;
-	QMap<QString, QSharedPointer<QDiscordMember>> _members;
-	QMap<QString, QSharedPointer<QDiscordChannel>> _channels;
+	QMap<QDiscordID, QSharedPointer<QDiscordMember>> _members;
+	QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _channels;
 };
 
 Q_DECLARE_METATYPE(QDiscordGuild)

@@ -70,10 +70,10 @@ void tst_QDiscordUser::testConstructor_data()
 
 	QTest::newRow("nulluser")
 	<< _nullUser
-	<< QString()
+	<< "0"
 	<< QString()
 	<< false
-	<< QString()
+	<< "-1"
 	<< QString()
 	<< QString()
 	<<false;
@@ -98,10 +98,10 @@ void tst_QDiscordUser::testConstructor()
 
 	QDiscordUser testBot(input_object);
 
-	QCOMPARE(testBot.id(), output_id);
+	QCOMPARE(testBot.id().toString(), output_id);
 	QCOMPARE(testBot.avatar(), output_avatar);
 	QCOMPARE(testBot.bot(), output_bot);
-	QCOMPARE(testBot.discriminator(), output_discriminator);
+	QCOMPARE(testBot.discriminator().toString(), output_discriminator);
 	QCOMPARE(testBot.email(), output_email);
 	QCOMPARE(testBot.username(), output_username);
 	QCOMPARE(testBot.verified(), output_verified);
@@ -147,10 +147,10 @@ void tst_QDiscordUser::testUpdate()
 
 	original.update(update);
 
-	QCOMPARE(original.id(), output_id);
+	QCOMPARE(original.id().toString(), output_id);
 	QCOMPARE(original.avatar(), output_avatar);
 	QCOMPARE(original.bot(), output_bot);
-	QCOMPARE(original.discriminator(), output_discriminator);
+	QCOMPARE(original.discriminator().toString(), output_discriminator);
 	QCOMPARE(original.email(), output_email);
 	QCOMPARE(original.username(), output_username);
 	QCOMPARE(original.verified(), output_verified);

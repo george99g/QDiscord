@@ -39,7 +39,6 @@ public:
 	QString fullToken() const;
 	bool isEmpty() const;
 	void clear();
-	operator QString() const;
 private:
 	QString _token;
 	Type _type;

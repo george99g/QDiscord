@@ -61,9 +61,9 @@ public:
 	///\brief Returns this member's nickname.
 	QString nickname() const {return _nickname;}
 	///\brief Returns a string which allows you to mention this member using their username.
-	QString mentionUsername() const {return QString("<@"+(_user?_user->id():"nullptr")+">");}
+	QString mentionUsername() const;
 	///\brief Returns a string which allows you to mention this member using their nickname.
-	QString mentionNickname() const {return QString("<@!"+(_user?_user->id():"nullptr")+">");}
+	QString mentionNickname() const;
 	/*!
 	 * \brief Compares two members.
 	 *

@@ -54,8 +54,6 @@ namespace QDiscordUtilities
 	 * \param error The network error returned by a failed method.
 	 */
 	QString networkErrorToString(QNetworkReply::NetworkError error);
-	///\brief Returns the DateTime a Discord snowflake was generated.
-	QDateTime snowflakeTime(QString snowflake);
 	///\brief Generates a user-agent from the information in this namespace.
 	QString userAgent();
 	///\brief Discord's epoch value for snowflake generation.

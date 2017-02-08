@@ -21,9 +21,10 @@
 
 QDiscordUser::QDiscordUser(const QJsonObject& object)
 {
-	_id = object["id"].toString("");
+	_id = QDiscordID(object["id"].toString(""));
 	_bot = object["bot"].toBool(false);
-	_discriminator = object["discriminator"].toString("");
+	_discriminator =
+			QDiscordDiscriminator(object["discriminator"].toString(""));
 	_email = object["email"].toString("");
 	_username = object["username"].toString("");
 	_verified = object["verified"].toBool(false);
@@ -36,9 +37,7 @@ QDiscordUser::QDiscordUser(const QJsonObject& object)
 
 QDiscordUser::QDiscordUser()
 {
-	_id = "";
 	_bot = false;
-	_discriminator = "";
 	_email = "";
 	_username = "";
 	_verified = false;
@@ -59,11 +58,14 @@ QDiscordUser::~QDiscordUser()
 void QDiscordUser::update(const QJsonObject& object)
 {
 	if(object.contains("id"))
-		_id = object["id"].toString("");
+		_id = QDiscordID(object["id"].toString(""));
 	if(object.contains("bot"))
 		_bot = object["bot"].toBool(false);
 	if(object.contains("discriminator"))
-		_discriminator = object["discriminator"].toString("");
+	{
+		_discriminator =
+				QDiscordDiscriminator(object["discriminator"].toString(""));
+	}
 	if(object.contains("email"))
 		_email = object["email"].toString("");
 	if(object.contains("username"))
@@ -78,9 +80,14 @@ void QDiscordUser::update(const QJsonObject& object)
 #endif
 }
 
+QString QDiscordUser::mention() const
+{
+	return QString("<@" + _id.toString() + ">");
+}
+
 bool QDiscordUser::operator ==(const QDiscordUser& other) const
 {
-	return other.id() == _id;
+	return other._id == _id;
 }
 
 bool QDiscordUser::operator !=(const QDiscordUser& other) const

@@ -106,8 +106,3 @@ void QDiscordToken::clear()
 	_token.clear();
 	_type = Type::None;
 }
-
-QDiscordToken::operator QString() const
-{
-	return fullToken();
-}

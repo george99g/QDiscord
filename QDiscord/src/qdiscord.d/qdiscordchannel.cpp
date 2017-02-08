@@ -22,9 +22,9 @@
 QDiscordChannel::QDiscordChannel(const QJsonObject& object,
 								 QWeakPointer<QDiscordGuild> guild)
 {
-	_id = object["id"].toString("");
+	_id = QDiscordID(object["id"].toString(""));
 	_isPrivate = object["is_private"].toBool(false);
-	_lastMessageId = object["last_message_id"].toString("");
+	_lastMessageId = QDiscordID(object["last_message_id"].toString(""));
 	_name = object["name"].toString("");
 	_position = object["position"].toInt(-1);
 	_topic = object["topic"].toString("");
@@ -65,9 +65,7 @@ QDiscordChannel::QDiscordChannel(const QJsonObject& object,
 
 QDiscordChannel::QDiscordChannel()
 {
-	_id = "";
 	_isPrivate = false;
-	_lastMessageId = "";
 	_name = "";
 	_position = 0;
 	_topic = "";
@@ -107,7 +105,7 @@ QDiscordChannel::~QDiscordChannel()
 
 bool QDiscordChannel::operator ==(const QDiscordChannel& other) const
 {
-	return _id == other.id();
+	return _id == other._id;
 }
 
 bool QDiscordChannel::operator !=(const QDiscordChannel& other) const

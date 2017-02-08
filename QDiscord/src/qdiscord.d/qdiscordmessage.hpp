@@ -43,7 +43,7 @@ public:
 	QDiscordMessage(const QDiscordMessage& other);
 	~QDiscordMessage();
 	///\brief Returns the message's ID.
-	QString id() const {return _id;}
+	QDiscordID id() const {return _id;}
 	///\brief Returns the message's contents.
 	QString content() const {return _content;}
 	///\brief Returns the date at which the message was created.
@@ -53,7 +53,7 @@ public:
 	///\brief Returns whether the message successfully mentioned everyone.
 	bool mentionEveryone() const {return _mentionEveryone;}
 	///\brief Returns the ID of the channel this message was sent in.
-	QString channelId() const {return _channelId;}
+	QDiscordID channelId() const {return _channelId;}
 	///\brief Returns a pointer to the channel this message was sent in.
 	QSharedPointer<QDiscordChannel> channel() const {return _channel;}
 	///\brief Returns a pointer to the user that sent this message.
@@ -70,12 +70,12 @@ public:
 	QList<QSharedPointer<QDiscordUser>>
 	mentions() const { return _mentions;}
 private:
-	QString _id;
+	QDiscordID _id;
 	QString _content;
 	QDateTime _timestamp;
 	bool _tts;
 	bool _mentionEveryone;
-	QString _channelId;
+	QDiscordID _channelId;
 	QSharedPointer<QDiscordChannel> _channel;
 	QSharedPointer<QDiscordUser> _author;
 	QList<QSharedPointer<QDiscordUser>> _mentions;

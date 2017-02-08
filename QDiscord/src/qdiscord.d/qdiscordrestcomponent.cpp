@@ -115,7 +115,7 @@ void QDiscordRestComponent::sendMessage(const QString& content,
 	if(!channel)
 		return;
 
-	QString id = channel->id();
+	QDiscordID id = channel->id();
 	QJsonObject object;
 	object["content"] = content;
 
@@ -138,7 +138,7 @@ void QDiscordRestComponent::sendMessage(const QString& content,
 }
 
 void QDiscordRestComponent::sendMessage(const QString& content,
-										const QString& channelId,
+										const QDiscordID& channelId,
 										bool tts)
 {
 	if(!_loggedIn)
@@ -170,8 +170,8 @@ void QDiscordRestComponent::deleteMessage(QDiscordMessage message)
 	deleteMessage(message.channelId(), message.id());
 }
 
-void QDiscordRestComponent::deleteMessage(const QString& channelId,
-										  const QString& messageId)
+void QDiscordRestComponent::deleteMessage(const QDiscordID& channelId,
+										  const QDiscordID& messageId)
 {
 	if(!_loggedIn)
 		return;
@@ -188,6 +188,43 @@ void QDiscordRestComponent::deleteMessage(const QString& channelId,
 	});
 }
 
+void QDiscordRestComponent::deleteMessages(
+		const QList<QDiscordMessage>& messages)
+{
+	QList<QDiscordID> ids;
+	QDiscordID channel;
+	for(const QDiscordMessage& message : messages)
+	{
+		ids.append(message.id());
+		if(!channel && message.channelId())
+			channel = message.channelId();
+	}
+	deleteMessages(ids, channel);
+}
+
+void QDiscordRestComponent::deleteMessages(QList<QDiscordID> messages,
+										   QDiscordID channel)
+{
+	QJsonArray messageIDArray;
+
+	for(const QDiscordID& message : messages)
+		messageIDArray.append(message.toString());
+
+	QJsonObject object;
+	object["messages"] = messageIDArray;
+
+	doRequest(object, QDiscordRoutes::Messages::deleteMessages(channel),
+	[this, messages, channel](QNetworkReply* reply)
+	{
+		if(reply->error() != QNetworkReply::NoError)
+		{
+			emit messagesDeleteFailed(messages, channel);
+			return;
+		}
+		emit messagesDeleted(messages, channel);
+	});
+}
+
 void QDiscordRestComponent::editMessage(const QString& newContent,
 										QDiscordMessage message)
 {
@@ -195,8 +232,8 @@ void QDiscordRestComponent::editMessage(const QString& newContent,
 }
 
 void QDiscordRestComponent::editMessage(const QString& newContent,
-										const QString& channelId,
-										const QString& messageId)
+										const QDiscordID& channelId,
+										const QDiscordID& messageId)
 {
 	if(!_loggedIn)
 		return;
@@ -279,7 +316,7 @@ QDiscordRestComponent::setChannelName(const QString& name,
 }
 
 void QDiscordRestComponent::setChannelName(const QString& name,
-										   const QString& channelId)
+										   const QDiscordID& channelId)
 {
 	if(!_loggedIn)
 		return;
@@ -317,7 +354,7 @@ void QDiscordRestComponent::setChannelPosition(
 }
 
 void QDiscordRestComponent::setChannelPosition(int position,
-											   const QString& channelId)
+											   const QDiscordID& channelId)
 {
 	if(!_loggedIn)
 		return;
@@ -358,7 +395,7 @@ void QDiscordRestComponent::setChannelTopic(
 }
 
 void QDiscordRestComponent::setChannelTopic(const QString& topic,
-											const QString& channelId)
+											const QDiscordID& channelId)
 {
 	if(!_loggedIn)
 		return;
@@ -399,7 +436,7 @@ void QDiscordRestComponent::setChannelBitrate(
 }
 
 void QDiscordRestComponent::setChannelBitrate(int bitrate,
-											  const QString& channelId)
+											  const QDiscordID& channelId)
 {
 	if(!_loggedIn)
 		return;
@@ -440,7 +477,7 @@ void QDiscordRestComponent::setChannelUserLimit(
 }
 
 void QDiscordRestComponent::setChannelUserLimit(int limit,
-												const QString& channelId)
+												const QDiscordID& channelId)
 {
 	if(!_loggedIn)
 		return;

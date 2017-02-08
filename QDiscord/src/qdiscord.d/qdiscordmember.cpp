@@ -102,6 +102,16 @@ void QDiscordMember::update(const QJsonObject& object,
 #endif
 }
 
+QString QDiscordMember::mentionUsername() const
+{
+	return QString("<@"+(_user?_user->id().toString():"nullptr")+">");
+}
+
+QString QDiscordMember::mentionNickname() const
+{
+	return QString("<@!"+(_user?_user->id().toString():"nullptr")+">");
+}
+
 bool QDiscordMember::operator ==(const QDiscordMember& other) const
 {
 	QSharedPointer<QDiscordGuild> strongGuild = _guild.toStrongRef();

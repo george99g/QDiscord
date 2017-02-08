@@ -66,9 +66,9 @@ void tst_QDiscordChannel::testConstructor_data()
 
 	QTest::newRow("nullChannel")
 	<< _nullChannel
-	<< QString()
+	<< "0"
 	<< false
-	<< QString()
+	<< "0"
 	<< QDateTime()
 	<< QString()
 	<< -1
@@ -96,7 +96,7 @@ void tst_QDiscordChannel::testConstructor_data()
 	<< _voiceChannel
 	<< "74721463333122947"
 	<< false
-	<< QString()
+	<< "0"
 	<< QDateTime()
 	<< "test_channel"
 	<< 2
@@ -110,7 +110,7 @@ void tst_QDiscordChannel::testConstructor_data()
 	<< _privateChannel
 	<< "14721463333122947"
 	<< true
-	<< QString()
+	<< "0"
 	<< QDateTime()
 	<< QString()
 	<< -1
@@ -144,9 +144,9 @@ void tst_QDiscordChannel::testConstructor()
 
 	QDiscordChannel channel(inputObject, QWeakPointer<QDiscordGuild>());
 
-	QCOMPARE(channel.id(), output_id);
+	QCOMPARE(channel.id().toString(), output_id);
 	QCOMPARE(channel.isPrivate(), output_isPrivate);
-	QCOMPARE(channel.lastMessageId(), output_lastMessageId);
+	QCOMPARE(channel.lastMessageId().toString(), output_lastMessageId);
 	QCOMPARE(channel.lastPinTimestamp(), output_lastPinTimestamp);
 	QCOMPARE(channel.name(), output_name);
 	QCOMPARE(channel.position(), output_position);
@@ -155,7 +155,7 @@ void tst_QDiscordChannel::testConstructor()
 	QCOMPARE(channel.bitrate(), output_bitrate);
 	QCOMPARE(channel.userLimit(), output_userLimit);
 	if(output_recipientId != QString())
-		QCOMPARE(channel.recipient()->id(), output_recipientId);
+		QCOMPARE(channel.recipient()->id().toString(), output_recipientId);
 }
 
 QTEST_MAIN(tst_QDiscordChannel)

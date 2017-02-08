@@ -57,12 +57,12 @@ QDateTime QDiscordID::createdAt() const
 				);
 }
 
-bool QDiscordID::operator !()
+bool QDiscordID::operator !() const
 {
 	return _id == 0;
 }
 
-QDiscordID::operator bool()
+QDiscordID::operator bool() const
 {
 	return _id != 0;
 }

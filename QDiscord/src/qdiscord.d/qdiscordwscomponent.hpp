@@ -59,7 +59,7 @@ public:
 	 *
 	 * If the value is -1, the object will always attempt to stay connected.
 	 */
-	int maxReconnectAttempts(){return _maxReconnectAttempts;}
+	int maxReconnectAttempts() const {return _maxReconnectAttempts;}
 	/*!
 	 * \brief Sets the maximum reconnection attempts.
 	 *
@@ -71,7 +71,7 @@ public:
 		_maxReconnectAttempts=maxReconnectAttempts;
 	}
 	///\brief Returns the delay time before reconnecting in milliseconds.
-	int reconnectTime() {return _reconnectTime;}
+	int reconnectTime() const {return _reconnectTime;}
 	///\brief Sets the delay time before reconnecting in milliseconds.
 	void setReconnectTime(int reconnectTime) {_reconnectTime=reconnectTime;}
 	/*!

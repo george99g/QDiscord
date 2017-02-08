@@ -33,8 +33,8 @@ public:
 	QString toString() const;
 	quint64 value() const;
 	QDateTime createdAt() const;
-	operator bool();
-	bool operator !();
+	operator bool() const;
+	bool operator !() const;
 	bool operator ==(const QDiscordID& other) const;
 	bool operator !=(const QDiscordID& other) const;
 	bool operator > (const QDiscordID& other) const;

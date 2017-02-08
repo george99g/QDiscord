@@ -116,20 +116,6 @@ QDateTime QDiscordUtilities::snowflakeTime(QString snowflake)
 #endif
 }
 
-QString QDiscordUtilities::convertTokenToType(QString token,
-											  QDiscordTokenType tokenType)
-{
-	switch(tokenType)
-	{
-	case QDiscordTokenType::Bot:
-		return "Bot " + token;
-	case QDiscordTokenType::Bearer:
-		return "Bearer " + token;
-	default:
-		return token;
-	}
-}
-
 QString QDiscordUtilities::userAgent()
 {
 	return "DiscordBot (" + libLink + ", v" +

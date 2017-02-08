@@ -16,20 +16,36 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QDISCORDTOKENTYPE_HPP
-#define QDISCORDTOKENTYPE_HPP
+#ifndef QDISCORDTOKEN_HPP
+#define QDISCORDTOKEN_HPP
 
-/*!
- * \brief Specifies the type of a token passed to %QDiscord.
- *
- * See https://discordapp.com/developers/docs/reference#authentication for more
- * information and what the types are used for.\n
- * \n
- * If a type is not available here, use QDiscordTokenType::None and append the
- * type to the token manually.
- */
-enum class QDiscordTokenType {
-	None, Bot, Bearer
+#include <QMetaType>
+#include <QString>
+
+class QDiscordToken
+{
+public:
+	enum class Type
+	{
+		Auto,
+		Bearer, Bot, None
+	};
+	QDiscordToken();
+	QDiscordToken(QString token, Type type = Type::Bot);
+	QString rawToken() const;
+	void setRawToken(QString token);
+	Type type() const;
+	void setType(Type type);
+	QString fullToken() const;
+	bool isEmpty() const;
+	void clear();
+	operator QString() const;
+private:
+	QString _token;
+	Type _type;
 };
 
-#endif // QDISCORDTOKENTYPE_HPP
+Q_DECLARE_METATYPE(QDiscordToken)
+Q_DECLARE_METATYPE(QDiscordToken::Type)
+
+#endif // QDISCORDTOKEN_HPP

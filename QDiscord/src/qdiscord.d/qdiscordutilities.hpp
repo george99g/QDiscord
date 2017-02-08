@@ -22,7 +22,6 @@
 #include <QString>
 #include <QNetworkReply>
 #include <QDateTime>
-#include "qdiscordtokentype.hpp"
 
 /*!
  * \brief A namespace containing configuration variables and functions used in
@@ -57,8 +56,6 @@ namespace QDiscordUtilities
 	QString networkErrorToString(QNetworkReply::NetworkError error);
 	///\brief Returns the DateTime a Discord snowflake was generated.
 	QDateTime snowflakeTime(QString snowflake);
-	///\brief Converts the specified token to a token of type `tokenType`
-	QString convertTokenToType(QString token, QDiscordTokenType tokenType);
 	///\brief Generates a user-agent from the information in this namespace.
 	QString userAgent();
 	///\brief Discord's epoch value for snowflake generation.

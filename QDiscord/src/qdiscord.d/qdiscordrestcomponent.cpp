@@ -21,7 +21,6 @@
 
 QDiscordRestComponent::QDiscordRestComponent(QObject* parent) : QObject(parent)
 {
-	_authentication = "";
 	_self = QSharedPointer<QDiscordUser>();
 	_loggedIn = false;
 
@@ -46,10 +45,11 @@ void QDiscordRestComponent::login(const QString& email, const QString& password)
 	qWarning()<<"Please use a token instead";
 	qWarning()<<"See the following link for more information:";
 	qWarning()<<"https://github.com/hammerandchisel/discord-api-docs/issues/69";
-	if(!_authentication.isEmpty())
+	if(!_authorization.isEmpty())
 	{
 #ifdef QDISCORD_LIBRARY_DEBUG
-		qDebug()<<this<<"attempted to acquire a token while one is already stored";
+		qDebug()<<this
+		<<"attempted to acquire a token while one is already stored";
 #endif
 		return;
 	}
@@ -61,46 +61,47 @@ void QDiscordRestComponent::login(const QString& email, const QString& password)
 	{
 		if(reply->error() != QNetworkReply::NoError)
 		{
-			_authentication.clear();
+			_authorization.clear();
 			_loggedIn = false;
 			emit loginFailed(reply->error());
 			return;
 		}
-		_authentication =
+		QString tokenString =
 				QJsonDocument::fromJson(
 					reply->readAll()
 					).object().value("token").toString();
+		_authorization = QDiscordToken(tokenString, QDiscordToken::Type::None);
 		_loggedIn = true;
-		emit tokenVerified(_authentication, QDiscordTokenType::None);
+		emit tokenVerified(_authorization);
 	});
 }
 
-void QDiscordRestComponent::login(const QString& token,
-								  QDiscordTokenType tokenType)
+void QDiscordRestComponent::login(const QDiscordToken& token)
 {
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<this<<"verifying token";
 #endif
-	if(!_authentication.isEmpty())
+	if(!_authorization.isEmpty())
 	{
 #ifdef QDISCORD_LIBRARY_DEBUG
-		qDebug()<<this<<"attempted to verify a token while one is already stored";
+		qDebug()<<this
+		<<"attempted to verify a token while one is already stored";
 #endif
 		return;
 	}
-	_authentication = QDiscordUtilities::convertTokenToType(token, tokenType);
+	_authorization = token;
 	doRequest(QDiscordRoutes::Self::login(),
-	[this, token, tokenType](QNetworkReply* reply)
+	[this, token](QNetworkReply* reply)
 	{
 		if(reply->error() != QNetworkReply::NoError)
 		{
-			_authentication.clear();
+			_authorization.clear();
 			_loggedIn = false;
 			emit loginFailed(reply->error());
 			return;
 		}
 		_loggedIn = true;
-		emit tokenVerified(token, tokenType);
+		emit tokenVerified(token);
 	});
 }
 
@@ -221,14 +222,21 @@ void QDiscordRestComponent::editMessage(const QString& newContent,
 
 void QDiscordRestComponent::logout()
 {
-	if(_authentication.isEmpty())
+	if(_authorization.isEmpty())
 		return;
 	if(!_loggedIn)
 		return;
 	_self.reset();
+	if(_authorization.type() != QDiscordToken::Type::None)
+	{
+		_authorization.clear();
+		_loggedIn = false;
+		emit loggedOut();
+		return;
+	}
 	QJsonObject object;
-	object["token"] = _authentication;
-	_authentication = "";
+	object["token"] = _authorization.fullToken();
+	_authorization.clear();
 	_loggedIn = false;
 	doRequest(object, QDiscordRoutes::Self::logout(),
 	[this](QNetworkReply*)
@@ -465,8 +473,11 @@ void QDiscordRestComponent::doRequest(const QDiscordRoute& url,
 									  Functor function)
 {
 	QNetworkRequest request(QUrl(url.fullUrl()));
-	if(!_authentication.isEmpty())
-		request.setRawHeader("Authorization", _authentication.toUtf8());
+	if(!_authorization.isEmpty())
+	{
+		request.setRawHeader("Authorization",
+					_authorization.fullToken().toUtf8());
+	}
 	request.setHeader(QNetworkRequest::UserAgentHeader,
 					  QDiscordUtilities::userAgent());
 	QNetworkReply* reply;
@@ -519,8 +530,11 @@ void QDiscordRestComponent::doRequest(const QJsonObject& object,
 									  Functor function)
 {
 	QNetworkRequest request(QUrl(url.fullUrl()));
-	if(!_authentication.isEmpty())
-		request.setRawHeader("Authorization", _authentication.toUtf8());
+	if(!_authorization.isEmpty())
+	{
+		request.setRawHeader("Authorization",
+							 _authorization.fullToken().toUtf8());
+	}
 	request.setHeader(QNetworkRequest::UserAgentHeader,
 					  QDiscordUtilities::userAgent());
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -578,8 +592,11 @@ void QDiscordRestComponent::doRequest(const QJsonArray& array,
 									  Functor function)
 {
 	QNetworkRequest request(QUrl(url.fullUrl()));
-	if(!_authentication.isEmpty())
-		request.setRawHeader("Authorization", _authentication.toUtf8());
+	if(!_authorization.isEmpty())
+	{
+		request.setRawHeader("Authorization",
+							 _authorization.fullToken().toUtf8());
+	}
 	request.setHeader(QNetworkRequest::UserAgentHeader,
 					  QDiscordUtilities::userAgent());
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");

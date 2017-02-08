@@ -53,8 +53,7 @@ QDiscordWsComponent::~QDiscordWsComponent()
 }
 
 void QDiscordWsComponent::connectToEndpoint(const QString& endpoint,
-											const QString& token,
-											QDiscordTokenType tokenType)
+											const QDiscordToken& token)
 {
 	if(!_token.isEmpty())
 	{
@@ -67,7 +66,6 @@ void QDiscordWsComponent::connectToEndpoint(const QString& endpoint,
 		_reconnectTimer.stop();
 	_gateway = endpoint;
 	_token = token;
-	_tokenType = tokenType;
 	_socket.open(endpoint);
 
 #ifdef QDISCORD_LIBRARY_DEBUG
@@ -82,17 +80,17 @@ void QDiscordWsComponent::close()
 	if(_reconnectTimer.isActive())
 		_reconnectTimer.stop();
 	_tryReconnecting = false;
-	_gateway = "";
-	_token = "";
+	_gateway.clear();
+	_token.clear();
 	_reconnectAttempts = 0;
 	_socket.close();
 }
 
 void QDiscordWsComponent::setStatus(bool idle, QDiscordGame game)
 {
-	if(_token == "")
+	if(_token.isEmpty())
 		return;
-	if(_gateway == "")
+	if(_gateway.isEmpty())
 		return;
 	QJsonDocument document;
 	QJsonObject object;
@@ -115,8 +113,7 @@ void QDiscordWsComponent::setStatus(bool idle, QDiscordGame game)
 	_socket.sendTextMessage(document.toJson(QJsonDocument::Compact));
 }
 
-void QDiscordWsComponent::login(const QString& token,
-								QDiscordTokenType tokenType)
+void QDiscordWsComponent::login(const QDiscordToken& token)
 {
 	if(_reconnectTimer.isActive())
 		_reconnectTimer.stop();
@@ -124,8 +121,7 @@ void QDiscordWsComponent::login(const QString& token,
 	QJsonObject mainObject;
 	mainObject["op"] = 2;
 	QJsonObject dataObject;
-	dataObject["token"] =
-			QDiscordUtilities::convertTokenToType(token, tokenType);
+	dataObject["token"] = token.fullToken();
 	dataObject["v"] = 5;
 	dataObject["properties"] =
 			QJsonObject({
@@ -146,9 +142,9 @@ void QDiscordWsComponent::reconnect()
 {
 	if(_reconnectTimer.isActive())
 		_reconnectTimer.stop();
-	if(_token == "")
+	if(_token.isEmpty())
 		return;
-	if(_gateway == "")
+	if(_gateway.isEmpty())
 		return;
 
 #ifdef QDISCORD_LIBRARY_DEBUG
@@ -180,7 +176,7 @@ void QDiscordWsComponent::connected_()
 	if(_reconnectTimer.isActive())
 		_reconnectTimer.stop();
 	emit connected();
-	login(_token, _tokenType);
+	login(_token);
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<this<<"connected, logging in";
@@ -192,8 +188,8 @@ void QDiscordWsComponent::disconnected_()
 	emit disconnected(_socket.closeReason(), _socket.closeCode());
 
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"disconnected: \""<<
-			  _socket.closeReason()<<"\":"<<_socket.closeCode();
+	qDebug()<<this<<"disconnected:"<<
+			  _socket.closeReason()<<":"<<_socket.closeCode();
 #endif
 
 	_heartbeatTimer.stop();
@@ -201,8 +197,8 @@ void QDiscordWsComponent::disconnected_()
 		_reconnectTimer.start(_reconnectTime);
 	else
 	{
-		_token = "";
-		_gateway = "";
+		_token.clear();
+		_gateway.clear();
 	}
 }
 
@@ -216,8 +212,8 @@ void QDiscordWsComponent::error_(QAbstractSocket::SocketError err)
 	}
 	else
 	{
-		_token = "";
-		_gateway = "";
+		_token.clear();
+		_gateway.clear();
 		emit loginFailed();
 
 #ifdef QDISCORD_LIBRARY_DEBUG
@@ -240,7 +236,7 @@ void QDiscordWsComponent::textMessageReceived(const QString& message)
 	}
 
 #ifdef QDISCORD_LIBRARY_DEBUG
-		qDebug()<<this<<"op:"<<object["op"].toInt()<<" t:"<<object["t"].toString();
+	qDebug()<<this<<"op:"<<object["op"].toInt()<<" t:"<<object["t"].toString();
 #endif
 
 	switch(object["op"].toInt(-1))

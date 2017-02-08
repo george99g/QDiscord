@@ -29,6 +29,7 @@
 #include "qdiscordchannel.hpp"
 #include "qdiscorduser.hpp"
 #include "qdiscordroute.hpp"
+#include "qdiscordtoken.hpp"
 
 /*!
  * \brief The REST component of QDiscord.
@@ -62,8 +63,7 @@ public:
 	 * \param token The token to use.
 	 * \param tokenType Specifies the type of the provided token.
 	 */
-	void login(const QString& token,
-			   QDiscordTokenType tokenType = QDiscordTokenType::Bot);
+	void login(const QDiscordToken& token);
 	/*!
 	 * \brief Sends a message to the specified channel.
 	 *
@@ -159,7 +159,7 @@ signals:
 	 * \brief Emitted when the token acquired when logging in has been verified
 	 * to be correct.
 	 */
-	void tokenVerified(const QString& token, QDiscordTokenType tokenType);
+	void tokenVerified(QDiscordToken token);
 	/*!
 	 * \brief Emitted when logging in has failed.
 	 *
@@ -218,7 +218,7 @@ private:
 				   const QDiscordRoute& url,
 				   Functor function);
 	QSharedPointer<QDiscordUser> _self;
-	QString _authentication;
+	QDiscordToken _authorization;
 	QNetworkAccessManager _manager;
 	bool _loggedIn;
 };

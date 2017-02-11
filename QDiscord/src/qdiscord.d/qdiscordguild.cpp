@@ -19,36 +19,11 @@
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
 
-QDiscordGuild::QDiscordGuild(const QJsonObject& object)
+QSharedPointer<QDiscordGuild> QDiscordGuild::create(const QJsonObject& object)
 {
-	_id = QDiscordID(object["id"].toString(""));
-	_unavailable = object["unavailable"].toBool(false);
-	_name = object["name"].toString("");
-	_verificationLevel = object["verification_level"].toInt(0);
-	_afkTimeout = object["afk_timeout"].toInt(0);
-	_memberCount = object["member_count"].toInt(1);
-	_joinedAt = QDateTime::fromString(object["joined_at"].toString(""),
-			Qt::ISODate);
-	for(QJsonValue item : object["members"].toArray())
-	{
-		QSharedPointer<QDiscordMember> member =
-				QSharedPointer<QDiscordMember>(
-						new QDiscordMember(item.toObject(), sharedFromThis())
-					);
-		_members.insert(member->user()->id(), member);
-	}
-	for(QJsonValue item : object["channels"].toArray())
-	{
-		QSharedPointer<QDiscordChannel> channel =
-				QSharedPointer<QDiscordChannel>(
-						new QDiscordChannel(item.toObject(), sharedFromThis())
-					);
-		_channels.insert(channel->id(), channel);
-	}
-
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<"QDiscordGuild("<<this<<") constructed";
-#endif
+	QSharedPointer<QDiscordGuild> ptr(new QDiscordGuild());
+	ptr->init(object);
+	return ptr;
 }
 
 QDiscordGuild::QDiscordGuild(const QDiscordGuild& other):
@@ -128,4 +103,32 @@ bool QDiscordGuild::removeMember(QSharedPointer<QDiscordMember> member)
 		return false;
 	_members.remove(member->user()->id());
 	return true;
+}
+
+void QDiscordGuild::init(const QJsonObject& object)
+{
+	_id = QDiscordID(object["id"].toString(""));
+	_unavailable = object["unavailable"].toBool(false);
+	_name = object["name"].toString("");
+	_verificationLevel = object["verification_level"].toInt(0);
+	_afkTimeout = object["afk_timeout"].toInt(0);
+	_memberCount = object["member_count"].toInt(1);
+	_joinedAt = QDateTime::fromString(object["joined_at"].toString(""),
+			Qt::ISODate);
+	for(QJsonValue item : object["members"].toArray())
+	{
+		QSharedPointer<QDiscordMember> member =
+				QSharedPointer<QDiscordMember>(
+						new QDiscordMember(item.toObject(), sharedFromThis())
+					);
+		_members.insert(member->user()->id(), member);
+	}
+	for(QJsonValue item : object["channels"].toArray())
+	{
+		QSharedPointer<QDiscordChannel> channel =
+				QSharedPointer<QDiscordChannel>(
+						new QDiscordChannel(item.toObject(), sharedFromThis())
+					);
+		_channels.insert(channel->id(), channel);
+	}
 }

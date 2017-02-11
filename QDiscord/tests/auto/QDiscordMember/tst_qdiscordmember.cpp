@@ -49,7 +49,7 @@ tst_QDiscordMember::tst_QDiscordMember():
 			{"id", "111264179623531612"}
 		})
 		),
-	_guild(new QDiscordGuild({
+	_guild(QDiscordGuild::create({
 			{"id", "111264349623531632"}
 		}))
 {

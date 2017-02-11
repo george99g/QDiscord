@@ -71,7 +71,7 @@ void QDiscordStateComponent::readyReceived(const QJsonObject& object)
 void QDiscordStateComponent::guildCreateReceived(const QJsonObject& object)
 {
 	QSharedPointer<QDiscordGuild> guild =
-			QSharedPointer<QDiscordGuild>(new QDiscordGuild(object));
+			QDiscordGuild::create(object);
 	_guilds.insert(guild->id(), guild);
 	emit guildCreated(guild);
 	if(!guild->unavailable())
@@ -80,9 +80,9 @@ void QDiscordStateComponent::guildCreateReceived(const QJsonObject& object)
 
 void QDiscordStateComponent::guildDeleteReceived(const QJsonObject& object)
 {
-	QDiscordGuild guild(object);
-	_guilds.remove(guild.id());
-	emit guildDeleted(guild);
+	QSharedPointer<QDiscordGuild> guild = QDiscordGuild::create(object);
+	_guilds.remove(guild->id());
+	emit guildDeleted(*guild);
 }
 
 void QDiscordStateComponent::guildBanAddReceived(const QJsonObject& object)

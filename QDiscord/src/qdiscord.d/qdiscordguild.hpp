@@ -34,7 +34,7 @@ public:
 	 * \brief Creates an instance from the provided parameters.
 	 * \param object A JSON object of a Discord guild.
 	 */
-	QDiscordGuild(const QJsonObject& object);
+	static QSharedPointer<QDiscordGuild> create(const QJsonObject& object);
 	QDiscordGuild(const QDiscordGuild& other);
 	QDiscordGuild();
 	~QDiscordGuild();
@@ -102,6 +102,7 @@ public:
 	 */
 	bool removeMember(QSharedPointer<QDiscordMember> member);
 private:
+	void init(const QJsonObject &object);
 	QDiscordID _id;
 	QString _name;
 	bool _unavailable;

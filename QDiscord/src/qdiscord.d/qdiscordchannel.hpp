@@ -122,7 +122,7 @@ private:
 	int _userLimit;
 	QDateTime _lastPinTimestamp;
 	QSharedPointer<QDiscordUser> _recipient;
-	QSharedPointer<QDiscordGuild> _guild;
+	QWeakPointer<QDiscordGuild> _guild;
 };
 
 Q_DECLARE_METATYPE(QDiscordChannel::ChannelType)

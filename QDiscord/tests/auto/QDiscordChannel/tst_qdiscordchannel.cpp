@@ -44,7 +44,7 @@ tst_QDiscordChannel::tst_QDiscordChannel()
 			{"recipient", QJsonObject({{"id", "12721463333526927"}})},
 			{"type", "text"},
 	  }),
-  _guild(new QDiscordGuild({{"id", "74721953363722943"}}))
+  _guild(QDiscordGuild::create({{"id", "74721953363722943"}}))
 {
 
 }

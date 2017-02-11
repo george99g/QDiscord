@@ -19,7 +19,7 @@ QDISCORD_LIBRARY_MAJOR=0
 
 #QDISCORD_LIBRARY_MINOR: The library's minor version. This is used to form the
 #user-agent.
-QDISCORD_LIBRARY_MINOR=14
+QDISCORD_LIBRARY_MINOR=15
 
 #QDISCORD_LIBRARY_DEBUG: Determines whether the library should output debug
 #information.

@@ -69,10 +69,9 @@ namespace QDiscordUtilities
 	/*!
 	 * \brief The name of the bot this library will be used for.
 	 *
-	 * This should always be changed to your bot's name.\n
-	 * Change it in `src/config`.
+	 * This should always be changed to your bot's name before QDiscord starts.
 	 */
-	extern const QString botName;
+	extern QString botName;
 	///\brief The major version of the library.
 	extern const QString libMajor;
 	/*!

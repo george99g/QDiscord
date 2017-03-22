@@ -18,13 +18,6 @@
 
 #include "qdiscordutilities.hpp"
 
-const qlonglong QDiscordUtilities::discordEpoch = 1420070400000;
-
-#ifdef QDISCORD_BOT_NAME
-const QString QDiscordUtilities::botName = QDISCORD_BOT_NAME;
-#else
-const QString QDiscordUtilities::botName = "QDiscordBot";
-#endif
 #ifdef QDISCORD_LIBRARY_NAME
 const QString QDiscordUtilities::libName = QDISCORD_LIBRARY_NAME;
 #else
@@ -45,11 +38,12 @@ const QString QDiscordUtilities::libMinor = QDISCORD_LIBRARY_MINOR;
 #else
 const QString QDiscordUtilities::libMinor = "8";
 #endif
-#ifdef QDISCORD_DISCORD_API_VERSION
-const QString QDiscordUtilities::apiVersion = QDISCORD_DISCORD_API_VERSION;
-#else
+
+QString QDiscordUtilities::botName = "Unnamed QDiscord-based bot";
+
 const QString QDiscordUtilities::apiVersion = "6";
-#endif
+
+const qlonglong QDiscordUtilities::discordEpoch = 1420070400000;
 
 const QDiscordUtilities::EndPoints QDiscordUtilities::endPoints =
 []() -> QDiscordUtilities::EndPoints {

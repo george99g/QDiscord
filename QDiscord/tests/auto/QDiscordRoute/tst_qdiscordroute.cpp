@@ -1,5 +1,5 @@
 #include <QtTest>
-#include "../../../src/qdiscord.d/qdiscordroute.hpp"
+#include "QDiscord"
 
 class tst_QDiscordRoute: public QObject
 {

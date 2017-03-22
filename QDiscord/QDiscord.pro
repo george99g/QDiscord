@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 TEMPLATE = subdirs
+CONFIG += ordered
 
 include(config.pri)
 

@@ -1,0 +1,3 @@
+[submodule "Optional"]
+	path = QDiscord/src/qdiscord.d/external/Optional
+	url = ../../akrzemi1/Optional

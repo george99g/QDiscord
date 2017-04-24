@@ -49,8 +49,12 @@ DIRHEADERS += $$PWD/qdiscord.d/qdiscord.hpp \
     $$PWD/qdiscord.d/qdiscordid.hpp \
     $$PWD/qdiscord.d/qdiscorddiscriminator.hpp
 
+LIBOPTIONALHEADERS += $$PWD/qdiscord.d/external/Optional/optional.hpp
+
 HEADERS += $$TOPHEADERS \
-    $$DIRHEADERS
+    $$DIRHEADERS \
+    $$EXTERNALHEADERS \
+    $$LIBOPTIONALHEADERS
 
 unix {
     target.path = $$PREFIX/lib
@@ -58,5 +62,9 @@ unix {
     topheaders.path = $$PREFIX/include
     dirheaders.files = $$DIRHEADERS
     dirheaders.path = $$PREFIX/include/qdiscord.d
-    INSTALLS += target topheaders dirheaders
+    externalheaders.files = $$EXTERNALHEADERS
+    externalheaders.path = $$PREFIX/include/qdiscord.d/external
+    liboptionalheaders.files = $$LIBOPTIONALHEADERS
+    liboptionalheaders.path = $$PREFIX/include/qdiscord.d/external/Optional
+    INSTALLS += target topheaders dirheaders externalheaders liboptionalheaders
 }

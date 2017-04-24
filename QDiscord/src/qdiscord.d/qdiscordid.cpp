@@ -57,6 +57,11 @@ QDateTime QDiscordID::createdAt() const
 				);
 }
 
+bool QDiscordID::isNull() const
+{
+	return _id == 0;
+}
+
 bool QDiscordID::operator !() const
 {
 	return _id == 0;

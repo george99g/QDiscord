@@ -46,6 +46,11 @@ qint16 QDiscordDiscriminator::value() const
 	return _discriminator;
 }
 
+bool QDiscordDiscriminator::isNull() const
+{
+	return _discriminator == -1;
+}
+
 bool QDiscordDiscriminator::operator !() const
 {
 	return _discriminator == -1;

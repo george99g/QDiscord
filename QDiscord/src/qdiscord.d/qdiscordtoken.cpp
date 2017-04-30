@@ -106,3 +106,33 @@ void QDiscordToken::clear()
 	_token.clear();
 	_type = Type::None;
 }
+
+bool QDiscordToken::operator ==(const QDiscordToken& other) const
+{
+	return _token == other._token;
+}
+
+bool QDiscordToken::operator !=(const QDiscordToken& other) const
+{
+	return !operator ==(other);
+}
+
+bool QDiscordToken::operator <(const QDiscordToken& other) const
+{
+	return _token < other._token;
+}
+
+bool QDiscordToken::operator >(const QDiscordToken& other) const
+{
+	return _token > other._token;
+}
+
+bool QDiscordToken::operator <=(const QDiscordToken& other) const
+{
+	return _token <= other._token;
+}
+
+bool QDiscordToken::operator >=(const QDiscordToken& other) const
+{
+	return _token >= other._token;
+}

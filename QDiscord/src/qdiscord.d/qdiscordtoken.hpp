@@ -39,6 +39,12 @@ public:
 	QString fullToken() const;
 	bool isEmpty() const;
 	void clear();
+	bool operator ==(const QDiscordToken& other) const;
+	bool operator !=(const QDiscordToken& other) const;
+	bool operator < (const QDiscordToken& other) const;
+	bool operator > (const QDiscordToken& other) const;
+	bool operator <=(const QDiscordToken& other) const;
+	bool operator >=(const QDiscordToken& other) const;
 private:
 	QString _token;
 	Type _type;

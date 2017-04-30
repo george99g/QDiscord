@@ -74,12 +74,14 @@ QDiscordID::operator bool() const
 
 bool QDiscordID::operator ==(const QDiscordID& other) const
 {
+	if(isNull() || other.isNull())
+		return false;
 	return _id == other._id;
 }
 
 bool QDiscordID::operator !=(const QDiscordID& other) const
 {
-	return _id != other._id;
+	return !operator ==(other);
 }
 
 bool QDiscordID::operator >(const QDiscordID& other) const

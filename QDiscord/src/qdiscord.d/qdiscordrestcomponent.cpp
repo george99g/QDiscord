@@ -132,7 +132,8 @@ void QDiscordRestComponent::sendMessage(const QString& content,
 		}
 		QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
 		QJsonObject object = document.object();
-		QDiscordMessage message(object, channel);
+		QDiscordMessage message(object);
+		message.setChannel(channel);
 		emit messageSent(message);
 	});
 }
@@ -160,7 +161,7 @@ void QDiscordRestComponent::sendMessage(const QString& content,
 		}
 		QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
 		QJsonObject object = document.object();
-		QDiscordMessage message(object, QSharedPointer<QDiscordChannel>());
+		QDiscordMessage message(object);
 		emit messageSent(message);
 	});
 }
@@ -251,8 +252,7 @@ void QDiscordRestComponent::editMessage(const QString& newContent,
 		}
 		QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
 		QJsonObject object = document.object();
-		QDiscordMessage newMessage(object,
-								   QSharedPointer<QDiscordChannel>());
+		QDiscordMessage newMessage(object);
 		emit messageEdited(newMessage);
 	});
 }

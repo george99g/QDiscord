@@ -30,6 +30,7 @@ public:
 	QDiscordDiscriminator(const QString& discriminator);
 	QString toString() const;
 	qint16 value() const;
+	bool isNull() const;
 	operator bool() const;
 	bool operator !() const;
 	bool operator ==(const QDiscordDiscriminator& other) const;

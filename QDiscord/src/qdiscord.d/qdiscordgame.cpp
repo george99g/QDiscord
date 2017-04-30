@@ -18,6 +18,13 @@
 
 #include "qdiscordgame.hpp"
 
+QSharedPointer<QDiscordGame> QDiscordGame::fromJson(const QJsonObject& object)
+{
+	QSharedPointer<QDiscordGame> game(new QDiscordGame());
+	game->deserialize(object);
+	return game;
+}
+
 QDiscordGame::QDiscordGame(QString name,
 						   QString url,
 						   QDiscordGame::GameType type)
@@ -31,21 +38,17 @@ QDiscordGame::QDiscordGame(QString name,
 #endif
 }
 
+QDiscordGame::QDiscordGame()
+{
+	_type = GameType::Unknown;
+#ifdef QDISCORD_LIBRARY_DEBUG
+	qDebug()<<"QDiscordGame("<<this<<") constructed";
+#endif
+}
+
 QDiscordGame::QDiscordGame(const QJsonObject& object)
 {
-	_name = object["name"].toString("");
-	_url = object["url"].toString("");
-	switch(object["type"].toInt(-1))
-	{
-		case 1:
-			_type = GameType::Streaming;
-		break;
-		case 0:
-			_type = GameType::None;
-		break;
-		default:
-			_type = GameType::UnknownType;
-	}
+	deserialize(object);
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordGame("<<this<<") constructed";
@@ -57,4 +60,73 @@ QDiscordGame::~QDiscordGame()
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordGame("<<this<<") destroyed";
 #endif
+}
+
+void QDiscordGame::deserialize(const QJsonObject& object)
+{
+	_name = object["name"].toString();
+	_url = object["url"].toString();
+	switch(object["type"].toInt(-1))
+	{
+	case 0:
+		_type = GameType::Default;
+		break;
+	case 1:
+		_type = GameType::Streaming;
+		break;
+	default:
+		_type = GameType::Unknown;
+	}
+}
+
+QJsonObject QDiscordGame::serialize() const
+{
+	QJsonObject object;
+
+	object["name"] = _name;
+	if(!_url.isEmpty())
+		object["url"] = _url;
+	object["type"] = static_cast<qint8>(_type);
+
+	return object;
+}
+
+bool QDiscordGame::isNull() const
+{
+	return _name.isEmpty();
+}
+
+QDiscordGame::operator bool() const
+{
+	return !_name.isEmpty();
+}
+
+bool QDiscordGame::operator ==(const QDiscordGame& other) const
+{
+	return _name == other._name;
+}
+
+bool QDiscordGame::operator !=(const QDiscordGame& other) const
+{
+	return !operator ==(other);
+}
+
+bool QDiscordGame::operator <(const QDiscordGame& other) const
+{
+	return _name < other._name;
+}
+
+bool QDiscordGame::operator >(const QDiscordGame& other) const
+{
+	return _name > other._name;
+}
+
+bool QDiscordGame::operator <=(const QDiscordGame& other) const
+{
+	return _name <= other._name;
+}
+
+bool QDiscordGame::operator >=(const QDiscordGame& other) const
+{
+	return _name >= other._name;
 }

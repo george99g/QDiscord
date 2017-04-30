@@ -19,30 +19,24 @@
 #include "qdiscorduser.hpp"
 #include "qdiscordutilities.hpp"
 
+using std::experimental::optional;
+
+QSharedPointer<QDiscordUser> QDiscordUser::fromJson(const QJsonObject& object)
+{
+	QSharedPointer<QDiscordUser> user(new QDiscordUser());
+	user->deserialize(object);
+	return user;
+}
+
 QDiscordUser::QDiscordUser(const QJsonObject& object)
 {
-	_id = QDiscordID(object["id"].toString(""));
-	_bot = object["bot"].toBool(false);
-	_discriminator =
-			QDiscordDiscriminator(object["discriminator"].toString(""));
-	_email = object["email"].toString("");
-	_username = object["username"].toString("");
-	_verified = object["verified"].toBool(false);
-	_avatar = object["avatar"].toString("");
-
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<"QDiscordUser("<<this<<") constructed";
-#endif
+	deserialize(object);
 }
 
 QDiscordUser::QDiscordUser()
 {
 	_bot = false;
-	_email = "";
-	_username = "";
-	_verified = false;
-	_avatar = "";
-
+	_mfaEnabled = false;
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordUser("<<this<<") constructed";
 #endif
@@ -55,25 +49,59 @@ QDiscordUser::~QDiscordUser()
 #endif
 }
 
+void QDiscordUser::deserialize(const QJsonObject& object)
+{
+	_id = QDiscordID(object["id"].toString());
+	_username = object["username"].toString();
+	_discriminator = QDiscordDiscriminator(object["discriminator"].toString());
+	_avatar = object["avatar"].toString();
+	_bot = object["bot"].toBool(false);
+	_mfaEnabled =  object["mfa_enabled"].toBool(false);
+	if(object.contains("email"))
+		_email = object["email"].toString();
+	if(object.contains("verified"))
+		_verified = object["verified"].toBool();
+}
+
+QJsonObject QDiscordUser::serialize() const
+{
+	QJsonObject object;
+
+	object["id"] = _id.toString();
+	object["username"] = _username;
+	object["discriminator"] = _discriminator.toString();
+	object["avatar"] = _avatar.isEmpty()?QJsonValue():_avatar;
+	object["bot"] = _bot;
+	object["mfa_enabled"] = _mfaEnabled;
+	if(_email.has_value())
+		object["email"] = _email.value();
+	if(_verified.has_value())
+		object["verified"] = _verified.value();
+
+	return object;
+}
+
 void QDiscordUser::update(const QJsonObject& object)
 {
 	if(object.contains("id"))
-		_id = QDiscordID(object["id"].toString(""));
-	if(object.contains("bot"))
-		_bot = object["bot"].toBool(false);
+		_id = QDiscordID(object["id"].toString());
+	if(object.contains("username"))
+		_username = object["username"].toString();
 	if(object.contains("discriminator"))
 	{
 		_discriminator =
-				QDiscordDiscriminator(object["discriminator"].toString(""));
+				QDiscordDiscriminator(object["discriminator"].toString());
 	}
+	if(object.contains("avatar"))
+		_avatar = object["avatar"].toString();
+	if(object.contains("bot"))
+		_bot = object["bot"].toBool(false);
+	if(object.contains("mfa_enabled"))
+		_mfaEnabled = object["mfa_enabled"].toBool(false);
 	if(object.contains("email"))
-		_email = object["email"].toString("");
-	if(object.contains("username"))
-		_username = object["username"].toString("");
+		_email = object["email"].toString();
 	if(object.contains("verified"))
 		_verified = object["verified"].toBool(false);
-	if(object.contains("avatar"))
-		_avatar = object["avatar"].toString("");
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordUser("<<this<<") updated";
@@ -82,12 +110,37 @@ void QDiscordUser::update(const QJsonObject& object)
 
 QString QDiscordUser::mention() const
 {
-	return QString("<@" + _id.toString() + ">");
+	return QString("<@%1>").arg(_id?_id.toString():"invalid ID");
+}
+
+QDiscordUser::operator bool() const
+{
+	return _id;
 }
 
 bool QDiscordUser::operator ==(const QDiscordUser& other) const
 {
-	return other._id == _id;
+	return _id == other._id;
+}
+
+bool QDiscordUser::operator <(const QDiscordUser& other) const
+{
+	return _id < other._id;
+}
+
+bool QDiscordUser::operator >(const QDiscordUser& other) const
+{
+	return _id > other._id;
+}
+
+bool QDiscordUser::operator <=(const QDiscordUser& other) const
+{
+	return _id <= other._id;
+}
+
+bool QDiscordUser::operator >=(const QDiscordUser& other) const
+{
+	return _id >= other._id;
 }
 
 bool QDiscordUser::operator !=(const QDiscordUser& other) const

@@ -18,48 +18,16 @@
 
 #include "qdiscordmessage.hpp"
 
-QDiscordMessage::QDiscordMessage(const QJsonObject& object,
-								 QSharedPointer<QDiscordChannel> channel)
+QSharedPointer<QDiscordMessage> QDiscordMessage::fromJson(const QJsonObject& object)
 {
-	_id = QDiscordID(object["id"].toString(""));
-	_mentionEveryone = object["mention_everyone"].toBool(false);
-	_content = object["content"].toString("");
-	_channel = channel;
-	_channelId = QDiscordID(object["channel_id"].toString(""));
-	_author = object.contains("author") ?
-				QSharedPointer<QDiscordUser>(
-					new QDiscordUser(object["author"].toObject())
-				) : QSharedPointer<QDiscordUser>();
-	_tts = object["tts"].toBool(false);
-	_timestamp = QDateTime::fromString(object["timestamp"].toString(""),
-			Qt::ISODate);;
-	for(QJsonValue item : object["mentions"].toArray())
-	{
-		if(guild())
-		{
-			QSharedPointer<QDiscordMember> member =
-					guild()->member(
-						QDiscordID(item.toObject()["id"].toString(""))
-					);
-			if(member && member->user())
-			{
-				_mentions.removeAll(member->user());
-				_mentions.append(member->user());
-			}
-			else
-			{
-				_mentions.append(QSharedPointer<QDiscordUser>(
-									 new QDiscordUser(item.toObject())
-									 ));
-			}
-		}
-		else
-		{
-			_mentions.append(QSharedPointer<QDiscordUser>(
-								 new QDiscordUser(item.toObject())
-								 ));
-		}
-	}
+	QSharedPointer<QDiscordMessage> message(new QDiscordMessage());
+	message->deserialize(object);
+	return message;
+}
+
+QDiscordMessage::QDiscordMessage(const QJsonObject& object)
+{
+	deserialize(object);
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordMessage("<<this<<") constructed";
@@ -69,32 +37,11 @@ QDiscordMessage::QDiscordMessage(const QJsonObject& object,
 QDiscordMessage::QDiscordMessage()
 {
 	_mentionEveryone = false;
-	_content = "";
-	_author = QSharedPointer<QDiscordUser>();
-	_channel = QSharedPointer<QDiscordChannel>();
 	_tts = false;
-	_timestamp = QDateTime();
+	_pinned = false;
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordMessage("<<this<<") constructed";
-#endif
-}
-
-QDiscordMessage::QDiscordMessage(const QDiscordMessage& other)
-{
-	_id = other.id();
-	_mentionEveryone = other.mentionEveryone();
-	_content = other.content();
-	_author = other.author();
-	_channel = other.channel();
-	_channelId = other.channelId();
-	_tts = other.tts();
-	_timestamp = other.timestamp();
-	QList<QSharedPointer<QDiscordUser>> otherMentions = other.mentions();
-	for(QSharedPointer<QDiscordUser> item : otherMentions)
-		_mentions.append(item);
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<"QDiscordMessage("<<this<<") copy-constructed";
 #endif
 }
 
@@ -105,7 +52,105 @@ QDiscordMessage::~QDiscordMessage()
 #endif
 }
 
+void QDiscordMessage::deserialize(const QJsonObject& object)
+{
+	_id = QDiscordID(object["id"].toString());
+	_channelId = QDiscordID(object["channel_id"].toString());
+	_author = QDiscordUser(object["author"].toObject());
+	_content = object["content"].toString();
+	_timestamp = QDateTime::fromString(object["timestamp"].toString(),
+			Qt::ISODateWithMs);
+	if(!object["edited_timestamp"].isNull())
+	{
+		_editedTimestamp =
+				QDateTime::fromString(object["edited_timestamp"].toString(),
+										Qt::ISODateWithMs);
+	}
+	_tts = object["tts"].toBool(false);
+	_mentionEveryone = object["mention_everyone"].toBool(false);
+	_nonce = QDiscordID(object["nonce"].toString());
+	QJsonArray mentionsArray = object["mentions"].toArray();
+	for(const QJsonValue item : mentionsArray)
+	{
+		_mentions.append(QDiscordUser(item.toObject()));
+	}
+	_pinned = object["pinned"].toBool(false);
+	/* The channel pointer is handled by the calling class */
+}
+
+QJsonObject QDiscordMessage::serialize()
+{
+	QJsonObject object;
+
+	object["id"] = _id.toString();
+	object["channel_id"] = _channelId.toString();
+	object["author"] = _author.serialize();
+	object["content"] = _content;
+	{
+		object["timestamp"] = _timestamp.toTimeSpec(Qt::OffsetFromUTC)
+										.toString(Qt::ISODateWithMs);
+	}
+	if(_editedTimestamp.has_value())
+	{
+		object["edited_timestamp"] =
+				_editedTimestamp.value()
+								.toTimeSpec(Qt::OffsetFromUTC)
+								.toString(Qt::ISODateWithMs);
+	}
+	else
+		object["edited_timestamp"] = QJsonValue();
+	object["tts"] = _tts;
+	object["mention_everyone"] = _mentionEveryone;
+	QJsonArray mentions;
+	for(const QDiscordUser& u : _mentions)
+	{
+		mentions.append(u.serialize());
+	}
+	object["mentions"] = mentions;
+	object["nonce"] = _nonce.toString();
+	object["pinned"] = _pinned;
+
+	return object;
+}
+
 QSharedPointer<QDiscordGuild> QDiscordMessage::guild() const
 {
 	return _channel ? _channel->guild() : QSharedPointer<QDiscordGuild>();
+}
+
+bool QDiscordMessage::operator ==(const QDiscordMessage& other) const
+{
+	if(isNull() || other.isNull())
+		return false;
+	return _id == other._id;
+}
+
+bool QDiscordMessage::operator !=(const QDiscordMessage& other) const
+{
+	return !operator==(other);
+}
+
+bool QDiscordMessage::operator >(const QDiscordMessage& other) const
+{
+	return _id > other._id;
+}
+
+bool QDiscordMessage::operator <(const QDiscordMessage& other) const
+{
+	return _id < other._id;
+}
+
+bool QDiscordMessage::operator <=(const QDiscordMessage& other) const
+{
+	return _id <= other._id;
+}
+
+bool QDiscordMessage::operator >=(const QDiscordMessage& other) const
+{
+	return _id >= other._id;
+}
+
+QDiscordMessage::operator bool() const
+{
+	return _id;
 }

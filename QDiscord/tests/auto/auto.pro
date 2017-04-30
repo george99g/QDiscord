@@ -2,6 +2,7 @@ TEMPLATE = subdirs
 
 SUBDIRS += QDiscordUser
 SUBDIRS += QDiscordMember
-SUBDIRS += QDiscordChannel
+#SUBDIRS += QDiscordChannel I'll fix this later
+#TODO: FIX THIS
 SUBDIRS += QDiscordRoute
 SUBDIRS += QDiscordToken

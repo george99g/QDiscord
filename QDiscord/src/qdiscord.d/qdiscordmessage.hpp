@@ -22,6 +22,7 @@
 #include "qdiscordmember.hpp"
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
+#include "external/Optional/optional.hpp"
 
 /*!
  * \brief Represents a message in the Discord API.
@@ -29,35 +30,55 @@
 class QDiscordMessage
 {
 public:
+	static QSharedPointer<QDiscordMessage> fromJson(const QJsonObject& object);
 	/*!
 	 * \brief Creates an instance from the provided parameters.
 	 * \param object A JSON object of a Discord message.
 	 * \param channel A pointer to the channel the message was sent to.
 	 */
-	QDiscordMessage(
-			const QJsonObject& object,
-			QSharedPointer<QDiscordChannel> channel =
-				QSharedPointer<QDiscordChannel>()
-			);
+	QDiscordMessage(const QJsonObject& object);
 	QDiscordMessage();
-	QDiscordMessage(const QDiscordMessage& other);
 	~QDiscordMessage();
+	void deserialize(const QJsonObject& object);
+	QJsonObject serialize();
 	///\brief Returns the message's ID.
 	QDiscordID id() const {return _id;}
-	///\brief Returns the message's contents.
-	QString content() const {return _content;}
-	///\brief Returns the date at which the message was created.
-	QDateTime timestamp() const {return _timestamp;}
-	///\brief Returns whether the message will use text to speech.
-	bool tts() const {return _tts;}
-	///\brief Returns whether the message successfully mentioned everyone.
-	bool mentionEveryone() const {return _mentionEveryone;}
+	void setId(QDiscordID id) {_id = id;}
 	///\brief Returns the ID of the channel this message was sent in.
 	QDiscordID channelId() const {return _channelId;}
+	void setChannelId(QDiscordID id) {_id = id;}
+	///\brief Returns a pointer to the user that sent this message.
+	QDiscordUser author() const {return _author;}
+	void setAuthor(QDiscordUser author) {_author = author;}
+	///\brief Returns the message's contents.
+	QString content() const {return _content;}
+	void setContent(const QString& content) {_content = content;}
+	///\brief Returns the date at which the message was created.
+	QDateTime timestamp() const {return _timestamp;}
+	void setTimestamp(const QDateTime& timestamp) {_timestamp = timestamp;}
+	std::experimental::optional<QDateTime> editedTimestamp() const
+	{return _editedTimestamp;}
+	void setEditedTimestamp(QDateTime editedTimestamp)
+	{_editedTimestamp = editedTimestamp;}
+	void resetEditedTimestamp() {_editedTimestamp.reset();}
+	///\brief Returns whether the message will use text to speech.
+	bool tts() const {return _tts;}
+	void setTts(bool tts) {_tts = tts;}
+	///\brief Returns whether the message successfully mentioned everyone.
+	bool mentionEveryone() const {return _mentionEveryone;}
+	void setMentionEveryone(bool mentionEveryone)
+	{_mentionEveryone = mentionEveryone;}
+	///\brief Returns a list of users mentioned in this message.
+	QList<QDiscordUser> mentions() const { return _mentions;}
+	void setMentions(QList<QDiscordUser> mentions) {_mentions = mentions;}
+	QDiscordID nonce() const {return _nonce;}
+	void setNonce(QDiscordID nonce) {_nonce = nonce;}
+	bool pinned() const {return _pinned;}
+	void setPinned(bool pinned) {_pinned = pinned;}
 	///\brief Returns a pointer to the channel this message was sent in.
 	QSharedPointer<QDiscordChannel> channel() const {return _channel;}
-	///\brief Returns a pointer to the user that sent this message.
-	QSharedPointer<QDiscordUser> author() const {return _author;}
+	void setChannel(QSharedPointer<QDiscordChannel> channel)
+	{_channel = channel;}
 	/*!
 	 * \brief Returns a pointer to the guild this message was sent in using
 	 * the channel parameter provided in the class' constructor.
@@ -66,19 +87,28 @@ public:
 	 * constructor.
 	 */
 	QSharedPointer<QDiscordGuild> guild() const;
-	///\brief Returns a list of users mentioned in this message.
-	QList<QSharedPointer<QDiscordUser>>
-	mentions() const { return _mentions;}
+	bool isNull() const {return _id.isNull();}
+	operator bool() const;
+	bool operator ==(const QDiscordMessage& other) const;
+	bool operator !=(const QDiscordMessage& other) const;
+	bool operator > (const QDiscordMessage& other) const;
+	bool operator < (const QDiscordMessage& other) const;
+	bool operator <=(const QDiscordMessage& other) const;
+	bool operator >=(const QDiscordMessage& other) const;
+
 private:
 	QDiscordID _id;
+	QDiscordID _channelId;
+	QDiscordUser _author;
 	QString _content;
 	QDateTime _timestamp;
+	std::experimental::optional<QDateTime> _editedTimestamp;
 	bool _tts;
 	bool _mentionEveryone;
-	QDiscordID _channelId;
+	QList<QDiscordUser> _mentions;
+	QDiscordID _nonce;
+	bool _pinned;
 	QSharedPointer<QDiscordChannel> _channel;
-	QSharedPointer<QDiscordUser> _author;
-	QList<QSharedPointer<QDiscordUser>> _mentions;
 };
 
 Q_DECLARE_METATYPE(QDiscordMessage)

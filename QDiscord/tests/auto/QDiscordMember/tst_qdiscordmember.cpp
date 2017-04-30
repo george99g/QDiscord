@@ -7,12 +7,12 @@ class tst_QDiscordMember : public QObject
 public:
 	tst_QDiscordMember();
 private slots:
-	void testConstructor_data();
-	void testConstructor();
-	void testMentions_data();
-	void testMentions();
-	void testOperatorEquals_data();
-	void testOperatorEquals();
+	void testConstruction_null();
+	void testDeserialization_fields();
+	void testSerialization();
+	void testUpdate();
+	void testOperators();
+	void testMention();
 private:
 	QJsonObject _nullMember;
 	QJsonObject _guildlessMember;
@@ -22,156 +22,193 @@ private:
 	QSharedPointer<QDiscordGuild> _guild;
 };
 
-tst_QDiscordMember::tst_QDiscordMember():
-	_nullMember({
-			{"deaf", QJsonValue::Null},
-			{"mute", QJsonValue::Null},
-			{"nick", QJsonValue::Null},
-			{"joined_at", QJsonValue::Null}
-		}),
-	_userlessMember({
-			{"deaf", true},
-			{"mute", true},
-			{"nick", "testbot"},
-			{"joined_at", "2016-07-22T18:15:12.448000+00:00"}
-		}),
-	_testMember({
-			{"deaf", true},
-			{"mute", true},
-			{"nick", "testbot"},
-			{"joined_at", "2016-07-22T18:15:12.448000+00:00"},
-			{"user", QJsonObject({
-									 {"id", "111264179623531612"}
-									})}
-		}),
-	_testUser(
-		QJsonObject({
-			{"id", "111264179623531612"}
-		})
-		),
-	_guild(QDiscordGuild::create({
-			{"id", "111264349623531632"}
-		}))
-{
-
-}
-
-void tst_QDiscordMember::testConstructor_data()
-{
-	QTest::addColumn<QJsonObject>("input_object");
-	QTest::addColumn<QDiscordUser>("output_user");
-	QTest::addColumn<bool>("user_is_null");
-	QTest::addColumn<bool>("output_deaf");
-	QTest::addColumn<bool>("output_mute");
-	QTest::addColumn<QDateTime>("output_joinedAt");
-	QTest::addColumn<QString>("output_nickname");
-
-	QTest::newRow("nullMember")
-	<< _nullMember
-	<< _testUser
-	<< true
-	<< false
-	<< false
-	<< QDateTime()
-	<< QString();
-
-	QTest::newRow("testMember")
-	<< _testMember
-	<< _testUser
-	<< false
-	<< true
-	<< true
-	<< QDateTime::fromString("2016-07-22T18:15:12.448000+00:00", Qt::ISODate)
-	<< "testbot";
-
-	QTest::newRow("userlessMember")
-	<< _userlessMember
-	<< _testUser
-	<< true
-	<< true
-	<< true
-	<< QDateTime::fromString("2016-07-22T18:15:12.448000+00:00", Qt::ISODate)
-	<< "testbot";
-}
-
-void tst_QDiscordMember::testConstructor()
-{
-	QFETCH(QJsonObject, input_object);
-	QFETCH(QDiscordUser, output_user);
-	QFETCH(bool, user_is_null);
-	QFETCH(bool, output_deaf);
-	QFETCH(bool, output_mute);
-	QFETCH(QDateTime, output_joinedAt);
-	QFETCH(QString, output_nickname);
-
-	QBENCHMARK
+namespace data {
+	const QJsonObject user1 =
 	{
-		QDiscordMember member(input_object, QWeakPointer<QDiscordGuild>());
-		Q_UNUSED(member);
-	}
+		{"id", "129827149523671712"},
+		{"discriminator", "7480"},
+		{"username", "TestBot"},
+		{"avatar", QJsonValue()}
+	};
 
-	QDiscordMember member(input_object, QWeakPointer<QDiscordGuild>());
+	const QJsonObject user2 =
+	{
+		{"id", "129865555555576712"},
+		{"discriminator", "7480"},
+		{"username", "TestBot"},
+		{"bot", false},
+		{"mfa_enabled", false},
+		{"avatar", QJsonValue()}
+	};
 
-	if(!user_is_null)
-		QCOMPARE(*member.user(), output_user);
-	else
-		QVERIFY(member.user() == nullptr);
-	QCOMPARE(member.deaf(), output_deaf);
-	QCOMPARE(member.mute(), output_mute);
-	QCOMPARE(member.joinedAt(), output_joinedAt);
-	QCOMPARE(member.nickname(), output_nickname);
+	const QJsonObject user3 =
+	{
+		{"id", "155954930191040513"},
+		{"discriminator", "7480"},
+		{"username", "TestBot"},
+		{"bot", true},
+		{"mfa_enabled", true},
+		{"avatar", QJsonValue()}
+	};
+
+	const QJsonObject member1 =
+	{
+		{"deaf", false},
+		{"joined_at", "2017-04-30T11:46:31.837710+00:00"},
+		{"mute", false},
+		{"nick", "testbot"},
+		{"roles", QJsonArray({"234244444451867392"})},
+		{"user", user1}
+	};
+
+	const QJsonObject member2 =
+	{
+		{"deaf", true},
+		{"joined_at", "2017-04-30T11:46:31.837710+00:00"},
+		{"mute", true},
+		{"nick", QJsonValue()},
+		{"roles", QJsonArray({"234244444451867392"})},
+		{"user", user2}
+	};
+
+	const QJsonObject member3 =
+	{
+		{"deaf", false},
+		{"joined_at", "2017-04-30T11:46:31.837710+00:00"},
+		{"mute", false},
+		{"nick", QJsonValue()},
+		{"roles", QJsonArray({"234244444451867392"})},
+		{"user", user3}
+	};
+
+	const QJsonObject guild =
+	{
+		{"id", "174444440191040513"}
+	};
 }
 
-void tst_QDiscordMember::testMentions_data()
+tst_QDiscordMember::tst_QDiscordMember()
 {
-	QTest::addColumn<QDiscordMember>("input_member");
-	QTest::addColumn<QString>("output_nickname");
-	QTest::addColumn<QString>("output_username");
 
-	QTest::newRow("testMember")
-	<< QDiscordMember(_testMember, QWeakPointer<QDiscordGuild>())
-	<< "<@!111264179623531612>"
-	<< "<@111264179623531612>";
-
-	QTest::newRow("nullMember")
-	<< QDiscordMember(_nullMember, QWeakPointer<QDiscordGuild>())
-	<< "<@!nullptr>"
-	<< "<@nullptr>";
 }
 
-void tst_QDiscordMember::testMentions()
+void tst_QDiscordMember::testConstruction_null()
 {
-	QFETCH(QDiscordMember, input_member);
-	QFETCH(QString, output_nickname);
-	QFETCH(QString, output_username);
-
-	QCOMPARE(input_member.mentionNickname(), output_nickname);
-	QCOMPARE(input_member.mentionUsername(), output_username);
+	QDiscordMember member;
+	QVERIFY(member.isNull());
+	QCOMPARE(static_cast<bool>(member), false);
 }
 
-void tst_QDiscordMember::testOperatorEquals_data()
+void tst_QDiscordMember::testDeserialization_fields()
 {
-	QTest::addColumn<QDiscordMember>("null_member");
-	QTest::addColumn<QDiscordMember>("test_member");
+	QDiscordMember member1(data::member1);
+	QCOMPARE(member1.deaf(), false);
+	QCOMPARE(member1.mute(), false);
+	QCOMPARE(member1.nickname().has_value(), true);
+	QCOMPARE(member1.nickname().value(), QString("testbot"));
+	QCOMPARE(
+				member1.joinedAt(),
+				QDateTime::fromString("2017-04-30T11:46:31.837710+00:00",
+									  Qt::ISODateWithMs)
+				);
 
-	QTest::newRow("test1")
-	<< QDiscordMember(_nullMember, _guild)
-	<< QDiscordMember(_testMember, _guild);
+	QDiscordMember member2(data::member2);
+	QCOMPARE(member2.deaf(), true);
+	QCOMPARE(member2.mute(), true);
+	QCOMPARE(member2.nickname().has_value(), false);
 }
 
-void tst_QDiscordMember::testOperatorEquals()
+void tst_QDiscordMember::testSerialization()
 {
-	QFETCH(QDiscordMember, null_member);
-	QFETCH(QDiscordMember, test_member);
+	QDiscordMember member1(data::member1);
+	QJsonObject output1 =
+	{
+		{"deaf", false},
+		{"joined_at", "2017-04-30T11:46:31.838Z"},
+		{"mute", false},
+		{"nick", "testbot"},
+		//{"roles", QJsonArray({"234244444451867392"})},
+		{"user", data::user1}
+	};
+	QCOMPARE(member1.serialize(), output1);
 
-	QVERIFY(test_member == test_member);
-	QVERIFY(!(test_member != test_member));
+	QDiscordMember member2(data::member2);
+	QJsonObject output2 =
+	{
+		{"deaf", true},
+		{"joined_at", "2017-04-30T11:46:31.838Z"},//This shouldn't be happening
+		{"mute", true},
+		{"nick", QJsonValue()},
+		//{"roles", QJsonArray({"234244444451867392"})},
+		{"user", QJsonObject({
+			 {"id", "129865555555576712"},
+			 {"discriminator", "7480"},
+			 {"username", "TestBot"},
+			 {"avatar", QJsonValue()}
+		 })}
+	};
+	QCOMPARE(member2.serialize(), output2);
 
-	QVERIFY(test_member != null_member);
-	QVERIFY(!(test_member == null_member));
+	QDiscordMember member3(data::member3);
+	QJsonObject output3 =
+	{
+		{"deaf", false},
+		{"joined_at", "2017-04-30T11:46:31.838Z"},
+		{"mute", false},
+		{"nick", QJsonValue()},
+		//{"roles", QJsonArray({"234244444451867392"})},
+		{"user", data::user3}
+	};
+	QCOMPARE(member3.serialize(), output3);
+}
 
-	QVERIFY(null_member != null_member);
-	QVERIFY(!(null_member == null_member));
+void tst_QDiscordMember::testUpdate()
+{
+	QDiscordMember member1;
+	member1.update(data::member3);
+	QCOMPARE(member1.deaf(), false);
+	QCOMPARE(member1.mute(), false);
+	QCOMPARE(member1.nickname().has_value(), false);
+	QCOMPARE(
+				member1.joinedAt(),
+				QDateTime::fromString("2017-04-30T11:46:31.837710+00:00",
+									  Qt::ISODateWithMs)
+				);
+
+	QDiscordMember member2;
+	member2.update(data::member1);
+	QCOMPARE(member2.nickname().has_value(), true);
+	QCOMPARE(member2.nickname().value(), QString("testbot"));
+}
+
+void tst_QDiscordMember::testOperators()
+{
+	QSharedPointer<QDiscordGuild> guild = QDiscordGuild::fromJson(data::guild);
+	QDiscordMember nullMember;
+	QDiscordMember member1(data::member1);
+	member1.setGuild(guild);
+	QDiscordMember member2(data::member2);
+	member2.setGuild(guild);
+	QDiscordMember member3(data::member2);
+
+	QVERIFY(nullMember != nullMember);
+	QVERIFY(nullMember != member1);
+	QVERIFY(nullMember != member2);
+	QVERIFY(nullMember != member3);
+	QVERIFY(member1 != member2);
+	QVERIFY(member1 != member3);
+	QVERIFY(member3 != member3);
+	QVERIFY(member1 == member1);
+}
+
+void tst_QDiscordMember::testMention()
+{
+	QDiscordMember member(data::member1);
+	QCOMPARE(member.mentionUsername(), member.user().mention());
+	QCOMPARE(member.mentionNickname(), QString("<@!129827149523671712>"));
+
+	QDiscordMember nullMember;
+	QCOMPARE(nullMember.mentionNickname(), QString("<@!invalid ID>"));
 }
 
 QTEST_MAIN(tst_QDiscordMember)

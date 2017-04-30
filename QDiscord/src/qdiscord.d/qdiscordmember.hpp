@@ -23,6 +23,7 @@
 #include <QDateTime>
 #include <QSharedPointer>
 #include <QWeakPointer>
+#include "external/Optional/optional.hpp"
 #include "qdiscorduser.hpp"
 
 class QDiscordGuild;
@@ -37,33 +38,44 @@ class QDiscordGuild;
 class QDiscordMember
 {
 public:
+	static QSharedPointer<QDiscordMember> fromJson(const QJsonObject& object);
 	/*!
 	 * \brief Creates an instance from the provided parameters.
 	 * \param object A JSON object of a Discord guild member.
 	 * \param guild A pointer to the member's parent guild.
 	 */
-	QDiscordMember(const QJsonObject& object, QWeakPointer<QDiscordGuild> guild);
+	QDiscordMember(const QJsonObject& object);
 	QDiscordMember();
-	QDiscordMember(const QDiscordMember& other);
 	~QDiscordMember();
-	///\brief Updates the current instance from the provided parameters.
-	void update(const QJsonObject& object, QWeakPointer<QDiscordGuild> guild);
-	///\brief Returns whether the member has disabled their speakers.
-	bool deaf() const {return _deaf;}
-	///\brief Returns whether the member has muted their microphone.
-	bool mute() const {return _mute;}
+	void deserialize(const QJsonObject& object);
+	QJsonObject serialize() const;
+	///\brief Returns a pointer to the user object contained by this object.
+	QDiscordUser user() const {return _user;}
+	void setUser(const QDiscordUser& user) {_user = user;}
+	///\brief Returns this member's nickname.
+	std::experimental::optional<QString> nickname() const {return _nickname;}
+	void setNickname(const QString& nickname) {_nickname = nickname;}
+	void resetNickname() {_nickname.reset();}
 	///\brief Returns the date at which the member has joined the guild.
 	QDateTime joinedAt() const {return _joinedAt;}
-	///\brief Returns a pointer to the user object contained by this object.
-	QSharedPointer<QDiscordUser> user() const {return _user;}
+	void setJoinedAt(const QDateTime& joinedAt) {_joinedAt = joinedAt;}
+	///\brief Returns whether the member has disabled their speakers.
+	bool deaf() const {return _deaf;}
+	void setDeaf(bool deaf) {_deaf = deaf;}
+	///\brief Returns whether the member has muted their microphone.
+	bool mute() const {return _mute;}
+	void setMute(bool mute) {_mute = mute;}
+	///\brief Updates the current instance from the provided parameters.
+	void update(const QJsonObject& object);
 	///\brief Returns a pointer to this object's parent guild.
 	QSharedPointer<QDiscordGuild> guild() const {return _guild.toStrongRef();}
-	///\brief Returns this member's nickname.
-	QString nickname() const {return _nickname;}
+	void setGuild(QWeakPointer<QDiscordGuild> guild) {_guild = guild;}
 	///\brief Returns a string which allows you to mention this member using their username.
 	QString mentionUsername() const;
 	///\brief Returns a string which allows you to mention this member using their nickname.
 	QString mentionNickname() const;
+	bool isNull() const {return _user.isNull();}
+	operator bool() const;
 	/*!
 	 * \brief Compares two members.
 	 *
@@ -79,11 +91,11 @@ public:
 	 */
 	bool operator !=(const QDiscordMember& other) const;
 private:
-	bool _deaf;
+	QDiscordUser _user;
+	std::experimental::optional<QString> _nickname;
 	QDateTime _joinedAt;
+	bool _deaf;
 	bool _mute;
-	QString _nickname;
-	QSharedPointer<QDiscordUser> _user;
 	QWeakPointer<QDiscordGuild> _guild;
 };
 

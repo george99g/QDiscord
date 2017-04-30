@@ -21,6 +21,7 @@
 
 #include <QDebug>
 #include <QJsonObject>
+#include "external/Optional/optional.hpp"
 #include "qdiscordid.hpp"
 #include "qdiscorddiscriminator.hpp"
 
@@ -28,6 +29,7 @@
 class QDiscordUser
 {
 public:
+	static QSharedPointer<QDiscordUser> fromJson(const QJsonObject& object);
 	/*!
 	 * \brief Creates an instance from the provided parameters.
 	 * \param object A JSON object of a Discord user.
@@ -35,39 +37,60 @@ public:
 	QDiscordUser(const QJsonObject& object);
 	QDiscordUser();
 	~QDiscordUser();
+	void deserialize(const QJsonObject& object);
+	QJsonObject serialize() const;
 	///\brief Updates the current instance from the provided parameters.
 	void update(const QJsonObject& object);
 	///\brief Returns the user's ID.
 	QDiscordID id() const {return _id;}
-	///\brief Returns the user's avatar string.
-	QString avatar() const {return _avatar;}
-	///\brief Returns whether the user is a bot.
-	bool bot() const {return _bot;}
-	///\brief Returns the user's discriminator.
-	QDiscordDiscriminator discriminator() const {return _discriminator;}
-	///\brief Returns the user's e-mail, if it can be determined.
-	QString email() const {return _email;}
+	void setId(QDiscordID id) {_id = id;}
 	///\brief Returns the user's username.
 	QString username() const {return _username;}
+	void setUsername(QString username) {_username = username;}
+	///\brief Returns the user's discriminator.
+	QDiscordDiscriminator discriminator() const {return _discriminator;}
+	void setDiscriminator(QDiscordDiscriminator discriminator)
+	{_discriminator = discriminator;}
+	///\brief Returns the user's avatar string.
+	QString avatar() const {return _avatar;}
+	void setAvatar(QString avatar) {_avatar = avatar;}
+	///\brief Returns whether the user is a bot.
+	bool bot() const {return _bot;}
+	void setBot(bool bot) {_bot = bot;}
+	bool mfaEnabled() const {return _mfaEnabled;}
+	void setMfaEnabled(bool mfaEnabled) {_mfaEnabled = mfaEnabled;}
+	///\brief Returns the user's e-mail, if it can be determined.
+	std::experimental::optional<QString> email() const {return _email;}
+	void setEmail(QString email) {_email = email;}
+	void resetEmail() {_email.reset();}
 	///\brief Returns whether the user has verified their e-mail.
-	bool verified() const {return _verified;}
+	std::experimental::optional<bool> verified() const {return _verified;}
+	void setVerified(bool verified) {_verified = verified;}
+	void resetVerified() {_verified.reset();}
 	/*!
 	 * \brief Returns a string which allows you to mention this user using their
 	 * username.
 	 */
 	QString mention() const;
+	bool isNull() const {return _id.isNull();}
+	operator bool() const;
 	///\brief Compares two users based on their ID
 	bool operator ==(const QDiscordUser& other) const;
 	///\brief Compares two users based on their ID
 	bool operator !=(const QDiscordUser& other) const;
+	bool operator < (const QDiscordUser& other) const;
+	bool operator > (const QDiscordUser& other) const;
+	bool operator <=(const QDiscordUser& other) const;
+	bool operator >=(const QDiscordUser& other) const;
 private:
 	QDiscordID _id;
+	QString _username;
+	QDiscordDiscriminator _discriminator;
 	QString _avatar;
 	bool _bot;
-	QDiscordDiscriminator _discriminator;
-	QString _email;
-	QString _username;
-	bool _verified;
+	bool _mfaEnabled;
+	std::experimental::optional<QString> _email;
+	std::experimental::optional<bool> _verified;
 };
 
 Q_DECLARE_METATYPE(QDiscordUser)

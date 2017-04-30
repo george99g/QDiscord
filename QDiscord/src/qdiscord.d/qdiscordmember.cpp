@@ -19,23 +19,17 @@
 #include "qdiscordmember.hpp"
 #include "qdiscordguild.hpp"
 
-QDiscordMember::QDiscordMember(const QJsonObject& object,
-							   QWeakPointer<QDiscordGuild> guild)
+QSharedPointer<QDiscordMember> QDiscordMember::fromJson(const QJsonObject& object)
 {
-	_deaf = object["deaf"].toBool(false);
-	_mute = object["mute"].toBool(false);
-	_nickname = object["nick"].toString("");
-	_joinedAt = QDateTime::fromString(object["joined_at"].toString(""),
-			Qt::ISODate);
-	_guild = guild;
-	if(object["user"].isObject())
-	{
-		_user = QSharedPointer<QDiscordUser>(
-					new QDiscordUser(object["user"].toObject())
-				);
-	}
-	else
-		_user = QSharedPointer<QDiscordUser>();
+	QSharedPointer<QDiscordMember> member(new QDiscordMember());
+	member->deserialize(object);
+	return member;
+
+}
+
+QDiscordMember::QDiscordMember(const QJsonObject& object)
+{
+	deserialize(object);
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordMember("<<this<<") constructed";
@@ -46,28 +40,9 @@ QDiscordMember::QDiscordMember()
 {
 	_deaf = false;
 	_mute = false;
-	_nickname = "";
-	_joinedAt = QDateTime();
-	_user = QSharedPointer<QDiscordUser>();
-	_guild = QWeakPointer<QDiscordGuild>();
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordMember("<<this<<") constructed";
-#endif
-}
-
-QDiscordMember::QDiscordMember(const QDiscordMember& other)
-{
-	_deaf = other.deaf();
-	_mute = other.mute();
-	_joinedAt = other.joinedAt();
-	if(other.user())
-		_user = QSharedPointer<QDiscordUser>(new QDiscordUser(*other.user()));
-	else
-		_user = QSharedPointer<QDiscordUser>();
-	_guild = other.guild();
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<"QDiscordMember("<<this<<") copy-constructed";
 #endif
 }
 
@@ -78,24 +53,71 @@ QDiscordMember::~QDiscordMember()
 #endif
 }
 
-void QDiscordMember::update(const QJsonObject& object,
-							QWeakPointer<QDiscordGuild> guild)
+void QDiscordMember::deserialize(const QJsonObject& object)
 {
+	_user = QDiscordUser(object["user"].toObject());
+	if(object.contains("nick"))
+	{
+		if(!object["nick"].isNull())
+			_nickname = object["nick"].toString();
+	}
+	_joinedAt = QDateTime::fromString(
+					object["joined_at"].toString(),
+					Qt::ISODateWithMs
+			);
+	_deaf = object["deaf"].toBool(false);
+	_mute = object["mute"].toBool(false);
+	/* The guild pointer is managed by the calling class. */
+}
+
+QJsonObject QDiscordMember::serialize() const
+{
+	QJsonObject object;
+
+	{
+		// Apparently the `bot` and `mfa_enabled` fields should be removed if
+		// they're false, but only when in a member's `user` field.
+		// Why? I have not a clue, but I'll go with it.
+		QJsonObject user = _user.serialize();
+
+		if(user["mfa_enabled"].toBool(false) == false)
+			user.remove("mfa_enabled");
+		if(user["bot"].toBool(false) == false)
+			user.remove("bot");
+
+		object["user"] = user;
+	}
+
+	object["nick"] = _nickname.has_value()?_nickname.value():QJsonValue();
+	{
+		object["joined_at"] = _joinedAt.toTimeSpec(Qt::OffsetFromUTC)
+									   .toString(Qt::ISODateWithMs);
+	}
+	object["deaf"] = _deaf;
+	object["mute"] = _mute;
+
+	return object;
+}
+
+void QDiscordMember::update(const QJsonObject& object)
+{
+	_user.update(object["user"].toObject());
+	if(object.contains("nick"))
+	{
+		if(object["nick"].isNull())
+			_nickname.reset();
+		else
+			_nickname = object["nick"].toString();
+	}
+	if(object.contains("joined_at"))
+	{
+		_joinedAt = QDateTime::fromString(object["joined_at"].toString(""),
+				Qt::ISODateWithMs);
+	}
 	if(object.contains("deaf"))
 		_deaf = object["deaf"].toBool(false);
 	if(object.contains("mute"))
 		_mute = object["mute"].toBool(false);
-	if(object.contains("nick"))
-		_nickname = object["nick"].toString("");
-	if(object.contains("joined_at"))
-	{
-		_joinedAt = QDateTime::fromString(object["joined_at"].toString(""),
-				Qt::ISODate);
-	}
-	if(guild)
-		_guild = guild;
-	if(_user)
-		_user->update(object["user"].toObject());
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordMember("<<this<<") updated";
@@ -104,31 +126,27 @@ void QDiscordMember::update(const QJsonObject& object,
 
 QString QDiscordMember::mentionUsername() const
 {
-	return QString("<@"+(_user?_user->id().toString():"nullptr")+">");
+	return _user.mention();
 }
 
 QString QDiscordMember::mentionNickname() const
 {
-	return QString("<@!"+(_user?_user->id().toString():"nullptr")+">");
+	return QString("<@!%1>").arg(_user.id()?_user.id().toString():"invalid ID");
+}
+
+QDiscordMember::operator bool() const
+{
+	return _user;
 }
 
 bool QDiscordMember::operator ==(const QDiscordMember& other) const
 {
 	QSharedPointer<QDiscordGuild> strongGuild = _guild.toStrongRef();
-	if(!_user)
-		return false;
-	if(!other.user())
-		return false;
 	if(!strongGuild)
 		return false;
 	if(!other.guild())
 		return false;
-	if(*_user == *other.user() &&
-			strongGuild->id() == other.guild()->id())
-	{
-		return true;
-	}
-	return false;
+	return _user == other.user() && strongGuild->id() == other.guild()->id();
 }
 
 bool QDiscordMember::operator !=(const QDiscordMember& other) const

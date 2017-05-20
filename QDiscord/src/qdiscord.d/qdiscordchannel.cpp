@@ -107,6 +107,7 @@ QJsonObject QDiscordChannel::serialize() const
 		object["recipient"] = (_recipient?_recipient->serialize():QJsonValue());
 		object["last_message_id"] =
 				_lastMessageId?_lastMessageId.toString():QJsonValue();
+		object["type"] = "text";
 	}
 	else
 	{
@@ -132,8 +133,6 @@ QJsonObject QDiscordChannel::serialize() const
 
 bool QDiscordChannel::operator ==(const QDiscordChannel& other) const
 {
-	if(isNull() || other.isNull())
-		return false;
 	return _id == other._id;
 }
 

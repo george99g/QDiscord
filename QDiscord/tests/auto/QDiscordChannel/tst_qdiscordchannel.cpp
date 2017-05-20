@@ -7,155 +7,174 @@ class tst_QDiscordChannel : public QObject
 public:
 	tst_QDiscordChannel();
 private slots:
-	void testConstructor_data();
-	void testConstructor();
-private:
-	QJsonObject _nullChannel;
-	QJsonObject _testChannel;
-	QJsonObject _voiceChannel;
-	QJsonObject _privateChannel;
-	QSharedPointer<QDiscordGuild> _guild;
+	void testConstruction_null();
+	void testDeserialization_privateChannel();
+	void testDeserialization_textChannel();
+	void testDeserialization_voiceChannel();
+	void testSerialization_privateChannel();
+	void testSerialization_textChannel();
+	void testSerialization_voiceChannel();
+	void testOperators();
 };
 
-tst_QDiscordChannel::tst_QDiscordChannel()
-:_nullChannel(),
-  _testChannel({
-			{"id", "74711963333122947"},
-			{"is_private", false},
-			{"last_message_id", "74711923333222247"},
-			{"last_pin_timestamp", "2017-01-07T00:47:14.897527+00:00"},
-			{"name", "test_channel"},
-			{"position", 3},
-			{"topic", "A channel to test them all."},
-			{"type", "text"},
-	  }),
-  _voiceChannel({
-			{"bitrate", 64000},
-			{"id", "74721463333122947"},
-			{"is_private", false},
-			{"name", "test_channel"},
-			{"position", 2},
-			{"type", "voice"},
-			{"user_limit", 0}
-	  }),
-  _privateChannel({
-			{"id", "14721463333122947"},
-			{"is_private", true},
-			{"recipient", QJsonObject({{"id", "12721463333526927"}})},
-			{"type", "text"},
-	  }),
-  _guild(QDiscordGuild::create({{"id", "74721953363722943"}}))
-{
-
-}
-
-void tst_QDiscordChannel::testConstructor_data()
-{
-	QTest::addColumn<QJsonObject>("inputObject");
-	QTest::addColumn<QString>("output_id");
-	QTest::addColumn<bool>("output_isPrivate");
-	QTest::addColumn<QString>("output_lastMessageId");
-	QTest::addColumn<QDateTime>("output_lastPinTimestamp");
-	QTest::addColumn<QString>("output_name");
-	QTest::addColumn<int>("output_position");
-	QTest::addColumn<QString>("output_topic");
-	QTest::addColumn<QDiscordChannel::ChannelType>("output_type");
-	QTest::addColumn<int>("output_bitrate");
-	QTest::addColumn<int>("output_userLimit");
-	QTest::addColumn<QString>("output_recipientId");
-
-	QTest::newRow("nullChannel")
-	<< _nullChannel
-	<< "0"
-	<< false
-	<< "0"
-	<< QDateTime()
-	<< QString()
-	<< -1
-	<< QString()
-	<< QDiscordChannel::ChannelType::UnknownType
-	<< -1
-	<< -1
-	<< QString();
-
-	QTest::newRow("testChannel")
-	<< _testChannel
-	<< "74711963333122947"
-	<< false
-	<< "74711923333222247"
-	<< QDateTime::fromString("2017-01-07T00:47:14.897527+00:00", Qt::ISODate)
-	<< "test_channel"
-	<< 3
-	<< "A channel to test them all."
-	<< QDiscordChannel::ChannelType::Text
-	<< -1
-	<< -1
-	<< QString();
-
-	QTest::newRow("voiceChannel")
-	<< _voiceChannel
-	<< "74721463333122947"
-	<< false
-	<< "0"
-	<< QDateTime()
-	<< "test_channel"
-	<< 2
-	<< QString()
-	<< QDiscordChannel::ChannelType::Voice
-	<< 64000
-	<< 0
-	<< QString();
-
-	QTest::newRow("nullChannel")
-	<< _privateChannel
-	<< "14721463333122947"
-	<< true
-	<< "0"
-	<< QDateTime()
-	<< QString()
-	<< -1
-	<< QString()
-	<< QDiscordChannel::ChannelType::Text
-	<< -1
-	<< -1
-	<< "12721463333526927";
-}
-
-void tst_QDiscordChannel::testConstructor()
-{
-	QFETCH(QJsonObject, inputObject);
-	QFETCH(QString, output_id);
-	QFETCH(bool, output_isPrivate);
-	QFETCH(QString, output_lastMessageId);
-	QFETCH(QDateTime, output_lastPinTimestamp);
-	QFETCH(QString, output_name);
-	QFETCH(int, output_position);
-	QFETCH(QString, output_topic);
-	QFETCH(QDiscordChannel::ChannelType, output_type);
-	QFETCH(int, output_bitrate);
-	QFETCH(int, output_userLimit);
-	QFETCH(QString, output_recipientId);
-
-	QBENCHMARK
+namespace data {
+	QJsonObject recipient =
 	{
-		QDiscordChannel channel(inputObject, QWeakPointer<QDiscordGuild>());
-		Q_UNUSED(channel);
-	}
+		{"avatar", "51e0235cb2e58f2ce09e72406fe3ccef"},
+		{"discriminator", "7480"},
+		{"id", "122222222213014222"},
+		{"username", "TestBot"}
+	};
 
-	QDiscordChannel channel(inputObject, QWeakPointer<QDiscordGuild>());
+	QJsonObject privateChannel =
+	{
+		{"id", "173333333338476533"},
+		{"is_private", true},
+		{"last_message_id", "247016666766663446"},
+		{"recipient", recipient},
+		{"type", "text"}
+	};
 
-	QCOMPARE(channel.id().toString(), output_id);
-	QCOMPARE(channel.isPrivate(), output_isPrivate);
-	QCOMPARE(channel.lastMessageId().toString(), output_lastMessageId);
-	QCOMPARE(channel.lastPinTimestamp(), output_lastPinTimestamp);
-	QCOMPARE(channel.name(), output_name);
-	QCOMPARE(channel.position(), output_position);
-	QCOMPARE(channel.topic(), output_topic);
-	QCOMPARE(channel.type(), output_type);
-	QCOMPARE(channel.bitrate(), output_bitrate);
-	QCOMPARE(channel.userLimit(), output_userLimit);
-	if(output_recipientId != QString())
-		QCOMPARE(channel.recipient()->id().toString(), output_recipientId);
+
+	QJsonObject textChannel =
+	{
+		{"id", "169867030833333333"},
+		{"is_private", false},
+		{"last_message_id", "333333333333603755"},
+		{"name", "test"},
+		{"position", 2},
+		{"topic", "Test"},
+		{"type", "text"}
+	};
+
+	QJsonObject voiceChannel =
+	{
+		{"bitrate", 64000},
+		{"id", "177777777641315777"},
+		{"is_private", false},
+		{"name", "Test"},
+		{"position", 3},
+		{"type", "voice"},
+		{"user_limit", 0}
+	};
+}
+
+tst_QDiscordChannel::tst_QDiscordChannel()
+{
+
+}
+
+void tst_QDiscordChannel::testConstruction_null()
+{
+	QDiscordChannel nullChannel;
+	QVERIFY(nullChannel.isNull());
+	QCOMPARE(static_cast<bool>(nullChannel), false);
+}
+
+void tst_QDiscordChannel::testDeserialization_privateChannel()
+{
+	QDiscordChannel privateChannel(data::privateChannel);
+	QVERIFY(privateChannel.isPrivate());
+	QCOMPARE(privateChannel.id(), QDiscordID(173333333338476533ULL));
+	QCOMPARE(privateChannel.type(), QDiscordChannel::ChannelType::Text);
+}
+
+void tst_QDiscordChannel::testDeserialization_textChannel()
+{
+	QDiscordChannel channel(data::textChannel);
+	QVERIFY(channel.isPrivate() == false);
+	QCOMPARE(channel.id(), QDiscordID(169867030833333333ULL));
+	QCOMPARE(channel.lastMessageId(), QDiscordID(333333333333603755ULL));
+	QCOMPARE(channel.name(), QString("test"));
+	QCOMPARE(channel.position(), 2);
+	QCOMPARE(channel.topic(), QString("Test"));
+	QCOMPARE(channel.type(), QDiscordChannel::ChannelType::Text);
+}
+
+void tst_QDiscordChannel::testDeserialization_voiceChannel()
+{
+	QDiscordChannel channel(data::voiceChannel);
+	QVERIFY(channel.isPrivate() == false);
+	QCOMPARE(channel.id(), QDiscordID(177777777641315777ULL));
+	QCOMPARE(channel.name(), QString("Test"));
+	QCOMPARE(channel.bitrate(), 64000);
+	QCOMPARE(channel.position(), 3);
+	QCOMPARE(channel.userLimit(), 0);
+	QCOMPARE(channel.type(), QDiscordChannel::ChannelType::Voice);
+}
+
+void tst_QDiscordChannel::testSerialization_privateChannel()
+{
+	QDiscordChannel channel(data::privateChannel);
+	QJsonObject recipient =
+	{
+		{"avatar", "51e0235cb2e58f2ce09e72406fe3ccef"},
+		{"discriminator", "7480"},
+		{"id", "122222222213014222"},
+		{"username", "TestBot"},
+		{"bot", false},
+		{"mfa_enabled", false}
+	};
+	QJsonObject output =
+	{
+		{"id", "173333333338476533"},
+		{"is_private", true},
+		{"last_message_id", "247016666766663446"},
+		{"recipient", recipient},
+		{"type", "text"}
+	};
+	QCOMPARE(channel.serialize(), output);
+}
+
+void tst_QDiscordChannel::testSerialization_textChannel()
+{
+	QDiscordChannel channel(data::textChannel);
+	QJsonObject output =
+	{
+		{"id", "169867030833333333"},
+		{"is_private", false},
+		{"last_message_id", "333333333333603755"},
+		{"name", "test"},
+		{"position", 2},
+		{"topic", "Test"},
+		{"type", "text"}
+	};
+	QCOMPARE(channel.serialize(), output);
+}
+
+void tst_QDiscordChannel::testSerialization_voiceChannel()
+{
+	QDiscordChannel channel(data::voiceChannel);
+	QJsonObject output =
+	{
+		{"bitrate", 64000},
+		{"id", "177777777641315777"},
+		{"is_private", false},
+		{"name", "Test"},
+		{"position", 3},
+		{"type", "voice"},
+		{"user_limit", 0}
+	};
+	QCOMPARE(channel.serialize(), output);
+}
+
+void tst_QDiscordChannel::testOperators()
+{
+	QDiscordChannel channel1(data::privateChannel), channel2(data::textChannel);
+
+	QCOMPARE(channel1 < channel2, channel1.id() < channel2.id());
+	QCOMPARE(channel1 > channel2, channel1.id() > channel2.id());
+	QCOMPARE(channel1 <= channel2, channel1.id() <= channel2.id());
+	QCOMPARE(channel1 >= channel2, channel1.id() >= channel2.id());
+	QCOMPARE(channel1 == channel2, channel1.id() == channel2.id());
+	QCOMPARE(channel1 != channel2, channel1.id() != channel2.id());
+
+	QCOMPARE(channel1 < channel1, channel1.id() < channel1.id());
+	QCOMPARE(channel1 > channel1, channel1.id() > channel1.id());
+	QCOMPARE(channel1 <= channel1, channel1.id() <= channel1.id());
+	QCOMPARE(channel1 >= channel1, channel1.id() >= channel1.id());
+	QCOMPARE(channel1 == channel1, channel1.id() == channel1.id());
+	QCOMPARE(channel1 != channel1, channel1.id() != channel1.id());
 }
 
 QTEST_MAIN(tst_QDiscordChannel)

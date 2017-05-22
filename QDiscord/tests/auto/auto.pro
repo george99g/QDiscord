@@ -5,3 +5,4 @@ SUBDIRS += QDiscordMember
 SUBDIRS += QDiscordChannel
 SUBDIRS += QDiscordRoute
 SUBDIRS += QDiscordToken
+SUBDIRS += QDiscordDiscriminator

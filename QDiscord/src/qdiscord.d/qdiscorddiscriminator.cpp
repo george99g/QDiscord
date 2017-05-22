@@ -64,13 +64,15 @@ QDiscordDiscriminator::operator bool() const
 bool
 QDiscordDiscriminator::operator ==(const QDiscordDiscriminator& other) const
 {
+	if(isNull() || other.isNull())
+		return false;
 	return _discriminator == other._discriminator;
 }
 
 bool
 QDiscordDiscriminator::operator !=(const QDiscordDiscriminator& other) const
 {
-	return _discriminator != other._discriminator;
+	return !operator ==(other);
 }
 
 bool

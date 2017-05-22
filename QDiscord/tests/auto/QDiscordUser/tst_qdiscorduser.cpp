@@ -176,77 +176,22 @@ void tst_QDiscordUser::testUpdate()
 
 void tst_QDiscordUser::testOperators()
 {
-	QDiscordUser nullUser;
 	QDiscordUser user1(data::user1);
 	QDiscordUser user2(data::user2);
-	QDiscordUser user3(data::user3);
 
-	// A null user should never be equal to itself
-	QVERIFY(nullUser != nullUser);
-	QCOMPARE(nullUser == nullUser, false);
+	QCOMPARE(user1 < user2, user1.id() < user2.id());
+	QCOMPARE(user1 > user2, user1.id() > user2.id());
+	QCOMPARE(user1 <= user2, user1.id() <= user2.id());
+	QCOMPARE(user1 >= user2, user1.id() >= user2.id());
+	QCOMPARE(user1 == user2, user1.id() == user2.id());
+	QCOMPARE(user1 != user2, user1.id() != user2.id());
 
-	QVERIFY(user1 != nullUser);
-	QCOMPARE(user1 == nullUser, false);
-	QVERIFY(user2 != nullUser);
-	QCOMPARE(user2 == nullUser, false);
-	QVERIFY(user3 != nullUser);
-	QCOMPARE(user3 == nullUser, false);
-
-	// A null user should be smaller than anything, due to being 0 internally
-	QVERIFY(user1 > nullUser);
-	QVERIFY(user2 > nullUser);
-	QVERIFY(user3 > nullUser);
-	QVERIFY(user1 >= nullUser);
-	QVERIFY(user2 >= nullUser);
-	QVERIFY(user3 >= nullUser);
-	QCOMPARE(user1 < nullUser, false);
-	QCOMPARE(user2 < nullUser, false);
-	QCOMPARE(user3 < nullUser, false);
-	QCOMPARE(user1 <= nullUser, false);
-	QCOMPARE(user2 <= nullUser, false);
-	QCOMPARE(user3 <= nullUser, false);
-
-	// A null user should never be equal to anything
-	QVERIFY(nullUser != user1);
-	QCOMPARE(nullUser == user1, false);
-	QVERIFY(nullUser != user2);
-	QCOMPARE(nullUser == user2, false);
-	QVERIFY(nullUser != user3);
-	QCOMPARE(nullUser == user3, false);
-
-	// The comparisons should be the same both ways
-	QVERIFY(nullUser < user1);
-	QVERIFY(nullUser < user2);
-	QVERIFY(nullUser < user3);
-	QVERIFY(nullUser <= user1);
-	QVERIFY(nullUser <= user2);
-	QVERIFY(nullUser <= user3);
-	QCOMPARE(nullUser > user1, false);
-	QCOMPARE(nullUser > user2, false);
-	QCOMPARE(nullUser > user3, false);
-	QCOMPARE(nullUser >= user1, false);
-	QCOMPARE(nullUser >= user2, false);
-	QCOMPARE(nullUser >= user3, false);
-
-	// Users should be sorted by comparing their IDs
-	QVERIFY(user3 > user2);
-	QVERIFY(user3 >= user2);
-	QVERIFY(user2 > user1);
-	QVERIFY(user2 >= user1);
-	QCOMPARE(user2 > user3, false);
-	QCOMPARE(user2 >= user3, false);
-	QCOMPARE(user1 > user2, false);
-	QCOMPARE(user1 >= user2, false);
-
-	// Two users with the same ID should be equal
-	QVERIFY(user1 == user1);
-	QCOMPARE(user1 != user1, false);
-
-	// Even when the operation is less than or euqals or more than or equals
-	QVERIFY(user1 >= user1);
-	QCOMPARE(user1 > user1, false);
-	QVERIFY(user1 <= user1);
-	QCOMPARE(user1 < user1, false);
+	QCOMPARE(user1 < user1, user1.id() < user1.id());
+	QCOMPARE(user1 > user1, user1.id() > user1.id());
+	QCOMPARE(user1 <= user1, user1.id() <= user1.id());
+	QCOMPARE(user1 >= user1, user1.id() >= user1.id());
+	QCOMPARE(user1 == user1, user1.id() == user1.id());
+	QCOMPARE(user1 != user1, user1.id() != user1.id());
 }
 
 void tst_QDiscordUser::testMention()

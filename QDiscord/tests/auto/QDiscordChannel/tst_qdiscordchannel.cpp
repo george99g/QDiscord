@@ -106,23 +106,15 @@ void tst_QDiscordChannel::testDeserialization_voiceChannel()
 void tst_QDiscordChannel::testSerialization_privateChannel()
 {
 	QDiscordChannel channel(data::privateChannel);
-	QJsonObject recipient =
-	{
-		{"avatar", "51e0235cb2e58f2ce09e72406fe3ccef"},
-		{"discriminator", "7480"},
-		{"id", "122222222213014222"},
-		{"username", "TestBot"},
-		{"bot", false},
-		{"mfa_enabled", false}
-	};
 	QJsonObject output =
 	{
 		{"id", "173333333338476533"},
 		{"is_private", true},
 		{"last_message_id", "247016666766663446"},
-		{"recipient", recipient},
+		{"recipient", data::recipient},
 		{"type", "text"}
 	};
+	QJsonObject data = channel.serialize();
 	QCOMPARE(channel.serialize(), output);
 }
 

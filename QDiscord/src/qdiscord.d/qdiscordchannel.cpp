@@ -104,7 +104,17 @@ QJsonObject QDiscordChannel::serialize() const
 	object["is_private"] = _isPrivate;
 	if(_isPrivate)
 	{
-		object["recipient"] = (_recipient?_recipient->serialize():QJsonValue());
+		if(_recipient)
+		{
+			QJsonObject user = _recipient->serialize();
+			if(user["mfa_enabled"].toBool(false) == false)
+				user.remove("mfa_enabled");
+			if(user["bot"].toBool(false) == false)
+				user.remove("bot");
+			object["recipient"] = user;
+		}
+		else
+			object["recipient"] = QJsonValue();
 		object["last_message_id"] =
 				_lastMessageId?_lastMessageId.toString():QJsonValue();
 		object["type"] = "text";

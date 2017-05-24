@@ -84,7 +84,16 @@ QJsonObject QDiscordMessage::serialize()
 
 	object["id"] = _id.toString();
 	object["channel_id"] = _channelId.toString();
-	object["author"] = _author.serialize();
+	{
+		QJsonObject user = _author.serialize();
+
+		if(user["bot"].toBool(false) == false)
+			user.remove("bot");
+		if(user["mfa_enabled"].toBool(false) == false)
+			user.remove("mfa_enabled");
+
+		object["author"] = user;
+	}
 	object["content"] = _content;
 	{
 		object["timestamp"] = _timestamp.toTimeSpec(Qt::OffsetFromUTC)
@@ -107,7 +116,10 @@ QJsonObject QDiscordMessage::serialize()
 		mentions.append(u.serialize());
 	}
 	object["mentions"] = mentions;
-	object["nonce"] = _nonce.toString();
+	if(_nonce.isNull())
+		object["nonce"] = QJsonValue();
+	else
+		object["nonce"] = _nonce.toString();
 	object["pinned"] = _pinned;
 
 	return object;

@@ -7,3 +7,4 @@ SUBDIRS += QDiscordRoute
 SUBDIRS += QDiscordToken
 SUBDIRS += QDiscordID
 SUBDIRS += QDiscordDiscriminator
+SUBDIRS += QDiscordMessage

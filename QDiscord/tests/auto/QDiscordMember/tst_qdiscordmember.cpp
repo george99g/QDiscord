@@ -14,12 +14,6 @@ private slots:
 	void testOperators();
 	void testMention();
 private:
-	QJsonObject _nullMember;
-	QJsonObject _guildlessMember;
-	QJsonObject _userlessMember;
-	QJsonObject _testMember;
-	QDiscordUser _testUser;
-	QSharedPointer<QDiscordGuild> _guild;
 };
 
 namespace data {

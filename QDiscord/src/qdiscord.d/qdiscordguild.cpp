@@ -57,6 +57,7 @@ QDiscordGuild::QDiscordGuild()
 	_embedEnabled = false;
 	_verificationLevel = VerificationLevel::Unknown;
 	_defaultMessageNotifications = NotificationLevel::Unknown;
+	_explicitContentFilter = ExplicitContentFilterLevel::Unknown;
 	_mfaLevel = -1;
 	_large = false;
 	_unavailable = false;
@@ -150,6 +151,8 @@ void QDiscordGuild::deserialize(const QJsonObject& object)
 				);
 		_large = object["large"].toBool(false);
 		_memberCount = object["member_count"].toInt(-1);
+		if(!object["application_id"].isNull())
+			_applicationId = QDiscordID(object["application_id"].toString());
 		for(const QJsonValue& item : object["members"].toArray())
 		{
 			QSharedPointer<QDiscordMember> member =
@@ -205,6 +208,8 @@ QJsonObject QDiscordGuild::serialize()
 		}
 		object["large"] = _large;
 		object["member_count"] = _memberCount;
+		object["application_id"] =
+				_applicationId?_applicationId.toString():QJsonValue();
 		{
 			QJsonArray members;
 			for(const QSharedPointer<QDiscordMember> member : _members.values())

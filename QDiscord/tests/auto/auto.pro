@@ -9,3 +9,4 @@ SUBDIRS += QDiscordID
 SUBDIRS += QDiscordDiscriminator
 SUBDIRS += QDiscordMessage
 SUBDIRS += QDiscordGame
+SUBDIRS += QDiscordGuild

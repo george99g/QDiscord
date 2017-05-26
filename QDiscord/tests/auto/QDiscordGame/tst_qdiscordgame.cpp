@@ -10,6 +10,7 @@ private slots:
 	void testConstruction_null();
 	void testConstruction_game();
 	void testConstruction_streaming();
+	void testSerialization();
 	void testOperators();
 };
 
@@ -52,6 +53,15 @@ void tst_QDiscordGame::testConstruction_streaming()
 	QCOMPARE(game.name(), QString("A game."));
 	QCOMPARE(game.url(), QString("https://example.org"));
 	QCOMPARE(game.type(), QDiscordGame::GameType::Streaming);
+}
+
+void tst_QDiscordGame::testSerialization()
+{
+	QDiscordGame game(data::game);
+	QCOMPARE(game.serialize(), data::game);
+
+	QDiscordGame streaming(data::streaming);
+	QCOMPARE(streaming.serialize(), data::streaming);
 }
 
 void tst_QDiscordGame::testOperators()

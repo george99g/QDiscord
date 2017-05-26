@@ -43,7 +43,7 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
 						new QDiscordChannel(*item)
 					);
 		newChannel->setGuild(sharedFromThis());
-		_channels.insert(other.channels().key(item), newChannel);
+		_channels.insert(other.channelsMap().key(item), newChannel);
 	}
 
 #ifdef QDISCORD_LIBRARY_DEBUG

@@ -43,7 +43,7 @@ QDiscordStateComponent::channel(const QDiscordID& id)
 		return _privateChannels.value(id);
 	for(const QSharedPointer<QDiscordGuild>& item : _guilds)
 	{
-		if(item->channels().keys().contains(id))
+		if(item->channelsMap().keys().contains(id))
 			return item->channels().value(id);
 	}
 	return QSharedPointer<QDiscordChannel>();

@@ -128,10 +128,14 @@ public:
 	void setMemberCount(int memberCount) {_memberCount = memberCount;}
 	///\brief Returns a map of pointers to the guild's members and their IDs.
 	QMap<QDiscordID, QSharedPointer<QDiscordMember>>
-	members() const {return _members;}
+	membersMap() const {return _members;}
 	///\brief Returns a map of pointers to the guild's channels and their IDs.
 	QMap<QDiscordID, QSharedPointer<QDiscordChannel>>
-	channels() const {return _channels;}
+	channelsMap() const {return _channels;}
+	QList<QSharedPointer<QDiscordMember>>
+	members() const {return _members.values();}
+	QList<QSharedPointer<QDiscordChannel>>
+	channels() const {return _channels.values();}
 	/*!
 	 * \brief Returns a pointer to a guild channel that has the provided ID.
 	 *

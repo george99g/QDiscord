@@ -14,13 +14,12 @@ private slots:
 };
 
 namespace data {
-	QString id1 = "129827149523671712";
-	QString id2 = "129865555555576712";
-	QString id3 = "155954930191040513";
-	quint64 iid1 = 129827149523671712ULL;
-	quint64 iid2 = 129865555555576712ULL;
-	quint64 iid3 = 155954930191040513ULL;
-
+	const QString id1 = "129827149523671712";
+	const QString id2 = "129865555555576712";
+	const QString id3 = "155954930191040513";
+	const quint64 iid1 = 129827149523671712ULL;
+	const quint64 iid2 = 129865555555576712ULL;
+	const quint64 iid3 = 155954930191040513ULL;
 }
 
 tst_QDiscordID::tst_QDiscordID()

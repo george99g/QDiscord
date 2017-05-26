@@ -15,14 +15,14 @@ private:
 };
 
 namespace data {
-	QJsonObject author =
+	const QJsonObject author =
 	{
 		{"id", "129827149523671712"},
 		{"discriminator", "7480"},
 		{"username", "TestBot"},
 		{"avatar", QJsonValue()}
 	};
-	QJsonObject message1 =
+	const QJsonObject message1 =
 	{
 		{"author", author},
 		{"channel_id", "200000000025117696"},
@@ -36,7 +36,7 @@ namespace data {
 		{"edited_timestamp", QJsonValue()},
 		{"tts", false}
 	};
-	QJsonObject message2 =
+	const QJsonObject message2 =
 	{
 		{"author", author},
 		{"channel_id", "200000000025117696"},

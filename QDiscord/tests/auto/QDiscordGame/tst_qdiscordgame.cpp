@@ -15,13 +15,13 @@ private slots:
 };
 
 namespace data {
-	QJsonObject game =
+	const QJsonObject game =
 	{
 		{"name", "Game."},
 		{"type", 0}
 	};
 
-	QJsonObject streaming =
+	const QJsonObject streaming =
 	{
 		{"name", "A game."},
 		{"url", "https://example.org"},

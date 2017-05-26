@@ -14,12 +14,12 @@ private slots:
 };
 
 namespace data {
-	QString d1 = "1234";
-	QString d2 = "2345";
-	QString d3 = "3456";
-	qint16 id1 = 1234;
-	qint16 id2 = 2345;
-	qint16 id3 = 3456;
+	const QString d1 = "1234";
+	const QString d2 = "2345";
+	const QString d3 = "3456";
+	const qint16 id1 = 1234;
+	const qint16 id2 = 2345;
+	const qint16 id3 = 3456;
 }
 
 tst_QDiscordDiscriminator::tst_QDiscordDiscriminator()

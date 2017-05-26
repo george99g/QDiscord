@@ -18,7 +18,7 @@ private slots:
 };
 
 namespace data {
-	QJsonObject recipient =
+	const QJsonObject recipient =
 	{
 		{"avatar", "51e0235cb2e58f2ce09e72406fe3ccef"},
 		{"discriminator", "7480"},
@@ -26,7 +26,7 @@ namespace data {
 		{"username", "TestBot"}
 	};
 
-	QJsonObject privateChannel =
+	const QJsonObject privateChannel =
 	{
 		{"id", "173333333338476533"},
 		{"is_private", true},
@@ -35,8 +35,7 @@ namespace data {
 		{"type", "text"}
 	};
 
-
-	QJsonObject textChannel =
+	const QJsonObject textChannel =
 	{
 		{"id", "169867030833333333"},
 		{"is_private", false},
@@ -47,7 +46,7 @@ namespace data {
 		{"type", "text"}
 	};
 
-	QJsonObject voiceChannel =
+	const QJsonObject voiceChannel =
 	{
 		{"bitrate", 64000},
 		{"id", "177777777641315777"},

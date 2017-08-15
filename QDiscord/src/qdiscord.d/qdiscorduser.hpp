@@ -25,6 +25,8 @@
 #include "qdiscordid.hpp"
 #include "qdiscorddiscriminator.hpp"
 
+class QDiscordRest;
+
 ///\brief Represents a user in the Discord API.
 class QDiscordUser
 {
@@ -72,6 +74,12 @@ public:
 	 * username.
 	 */
 	QString mention() const;
+
+	QDiscordRest* rest() const
+	{return _rest;}
+	void setRest(QDiscordRest* rest)
+	{_rest = rest;}
+
 	bool isNull() const {return _id.isNull();}
 	operator bool() const;
 	///\brief Compares two users based on their ID
@@ -91,6 +99,7 @@ private:
 	bool _mfaEnabled;
 	std::experimental::optional<QString> _email;
 	std::experimental::optional<bool> _verified;
+	QDiscordRest* _rest;
 };
 
 Q_DECLARE_METATYPE(QDiscordUser)

@@ -26,6 +26,7 @@
 #include "external/Optional/optional.hpp"
 
 class QDiscordGuild;
+class QDiscordRest;
 
 ///\brief Represents either a private or guild channel in the Discord API.
 class QDiscordChannel
@@ -113,6 +114,8 @@ public:
 	 * \param guild A pointer to this object's new parent guild.
 	 */
 	void setGuild(QSharedPointer<QDiscordGuild> guild) {_guild = guild;}
+	QDiscordRest* rest() const {return _rest;}
+	void setRest(QDiscordRest* rest) {_rest = rest;}
 	/*!
 	 * \brief Returns a pointer to this channel's recipient, if this is a
 	 * private channel.
@@ -146,6 +149,7 @@ private:
 	QDateTime _lastPinTimestamp;
 	QSharedPointer<QDiscordUser> _recipient;
 	QWeakPointer<QDiscordGuild> _guild;
+	QDiscordRest* _rest;
 };
 
 Q_DECLARE_METATYPE(QDiscordChannel::ChannelType)

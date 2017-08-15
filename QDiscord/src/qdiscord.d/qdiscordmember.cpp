@@ -146,7 +146,7 @@ bool QDiscordMember::operator ==(const QDiscordMember& other) const
 		return false;
 	if(!other.guild())
 		return false;
-	return _user == other.user() && strongGuild->id() == other.guild()->id();
+	return _user == other._user && strongGuild->id() == other.guild()->id();
 }
 
 bool QDiscordMember::operator !=(const QDiscordMember& other) const

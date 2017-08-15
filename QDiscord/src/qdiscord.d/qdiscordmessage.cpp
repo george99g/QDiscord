@@ -17,12 +17,407 @@
  */
 
 #include "qdiscordmessage.hpp"
+#include "qdiscordrest.hpp"
 
 QSharedPointer<QDiscordMessage> QDiscordMessage::fromJson(const QJsonObject& object)
 {
 	QSharedPointer<QDiscordMessage> message(new QDiscordMessage());
 	message->deserialize(object);
 	return message;
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QJsonObject& data,
+							 std::function<void (QDiscordMessage)> callback)
+{
+	rest.request(
+				QNetworkRequest(),
+				QDiscordRoutes::Messages::sendMessage(channel),
+				data,
+				[&rest, callback](QNetworkReply* reply)
+	{
+		if(!callback)
+			return;
+		QDiscordMessage m;
+		if(reply->error() != QNetworkReply::NoError)
+		{
+			callback(m);
+			return;
+		}
+		m.deserialize(QJsonDocument::fromJson(reply->readAll()).object());
+		m.setRest(&rest);
+		callback(m);
+	}
+	);
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QString& content,
+							 std::function<void(QDiscordMessage)> callback)
+{
+	QJsonObject data = {
+		{"content", content}
+	};
+	create(rest, channel, data, callback);
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QString& content,
+							 const QDiscordID& nonce,
+							 std::function<void(QDiscordMessage)> callback)
+{
+	QJsonObject data = {
+		{"content", content},
+		{"nonce", nonce.toString()}
+	};
+	create(rest, channel, data, callback);
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QString& content,
+							 TTS tts,
+							 std::function<void(QDiscordMessage)> callback)
+{
+	QJsonObject data = {
+		{"content", content},
+		{"tts", static_cast<bool>(tts)}
+	};
+	create(rest, channel, data, callback);
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QString& content,
+							 const QDiscordID& nonce,
+							 TTS tts,
+							 std::function<void(QDiscordMessage)> callback)
+{
+	QJsonObject data = {
+		{"content", content},
+		{"nonce", nonce.toString()},
+		{"tts", static_cast<bool>(tts)}
+	};
+	create(rest, channel, data, callback);
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QString& content,
+							 const QDiscordID& nonce,
+							 TTS tts)
+{
+	QJsonObject data = {
+		{"content", content},
+		{"nonce", nonce.toString()},
+		{"tts", static_cast<bool>(tts)}
+	};
+	create(rest, channel, data);
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QString& content,
+							 TTS tts)
+{
+	QJsonObject data = {
+		{"content", content},
+		{"tts", static_cast<bool>(tts)}
+	};
+	create(rest, channel, data);
+}
+
+void QDiscordMessage::create(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QJsonObject& data)
+{
+	rest.request(
+				QNetworkRequest(),
+				QDiscordRoutes::Messages::sendMessage(channel),
+				data
+				);
+}
+
+void QDiscordMessage::send()
+{
+	if(!_rest)
+		return;
+
+	if(_content.isEmpty())
+		return;
+
+	if(!_channelId)
+	{
+		if(_channel)
+			_channelId = _channel->id();
+		else
+			return;
+	}
+
+	QJsonObject data = {
+		{"content", _content}
+	};
+	if(_nonce)
+		data["nonce"] = _nonce.toString();
+	if(_tts)
+		data["tts"]	= _tts;
+
+	QDiscordMessage::create(*_rest, _channelId, data);
+}
+
+void QDiscordMessage::send(std::function<void(QDiscordMessage)> callback)
+{
+	if(!_rest)
+		return;
+
+	if(_content.isEmpty())
+	{
+		if(callback)
+			callback(QDiscordMessage());
+		return;
+	}
+
+	if(!_channelId)
+	{
+		if(_channel)
+			_channelId = _channel->id();
+		else
+		{
+			if(callback)
+				callback(QDiscordMessage());
+			return;
+		}
+	}
+
+	QJsonObject data = {
+		{"content", _content}
+	};
+	if(_nonce)
+		data["nonce"] = _nonce.toString();
+	if(_tts)
+		data["tts"] = _tts;
+
+	QDiscordMessage::create(*_rest, _channelId, data, callback);
+}
+
+void QDiscordMessage::edit(QDiscordRest& rest,
+						   const QDiscordID& channel,
+						   const QDiscordID& message,
+						   const QString& newContent)
+{
+	QJsonObject data = {
+		{"content", newContent}
+	};
+	edit(rest, channel, message, data);
+}
+
+void QDiscordMessage::edit(QDiscordRest& rest,
+						   const QDiscordID& channel,
+						   const QDiscordID& message,
+						   const QJsonObject& data)
+{
+	rest.request(QNetworkRequest(),
+				 QDiscordRoutes::Messages::editMessage(channel, message),
+				 data);
+}
+
+void QDiscordMessage::edit(QDiscordRest& rest,
+						   const QDiscordID& channel,
+						   const QDiscordID& message,
+						   const QString& newContent,
+						   std::function<void (QDiscordMessage)> callback)
+{
+	QJsonObject data = {
+		{"content", newContent}
+	};
+	edit(rest, channel, message, data, callback);
+}
+
+void QDiscordMessage::edit(QDiscordRest& rest,
+						   const QDiscordID& channel,
+						   const QDiscordID& message,
+						   const QJsonObject& data,
+						   std::function<void (QDiscordMessage)> callback)
+{
+	rest.request(
+				QNetworkRequest(),
+				QDiscordRoutes::Messages::editMessage(channel, message),
+				data,
+				[&rest, callback](QNetworkReply* reply)
+	{
+		if(!callback)
+			return;
+		QDiscordMessage m;
+		if(reply->error() != QNetworkReply::NoError)
+		{
+			callback(m);
+			return;
+		}
+		m.deserialize(QJsonDocument::fromJson(reply->readAll()).object());
+		m.setRest(&rest);
+		callback(m);
+	}
+	);
+}
+
+void QDiscordMessage::edit(const QString& newContent)
+{
+	if(!_rest)
+		return;
+
+	if(!_id)
+		return;
+
+	if(!_channelId)
+	{
+		if(_channel)
+			_channelId = _channel->id();
+		else
+			return;
+	}
+
+	QDiscordMessage::edit(*_rest, _channelId, _id, newContent);
+}
+
+void QDiscordMessage::edit(const QString& newContent,
+						   std::function<void (QDiscordMessage)> callback)
+{
+	if(!_rest)
+		return;
+
+	if(!_id)
+	{
+		if(callback)
+			callback(QDiscordMessage());
+		return;
+	}
+
+	if(!_channelId)
+	{
+		if(_channel)
+			_channelId = _channel->id();
+		else
+		{
+			if(callback)
+				callback(QDiscordMessage());
+			return;
+		}
+	}
+
+	QDiscordMessage::edit(*_rest, _channelId, _id, newContent, callback);
+}
+
+void QDiscordMessage::remove(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QDiscordID& message)
+{
+	rest.request(QNetworkRequest(),
+				 QDiscordRoutes::Messages::deleteMessage(channel, message));
+}
+
+void QDiscordMessage::remove(QDiscordRest& rest,
+							 const QDiscordID& channel,
+							 const QDiscordID& message,
+							 std::function<void (bool)> callback)
+{
+	rest.request(
+				QNetworkRequest(),
+				QDiscordRoutes::Messages::deleteMessage(channel, message),
+				[callback](QNetworkReply* reply)
+	{
+		if(callback)
+			callback(reply->error() ==204);
+	}
+	);
+}
+
+void QDiscordMessage::remove()
+{
+	if(!_rest)
+		return;
+
+	if(!_id)
+		return;
+
+	if(!_channelId)
+	{
+		if(_channel)
+			_channelId = _channel->id();
+		else
+			return;
+	}
+
+	QDiscordMessage::remove(*_rest, _channelId, _id);
+}
+
+void QDiscordMessage::remove(std::function<void (bool)> callback)
+{
+	if(!_rest)
+		return;
+
+	if(!_id)
+	{
+		if(callback)
+			callback(false);
+		return;
+	}
+
+	if(!_channelId)
+	{
+		if(_channel)
+			_channelId = _channel->id();
+		else
+		{
+			if(callback)
+				callback(false);
+			return;
+		}
+	}
+
+	QDiscordMessage::remove(*_rest, _channelId, _id, callback);
+}
+
+void QDiscordMessage::bulkRemove(QDiscordRest& rest,
+								 const QDiscordID& channel,
+								 const QList<QDiscordID>& messages)
+{
+	QJsonObject data;
+
+	QJsonArray array;
+	for(const QDiscordID& message : messages)
+		array.append(message.toString());
+	data["messages"] = array;
+
+	rest.request(QNetworkRequest(),
+				 QDiscordRoutes::Messages::deleteMessages(channel),
+				 data);
+}
+
+void QDiscordMessage::bulkRemove(QDiscordRest& rest,
+								 const QDiscordID& channel,
+								 const QList<QDiscordID>& messages,
+								 std::function<void (bool)> callback)
+{
+	QJsonObject data;
+
+	QJsonArray array;
+	for(const QDiscordID& message : messages)
+		array.append(message.toString());
+	data["messages"] = array;
+
+	rest.request(
+				QNetworkRequest(),
+				QDiscordRoutes::Messages::deleteMessages(channel),
+				data,
+				[callback](QNetworkReply* reply)
+	{
+		if(callback)
+			callback(reply->error() == 204);
+	}
+	);
 }
 
 QDiscordMessage::QDiscordMessage(const QJsonObject& object)
@@ -39,6 +434,7 @@ QDiscordMessage::QDiscordMessage()
 	_mentionEveryone = false;
 	_tts = false;
 	_pinned = false;
+	_rest = nullptr;
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordMessage("<<this<<") constructed";

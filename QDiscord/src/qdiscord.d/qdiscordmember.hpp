@@ -50,7 +50,7 @@ public:
 	void deserialize(const QJsonObject& object);
 	QJsonObject serialize() const;
 	///\brief Returns a pointer to the user object contained by this object.
-	QDiscordUser user() const {return _user;}
+	QDiscordUser& user() {return _user;}
 	void setUser(const QDiscordUser& user) {_user = user;}
 	///\brief Returns this member's nickname.
 	std::experimental::optional<QString> nickname() const {return _nickname;}

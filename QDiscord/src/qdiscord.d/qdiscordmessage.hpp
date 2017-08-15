@@ -19,10 +19,13 @@
 #ifndef QDISCORDMESSAGE_HPP
 #define QDISCORDMESSAGE_HPP
 
+#include <functional>
 #include "qdiscordmember.hpp"
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
 #include "external/Optional/optional.hpp"
+
+class QDiscordRest;
 
 /*!
  * \brief Represents a message in the Discord API.
@@ -31,11 +34,111 @@ class QDiscordMessage
 {
 public:
 	static QSharedPointer<QDiscordMessage> fromJson(const QJsonObject& object);
-	/*!
-	 * \brief Creates an instance from the provided parameters.
-	 * \param object A JSON object of a Discord message.
-	 * \param channel A pointer to the channel the message was sent to.
-	 */
+
+	struct TTS
+	{
+		TTS(bool b):_b(b){}
+		operator bool(){return _b;}
+	private:
+		bool _b;
+	};
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QJsonObject& data,
+					   std::function<void(QDiscordMessage)> callback);
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QString& content,
+					   std::function<void(QDiscordMessage)> callback);
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QString& content,
+					   const QDiscordID& nonce,
+					   std::function<void(QDiscordMessage)> callback);
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QString& content,
+					   TTS tts,
+					   std::function<void(QDiscordMessage)> callback);
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QString& content,
+					   const QDiscordID& nonce,
+					   TTS tts,
+					   std::function<void(QDiscordMessage)> callback);
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QString& content,
+					   const QDiscordID& nonce,
+					   TTS tts = false);
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QString& content,
+					   TTS tts = false);
+
+	static void create(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QJsonObject& data);
+
+	void send();
+
+	void send(std::function<void(QDiscordMessage)> callback);
+
+	static void edit(QDiscordRest& rest,
+					 const QDiscordID& channel,
+					 const QDiscordID& message,
+					 const QString& newContent);
+
+	static void edit(QDiscordRest& rest,
+					 const QDiscordID& channel,
+					 const QDiscordID& message,
+					 const QJsonObject& data);
+
+	static void edit(QDiscordRest& rest,
+					 const QDiscordID& channel,
+					 const QDiscordID& message,
+					 const QString& newContent,
+					 std::function<void(QDiscordMessage)> callback);
+
+	static void edit(QDiscordRest& rest,
+					 const QDiscordID& channel,
+					 const QDiscordID& message,
+					 const QJsonObject& data,
+					 std::function<void(QDiscordMessage)> callback);
+
+	void edit(const QString& newContent);
+
+	void edit(const QString& newContent,
+			  std::function<void(QDiscordMessage)> callback);
+
+	static void remove(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QDiscordID& message);
+
+	static void remove(QDiscordRest& rest,
+					   const QDiscordID& channel,
+					   const QDiscordID& message,
+					   std::function<void(bool)> callback);
+
+	void remove();
+	void remove(std::function<void(bool)> callback);
+
+	static void bulkRemove(QDiscordRest& rest,
+						   const QDiscordID& channel,
+						   const QList<QDiscordID>& messages);
+
+	static void bulkRemove(QDiscordRest& rest,
+						   const QDiscordID& channel,
+						   const QList<QDiscordID>& messages,
+						   std::function<void(bool)> callback);
+
 	QDiscordMessage(const QJsonObject& object);
 	QDiscordMessage();
 	~QDiscordMessage();
@@ -87,6 +190,10 @@ public:
 	 * constructor.
 	 */
 	QSharedPointer<QDiscordGuild> guild() const;
+	QDiscordRest* rest() const
+	{return _rest;}
+	void setRest(QDiscordRest* rest)
+	{_rest = rest;}
 	bool isNull() const {return _id.isNull();}
 	operator bool() const;
 	bool operator ==(const QDiscordMessage& other) const;
@@ -109,6 +216,7 @@ private:
 	QDiscordID _nonce;
 	bool _pinned;
 	QSharedPointer<QDiscordChannel> _channel;
+	QDiscordRest* _rest;
 };
 
 Q_DECLARE_METATYPE(QDiscordMessage)

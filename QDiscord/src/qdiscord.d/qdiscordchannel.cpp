@@ -42,6 +42,7 @@ QDiscordChannel::QDiscordChannel()
 	_type = ChannelType::UnknownType;
 	_bitrate = -1;
 	_userLimit = -1;
+	_rest = nullptr;
 
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordChannel("<<this<<") constructed";

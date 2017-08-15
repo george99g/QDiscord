@@ -18,6 +18,7 @@
 
 #include "qdiscorduser.hpp"
 #include "qdiscordutilities.hpp"
+#include "qdiscordrest.hpp"
 
 using std::experimental::optional;
 
@@ -37,6 +38,7 @@ QDiscordUser::QDiscordUser()
 {
 	_bot = false;
 	_mfaEnabled = false;
+	_rest = nullptr;
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<"QDiscordUser("<<this<<") constructed";
 #endif

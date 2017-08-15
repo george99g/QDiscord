@@ -26,6 +26,8 @@
 #include "qdiscordmember.hpp"
 #include "qdiscordchannel.hpp"
 
+class QDiscordRest;
+
 ///\brief Represents a guild in the Discord API.
 class QDiscordGuild : public QEnableSharedFromThis<QDiscordGuild>
 {
@@ -126,6 +128,7 @@ public:
 	///\brief Returns the guild's member count.
 	int memberCount() const {return _memberCount;}
 	void setMemberCount(int memberCount) {_memberCount = memberCount;}
+	void update(const QJsonObject& object);
 	///\brief Returns a map of pointers to the guild's members and their IDs.
 	QMap<QDiscordID, QSharedPointer<QDiscordMember>>
 	membersMap() const {return _members;}
@@ -163,6 +166,7 @@ public:
 	 * `nullptr` was passed or the channel was not found.
 	 */
 	bool removeChannel(QSharedPointer<QDiscordChannel> channel);
+	bool removeChannel(QDiscordID channel);
 	///\brief Adds the provided member to the guild.
 	void addMember(QSharedPointer<QDiscordMember> member);
 	/*!
@@ -172,6 +176,13 @@ public:
 	 * `nullptr` was passed or the member was not found.
 	 */
 	bool removeMember(QSharedPointer<QDiscordMember> member);
+	bool removeMember(QDiscordID member);
+
+	QDiscordRest* rest() const
+	{return _rest;}
+	void setRest(QDiscordRest* rest)
+	{_rest = rest;}
+
 	bool isNull() const {return _id.isNull();}
 	operator bool() const;
 	bool operator ==(const QDiscordGuild& other) const;
@@ -203,6 +214,7 @@ private:
 	int _memberCount;
 	QMap<QDiscordID, QSharedPointer<QDiscordMember>> _members;
 	QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _channels;
+	QDiscordRest* _rest;
 };
 
 Q_DECLARE_METATYPE(QDiscordGuild)

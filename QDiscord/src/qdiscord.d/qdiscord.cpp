@@ -18,15 +18,21 @@
 
 #include "qdiscord.hpp"
 
-QDiscord::QDiscord(QObject* parent) : QObject(parent)
+QDiscord::QDiscord(QObject* parent)
+: QObject(parent)
 {
-	connectComponents();
-	_signalsConnected = false;
-	_connectionStatus = ConnectionStatus::Disconnected;
-
 #ifdef QDISCORD_LIBRARY_DEBUG
 	qDebug()<<this<<"constructed";
 #endif
+	_tokenSet = false;
+	_connected = false;
+
+	_ws.setState(&_state);
+	_state.setRest(&_rest);
+
+	connect(&_ws, &QDiscordWs::loggedIn, this, &QDiscord::wsConnectSuccess);
+	connect(&_ws, &QDiscordWs::authFail, this, &QDiscord::wsConnectFailed);
+	connect(&_ws, &QDiscordWs::disconnected, this, &QDiscord::wsDisconnected);
 }
 
 QDiscord::~QDiscord()
@@ -36,208 +42,102 @@ QDiscord::~QDiscord()
 #endif
 }
 
-void QDiscord::login(const QString& email, const QString& password)
-{
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"logging in via email and password";
-#endif
-	qWarning()<<"Logging in via email and password is deprecated";
-	qWarning()<<"Please use a token instead";
-	qWarning()<<"See the following link for more information:";
-	qWarning()<<"https://github.com/hammerandchisel/discord-api-docs/issues/69";
-	if(_connectionStatus != ConnectionStatus::Disconnected)
-	{
-#ifdef QDISCORD_LIBRARY_DEBUG
-		qDebug()<<this
-		<<"login requested while already in a connected/connecting state";
-#endif
-		return;
-	}
-	if(!_signalsConnected)
-	{
-		connectDiscordSignals();
-		_signalsConnected = true;
-	}
-	_connectionStatus = ConnectionStatus::TokenVerifying;
-	_rest.login(email, password);
-}
-
 void QDiscord::login(const QDiscordToken& token)
 {
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"logging in via token";
-#endif
-	if(_connectionStatus != ConnectionStatus::Disconnected)
-	{
-#ifdef QDISCORD_LIBRARY_DEBUG
-		qDebug()<<this
-		<<"login requested while already in a connected/connecting state";
-#endif
+	if(isConnected() || isConnecting())
 		return;
-	}
-	if(!_signalsConnected)
+	setToken(token);
+	QDiscordWs::getGateway(_rest, [this](QString endpoint)
 	{
-		connectDiscordSignals();
-		_signalsConnected = true;
-	}
-	_connectionStatus = ConnectionStatus::TokenVerifying;
-	_rest.login(token);
+		if(endpoint.isEmpty())
+		{
+			wsConnectFailed();
+			return;
+		}
+
+		_ws.open(endpoint);
+	});
+}
+
+void QDiscord::login(const QDiscordToken& token,
+					 std::function<void(bool)> callback)
+{
+	if(isConnected() || isConnecting())
+		return;
+	_loginCallback = callback;
+	login(token);
 }
 
 void QDiscord::logout()
 {
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"disconnecting";
-#endif
+	if(!isConnected() && !isConnecting())
+		return;
 	_ws.close();
-	_rest.logout();
-	_connectionStatus = ConnectionStatus::Disconnected;
+	setToken(QDiscordToken());
+}
+
+void QDiscord::logout(std::function<void()> callback)
+{
+	if(!isConnected() && !isConnecting())
+		return;
+	_logoutCallback = callback;
+	logout();
 }
 
 bool QDiscord::isConnecting() const
 {
-	return _connectionStatus == ConnectionStatus::TokenVerifying ||
-			_connectionStatus == ConnectionStatus::WsConnecting;
+	return _tokenSet && !_connected;
 }
 
-void QDiscord::tokenVerfified(QDiscordToken token)
+bool QDiscord::isConnected() const
 {
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"token verified, getting WS endpoint";
-#endif
-	_token = token;
-	_rest.getEndpoint();
+	return _connected;
 }
 
-void QDiscord::endpointAcquired(const QString& endpoint)
+void QDiscord::setToken(const QDiscordToken& token)
 {
-#ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"WS endpoint acquired, connecting WS component";
-#endif
-	_connectionStatus = ConnectionStatus::WsConnecting;
-	_ws.connectToEndpoint(endpoint, _token);
+	_tokenSet = !token.isEmpty();
+	_ws.setToken(token);
+	_rest.setToken(token);
 }
 
-void QDiscord::connectComponents()
+void QDiscord::wsConnectFailed()
 {
-	connect(&_ws, &QDiscordWsComponent::readyReceived,
-			&_state, &QDiscordStateComponent::readyReceived);
-	connect(&_ws, &QDiscordWsComponent::guildCreateReceived,
-			&_state, &QDiscordStateComponent::guildCreateReceived);
-	connect(&_ws, &QDiscordWsComponent::guildDeleteReceived,
-			&_state, &QDiscordStateComponent::guildDeleteReceived);
-	connect(&_ws, &QDiscordWsComponent::guildBanAddReceived,
-			&_state, &QDiscordStateComponent::guildBanAddReceived);
-	connect(&_ws, &QDiscordWsComponent::guildBanRemoveReceived,
-			&_state, &QDiscordStateComponent::guildBanRemoveReceived);
-	connect(&_ws, &QDiscordWsComponent::guildIntegrationsUpdateRecevied,
-			&_state, &QDiscordStateComponent::guildIntegrationsUpdateRecevied);
-	connect(&_ws, &QDiscordWsComponent::guildMemberAddReceived,
-			&_state, &QDiscordStateComponent::guildMemberAddReceived);
-	connect(&_ws, &QDiscordWsComponent::guildMemberRemoveReceived,
-			&_state, &QDiscordStateComponent::guildMemberRemoveReceived);
-	connect(&_ws, &QDiscordWsComponent::guildMemberUpdateReceived,
-			&_state, &QDiscordStateComponent::guildMemberUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::guildRoleCreateReceived,
-			&_state, &QDiscordStateComponent::guildRoleCreateReceived);
-	connect(&_ws, &QDiscordWsComponent::guildRoleDeleteReceived,
-			&_state, &QDiscordStateComponent::guildRoleDeleteReceived);
-	connect(&_ws, &QDiscordWsComponent::guildRoleUpdateReceived,
-			&_state, &QDiscordStateComponent::guildRoleUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::guildUpdateReceived,
-			&_state, &QDiscordStateComponent::guildUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::messageCreateReceived,
-			&_state, &QDiscordStateComponent::messageCreateReceived);
-	connect(&_ws, &QDiscordWsComponent::messageDeleteReceived,
-			&_state, &QDiscordStateComponent::messageDeleteReceived);
-	connect(&_ws, &QDiscordWsComponent::messageUpdateReceived,
-			&_state, &QDiscordStateComponent::messageUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::presenceUpdateReceived,
-			&_state, &QDiscordStateComponent::presenceUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::typingStartReceived,
-			&_state, &QDiscordStateComponent::typingStartReceived);
-	connect(&_ws, &QDiscordWsComponent::userSettingsUpdateReceived,
-			&_state, &QDiscordStateComponent::userSettingsUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::voiceStateUpdateReceived,
-			&_state, &QDiscordStateComponent::voiceStateUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::channelCreateReceived,
-			&_state, &QDiscordStateComponent::channelCreateReceived);
-	connect(&_ws, &QDiscordWsComponent::channelDeleteReceived,
-			&_state, &QDiscordStateComponent::channelDeleteReceived);
-	connect(&_ws, &QDiscordWsComponent::channelUpdateReceived,
-			&_state, &QDiscordStateComponent::channelUpdateReceived);
-	connect(&_ws, &QDiscordWsComponent::disconnected,
-			&_state, &QDiscordStateComponent::clear);
-	connect(&_ws, &QDiscordWsComponent::error,
-			&_state, &QDiscordStateComponent::clear);
-	connect(&_state, &QDiscordStateComponent::selfCreated,
-			&_rest, &QDiscordRestComponent::setSelf);
+	setToken(QDiscordToken());
+	_connected = false;
 
-}
-
-void QDiscord::connectDiscordSignals()
-{
-	connect(&_rest, &QDiscordRestComponent::tokenVerified,
-			this, &QDiscord::tokenVerfified);
-	connect(&_rest, &QDiscordRestComponent::endpointAcquired,
-			this, &QDiscord::endpointAcquired);
-	connect(&_rest, &QDiscordRestComponent::loginFailed,
-			this, &QDiscord::loginFailed);
-	connect(&_rest, &QDiscordRestComponent::endpointAcquireFailed,
-			this, &QDiscord::loginFailed);
-	connect(&_ws, &QDiscordWsComponent::loginFailed,
-			this, &QDiscord::loginFailed);
-	connect(&_ws, &QDiscordWsComponent::loginSuccess,
-			this, &QDiscord::loginSuccessRecevied);
-	connect(&_ws, &QDiscordWsComponent::disconnected,
-			this, &QDiscord::disconnected);
-	connect(&_ws, &QDiscordWsComponent::error,
-			this, &QDiscord::disconnected);
-	connect(&_rest, &QDiscordRestComponent::loggedOut,
-			this, &QDiscord::logoutFinished);
-}
-
-void QDiscord::disconnectDiscordSignals()
-{
-	disconnect(&_rest, &QDiscordRestComponent::tokenVerified,
-			   this, &QDiscord::tokenVerfified);
-	disconnect(&_rest, &QDiscordRestComponent::endpointAcquired,
-			   this, &QDiscord::endpointAcquired);
-	disconnect(&_rest, &QDiscordRestComponent::loginFailed,
-			   this, &QDiscord::loginFailed);
-	disconnect(&_rest, &QDiscordRestComponent::endpointAcquireFailed,
-			   this, &QDiscord::loginFailed);
-	disconnect(&_ws, &QDiscordWsComponent::loginFailed,
-			   this, &QDiscord::loginFailedReceived);
-	disconnect(&_ws, &QDiscordWsComponent::loginSuccess,
-			   this, &QDiscord::loginSuccessRecevied);
-	disconnect(&_ws, &QDiscordWsComponent::disconnected,
-			   this, &QDiscord::disconnected);
-	disconnect(&_ws, &QDiscordWsComponent::error,
-			   this, &QDiscord::disconnected);
-	disconnect(&_rest, &QDiscordRestComponent::loggedOut,
-			   this, &QDiscord::logoutFinished);
-}
-
-void QDiscord::logoutFinished()
-{
-	if(_signalsConnected)
+	if(_loginCallback)
 	{
-		_signalsConnected = false;
-		disconnectDiscordSignals();
+		_loginCallback(false);
+		_loginCallback = std::function<void(bool)>();
 	}
-	_connectionStatus = ConnectionStatus::Disconnected;
+
+	emit loginFailed();
+}
+
+void QDiscord::wsDisconnected()
+{
+	setToken(QDiscordToken());
+	_connected = false;
+
+	if(_logoutCallback)
+	{
+		_logoutCallback();
+		_logoutCallback = std::function<void()>();
+	}
+
 	emit loggedOut();
 }
 
-void QDiscord::loginSuccessRecevied()
+void QDiscord::wsConnectSuccess()
 {
-	_connectionStatus = ConnectionStatus::Connected;
-	emit loginSuccess();
-}
+	_connected = true;
 
-void QDiscord::loginFailedReceived()
-{
-	_connectionStatus = ConnectionStatus::Disconnected;
-	emit loginFailed();
+	if(_loginCallback)
+	{
+		_loginCallback(true);
+		_loginCallback = std::function<void(bool)>();
+	}
+
+	emit loggedIn();
 }

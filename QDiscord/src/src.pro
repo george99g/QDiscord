@@ -16,10 +16,7 @@ isEmpty(PREFIX) {
 include(../config.pri)
 
 SOURCES += $$PWD/qdiscord.d/qdiscord.cpp \
-    $$PWD/qdiscord.d/qdiscordrestcomponent.cpp \
     $$PWD/qdiscord.d/qdiscordutilities.cpp \
-    $$PWD/qdiscord.d/qdiscordwscomponent.cpp \
-    $$PWD/qdiscord.d/qdiscordstatecomponent.cpp \
     $$PWD/qdiscord.d/qdiscordguild.cpp \
     $$PWD/qdiscord.d/qdiscorduser.cpp \
     $$PWD/qdiscord.d/qdiscordchannel.cpp \
@@ -29,15 +26,21 @@ SOURCES += $$PWD/qdiscord.d/qdiscord.cpp \
     $$PWD/qdiscord.d/qdiscordroute.cpp \
     $$PWD/qdiscord.d/qdiscordtoken.cpp \
     $$PWD/qdiscord.d/qdiscordid.cpp \
-    $$PWD/qdiscord.d/qdiscorddiscriminator.cpp
+    $$PWD/qdiscord.d/qdiscorddiscriminator.cpp \
+    $$PWD/qdiscord.d/qdiscordstate.cpp \
+    $$PWD/qdiscord.d/qdiscordabstractstate.cpp \
+    $$PWD/qdiscord.d/qdiscordws.cpp \
+    $$PWD/qdiscord.d/qdiscordrest.cpp \
+    $$PWD/qdiscord.d/qdiscorduseragent.cpp \
+    $$PWD/qdiscord.d/qdiscordbucket.cpp
 
-TOPHEADERS += $$PWD/QDiscord
+TOPHEADERS += $$PWD/QDiscord \
+              $$PWD/QDiscordRest \
+              $$PWD/QDiscordState \
+              $$PWD/QDiscordWs
 
 DIRHEADERS += $$PWD/qdiscord.d/qdiscord.hpp \
-    $$PWD/qdiscord.d/qdiscordrestcomponent.hpp \
     $$PWD/qdiscord.d/qdiscordutilities.hpp \
-    $$PWD/qdiscord.d/qdiscordwscomponent.hpp \
-    $$PWD/qdiscord.d/qdiscordstatecomponent.hpp \
     $$PWD/qdiscord.d/qdiscordguild.hpp \
     $$PWD/qdiscord.d/qdiscorduser.hpp \
     $$PWD/qdiscord.d/qdiscordchannel.hpp \
@@ -47,7 +50,13 @@ DIRHEADERS += $$PWD/qdiscord.d/qdiscord.hpp \
     $$PWD/qdiscord.d/qdiscordroute.hpp \
     $$PWD/qdiscord.d/qdiscordtoken.hpp \
     $$PWD/qdiscord.d/qdiscordid.hpp \
-    $$PWD/qdiscord.d/qdiscorddiscriminator.hpp
+    $$PWD/qdiscord.d/qdiscorddiscriminator.hpp \
+    $$PWD/qdiscord.d/qdiscordstate.hpp \
+    $$PWD/qdiscord.d/qdiscordabstractstate.hpp \
+    $$PWD/qdiscord.d/qdiscordws.hpp \
+    $$PWD/qdiscord.d/qdiscordrest.hpp \
+    $$PWD/qdiscord.d/qdiscorduseragent.hpp \
+    $$PWD/qdiscord.d/qdiscordbucket.hpp
 
 LIBOPTIONALHEADERS += $$PWD/qdiscord.d/external/Optional/optional.hpp
 

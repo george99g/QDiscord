@@ -19,71 +19,70 @@
 #ifndef QDISCORDUTILITIES_HPP
 #define QDISCORDUTILITIES_HPP
 
-#include <QString>
-#include <QNetworkReply>
 #include <QDateTime>
+#include <QNetworkReply>
+#include <QString>
 
 /*!
  * \brief A namespace containing configuration variables and functions used in
  * %QDiscord.
  */
-namespace QDiscordUtilities
-{
-	///\brief A struct used for storing the Discord API endpoints.
-	struct EndPoints
-	{
-		QString base;	  ///<\brief The base Discord endpoint.
-		QString apiBase;  ///<\brief The base Discord API endpoint.
-		QString gateway;  ///<\brief The gateway endpoint.
-		QString users;	  ///<\brief The users endpoint.
-		QString me;		  ///<\brief The users/\@me endpoint.
-		QString guilds;   ///<\brief THe guilds endpoint.
-		QString auth;	  ///<\brief The auth endpoint.
-		QString register_;///<\brief The registration endpoint.
-		QString login;	  ///<\brief The auth/login endpoint.
-		QString logout;	  ///<\brief The auth/logout endpoint.
-		QString servers;  ///<\brief The servers endpoint.
-		QString channels; ///<\brief The channels endpoint.
-	};
-	extern const EndPoints endPoints;
-	/*!
-	 * \brief Converts network errors to a human-readable string based on
-	 * Discord documentation.
-	 *
-	 * See https://discordapp.com/developers/docs/topics/response-codes
-	 * \param error The network error returned by a failed method.
-	 */
-	QString networkErrorToString(QNetworkReply::NetworkError error);
-	///\brief Generates a user-agent from the information in this namespace.
-	QString userAgent();
-	///\brief Discord's epoch value for snowflake generation.
-	extern const qlonglong discordEpoch;
-	/*!
-	 * \brief The library name.
-	 *
-	 * This should always be QDiscord, unless you fork the project and change
-	 * the name.\n
-	 * Change it in `src/config`.
-	 */
-	extern const QString libName;
-	/*!
-	 * \brief The name of the bot this library will be used for.
-	 *
-	 * This should always be changed to your bot's name before QDiscord starts.
-	 */
-	extern QString botName;
-	///\brief The major version of the library.
-	extern const QString libMajor;
-	/*!
-	 * \brief The minor version of the library.
-	 *
-	 * This should be incremented with each update of the library.
-	 */
-	extern const QString libMinor;
-	///\brief A link to where the library repository is located.
-	extern const QString libLink;
-	///\brief The Discord API version in use.
-	extern const QString apiVersion;
-}
+namespace QDiscordUtilities {
+    ///\brief A struct used for storing the Discord API endpoints.
+    struct EndPoints
+    {
+        QString base; ///<\brief The base Discord endpoint.
+        QString apiBase; ///<\brief The base Discord API endpoint.
+        QString gateway; ///<\brief The gateway endpoint.
+        QString users; ///<\brief The users endpoint.
+        QString me; ///<\brief The users/\@me endpoint.
+        QString guilds; ///<\brief THe guilds endpoint.
+        QString auth; ///<\brief The auth endpoint.
+        QString register_; ///<\brief The registration endpoint.
+        QString login; ///<\brief The auth/login endpoint.
+        QString logout; ///<\brief The auth/logout endpoint.
+        QString servers; ///<\brief The servers endpoint.
+        QString channels; ///<\brief The channels endpoint.
+    };
+    extern const EndPoints endPoints;
+    /*!
+     * \brief Converts network errors to a human-readable string based on
+     * Discord documentation.
+     *
+     * See https://discordapp.com/developers/docs/topics/response-codes
+     * \param error The network error returned by a failed method.
+     */
+    QString networkErrorToString(QNetworkReply::NetworkError error);
+    ///\brief Generates a user-agent from the information in this namespace.
+    QString userAgent();
+    ///\brief Discord's epoch value for snowflake generation.
+    extern const qlonglong discordEpoch;
+    /*!
+     * \brief The library name.
+     *
+     * This should always be QDiscord, unless you fork the project and change
+     * the name.\n
+     * Change it in `src/config`.
+     */
+    extern const QString libName;
+    /*!
+     * \brief The name of the bot this library will be used for.
+     *
+     * This should always be changed to your bot's name before QDiscord starts.
+     */
+    extern QString botName;
+    ///\brief The major version of the library.
+    extern const QString libMajor;
+    /*!
+     * \brief The minor version of the library.
+     *
+     * This should be incremented with each update of the library.
+     */
+    extern const QString libMinor;
+    ///\brief A link to where the library repository is located.
+    extern const QString libLink;
+    ///\brief The Discord API version in use.
+    extern const QString apiVersion;
+} // namespace QDiscordUtilities
 
 #endif // QDISCORDUTILITIES_HPP

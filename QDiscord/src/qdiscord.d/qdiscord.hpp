@@ -19,50 +19,50 @@
 #ifndef QDISCORD_HPP
 #define QDISCORD_HPP
 
-#include <QObject>
-#include <QDebug>
 #include "qdiscordrest.hpp"
 #include "qdiscordstate.hpp"
 #include "qdiscordws.hpp"
+#include <QDebug>
+#include <QObject>
 
 class QDiscord : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit QDiscord(QObject* parent = 0);
-	~QDiscord();
+    explicit QDiscord(QObject* parent = 0);
+    ~QDiscord();
 
-	void login(const QDiscordToken& token);
-	void login(const QDiscordToken& token, std::function<void(bool)> callback);
+    void login(const QDiscordToken& token);
+    void login(const QDiscordToken& token, std::function<void(bool)> callback);
 
-	void logout();
-	void logout(std::function<void()> callback);
+    void logout();
+    void logout(std::function<void()> callback);
 
-	bool isConnecting() const;
-	bool isConnected() const;
+    bool isConnecting() const;
+    bool isConnected() const;
 
-	QDiscordToken token() const
-	{return _rest.token();}
-	void setToken(const QDiscordToken& token);
+    QDiscordToken token() const { return _rest.token(); }
+    void setToken(const QDiscordToken& token);
 
-	QDiscordRest& rest() {return _rest;}
-	QDiscordWs& ws() {return _ws;}
-	QDiscordState& state() {return _state;}
+    QDiscordRest& rest() { return _rest; }
+    QDiscordWs& ws() { return _ws; }
+    QDiscordState& state() { return _state; }
 signals:
-	void loginFailed();
-	void loggedIn();
-	void loggedOut();
+    void loginFailed();
+    void loggedIn();
+    void loggedOut();
+
 private:
-	void wsConnectFailed();
-	void wsDisconnected();
-	void wsConnectSuccess();
-	bool _tokenSet;
-	bool _connected;
-	std::function<void(bool)> _loginCallback;
-	std::function<void()> _logoutCallback;
-	QDiscordRest _rest;
-	QDiscordWs _ws;
-	QDiscordState _state;
+    void wsConnectFailed();
+    void wsDisconnected();
+    void wsConnectSuccess();
+    bool _tokenSet;
+    bool _connected;
+    std::function<void(bool)> _loginCallback;
+    std::function<void()> _logoutCallback;
+    QDiscordRest _rest;
+    QDiscordWs _ws;
+    QDiscordState _state;
 };
 
 #endif // QDISCORD_HPP

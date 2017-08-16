@@ -24,8 +24,8 @@
 
 struct QDiscordLibraryVersion
 {
-	quint16 majorVersion;
-	quint16 minorVersion;
+    quint16 majorVersion;
+    quint16 minorVersion;
 };
 
 Q_DECLARE_METATYPE(QDiscordLibraryVersion)
@@ -33,31 +33,33 @@ Q_DECLARE_METATYPE(QDiscordLibraryVersion)
 class QDiscordUserAgent
 {
 public:
-	QDiscordUserAgent();
-	static const QDiscordUserAgent& global();
-	QString libraryName() const
-	{return _libraryName;}
-	void setLibraryName(const QString& libraryName)
-	{_libraryName = libraryName;}
-	QString libraryLink() const
-	{return _libraryLink;}
-	void setLibraryLink(const QString& libraryLink)
-	{_libraryLink = libraryLink;}
-	QDiscordLibraryVersion libraryVersion() const
-	{return _libraryVersion;}
-	void setLibraryVersion(const QDiscordLibraryVersion& libraryVersion)
-	{_libraryVersion = libraryVersion;}
-	QString botName() const
-	{return _botName;}
-	void setBotName(const QString& botName)
-	{_botName = botName;}
-	QString toString() const;
+    QDiscordUserAgent();
+    static const QDiscordUserAgent& global();
+    QString libraryName() const { return _libraryName; }
+    void setLibraryName(const QString& libraryName)
+    {
+        _libraryName = libraryName;
+    }
+    QString libraryLink() const { return _libraryLink; }
+    void setLibraryLink(const QString& libraryLink)
+    {
+        _libraryLink = libraryLink;
+    }
+    QDiscordLibraryVersion libraryVersion() const { return _libraryVersion; }
+    void setLibraryVersion(const QDiscordLibraryVersion& libraryVersion)
+    {
+        _libraryVersion = libraryVersion;
+    }
+    QString botName() const { return _botName; }
+    void setBotName(const QString& botName) { _botName = botName; }
+    QString toString() const;
+
 private:
-	static QDiscordUserAgent makeGlobalInstance();
-	QString _libraryName;
-	QString _libraryLink;
-	QDiscordLibraryVersion _libraryVersion;
-	QString _botName;
+    static QDiscordUserAgent makeGlobalInstance();
+    QString _libraryName;
+    QString _libraryLink;
+    QDiscordLibraryVersion _libraryVersion;
+    QString _botName;
 };
 
 Q_DECLARE_METATYPE(QDiscordUserAgent)

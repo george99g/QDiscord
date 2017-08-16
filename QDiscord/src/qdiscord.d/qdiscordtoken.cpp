@@ -20,119 +20,119 @@
 
 QDiscordToken::QDiscordToken()
 {
-	_type = Type::None;
+    _type = Type::None;
 }
 
 QDiscordToken::QDiscordToken(QString token, Type type)
 {
-	//The token passed already has a type, so we'll have to use the string.
-	if(type == Type::Auto)
-	{
-		int spacePos = token.indexOf(' ');
-		//No space, no type, thus user token.
-		if(spacePos == -1)
-		{
-			_token = token;
-			_type = Type::None;
-		}
-		else //We have a space, let's try to find the type.
-		{
-			QString type = token.mid(0, spacePos);
-			type = type.toLower();
-			if(type == "bot")
-			{
-				_token = token.mid(spacePos + 1);
-				_type = Type::Bot;
-			}
-			else if(type == "bearer")
-			{
-				_token = token.mid(spacePos + 1);
-				_type = Type::Bearer;
-			}
-			else //Not a valid type. We'll assume they meant bot.
-			{
-				_token = token.mid(spacePos + 1);
-				_type = Type::Bot;
-			}
-		}
-	}
-	else //The user has given us a type, use that.
-	{
-		_token = token;
-		_type = type;
-	}
+    // The token passed already has a type, so we'll have to use the string.
+    if(type == Type::Auto)
+    {
+        int spacePos = token.indexOf(' ');
+        // No space, no type, thus user token.
+        if(spacePos == -1)
+        {
+            _token = token;
+            _type = Type::None;
+        }
+        else // We have a space, let's try to find the type.
+        {
+            QString type = token.mid(0, spacePos);
+            type = type.toLower();
+            if(type == "bot")
+            {
+                _token = token.mid(spacePos + 1);
+                _type = Type::Bot;
+            }
+            else if(type == "bearer")
+            {
+                _token = token.mid(spacePos + 1);
+                _type = Type::Bearer;
+            }
+            else // Not a valid type. We'll assume they meant bot.
+            {
+                _token = token.mid(spacePos + 1);
+                _type = Type::Bot;
+            }
+        }
+    }
+    else // The user has given us a type, use that.
+    {
+        _token = token;
+        _type = type;
+    }
 }
 
 QString QDiscordToken::rawToken() const
 {
-	return _token;
+    return _token;
 }
 
 void QDiscordToken::setRawToken(QString token)
 {
-	_token = token;
+    _token = token;
 }
 
 QDiscordToken::Type QDiscordToken::type() const
 {
-	return _type;
+    return _type;
 }
 
 void QDiscordToken::setType(QDiscordToken::Type type)
 {
-	_type = type;
+    _type = type;
 }
 
 QString QDiscordToken::fullToken() const
 {
-	switch(_type)
-	{
-	case Type::Bearer:
-		return "Bearer " + _token;
-	case Type::Bot:
-		return "Bot " + _token;
-	default:
-		return _token;
-	}
+    switch(_type)
+    {
+    case Type::Bearer:
+        return "Bearer " + _token;
+    case Type::Bot:
+        return "Bot " + _token;
+    default:
+        return _token;
+    }
 }
 
 bool QDiscordToken::isEmpty() const
 {
-	return _token.isEmpty();
+    return _token.isEmpty();
 }
 
 void QDiscordToken::clear()
 {
-	_token.clear();
-	_type = Type::None;
+    _token.clear();
+    _type = Type::None;
 }
 
-bool QDiscordToken::operator ==(const QDiscordToken& other) const
+bool QDiscordToken::operator==(const QDiscordToken& other) const
 {
-	return _token == other._token;
+    return _token == other._token;
 }
 
-bool QDiscordToken::operator !=(const QDiscordToken& other) const
+bool QDiscordToken::operator!=(const QDiscordToken& other) const
 {
-	return !operator ==(other);
+    return !operator==(other);
 }
 
-bool QDiscordToken::operator <(const QDiscordToken& other) const
+bool QDiscordToken::operator<(const QDiscordToken& other) const
 {
-	return _token < other._token;
+    return _token < other._token;
 }
 
-bool QDiscordToken::operator >(const QDiscordToken& other) const
+bool QDiscordToken::operator>(const QDiscordToken& other) const
 {
-	return _token > other._token;
+    return _token > other._token;
 }
 
-bool QDiscordToken::operator <=(const QDiscordToken& other) const
+bool QDiscordToken::operator<=(const QDiscordToken& other) const
 {
-	return _token <= other._token;
+    return _token <= other._token;
 }
 
-bool QDiscordToken::operator >=(const QDiscordToken& other) const
+bool QDiscordToken::operator>=(const QDiscordToken& other) const
 {
-	return _token >= other._token;
+    return _token >= other._token;
 }

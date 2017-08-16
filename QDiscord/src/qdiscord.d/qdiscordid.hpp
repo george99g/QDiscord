@@ -19,37 +19,38 @@
 #ifndef QDISCORDID_HPP
 #define QDISCORDID_HPP
 
+#include "qdiscordutilities.hpp"
+#include <QDateTime>
 #include <QMetaType>
 #include <QString>
-#include <QDateTime>
-#include "qdiscordutilities.hpp"
 
 class QDiscordID
 {
 public:
-	QDiscordID();
-	explicit QDiscordID(quint64 id);
-	QDiscordID(const QString& id);
-	QString toString() const;
-	quint64 value() const;
-	QDateTime createdAt() const;
-	bool isNull() const;
-	operator bool() const;
-	bool operator !() const;
-	bool operator ==(const QDiscordID& other) const;
-	bool operator !=(const QDiscordID& other) const;
-	bool operator > (const QDiscordID& other) const;
-	bool operator < (const QDiscordID& other) const;
-	bool operator <=(const QDiscordID& other) const;
-	bool operator >=(const QDiscordID& other) const;
-	bool operator ==(quint64 other) const;
-	bool operator !=(quint64 other) const;
-	bool operator > (quint64 other) const;
-	bool operator < (quint64 other) const;
-	bool operator <=(quint64 other) const;
-	bool operator >=(quint64 other) const;
+    QDiscordID();
+    explicit QDiscordID(quint64 id);
+    QDiscordID(const QString& id);
+    QString toString() const;
+    quint64 value() const;
+    QDateTime createdAt() const;
+    bool isNull() const;
+    operator bool() const;
+    bool operator!() const;
+    bool operator==(const QDiscordID& other) const;
+    bool operator!=(const QDiscordID& other) const;
+    bool operator>(const QDiscordID& other) const;
+    bool operator<(const QDiscordID& other) const;
+    bool operator<=(const QDiscordID& other) const;
+    bool operator>=(const QDiscordID& other) const;
+    bool operator==(quint64 other) const;
+    bool operator!=(quint64 other) const;
+    bool operator>(quint64 other) const;
+    bool operator<(quint64 other) const;
+    bool operator<=(quint64 other) const;
+    bool operator>=(quint64 other) const;
+
 private:
-	quint64 _id;
+    quint64 _id;
 };
 
 Q_DECLARE_METATYPE(QDiscordID)

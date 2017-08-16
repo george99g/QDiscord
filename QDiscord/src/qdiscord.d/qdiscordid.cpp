@@ -20,116 +20,115 @@
 
 QDiscordID::QDiscordID()
 {
-	_id = 0;
+    _id = 0;
 }
 
 QDiscordID::QDiscordID(quint64 id)
 {
-	_id = id;
+    _id = id;
 }
 
 QDiscordID::QDiscordID(const QString& id)
 {
-	bool ok;
-	_id = id.toULongLong(&ok);
-	if(!ok)
-		_id = 0;
+    bool ok;
+    _id = id.toULongLong(&ok);
+    if(!ok)
+        _id = 0;
 }
 
 QString QDiscordID::toString() const
 {
-	return QString::number(_id);
+    return QString::number(_id);
 }
 
 quint64 QDiscordID::value() const
 {
-	return _id;
+    return _id;
 }
 
 QDateTime QDiscordID::createdAt() const
 {
 #if QT_VERSION_MAJOR >= 5 && QT_VERSION_MINOR >= 8
-	return QDateTime::fromSecsSinceEpoch(
+    return QDateTime::fromSecsSinceEpoch(
 #else
-	return QDateTime::fromTime_t(
+    return QDateTime::fromTime_t(
 #endif
-		((_id >> 22) + QDiscordUtilities::discordEpoch) / 1000
-				);
+        ((_id >> 22) + QDiscordUtilities::discordEpoch) / 1000);
 }
 
 bool QDiscordID::isNull() const
 {
-	return _id == 0;
+    return _id == 0;
 }
 
-bool QDiscordID::operator !() const
+bool QDiscordID::operator!() const
 {
-	return _id == 0;
+    return _id == 0;
 }
 
 QDiscordID::operator bool() const
 {
-	return _id != 0;
+    return _id != 0;
 }
 
-bool QDiscordID::operator ==(const QDiscordID& other) const
+bool QDiscordID::operator==(const QDiscordID& other) const
 {
-	if(isNull() || other.isNull())
-		return false;
-	return _id == other._id;
+    if(isNull() || other.isNull())
+        return false;
+    return _id == other._id;
 }
 
-bool QDiscordID::operator !=(const QDiscordID& other) const
+bool QDiscordID::operator!=(const QDiscordID& other) const
 {
-	return !operator ==(other);
+    return !operator==(other);
 }
 
-bool QDiscordID::operator >(const QDiscordID& other) const
+bool QDiscordID::operator>(const QDiscordID& other) const
 {
-	return _id > other._id;
+    return _id > other._id;
 }
 
-bool QDiscordID::operator <(const QDiscordID& other) const
+bool QDiscordID::operator<(const QDiscordID& other) const
 {
-	return _id < other._id;
+    return _id < other._id;
 }
 
-bool QDiscordID::operator <=(const QDiscordID& other) const
+bool QDiscordID::operator<=(const QDiscordID& other) const
 {
-	return _id <= other._id;
+    return _id <= other._id;
 }
 
-bool QDiscordID::operator >=(const QDiscordID& other) const
+bool QDiscordID::operator>=(const QDiscordID& other) const
 {
-	return _id >= other._id;
+    return _id >= other._id;
 }
 
-bool QDiscordID::operator ==(quint64 other) const
+bool QDiscordID::operator==(quint64 other) const
 {
-	return _id == other;
+    return _id == other;
 }
 
-bool QDiscordID::operator !=(quint64 other) const
+bool QDiscordID::operator!=(quint64 other) const
 {
-	return _id != other;
+    return _id != other;
 }
 
-bool QDiscordID::operator >(quint64 other) const
+bool QDiscordID::operator>(quint64 other) const
 {
-	return _id > other;
+    return _id > other;
 }
 
-bool QDiscordID::operator <(quint64 other) const
+bool QDiscordID::operator<(quint64 other) const
 {
-	return _id < other;
+    return _id < other;
 }
 
-bool QDiscordID::operator <=(quint64 other) const
+bool QDiscordID::operator<=(quint64 other) const
 {
-	return _id <= other;
+    return _id <= other;
 }
 
-bool QDiscordID::operator >=(quint64 other) const
+bool QDiscordID::operator>=(quint64 other) const
 {
-	return _id >= other;
+    return _id >= other;
 }

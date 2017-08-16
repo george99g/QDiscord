@@ -19,44 +19,38 @@
 #ifndef QDISCORDBUCKET_HPP
 #define QDISCORDBUCKET_HPP
 
-#include <QQueue>
 #include <QMetaType>
-#include <numeric>
+#include <QQueue>
 #include <functional>
+#include <numeric>
 
 class QNetworkReply;
 
 class QDiscordBucket
 {
 public:
-	QDiscordBucket();
-	quint16 limit() const
-	{return _limit;}
-	void setLimit(quint16 limit)
-	{_limit = limit;}
-	quint16 remaining() const
-	{return _remaining;}
-	void setRemaining(quint16 remaining)
-	{_remaining = remaining;}
-	quint64 reset() const
-	{return _reset;}
-	void setReset(quint64 reset)
-	{_reset = reset;}
-	qint8 activeRequests() const
-	{return _activeRequests;}
-	void setActiveRequests(qint8 activeRequests);
-	void process();
-	void processLimits();
-	void processQueue();
-	bool processHeaders(QNetworkReply* reply);
-	void enqueue(const std::function<void()>& func);
-	bool hasQueued();
+    QDiscordBucket();
+    quint16 limit() const { return _limit; }
+    void setLimit(quint16 limit) { _limit = limit; }
+    quint16 remaining() const { return _remaining; }
+    void setRemaining(quint16 remaining) { _remaining = remaining; }
+    quint64 reset() const { return _reset; }
+    void setReset(quint64 reset) { _reset = reset; }
+    qint8 activeRequests() const { return _activeRequests; }
+    void setActiveRequests(qint8 activeRequests);
+    void process();
+    void processLimits();
+    void processQueue();
+    bool processHeaders(QNetworkReply* reply);
+    void enqueue(const std::function<void()>& func);
+    bool hasQueued();
+
 private:
-	quint16 _limit = 1;
-	quint16 _remaining = 1;
-	quint64 _reset = std::numeric_limits<quint64>::max();
-	qint8 _activeRequests = 0;
-	QQueue<std::function<void()>> _queue;
+    quint16 _limit = 1;
+    quint16 _remaining = 1;
+    quint64 _reset = std::numeric_limits<quint64>::max();
+    qint8 _activeRequests = 0;
+    QQueue<std::function<void()>> _queue;
 };
 
 Q_DECLARE_METATYPE(QDiscordBucket)

@@ -19,12 +19,12 @@
 #ifndef QDISCORDGUILD_HPP
 #define QDISCORDGUILD_HPP
 
+#include "qdiscordchannel.hpp"
+#include "qdiscordmember.hpp"
 #include <QDateTime>
 #include <QDebug>
-#include <QJsonObject>
 #include <QJsonArray>
-#include "qdiscordmember.hpp"
-#include "qdiscordchannel.hpp"
+#include <QJsonObject>
 
 class QDiscordRest;
 
@@ -32,189 +32,211 @@ class QDiscordRest;
 class QDiscordGuild : public QEnableSharedFromThis<QDiscordGuild>
 {
 public:
-	static QSharedPointer<QDiscordGuild> fromJson(const QJsonObject& object);
+    static QSharedPointer<QDiscordGuild> fromJson(const QJsonObject& object);
 
-	enum class NotificationLevel : qint8
-	{
-		AllMessages = 0,
-		OnlyMentions = 1,
-		Unknown = -1
-	};
+    enum class NotificationLevel : qint8
+    {
+        AllMessages = 0,
+        OnlyMentions = 1,
+        Unknown = -1
+    };
 
-	enum class VerificationLevel : qint8
-	{
-		None = 0,
-		Low = 1,
-		Medium = 2,
-		High = 3,
-		Unknown = -1
-	};
+    enum class VerificationLevel : qint8
+    {
+        None = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3,
+        Unknown = -1
+    };
 
-	enum class ExplicitContentFilterLevel : qint8
-	{
-		None = 0,
-		WithoutRoles = 1,
-		All = 2,
-		Unknown = -1
-	};
+    enum class ExplicitContentFilterLevel : qint8
+    {
+        None = 0,
+        WithoutRoles = 1,
+        All = 2,
+        Unknown = -1
+    };
 
-	QDiscordGuild(const QDiscordGuild& other);
-	QDiscordGuild();
-	~QDiscordGuild();
-	void deserialize(const QJsonObject& object);
-	QJsonObject serialize();
-	///\brief Returns the guild's ID.
-	QDiscordID id() const {return _id;}
-	void setId(QDiscordID id) {_id = id;}
-	///\brief Returns the guild's name.
-	QString name() const {return _name;}
-	void setName(const QString& name) {_name = name;}
-	QString icon() const {return _icon;}
-	void setIcon(const QString& icon) {_icon = icon;}
-	QString splash() const {return _splash;}
-	void setSplash(const QString& splash) {_splash = splash;}
-	QDiscordID ownerId() const {return _ownerId;}
-	void setOwnerId(QDiscordID ownerId) {_ownerId = ownerId;}
-	QDiscordID applicationId() const {return _applicationId;}
-	void setApplicationId(QDiscordID applicationId)
-	{_applicationId = applicationId;}
-	QString region() const {return _region;}
-	void setRegion(const QString& region) {_region = region;}
-	QDiscordID afkChannelId() const {return _afkChannelId;}
-	void setAfkChannelId(QDiscordID afkChannelId)
-	{_afkChannelId = afkChannelId;}
-	/*!
-	 * \brief Returns the guild's AFK time needed to move a user to the AFK
-	 * channel.
-	 */
-	int afkTimeout() const {return _afkTimeout;}
-	void setAfkTimeout(int afkTimeout) {_afkTimeout = afkTimeout;}
-	bool embedEnabled() const {return _embedEnabled;}
-	void setEmbedEnabled(bool embedEnabled) {_embedEnabled = embedEnabled;}
-	QDiscordID embedChannelId() const {return _embedChannelId;}
-	void setEmbedChannelId(QDiscordID embedChannelId)
-	{_embedChannelId = embedChannelId;}
-	///\brief Returns the guild's verification level.
-	VerificationLevel verificationLevel() const {return _verificationLevel;}
-	void setVerificationLevel(VerificationLevel verificationLevel)
-	{_verificationLevel = verificationLevel;}
-	NotificationLevel defaultMessageNotifications() const
-	{return _defaultMessageNotifications;}
-	void setDefaultMessageNotifications(
-			NotificationLevel defaultMessageNotifications
-		)
-	{_defaultMessageNotifications = defaultMessageNotifications;}
-	ExplicitContentFilterLevel explicitContentFilter() const
-	{return _explicitContentFilter;}
-	void
-	setExplicitContentFilter(ExplicitContentFilterLevel explicitContentFilter)
-	{_explicitContentFilter = explicitContentFilter;}
-	QStringList features() const {return _features;}
-	void setFeatures(const QStringList& features) {_features = features;}
-	int mfaLevel() const {return _mfaLevel;}
-	void setMfaLevel(int mfaLevel) {_mfaLevel = mfaLevel;}
-	///\brief Returns the date the current user joined this guild.
-	QDateTime joinedAt() const {return _joinedAt;}
-	void setJoinedAt(const QDateTime& joinedAt) {_joinedAt = joinedAt;}
-	bool large() const {return _large;}
-	void setLarge(bool large) {_large = large;}
-	/*!
-	 * \brief Returns whether the guild is unavailable.
-	 *
-	 * If this is true, a majority of guild information will not be available.
-	 */
-	bool unavailable() const {return _unavailable;}
-	void setUnavailable(bool unavailable) {_unavailable = unavailable;}
-	///\brief Returns the guild's member count.
-	int memberCount() const {return _memberCount;}
-	void setMemberCount(int memberCount) {_memberCount = memberCount;}
-	void update(const QJsonObject& object);
-	///\brief Returns a map of pointers to the guild's members and their IDs.
-	QMap<QDiscordID, QSharedPointer<QDiscordMember>>
-	membersMap() const {return _members;}
-	///\brief Returns a map of pointers to the guild's channels and their IDs.
-	QMap<QDiscordID, QSharedPointer<QDiscordChannel>>
-	channelsMap() const {return _channels;}
-	QList<QSharedPointer<QDiscordMember>>
-	members() const {return _members.values();}
-	QList<QSharedPointer<QDiscordChannel>>
-	channels() const {return _channels.values();}
-	/*!
-	 * \brief Returns a pointer to a guild channel that has the provided ID.
-	 *
-	 * Returns `nullptr` if the channel was not found.
-	 */
-	QSharedPointer<QDiscordChannel>
-	channel(const QDiscordID& id) const {
-		return _channels.value(id, QSharedPointer<QDiscordChannel>());
-	}
-	/*!
-	 * \brief Returns a pointer to a guild member that has the provided ID.
-	 *
-	 * Returns `nullptr` if the member was not found.
-	 */
-	QSharedPointer<QDiscordMember>
-	member(const QDiscordID& id) const {
-		return _members.value(id, QSharedPointer<QDiscordMember>());
-	}
-	///\brief Adds the provided channel to the guild.
-	void addChannel(QSharedPointer<QDiscordChannel> channel);
-	/*!
-	 * \brief Removes the provided channel from the guild.
-	 *
-	 * Returns `true` if the channel was successfully removed. `false` if
-	 * `nullptr` was passed or the channel was not found.
-	 */
-	bool removeChannel(QSharedPointer<QDiscordChannel> channel);
-	bool removeChannel(QDiscordID channel);
-	///\brief Adds the provided member to the guild.
-	void addMember(QSharedPointer<QDiscordMember> member);
-	/*!
-	 * \brief Removes the provided member from the guild.
-	 *
-	 * Returns `true` if the member was successfully removed. `false` if
-	 * `nullptr` was passed or the member was not found.
-	 */
-	bool removeMember(QSharedPointer<QDiscordMember> member);
-	bool removeMember(QDiscordID member);
+    QDiscordGuild(const QDiscordGuild& other);
+    QDiscordGuild();
+    ~QDiscordGuild();
+    void deserialize(const QJsonObject& object);
+    QJsonObject serialize();
+    ///\brief Returns the guild's ID.
+    QDiscordID id() const { return _id; }
+    void setId(QDiscordID id) { _id = id; }
+    ///\brief Returns the guild's name.
+    QString name() const { return _name; }
+    void setName(const QString& name) { _name = name; }
+    QString icon() const { return _icon; }
+    void setIcon(const QString& icon) { _icon = icon; }
+    QString splash() const { return _splash; }
+    void setSplash(const QString& splash) { _splash = splash; }
+    QDiscordID ownerId() const { return _ownerId; }
+    void setOwnerId(QDiscordID ownerId) { _ownerId = ownerId; }
+    QDiscordID applicationId() const { return _applicationId; }
+    void setApplicationId(QDiscordID applicationId)
+    {
+        _applicationId = applicationId;
+    }
+    QString region() const { return _region; }
+    void setRegion(const QString& region) { _region = region; }
+    QDiscordID afkChannelId() const { return _afkChannelId; }
+    void setAfkChannelId(QDiscordID afkChannelId)
+    {
+        _afkChannelId = afkChannelId;
+    }
+    /*!
+     * \brief Returns the guild's AFK time needed to move a user to the AFK
+     * channel.
+     */
+    int afkTimeout() const { return _afkTimeout; }
+    void setAfkTimeout(int afkTimeout) { _afkTimeout = afkTimeout; }
+    bool embedEnabled() const { return _embedEnabled; }
+    void setEmbedEnabled(bool embedEnabled) { _embedEnabled = embedEnabled; }
+    QDiscordID embedChannelId() const { return _embedChannelId; }
+    void setEmbedChannelId(QDiscordID embedChannelId)
+    {
+        _embedChannelId = embedChannelId;
+    }
+    ///\brief Returns the guild's verification level.
+    VerificationLevel verificationLevel() const { return _verificationLevel; }
+    void setVerificationLevel(VerificationLevel verificationLevel)
+    {
+        _verificationLevel = verificationLevel;
+    }
+    NotificationLevel defaultMessageNotifications() const
+    {
+        return _defaultMessageNotifications;
+    }
+    void setDefaultMessageNotifications(
+        NotificationLevel defaultMessageNotifications)
+    {
+        _defaultMessageNotifications = defaultMessageNotifications;
+    }
+    ExplicitContentFilterLevel explicitContentFilter() const
+    {
+        return _explicitContentFilter;
+    }
+    void
+    setExplicitContentFilter(ExplicitContentFilterLevel explicitContentFilter)
+    {
+        _explicitContentFilter = explicitContentFilter;
+    }
+    QStringList features() const { return _features; }
+    void setFeatures(const QStringList& features) { _features = features; }
+    int mfaLevel() const { return _mfaLevel; }
+    void setMfaLevel(int mfaLevel) { _mfaLevel = mfaLevel; }
+    ///\brief Returns the date the current user joined this guild.
+    QDateTime joinedAt() const { return _joinedAt; }
+    void setJoinedAt(const QDateTime& joinedAt) { _joinedAt = joinedAt; }
+    bool large() const { return _large; }
+    void setLarge(bool large) { _large = large; }
+    /*!
+     * \brief Returns whether the guild is unavailable.
+     *
+     * If this is true, a majority of guild information will not be available.
+     */
+    bool unavailable() const { return _unavailable; }
+    void setUnavailable(bool unavailable) { _unavailable = unavailable; }
+    ///\brief Returns the guild's member count.
+    int memberCount() const { return _memberCount; }
+    void setMemberCount(int memberCount) { _memberCount = memberCount; }
+    void update(const QJsonObject& object);
+    ///\brief Returns a map of pointers to the guild's members and their IDs.
+    QMap<QDiscordID, QSharedPointer<QDiscordMember>> membersMap() const
+    {
+        return _members;
+    }
+    ///\brief Returns a map of pointers to the guild's channels and their IDs.
+    QMap<QDiscordID, QSharedPointer<QDiscordChannel>> channelsMap() const
+    {
+        return _channels;
+    }
+    QList<QSharedPointer<QDiscordMember>> members() const
+    {
+        return _members.values();
+    }
+    QList<QSharedPointer<QDiscordChannel>> channels() const
+    {
+        return _channels.values();
+    }
+    /*!
+     * \brief Returns a pointer to a guild channel that has the provided ID.
+     *
+     * Returns `nullptr` if the channel was not found.
+     */
+    QSharedPointer<QDiscordChannel> channel(const QDiscordID& id) const
+    {
+        return _channels.value(id, QSharedPointer<QDiscordChannel>());
+    }
+    /*!
+     * \brief Returns a pointer to a guild member that has the provided ID.
+     *
+     * Returns `nullptr` if the member was not found.
+     */
+    QSharedPointer<QDiscordMember> member(const QDiscordID& id) const
+    {
+        return _members.value(id, QSharedPointer<QDiscordMember>());
+    }
+    ///\brief Adds the provided channel to the guild.
+    void addChannel(QSharedPointer<QDiscordChannel> channel);
+    /*!
+     * \brief Removes the provided channel from the guild.
+     *
+     * Returns `true` if the channel was successfully removed. `false` if
+     * `nullptr` was passed or the channel was not found.
+     */
+    bool removeChannel(QSharedPointer<QDiscordChannel> channel);
+    bool removeChannel(QDiscordID channel);
+    ///\brief Adds the provided member to the guild.
+    void addMember(QSharedPointer<QDiscordMember> member);
+    /*!
+     * \brief Removes the provided member from the guild.
+     *
+     * Returns `true` if the member was successfully removed. `false` if
+     * `nullptr` was passed or the member was not found.
+     */
+    bool removeMember(QSharedPointer<QDiscordMember> member);
+    bool removeMember(QDiscordID member);
 
-	QDiscordRest* rest() const
-	{return _rest;}
-	void setRest(QDiscordRest* rest)
-	{_rest = rest;}
+    QDiscordRest* rest() const { return _rest; }
+    void setRest(QDiscordRest* rest) { _rest = rest; }
 
-	bool isNull() const {return _id.isNull();}
-	operator bool() const;
-	bool operator ==(const QDiscordGuild& other) const;
-	bool operator !=(const QDiscordGuild& other) const;
-	bool operator < (const QDiscordGuild& other) const;
-	bool operator > (const QDiscordGuild& other) const;
-	bool operator <=(const QDiscordGuild& other) const;
-	bool operator >=(const QDiscordGuild& other) const;
+    bool isNull() const { return _id.isNull(); }
+    operator bool() const;
+    bool operator==(const QDiscordGuild& other) const;
+    bool operator!=(const QDiscordGuild& other) const;
+    bool operator<(const QDiscordGuild& other) const;
+    bool operator>(const QDiscordGuild& other) const;
+    bool operator<=(const QDiscordGuild& other) const;
+    bool operator>=(const QDiscordGuild& other) const;
+
 private:
-	QDiscordID _id;
-	QString _name;
-	QString _icon;
-	QString _splash;
-	QDiscordID _ownerId;
-	QDiscordID _applicationId;
-	QString _region;
-	QDiscordID _afkChannelId;
-	int _afkTimeout;
-	bool _embedEnabled;
-	QDiscordID _embedChannelId;
-	VerificationLevel _verificationLevel;
-	NotificationLevel _defaultMessageNotifications;
-	ExplicitContentFilterLevel _explicitContentFilter;
-	QStringList _features;
-	int _mfaLevel;
-	QDateTime _joinedAt;
-	bool _large;
-	bool _unavailable;
-	int _memberCount;
-	QMap<QDiscordID, QSharedPointer<QDiscordMember>> _members;
-	QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _channels;
-	QDiscordRest* _rest;
+    QDiscordID _id;
+    QString _name;
+    QString _icon;
+    QString _splash;
+    QDiscordID _ownerId;
+    QDiscordID _applicationId;
+    QString _region;
+    QDiscordID _afkChannelId;
+    int _afkTimeout;
+    bool _embedEnabled;
+    QDiscordID _embedChannelId;
+    VerificationLevel _verificationLevel;
+    NotificationLevel _defaultMessageNotifications;
+    ExplicitContentFilterLevel _explicitContentFilter;
+    QStringList _features;
+    int _mfaLevel;
+    QDateTime _joinedAt;
+    bool _large;
+    bool _unavailable;
+    int _memberCount;
+    QMap<QDiscordID, QSharedPointer<QDiscordMember>> _members;
+    QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _channels;
+    QDiscordRest* _rest;
 };
 
 Q_DECLARE_METATYPE(QDiscordGuild)

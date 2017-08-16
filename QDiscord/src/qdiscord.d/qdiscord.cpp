@@ -19,125 +19,124 @@
 #include "qdiscord.hpp"
 
 QDiscord::QDiscord(QObject* parent)
-: QObject(parent)
+    : QObject(parent)
 {
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"constructed";
+    qDebug() << this << "constructed";
 #endif
-	_tokenSet = false;
-	_connected = false;
+    _tokenSet = false;
+    _connected = false;
 
-	_ws.setState(&_state);
-	_state.setRest(&_rest);
+    _ws.setState(&_state);
+    _state.setRest(&_rest);
 
-	connect(&_ws, &QDiscordWs::loggedIn, this, &QDiscord::wsConnectSuccess);
-	connect(&_ws, &QDiscordWs::authFail, this, &QDiscord::wsConnectFailed);
-	connect(&_ws, &QDiscordWs::disconnected, this, &QDiscord::wsDisconnected);
+    connect(&_ws, &QDiscordWs::loggedIn, this, &QDiscord::wsConnectSuccess);
+    connect(&_ws, &QDiscordWs::authFail, this, &QDiscord::wsConnectFailed);
+    connect(&_ws, &QDiscordWs::disconnected, this, &QDiscord::wsDisconnected);
 }
 
 QDiscord::~QDiscord()
 {
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"destroyed";
+    qDebug() << this << "destroyed";
 #endif
 }
 
 void QDiscord::login(const QDiscordToken& token)
 {
-	if(isConnected() || isConnecting())
-		return;
-	setToken(token);
-	QDiscordWs::getGateway(_rest, [this](QString endpoint)
-	{
-		if(endpoint.isEmpty())
-		{
-			wsConnectFailed();
-			return;
-		}
+    if(isConnected() || isConnecting())
+        return;
+    setToken(token);
+    QDiscordWs::getGateway(_rest, [this](QString endpoint) {
+        if(endpoint.isEmpty())
+        {
+            wsConnectFailed();
+            return;
+        }
 
-		_ws.open(endpoint);
-	});
+        _ws.open(endpoint);
+    });
 }
 
 void QDiscord::login(const QDiscordToken& token,
-					 std::function<void(bool)> callback)
+                     std::function<void(bool)> callback)
 {
-	if(isConnected() || isConnecting())
-		return;
-	_loginCallback = callback;
-	login(token);
+    if(isConnected() || isConnecting())
+        return;
+    _loginCallback = callback;
+    login(token);
 }
 
 void QDiscord::logout()
 {
-	if(!isConnected() && !isConnecting())
-		return;
-	_ws.close();
-	setToken(QDiscordToken());
+    if(!isConnected() && !isConnecting())
+        return;
+    _ws.close();
+    setToken(QDiscordToken());
 }
 
 void QDiscord::logout(std::function<void()> callback)
 {
-	if(!isConnected() && !isConnecting())
-		return;
-	_logoutCallback = callback;
-	logout();
+    if(!isConnected() && !isConnecting())
+        return;
+    _logoutCallback = callback;
+    logout();
 }
 
 bool QDiscord::isConnecting() const
 {
-	return _tokenSet && !_connected;
+    return _tokenSet && !_connected;
 }
 
 bool QDiscord::isConnected() const
 {
-	return _connected;
+    return _connected;
 }
 
 void QDiscord::setToken(const QDiscordToken& token)
 {
-	_tokenSet = !token.isEmpty();
-	_ws.setToken(token);
-	_rest.setToken(token);
+    _tokenSet = !token.isEmpty();
+    _ws.setToken(token);
+    _rest.setToken(token);
 }
 
 void QDiscord::wsConnectFailed()
 {
-	setToken(QDiscordToken());
-	_connected = false;
+    setToken(QDiscordToken());
+    _connected = false;
 
-	if(_loginCallback)
-	{
-		_loginCallback(false);
-		_loginCallback = std::function<void(bool)>();
-	}
+    if(_loginCallback)
+    {
+        _loginCallback(false);
+        _loginCallback = std::function<void(bool)>();
+    }
 
-	emit loginFailed();
+    emit loginFailed();
 }
 
 void QDiscord::wsDisconnected()
 {
-	setToken(QDiscordToken());
-	_connected = false;
+    setToken(QDiscordToken());
+    _connected = false;
 
-	if(_logoutCallback)
-	{
-		_logoutCallback();
-		_logoutCallback = std::function<void()>();
-	}
+    if(_logoutCallback)
+    {
+        _logoutCallback();
+        _logoutCallback = std::function<void()>();
+    }
 
-	emit loggedOut();
+    emit loggedOut();
 }
 
 void QDiscord::wsConnectSuccess()
 {
-	_connected = true;
+    _connected = true;
 
-	if(_loginCallback)
-	{
-		_loginCallback(true);
-		_loginCallback = std::function<void(bool)>();
-	}
+    if(_loginCallback)
+    {
+        _loginCallback(true);
+        _loginCallback = std::function<void(bool)>();
+    }
 
-	emit loggedIn();
+    emit loggedIn();
 }

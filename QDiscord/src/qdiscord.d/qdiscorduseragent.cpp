@@ -19,35 +19,32 @@
 #include "qdiscorduseragent.hpp"
 #include "qdiscordutilities.hpp"
 
-QDiscordUserAgent::QDiscordUserAgent()
-{
-
-}
+QDiscordUserAgent::QDiscordUserAgent() {}
 
 const QDiscordUserAgent& QDiscordUserAgent::global()
 {
-	static QDiscordUserAgent instance = makeGlobalInstance();
-	return instance;
+    static QDiscordUserAgent instance = makeGlobalInstance();
+    return instance;
 }
 
 QString QDiscordUserAgent::toString() const
 {
-	return QString("DiscordBot (%1, v%2:%3); %4")
-			.arg(_libraryLink)
-			.arg(_libraryVersion.majorVersion)
-			.arg(_libraryVersion.minorVersion)
-			.arg(_botName);
+    return QString("DiscordBot (%1, v%2:%3); %4")
+        .arg(_libraryLink)
+        .arg(_libraryVersion.majorVersion)
+        .arg(_libraryVersion.minorVersion)
+        .arg(_botName);
 }
 
 QDiscordUserAgent QDiscordUserAgent::makeGlobalInstance()
 {
-	QDiscordUserAgent instance;
-	instance._libraryLink = QDiscordUtilities::libLink;
-	QDiscordLibraryVersion version;
-	version.majorVersion = QDiscordUtilities::libMajor.toUInt();
-	version.minorVersion = QDiscordUtilities::libMinor.toUInt();
-	instance._libraryVersion = version;
-	instance._botName = QDiscordUtilities::botName;
-	instance._libraryName = QDiscordUtilities::libName;
-	return instance;
+    QDiscordUserAgent instance;
+    instance._libraryLink = QDiscordUtilities::libLink;
+    QDiscordLibraryVersion version;
+    version.majorVersion = QDiscordUtilities::libMajor.toUInt();
+    version.minorVersion = QDiscordUtilities::libMinor.toUInt();
+    instance._libraryVersion = version;
+    instance._botName = QDiscordUtilities::botName;
+    instance._libraryName = QDiscordUtilities::libName;
+    return instance;
 }

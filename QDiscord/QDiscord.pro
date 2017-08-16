@@ -19,3 +19,5 @@ equals(QDISCORD_LIBRARY_GEN_DOCS, "true") {
     OTHER_FILES += Doxyfile
     include(doc/doc.pri)
 }
+
+OTHER_FILES += .clang-format

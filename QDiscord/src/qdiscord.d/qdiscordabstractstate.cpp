@@ -19,12 +19,8 @@
 #include "qdiscordabstractstate.hpp"
 
 QDiscordAbstractState::QDiscordAbstractState(QObject* parent)
-: QObject(parent)
+    : QObject(parent)
 {
-
 }
 
-QDiscordAbstractState::~QDiscordAbstractState()
-{
-
-}
+QDiscordAbstractState::~QDiscordAbstractState() {}

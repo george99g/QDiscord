@@ -21,126 +21,123 @@
 #define DEFAULT_TIMER_INTERVAL 60
 
 QDiscordRest::QDiscordRest(QObject* parent)
-: QObject(parent)
+    : QObject(parent)
 {
-	_bucketTimer.setInterval(DEFAULT_TIMER_INTERVAL * 1000);
-	_bucketTimer.setSingleShot(false);
-	connect(&_bucketTimer, &QTimer::timeout,
-			this, &QDiscordRest::processBuckets);
-	_bucketTimer.start();
+    _bucketTimer.setInterval(DEFAULT_TIMER_INTERVAL * 1000);
+    _bucketTimer.setSingleShot(false);
+    connect(
+        &_bucketTimer, &QTimer::timeout, this, &QDiscordRest::processBuckets);
+    _bucketTimer.start();
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"constructed";
+    qDebug() << this << "constructed";
 #endif
 }
 
 QDiscordRest::~QDiscordRest()
 {
-	_bucketTimer.stop();
+    _bucketTimer.stop();
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"destroyed";
+    qDebug() << this << "destroyed";
 #endif
 }
 
 void QDiscordRest::request(const QNetworkRequest& request,
-						   const QDiscordRoute& route,
-						   const QJsonObject& data)
+                           const QDiscordRoute& route,
+                           const QJsonObject& data)
 {
-	QDiscordRest::request(request, route, data, [](QNetworkReply*){});
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }
 
 void QDiscordRest::request(const QNetworkRequest& request,
-						   const QDiscordRoute& route,
-						   const QJsonArray& data)
+                           const QDiscordRoute& route,
+                           const QJsonArray& data)
 {
-	QDiscordRest::request(request, route, data, [](QNetworkReply*){});
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }
 
 void QDiscordRest::request(const QNetworkRequest& request,
-						   const QDiscordRoute& route,
-						   const QByteArray& data)
+                           const QDiscordRoute& route,
+                           const QByteArray& data)
 {
-	QDiscordRest::request(request, route, data, [](QNetworkReply*){});
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }
 
 void QDiscordRest::request(const QNetworkRequest& request,
-						   const QDiscordRoute& route,
-						   QHttpMultiPart* data)
+                           const QDiscordRoute& route,
+                           QHttpMultiPart* data)
 {
-	QDiscordRest::request(request, route, data, [](QNetworkReply*){});
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }
 
 void QDiscordRest::request(const QNetworkRequest& request,
-						   const QDiscordRoute& route)
+                           const QDiscordRoute& route)
 {
-	QDiscordRest::request(request, route, [](QNetworkReply*){});
+    QDiscordRest::request(request, route, [](QNetworkReply*) {});
 }
 
 QByteArray QDiscordRest::extractData(const QJsonObject& object) const
 {
-	return QJsonDocument(object).toJson(QJsonDocument::Compact);
+    return QJsonDocument(object).toJson(QJsonDocument::Compact);
 }
 
 QByteArray QDiscordRest::extractData(const QJsonArray& array) const
 {
-	return QJsonDocument(array).toJson(QJsonDocument::Compact);
+    return QJsonDocument(array).toJson(QJsonDocument::Compact);
 }
 
 QByteArray QDiscordRest::extractData(const QByteArray& array) const
 {
-	return array;
+    return array;
 }
 
 QSharedPointer<QDiscordBucket> QDiscordRest::getBucket(QString route)
 {
-	if(!_buckets.keys().contains(route))
-	{
-		_buckets.insert(
-					route,
-					QSharedPointer<QDiscordBucket>(new QDiscordBucket())
-				);
+    if(!_buckets.keys().contains(route))
+    {
+        _buckets.insert(route,
+                        QSharedPointer<QDiscordBucket>(new QDiscordBucket()));
 
 #ifdef QDISCORD_LIBRARY_DEBUG
-		qDebug()<<this<<"created bucket"<<_buckets[route].data()
-				  <<"for"<<route;
+        qDebug() << this << "created bucket" << _buckets[route].data() << "for"
+                 << route;
 #endif
-	}
+    }
 
-	return _buckets[route];
+    return _buckets[route];
 }
 
 void QDiscordRest::processBuckets()
 {
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"processing buckets";
+    qDebug() << this << "processing buckets";
 #endif
 
-	// Process the buckets
-	for(const QSharedPointer<QDiscordBucket>& bucket : _buckets.values())
-		bucket->process();
+    // Process the buckets
+    for(const QSharedPointer<QDiscordBucket>& bucket : _buckets.values())
+        bucket->process();
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"finished processing buckets";
+    qDebug() << this << "finished processing buckets";
 #endif
 
-	// Set the timer interval for the next tick
-	quint64 minResetTime = std::numeric_limits<quint64>::max();
-	for(const QSharedPointer<QDiscordBucket>& bucket : _buckets.values())
-	{
-		if(bucket->reset() < minResetTime)
-			minResetTime = bucket->reset();
-	}
+    // Set the timer interval for the next tick
+    quint64 minResetTime = std::numeric_limits<quint64>::max();
+    for(const QSharedPointer<QDiscordBucket>& bucket : _buckets.values())
+    {
+        if(bucket->reset() < minResetTime)
+            minResetTime = bucket->reset();
+    }
 
-	quint64 currentTime = QDateTime::currentSecsSinceEpoch();
-	quint64 resetInterval;
-	if(minResetTime < currentTime)
-		resetInterval = 0;
-	else if(minResetTime - currentTime > DEFAULT_TIMER_INTERVAL)
-		resetInterval = DEFAULT_TIMER_INTERVAL;
-	else
-		resetInterval = minResetTime - currentTime;
-	_bucketTimer.start(resetInterval*1000);
+    quint64 currentTime = QDateTime::currentSecsSinceEpoch();
+    quint64 resetInterval;
+    if(minResetTime < currentTime)
+        resetInterval = 0;
+    else if(minResetTime - currentTime > DEFAULT_TIMER_INTERVAL)
+        resetInterval = DEFAULT_TIMER_INTERVAL;
+    else
+        resetInterval = minResetTime - currentTime;
+    _bucketTimer.start(resetInterval * 1000);
 #ifdef QDISCORD_LIBRARY_DEBUG
-	qDebug()<<this<<"ticking again in"
-		   <<_bucketTimer.interval()/1000.<<"seconds";
+    qDebug() << this << "ticking again in" << _bucketTimer.interval() / 1000.
+             << "seconds";
 #endif
 }
-

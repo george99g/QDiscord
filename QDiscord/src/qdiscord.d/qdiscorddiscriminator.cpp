@@ -20,111 +20,105 @@
 
 QDiscordDiscriminator::QDiscordDiscriminator()
 {
-	_discriminator = -1;
+    _discriminator = -1;
 }
 
 QDiscordDiscriminator::QDiscordDiscriminator(qint16 discriminator)
 {
-	_discriminator = discriminator;
+    _discriminator = discriminator;
 }
 
 QDiscordDiscriminator::QDiscordDiscriminator(const QString& discriminator)
 {
-	bool ok;
-	_discriminator = discriminator.toShort(&ok);
-	if(!ok)
-		_discriminator = -1;
+    bool ok;
+    _discriminator = discriminator.toShort(&ok);
+    if(!ok)
+        _discriminator = -1;
 }
 
 QString QDiscordDiscriminator::toString() const
 {
-	return QString::number(_discriminator);
+    return QString::number(_discriminator);
 }
 
 qint16 QDiscordDiscriminator::value() const
 {
-	return _discriminator;
+    return _discriminator;
 }
 
 bool QDiscordDiscriminator::isNull() const
 {
-	return _discriminator == -1;
+    return _discriminator == -1;
 }
 
-bool QDiscordDiscriminator::operator !() const
+bool QDiscordDiscriminator::operator!() const
 {
-	return _discriminator == -1;
+    return _discriminator == -1;
 }
 
 QDiscordDiscriminator::operator bool() const
 {
-	return _discriminator != -1;
+    return _discriminator != -1;
 }
 
-bool
-QDiscordDiscriminator::operator ==(const QDiscordDiscriminator& other) const
+bool QDiscordDiscriminator::operator==(const QDiscordDiscriminator& other) const
 {
-	if(isNull() || other.isNull())
-		return false;
-	return _discriminator == other._discriminator;
+    if(isNull() || other.isNull())
+        return false;
+    return _discriminator == other._discriminator;
 }
 
-bool
-QDiscordDiscriminator::operator !=(const QDiscordDiscriminator& other) const
+bool QDiscordDiscriminator::operator!=(const QDiscordDiscriminator& other) const
 {
-	return !operator ==(other);
+    return !operator==(other);
 }
 
-bool
-QDiscordDiscriminator::operator >(const QDiscordDiscriminator& other) const
+bool QDiscordDiscriminator::operator>(const QDiscordDiscriminator& other) const
 {
-	return _discriminator > other._discriminator;
+    return _discriminator > other._discriminator;
 }
 
-bool
-QDiscordDiscriminator::operator <(const QDiscordDiscriminator& other) const
+bool QDiscordDiscriminator::operator<(const QDiscordDiscriminator& other) const
 {
-	return _discriminator < other._discriminator;
+    return _discriminator < other._discriminator;
 }
 
-bool
-QDiscordDiscriminator::operator <=(const QDiscordDiscriminator& other) const
+bool QDiscordDiscriminator::operator<=(const QDiscordDiscriminator& other) const
 {
-	return _discriminator <= other._discriminator;
+    return _discriminator <= other._discriminator;
 }
 
-bool
-QDiscordDiscriminator::operator >=(const QDiscordDiscriminator& other) const
+bool QDiscordDiscriminator::operator>=(const QDiscordDiscriminator& other) const
 {
-	return _discriminator >= other._discriminator;
+    return _discriminator >= other._discriminator;
 }
 
-bool QDiscordDiscriminator::operator ==(qint16 other) const
+bool QDiscordDiscriminator::operator==(qint16 other) const
 {
-	return _discriminator == other;
+    return _discriminator == other;
 }
 
-bool QDiscordDiscriminator::operator !=(qint16 other) const
+bool QDiscordDiscriminator::operator!=(qint16 other) const
 {
-	return _discriminator != other;
+    return _discriminator != other;
 }
 
-bool QDiscordDiscriminator::operator >(qint16 other) const
+bool QDiscordDiscriminator::operator>(qint16 other) const
 {
-	return _discriminator > other;
+    return _discriminator > other;
 }
 
-bool QDiscordDiscriminator::operator <(qint16 other) const
+bool QDiscordDiscriminator::operator<(qint16 other) const
 {
-	return _discriminator < other;
+    return _discriminator < other;
 }
 
-bool QDiscordDiscriminator::operator <=(qint16 other) const
+bool QDiscordDiscriminator::operator<=(qint16 other) const
 {
-	return _discriminator <= other;
+    return _discriminator <= other;
 }
 
-bool QDiscordDiscriminator::operator >=(qint16 other) const
+bool QDiscordDiscriminator::operator>=(qint16 other) const
 {
-	return _discriminator >= other;
+    return _discriminator >= other;
 }

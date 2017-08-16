@@ -25,29 +25,32 @@
 class QDiscordToken
 {
 public:
-	enum class Type
-	{
-		Auto,
-		Bearer, Bot, None
-	};
-	QDiscordToken();
-	QDiscordToken(QString token, Type type = Type::Bot);
-	QString rawToken() const;
-	void setRawToken(QString token);
-	Type type() const;
-	void setType(Type type);
-	QString fullToken() const;
-	bool isEmpty() const;
-	void clear();
-	bool operator ==(const QDiscordToken& other) const;
-	bool operator !=(const QDiscordToken& other) const;
-	bool operator < (const QDiscordToken& other) const;
-	bool operator > (const QDiscordToken& other) const;
-	bool operator <=(const QDiscordToken& other) const;
-	bool operator >=(const QDiscordToken& other) const;
+    enum class Type
+    {
+        Auto,
+        Bearer,
+        Bot,
+        None
+    };
+    QDiscordToken();
+    QDiscordToken(QString token, Type type = Type::Bot);
+    QString rawToken() const;
+    void setRawToken(QString token);
+    Type type() const;
+    void setType(Type type);
+    QString fullToken() const;
+    bool isEmpty() const;
+    void clear();
+    bool operator==(const QDiscordToken& other) const;
+    bool operator!=(const QDiscordToken& other) const;
+    bool operator<(const QDiscordToken& other) const;
+    bool operator>(const QDiscordToken& other) const;
+    bool operator<=(const QDiscordToken& other) const;
+    bool operator>=(const QDiscordToken& other) const;
+
 private:
-	QString _token;
-	Type _type;
+    QString _token;
+    Type _type;
 };
 
 Q_DECLARE_METATYPE(QDiscordToken)

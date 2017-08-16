@@ -25,28 +25,29 @@
 class QDiscordDiscriminator
 {
 public:
-	QDiscordDiscriminator();
-	QDiscordDiscriminator(qint16 discriminator);
-	QDiscordDiscriminator(const QString& discriminator);
-	QString toString() const;
-	qint16 value() const;
-	bool isNull() const;
-	operator bool() const;
-	bool operator !() const;
-	bool operator ==(const QDiscordDiscriminator& other) const;
-	bool operator !=(const QDiscordDiscriminator& other) const;
-	bool operator > (const QDiscordDiscriminator& other) const;
-	bool operator < (const QDiscordDiscriminator& other) const;
-	bool operator <=(const QDiscordDiscriminator& other) const;
-	bool operator >=(const QDiscordDiscriminator& other) const;
-	bool operator ==(qint16 other) const;
-	bool operator !=(qint16 other) const;
-	bool operator > (qint16 other) const;
-	bool operator < (qint16 other) const;
-	bool operator <=(qint16 other) const;
-	bool operator >=(qint16 other) const;
+    QDiscordDiscriminator();
+    QDiscordDiscriminator(qint16 discriminator);
+    QDiscordDiscriminator(const QString& discriminator);
+    QString toString() const;
+    qint16 value() const;
+    bool isNull() const;
+    operator bool() const;
+    bool operator!() const;
+    bool operator==(const QDiscordDiscriminator& other) const;
+    bool operator!=(const QDiscordDiscriminator& other) const;
+    bool operator>(const QDiscordDiscriminator& other) const;
+    bool operator<(const QDiscordDiscriminator& other) const;
+    bool operator<=(const QDiscordDiscriminator& other) const;
+    bool operator>=(const QDiscordDiscriminator& other) const;
+    bool operator==(qint16 other) const;
+    bool operator!=(qint16 other) const;
+    bool operator>(qint16 other) const;
+    bool operator<(qint16 other) const;
+    bool operator<=(qint16 other) const;
+    bool operator>=(qint16 other) const;
+
 private:
-	qint16 _discriminator;
+    qint16 _discriminator;
 };
 
 Q_DECLARE_METATYPE(QDiscordDiscriminator)

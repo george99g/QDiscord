@@ -139,6 +139,11 @@ public:
 						   const QList<QDiscordID>& messages,
 						   std::function<void(bool)> callback);
 
+	static void get(QDiscordRest& rest,
+					const QDiscordID& channel,
+					const QDiscordID& message,
+					std::function<void(QDiscordMessage)> callback);
+
 	QDiscordMessage(const QJsonObject& object);
 	QDiscordMessage();
 	~QDiscordMessage();

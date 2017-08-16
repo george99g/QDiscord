@@ -420,6 +420,35 @@ void QDiscordMessage::bulkRemove(QDiscordRest& rest,
 	);
 }
 
+void QDiscordMessage::get(QDiscordRest& rest,
+						  const QDiscordID& channel,
+						  const QDiscordID& message,
+						  std::function<void (QDiscordMessage)> callback)
+{
+	rest.request(
+				QNetworkRequest(),
+				QDiscordRoutes::Messages::getMessage(channel, message),
+				[&rest, callback](QNetworkReply* reply)
+	{
+		if(callback)
+		{
+			QDiscordMessage m;
+			if(reply->error() != QNetworkReply::NoError)
+				callback(m);
+			else
+			{
+				m.deserialize(
+							QJsonDocument::fromJson(reply->readAll()).object()
+							);
+
+				m.setRest(&rest);
+				callback(m);
+			}
+		}
+	}
+	);
+}
+
 QDiscordMessage::QDiscordMessage(const QJsonObject& object)
 {
 	deserialize(object);

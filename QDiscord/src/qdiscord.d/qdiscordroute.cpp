@@ -358,6 +358,13 @@ QDiscordRoute QDiscordRoutes::Channels::sendTyping(const QDiscordID& channel)
                          channel.toString());
 }
 
+QDiscordRoute QDiscordRoutes::Channels::getChannel(const QDiscordID& channel)
+{
+    return QDiscordRoute(QDiscordRoute::Method::GET,
+                         QDiscordUtilities::endPoints.channels + "/{channel}",
+                         channel.toString());
+}
+
 QDiscordRoute
 QDiscordRoutes::Channels::getPermissions(const QDiscordID& channel)
 {

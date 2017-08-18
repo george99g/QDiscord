@@ -32,6 +32,10 @@ class QDiscordRest;
 class QDiscordChannel
 {
 public:
+    static void get(QDiscordRest& rest,
+                    const QDiscordID& channel,
+                    std::function<void(QDiscordChannel)> callback);
+
     static void remove(QDiscordRest& rest, const QDiscordID& channel);
 
     static void remove(QDiscordRest& rest,

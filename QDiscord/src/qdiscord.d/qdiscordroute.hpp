@@ -155,6 +155,7 @@ namespace QDiscordRoutes {
         QDiscordRoute modifyChannel(const QDiscordID& channel);
         QDiscordRoute sendTyping(const QDiscordID& channel);
         QDiscordRoute getPermissions(const QDiscordID& channel);
+        QDiscordRoute getChannel(const QDiscordID& channel);
         QDiscordRoute
         getPermissionsOverride(const QDiscordID& channel,
                                const QDiscordID& permissionsOverride);

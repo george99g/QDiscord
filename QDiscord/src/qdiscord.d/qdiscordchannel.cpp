@@ -18,6 +18,61 @@
 
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
+#include "qdiscordrest.hpp"
+
+void QDiscordChannel::remove(QDiscordRest& rest, const QDiscordID& channel)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Channels::deleteChannel(channel));
+}
+
+void QDiscordChannel::remove(QDiscordRest& rest,
+                             const QDiscordID& channel,
+                             std::function<void(QDiscordChannel)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Channels::deleteChannel(channel),
+                 [&rest, callback](QNetworkReply* reply) {
+                     if(!callback)
+                         return;
+                     QDiscordChannel c;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(c);
+                         return;
+                     }
+
+                     c.deserialize(
+                         QJsonDocument::fromJson(reply->readAll()).object());
+                     c.setRest(&rest);
+                     callback(c);
+                 });
+}
+
+void QDiscordChannel::remove()
+{
+    if(!_rest)
+        return;
+
+    if(!_id)
+        return;
+
+    QDiscordChannel::remove(*_rest, _id);
+}
+
+void QDiscordChannel::remove(std::function<void(QDiscordChannel)> callback)
+{
+    if(!_rest)
+        return;
+    if(!_id)
+    {
+        if(callback)
+            callback(QDiscordChannel());
+        return;
+    }
+
+    QDiscordChannel::remove(*_rest, _id, callback);
+}
 
 QSharedPointer<QDiscordChannel>
 QDiscordChannel::fromJson(const QJsonObject& object)

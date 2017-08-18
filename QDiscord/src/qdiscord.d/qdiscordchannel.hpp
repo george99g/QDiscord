@@ -32,6 +32,15 @@ class QDiscordRest;
 class QDiscordChannel
 {
 public:
+    static void remove(QDiscordRest& rest, const QDiscordID& channel);
+
+    static void remove(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       std::function<void(QDiscordChannel)> callback);
+
+    void remove();
+    void remove(std::function<void(QDiscordChannel)> callback);
+
     static QSharedPointer<QDiscordChannel> fromJson(const QJsonObject& object);
     /*!
      * \brief Creates an instance from the provided parameters.

@@ -92,9 +92,8 @@ QDiscordChannel::QDiscordChannel(const QJsonObject& object)
 
 QDiscordChannel::QDiscordChannel()
 {
-    _isPrivate = false;
     _position = -1;
-    _type = ChannelType::UnknownType;
+    _type = Type::UnknownType;
     _bitrate = -1;
     _userLimit = -1;
     _rest = nullptr;
@@ -114,37 +113,37 @@ QDiscordChannel::~QDiscordChannel()
 void QDiscordChannel::deserialize(const QJsonObject& object)
 {
     _id = QDiscordID(object["id"].toString());
+    _type = static_cast<Type>(object["type"].toInt(255));
+    _name = object["name"].toString();
+
+    switch(_type)
     {
-        QString type = object["type"].toString();
-        if(type == "text")
-            _type = ChannelType::Text;
-        else if(type == "voice")
-            _type = ChannelType::Voice;
-        else
-            _type = ChannelType::UnknownType;
-    }
-    _isPrivate = object["is_private"].toBool(false);
-    if(_isPrivate)
-    {
-        _recipient = QSharedPointer<QDiscordUser>(
-            new QDiscordUser(object["recipient"].toObject()));
-        if(!object["last_message_id"].isNull())
-            _lastMessageId = QDiscordID(object["last_message_id"].toString());
-        return;
-    }
-    if(_type == ChannelType::Text || _type == ChannelType::Voice)
-    {
+    case Type::Category:
+    case Type::Text:
+    case Type::Voice:
         _guildId = QDiscordID(object["guild_id"].toString());
-        _name = object["name"].toString();
         _position = object["position"].toInt(-1);
+        break;
+    case Type::DirectMessage:
+    case Type::GroupDirectMessage:
+    {
+        _icon = object["icon"].toString();
+        QList<QSharedPointer<QDiscordUser>> users;
+        for(QJsonValue recipient : object["recipients"].toArray())
+            users.append(QDiscordUser::fromJson(recipient.toObject()));
+        _recipients = users;
+        _ownerId = QDiscordID(object["owner_id"].toString());
+        _applicationId = QDiscordID(object["application_id"].toString());
     }
-    if(_type == ChannelType::Text)
+    default:;
+    }
+
+    if(_type == Type::Text)
     {
         _topic = object["topic"].toString();
-        if(!object["last_message_id"].isNull())
-            _lastMessageId = QDiscordID(object["last_message_id"].toString());
+        _lastMessageId = QDiscordID(object["last_message_id"].toString());
     }
-    else if(_type == ChannelType::Voice)
+    if(_type == Type::Voice)
     {
         _bitrate = object["bitrate"].toInt(-1);
         _userLimit = object["user_limit"].toInt(-1);
@@ -156,44 +155,65 @@ QJsonObject QDiscordChannel::serialize() const
     QJsonObject object;
 
     object["id"] = _id.toString();
-    object["is_private"] = _isPrivate;
-    if(_isPrivate)
+    object["type"] = static_cast<int>(_type);
+    object["name"] = _name;
+
+    switch(_type)
     {
-        if(_recipient)
+    case Type::Category:
+    case Type::Text:
+    case Type::Voice:
+        object["guild_id"] = _guildId.toString();
+        object["position"] = _position;
+        break;
+    case Type::DirectMessage:
+    case Type::GroupDirectMessage:
+    {
+        if(!_icon.isEmpty())
+            object["icon"] = _icon;
+        QJsonArray recipientArray;
+        QList<QSharedPointer<QDiscordUser>> users = _recipients;
+        for(QSharedPointer<QDiscordUser> user : users)
         {
-            QJsonObject user = _recipient->serialize();
-            if(user["mfa_enabled"].toBool(false) == false)
-                user.remove("mfa_enabled");
-            if(user["bot"].toBool(false) == false)
-                user.remove("bot");
-            object["recipient"] = user;
+            QJsonObject jsonUser = user->serialize();
+            if(jsonUser["mfa_enabled"].toBool(false) == false)
+                jsonUser.remove("mfa_enabled");
+            if(jsonUser["bot"].toBool(false) == false)
+                jsonUser.remove("bot");
+            recipientArray.append(jsonUser);
         }
-        else
-            object["recipient"] = QJsonValue();
+        object["recipients"] = recipientArray;
+        object["owner_id"] = _ownerId ? _ownerId.toString() : QJsonValue();
+        object["application_id"] =
+            _applicationId ? _applicationId.toString() : QJsonValue();
+    }
+    default:;
+    }
+
+    if(_type == Type::Text)
+    {
+        object["topic"] = _topic;
         object["last_message_id"] =
             _lastMessageId ? _lastMessageId.toString() : QJsonValue();
-        object["type"] = "text";
     }
-    else
+    if(_type == Type::Voice)
     {
-        object["name"] = _name;
-        object["position"] = _position;
-        if(_type == ChannelType::Text)
-        {
-            object["type"] = QString("text");
-            object["topic"] = _topic;
-            object["last_message_id"] =
-                _lastMessageId ? _lastMessageId.toString() : QJsonValue();
-        }
-        else if(_type == ChannelType::Voice)
-        {
-            object["type"] = QString("voice");
-            object["bitrate"] = _bitrate;
-            object["user_limit"] = _userLimit;
-        }
+        object["bitrate"] = _bitrate;
+        object["user_limit"] = _userLimit;
     }
 
     return object;
+}
+
+void QDiscordChannel::setGuild(QSharedPointer<QDiscordGuild> guild)
+{
+    _guild = guild;
+    if(!_guild)
+    {
+        _guildId = QDiscordID();
+        return;
+    }
+    _guildId = guild->id();
 }
 
 bool QDiscordChannel::operator==(const QDiscordChannel& other) const

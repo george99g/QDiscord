@@ -64,17 +64,17 @@ public:
     void setRest(QDiscordRest* rest) { _rest = rest; }
 
     int protocolVersion() const { return _protocolVersion; }
-    QSharedPointer<QDiscordChannel> privateChannel(QDiscordID id) const
+    QSharedPointer<QDiscordChannel> dmChannel(QDiscordID id) const
     {
-        return _privateChannels.value(id);
+        return _dmChannels.value(id);
     }
-    QList<QSharedPointer<QDiscordChannel>> privateChannels() const
+    QList<QSharedPointer<QDiscordChannel>> dmChannels() const
     {
-        return _privateChannels.values();
+        return _dmChannels.values();
     }
-    QMap<QDiscordID, QSharedPointer<QDiscordChannel>> privateChannelsMap() const
+    QMap<QDiscordID, QSharedPointer<QDiscordChannel>> dmChannelsMap() const
     {
-        return _privateChannels;
+        return _dmChannels;
     }
     QSharedPointer<QDiscordChannel> channel(QDiscordID id) const;
     QSharedPointer<QDiscordGuild> guild(QDiscordID id) const
@@ -93,7 +93,7 @@ public:
 private:
     int _protocolVersion = -1;
     QSharedPointer<QDiscordUser> _user;
-    QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _privateChannels;
+    QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _dmChannels;
     QMap<QDiscordID, QSharedPointer<QDiscordGuild>> _guilds;
     QDiscordRest* _rest;
 };

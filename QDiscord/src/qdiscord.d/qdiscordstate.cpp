@@ -45,8 +45,11 @@ void QDiscordState::channelCreateReceived(const QJsonObject& object)
     QSharedPointer<QDiscordChannel> channel = QDiscordChannel::fromJson(object);
     if(_rest)
         channel->setRest(_rest);
-    if(channel->isPrivate())
-        _privateChannels.insert(channel->id(), channel);
+    if(channel->type() == QDiscordChannel::Type::DirectMessage
+       || channel->type() == QDiscordChannel::Type::GroupDirectMessage)
+    {
+        _dmChannels.insert(channel->id(), channel);
+    }
     else
     {
         channel->setGuild(guild(channel->guildId()));
@@ -73,8 +76,11 @@ void QDiscordState::channelDeleteReceived(const QJsonObject& object)
     QSharedPointer<QDiscordChannel> channel = QDiscordChannel::fromJson(object);
     if(_rest)
         channel->setRest(_rest);
-    if(channel->isPrivate())
-        _privateChannels.remove(channel->id());
+    if(channel->type() == QDiscordChannel::Type::DirectMessage
+       || channel->type() == QDiscordChannel::Type::GroupDirectMessage)
+    {
+        _dmChannels.remove(channel->id());
+    }
     else
     {
         channel->setGuild(guild(channel->guildId()));
@@ -286,14 +292,14 @@ void QDiscordState::reset()
 {
     _protocolVersion = -1;
     _user = QSharedPointer<QDiscordUser>();
-    _privateChannels.clear();
+    _dmChannels.clear();
     _guilds.clear();
 }
 
 QSharedPointer<QDiscordChannel> QDiscordState::channel(QDiscordID id) const
 {
     QSharedPointer<QDiscordChannel> channel;
-    if((channel = privateChannel(id)))
+    if((channel = dmChannel(id)))
         return channel;
     for(QSharedPointer<QDiscordGuild> guild : _guilds.values())
     {

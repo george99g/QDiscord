@@ -62,37 +62,28 @@ public:
      * https://discordapp.com/developers/docs/resources/channel#guild-channel-structure
      * for more information.
      */
-    enum class ChannelType : quint8
+    enum class Type : quint8
     {
-        Voice,
-        Text,
-        UnknownType
+        Text = 0,
+        DirectMessage = 1,
+        Voice = 2,
+        GroupDirectMessage = 3,
+        Category = 4,
+        UnknownType = 255
     };
     ///\brief Returns the channel's ID.
     QDiscordID id() const { return _id; }
     void setId(QDiscordID id) { _id = id; }
+    Type type() const { return _type; }
+    void setType(Type type) { _type = type; }
     QDiscordID guildId() const { return _guildId; }
     void setGuildId(QDiscordID guildId) { _guildId = guildId; }
-    ///\brief Returns the channel's name.
-    QString name() const { return _name; }
-    void setName(const QString& name) { _name = name; }
-    /*!
-     * \brief Returns the channel's type.
-     *
-     * Possible types are specified in QDiscordChannel::ChannelType.
-     */
-    ChannelType type() const { return _type; }
-    void setType(ChannelType type) { _type = type; }
     ///\brief Returns the channel's position in the channel list.
     int position() const { return _position; }
     void setPosition(int position) { _position = position; }
-    /*!
-     * \brief Returns whether the channel is a private or a guild channel.
-     *
-     * Some parameters may not be set depending on this value.
-     */
-    bool isPrivate() const { return _isPrivate; }
-    void setIsPrivate(bool isPrivate) { _isPrivate = isPrivate; }
+    ///\brief Returns the channel's name.
+    QString name() const { return _name; }
+    void setName(const QString& name) { _name = name; }
     ///\brief Returns the channel's topic.
     QString topic() const { return _topic; }
     void setTopic(const QString& topic) { _topic = topic; }
@@ -118,10 +109,22 @@ public:
      */
     int userLimit() const { return _userLimit; }
     void setUserLimit(int userLimit) { _userLimit = userLimit; }
-    QDateTime lastPinTimestamp() const { return _lastPinTimestamp; }
-    void setLastPinTimestamp(QDateTime lastPinTimestamp)
+    QList<QSharedPointer<QDiscordUser>> recipients() const
     {
-        _lastPinTimestamp = lastPinTimestamp;
+        return _recipients;
+    }
+    void setRecipients(QList<QSharedPointer<QDiscordUser>> recipients)
+    {
+        _recipients = recipients;
+    }
+    QString icon() const { return _icon; }
+    void setIcon(QString icon) { _icon = icon; }
+    QDiscordID ownderId() const { return _ownerId; }
+    void setOwnerId(QDiscordID ownerId) { _ownerId = ownerId; }
+    QDiscordID applicationId() const { return _applicationId; }
+    void setApplicationId(QDiscordID applicationId)
+    {
+        _applicationId = applicationId;
     }
     ///\brief Returns a pointer to this channel's parent guild.
     QSharedPointer<QDiscordGuild> guild() const { return _guild; }
@@ -129,18 +132,13 @@ public:
      * \brief Sets this object's parent guild.
      * \param guild A pointer to this object's new parent guild.
      */
-    void setGuild(QSharedPointer<QDiscordGuild> guild) { _guild = guild; }
+    void setGuild(QSharedPointer<QDiscordGuild> guild);
     QDiscordRest* rest() const { return _rest; }
     void setRest(QDiscordRest* rest) { _rest = rest; }
     /*!
      * \brief Returns a pointer to this channel's recipient, if this is a
      * private channel.
      */
-    QSharedPointer<QDiscordUser> recipient() const { return _recipient; }
-    void setRecipient(QSharedPointer<QDiscordUser> recipient)
-    {
-        _recipient = recipient;
-    }
     ///\brief Returns a string which allows you to mention this channel.
     QString mention() const { return QString("<#" + _id.toString() + ">"); }
     bool isNull() const { return _id.isNull(); }
@@ -156,22 +154,23 @@ public:
 
 private:
     QDiscordID _id;
+    Type _type;
     QDiscordID _guildId;
-    QString _name;
-    ChannelType _type;
     int _position;
-    bool _isPrivate;
+    QString _name;
     QString _topic;
     QDiscordID _lastMessageId;
     int _bitrate;
     int _userLimit;
-    QDateTime _lastPinTimestamp;
-    QSharedPointer<QDiscordUser> _recipient;
+    QList<QSharedPointer<QDiscordUser>> _recipients;
+    QString _icon;
+    QDiscordID _ownerId;
+    QDiscordID _applicationId;
     QWeakPointer<QDiscordGuild> _guild;
     QDiscordRest* _rest;
 };
 
-Q_DECLARE_METATYPE(QDiscordChannel::ChannelType)
+Q_DECLARE_METATYPE(QDiscordChannel::Type)
 Q_DECLARE_METATYPE(QDiscordChannel)
 
 #endif // QDISCORDCHANNEL_HPP

@@ -108,7 +108,7 @@ public:
         _maxReconnectAttempts = maxReconnectAttempts;
     }
     int reconnectAttempt() const { return _reconnectAttempt; }
-    const QDiscordToken& token() const { return _token; }
+    QDiscordToken token() const { return _token; }
     bool setToken(const QDiscordToken& token);
     QString sessionId() const { return _sessionId; }
     quint32 latestSequence() const { return _latestSequence; }

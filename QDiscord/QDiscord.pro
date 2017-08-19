@@ -7,6 +7,16 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
+lessThan(QT_MAJOR_VERSION, 5) {
+    error("Qt version 5.8 or higher is required due to a bug with" \
+            "QNetworkAccessManager's sendCustomRequest method.")
+}
+
+lessThan(QT_MINOR_VERSION, 8) {
+    error("Qt version 5.8 or higher is required due to a bug with" \
+            "QNetworkAccessManager's sendCustomRequest method.")
+}
+
 include(config.pri)
 
 SUBDIRS += src

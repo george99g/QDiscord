@@ -48,11 +48,7 @@ quint64 QDiscordID::value() const
 
 QDateTime QDiscordID::createdAt() const
 {
-#if QT_VERSION_MAJOR >= 5 && QT_VERSION_MINOR >= 8
     return QDateTime::fromSecsSinceEpoch(
-#else
-    return QDateTime::fromTime_t(
-#endif
         ((_id >> 22) + QDiscordUtilities::discordEpoch) / 1000);
 }
 

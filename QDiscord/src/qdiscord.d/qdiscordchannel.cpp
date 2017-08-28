@@ -27,8 +27,6 @@ void QDiscordChannel::get(QDiscordRest& rest,
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Channels::getChannel(channel),
                  [&rest, callback](QNetworkReply* reply) {
-                     if(!callback)
-                         return;
                      QDiscordChannel c;
                      if(reply->error() != QNetworkReply::NoError)
                      {
@@ -40,6 +38,303 @@ void QDiscordChannel::get(QDiscordRest& rest,
                      c.setRest(&rest);
                      callback(c);
                  });
+}
+
+void QDiscordChannel::modify(QDiscordRest& rest,
+                             const QDiscordID& channel,
+                             const QJsonObject& data)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Channels::modifyChannel(channel),
+                 data);
+}
+
+void QDiscordChannel::modify(QDiscordRest& rest,
+                             const QDiscordID& channel,
+                             const QJsonObject& data,
+                             std::function<void(QDiscordChannel)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Channels::modifyChannel(channel),
+                 data,
+                 [&rest, callback](QNetworkReply* reply) {
+                     QDiscordChannel c;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(c);
+                         return;
+                     }
+
+                     c.deserialize(
+                         QJsonDocument::fromJson(reply->readAll()).object());
+                     c.setRest(&rest);
+                     callback(c);
+                 });
+}
+
+void QDiscordChannel::modify(const QJsonObject& data)
+{
+    if(!_rest)
+        return;
+
+    if(!_id)
+        return;
+
+    QDiscordChannel::modify(*_rest, _id, data);
+}
+
+void QDiscordChannel::modify(const QJsonObject& data,
+                             std::function<void(QDiscordChannel)> callback)
+{
+    if(!_rest)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    QDiscordChannel::modify(*_rest, _id, data, callback);
+}
+
+void QDiscordChannel::modifyName(QDiscordRest& rest,
+                                 const QDiscordID& channel,
+                                 const QString& name)
+{
+    QJsonObject data = {{"name", name}};
+    modify(rest, channel, data);
+}
+
+void QDiscordChannel::modifyName(QDiscordRest& rest,
+                                 const QDiscordID& channel,
+                                 const QString& name,
+                                 std::function<void(QDiscordChannel)> callback)
+{
+    QJsonObject data = {{"name", name}};
+    modify(rest, channel, data, callback);
+}
+
+void QDiscordChannel::modifyName(const QString& name)
+{
+    if(!_rest)
+        return;
+
+    if(!_id)
+        return;
+
+    QDiscordChannel::modifyName(*_rest, _id, name);
+}
+
+void QDiscordChannel::modifyName(const QString& name,
+                                 std::function<void(QDiscordChannel)> callback)
+{
+    if(!_rest)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    QDiscordChannel::modifyName(*_rest, _id, name, callback);
+}
+
+void QDiscordChannel::modifyPosition(QDiscordRest& rest,
+                                     const QDiscordID& channel,
+                                     int position)
+{
+    QJsonObject data = {{"position", position}};
+    modify(rest, channel, data);
+}
+
+void QDiscordChannel::modifyPosition(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    int position,
+    std::function<void(QDiscordChannel)> callback)
+{
+    QJsonObject data = {{"position", position}};
+    modify(rest, channel, data, callback);
+}
+
+void QDiscordChannel::modifyPosition(int position)
+{
+    if(!_rest)
+        return;
+
+    if(!_id)
+        return;
+
+    QDiscordChannel::modifyPosition(*_rest, _id, position);
+}
+
+void QDiscordChannel::modifyPosition(
+    int position,
+    std::function<void(QDiscordChannel)> callback)
+{
+    if(!_rest)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    QDiscordChannel::modifyPosition(*_rest, _id, position, callback);
+}
+
+void QDiscordChannel::modifyTopic(QDiscordRest& rest,
+                                  const QDiscordID& channel,
+                                  const QString& topic)
+{
+    QJsonObject data = {{"topic", topic}};
+    modify(rest, channel, data);
+}
+
+void QDiscordChannel::modifyTopic(QDiscordRest& rest,
+                                  const QDiscordID& channel,
+                                  const QString& topic,
+                                  std::function<void(QDiscordChannel)> callback)
+{
+    QJsonObject data = {{"topic", topic}};
+    modify(rest, channel, data, callback);
+}
+
+void QDiscordChannel::modifyTopic(const QString& topic)
+{
+    if(!_rest)
+        return;
+
+    if(!_id)
+        return;
+
+    QDiscordChannel::modifyTopic(*_rest, _id, topic);
+}
+
+void QDiscordChannel::modifyTopic(const QString& topic,
+                                  std::function<void(QDiscordChannel)> callback)
+{
+    if(!_rest)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    QDiscordChannel::modifyTopic(*_rest, _id, topic, callback);
+}
+
+void QDiscordChannel::modifyBitrate(QDiscordRest& rest,
+                                    const QDiscordID& channel,
+                                    int bitrate)
+{
+    QJsonObject data = {{"bitrate", bitrate}};
+    modify(rest, channel, data);
+}
+
+void QDiscordChannel::modifyBitrate(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    int bitrate,
+    std::function<void(QDiscordChannel)> callback)
+{
+    QJsonObject data = {{"bitrate", bitrate}};
+    modify(rest, channel, data, callback);
+}
+
+void QDiscordChannel::modifyBitrate(int bitrate)
+{
+    if(!_rest)
+        return;
+
+    if(!_id)
+        return;
+
+    QDiscordChannel::modifyBitrate(*_rest, _id, bitrate);
+}
+
+void QDiscordChannel::modifyBitrate(
+    int bitrate,
+    std::function<void(QDiscordChannel)> callback)
+{
+    if(!_rest)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    QDiscordChannel::modifyBitrate(*_rest, _id, bitrate, callback);
+}
+
+void QDiscordChannel::modifyUserLimit(QDiscordRest& rest,
+                                      const QDiscordID& channel,
+                                      int userLimit)
+{
+    QJsonObject data = {{"user_limit", userLimit}};
+    modify(rest, channel, data);
+}
+
+void QDiscordChannel::modifyUserLimit(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    int userLimit,
+    std::function<void(QDiscordChannel)> callback)
+{
+    QJsonObject data = {{"user_limit", userLimit}};
+    modify(rest, channel, data, callback);
+}
+
+void QDiscordChannel::modifyUserLimit(int userLimit)
+{
+    if(!_rest)
+        return;
+
+    if(!_id)
+        return;
+
+    QDiscordChannel::modifyUserLimit(*_rest, _id, userLimit);
+}
+
+void QDiscordChannel::modifyUserLimit(
+    int userLimit,
+    std::function<void(QDiscordChannel)> callback)
+{
+    if(!_rest)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QDiscordChannel());
+        return;
+    }
+
+    QDiscordChannel::modifyUserLimit(*_rest, _id, userLimit, callback);
 }
 
 void QDiscordChannel::remove(QDiscordRest& rest, const QDiscordID& channel)
@@ -55,8 +350,6 @@ void QDiscordChannel::remove(QDiscordRest& rest,
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Channels::deleteChannel(channel),
                  [&rest, callback](QNetworkReply* reply) {
-                     if(!callback)
-                         return;
                      QDiscordChannel c;
                      if(reply->error() != QNetworkReply::NoError)
                      {
@@ -85,11 +378,14 @@ void QDiscordChannel::remove()
 void QDiscordChannel::remove(std::function<void(QDiscordChannel)> callback)
 {
     if(!_rest)
+    {
+        callback(QDiscordChannel());
         return;
+    }
+
     if(!_id)
     {
-        if(callback)
-            callback(QDiscordChannel());
+        callback(QDiscordChannel());
         return;
     }
 

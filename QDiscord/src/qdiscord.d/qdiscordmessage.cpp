@@ -36,8 +36,6 @@ void QDiscordMessage::create(QDiscordRest& rest,
                  QDiscordRoutes::Messages::sendMessage(channel),
                  data,
                  [&rest, callback](QNetworkReply* reply) {
-                     if(!callback)
-                         return;
                      QDiscordMessage m;
                      if(reply->error() != QNetworkReply::NoError)
                      {
@@ -155,8 +153,7 @@ void QDiscordMessage::send(std::function<void(QDiscordMessage)> callback)
 
     if(_content.isEmpty())
     {
-        if(callback)
-            callback(QDiscordMessage());
+        callback(QDiscordMessage());
         return;
     }
 
@@ -166,8 +163,7 @@ void QDiscordMessage::send(std::function<void(QDiscordMessage)> callback)
             _channelId = _channel->id();
         else
         {
-            if(callback)
-                callback(QDiscordMessage());
+            callback(QDiscordMessage());
             return;
         }
     }
@@ -220,8 +216,6 @@ void QDiscordMessage::edit(QDiscordRest& rest,
                  QDiscordRoutes::Messages::editMessage(channel, message),
                  data,
                  [&rest, callback](QNetworkReply* reply) {
-                     if(!callback)
-                         return;
                      QDiscordMessage m;
                      if(reply->error() != QNetworkReply::NoError)
                      {
@@ -262,8 +256,7 @@ void QDiscordMessage::edit(const QString& newContent,
 
     if(!_id)
     {
-        if(callback)
-            callback(QDiscordMessage());
+        callback(QDiscordMessage());
         return;
     }
 
@@ -273,8 +266,7 @@ void QDiscordMessage::edit(const QString& newContent,
             _channelId = _channel->id();
         else
         {
-            if(callback)
-                callback(QDiscordMessage());
+            callback(QDiscordMessage());
             return;
         }
     }
@@ -295,12 +287,10 @@ void QDiscordMessage::remove(QDiscordRest& rest,
                              const QDiscordID& message,
                              std::function<void(bool)> callback)
 {
-    rest.request(QNetworkRequest(),
-                 QDiscordRoutes::Messages::deleteMessage(channel, message),
-                 [callback](QNetworkReply* reply) {
-                     if(callback)
-                         callback(reply->error() == 204);
-                 });
+    rest.request(
+        QNetworkRequest(),
+        QDiscordRoutes::Messages::deleteMessage(channel, message),
+        [callback](QNetworkReply* reply) { callback(reply->error() == 204); });
 }
 
 void QDiscordMessage::remove()
@@ -329,8 +319,7 @@ void QDiscordMessage::remove(std::function<void(bool)> callback)
 
     if(!_id)
     {
-        if(callback)
-            callback(false);
+        callback(false);
         return;
     }
 
@@ -340,8 +329,7 @@ void QDiscordMessage::remove(std::function<void(bool)> callback)
             _channelId = _channel->id();
         else
         {
-            if(callback)
-                callback(false);
+            callback(false);
             return;
         }
     }
@@ -377,13 +365,11 @@ void QDiscordMessage::bulkRemove(QDiscordRest& rest,
         array.append(message.toString());
     data["messages"] = array;
 
-    rest.request(QNetworkRequest(),
-                 QDiscordRoutes::Messages::deleteMessages(channel),
-                 data,
-                 [callback](QNetworkReply* reply) {
-                     if(callback)
-                         callback(reply->error() == 204);
-                 });
+    rest.request(
+        QNetworkRequest(),
+        QDiscordRoutes::Messages::deleteMessages(channel),
+        data,
+        [callback](QNetworkReply* reply) { callback(reply->error() == 204); });
 }
 
 void QDiscordMessage::get(QDiscordRest& rest,
@@ -395,19 +381,16 @@ void QDiscordMessage::get(QDiscordRest& rest,
         QNetworkRequest(),
         QDiscordRoutes::Messages::getMessage(channel, message),
         [&rest, callback](QNetworkReply* reply) {
-            if(callback)
+            QDiscordMessage m;
+            if(reply->error() != QNetworkReply::NoError)
+                callback(m);
+            else
             {
-                QDiscordMessage m;
-                if(reply->error() != QNetworkReply::NoError)
-                    callback(m);
-                else
-                {
-                    m.deserialize(
-                        QJsonDocument::fromJson(reply->readAll()).object());
+                m.deserialize(
+                    QJsonDocument::fromJson(reply->readAll()).object());
 
-                    m.setRest(&rest);
-                    callback(m);
-                }
+                m.setRest(&rest);
+                callback(m);
             }
         });
 }

@@ -36,6 +36,88 @@ public:
                     const QDiscordID& channel,
                     std::function<void(QDiscordChannel)> callback);
 
+    static void modify(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QJsonObject& data);
+
+    static void modify(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QJsonObject& data,
+                       std::function<void(QDiscordChannel)> callback);
+
+    void modify(const QJsonObject& data);
+
+    void modify(const QJsonObject& data,
+                std::function<void(QDiscordChannel)> callback);
+
+    static void modifyName(QDiscordRest& rest,
+                           const QDiscordID& channel,
+                           const QString& name);
+
+    static void modifyName(QDiscordRest& rest,
+                           const QDiscordID& channel,
+                           const QString& name,
+                           std::function<void(QDiscordChannel)> callback);
+
+    void modifyName(const QString& name);
+
+    void modifyName(const QString& name,
+                    std::function<void(QDiscordChannel)> callback);
+
+    static void
+    modifyPosition(QDiscordRest& rest, const QDiscordID& channel, int position);
+
+    static void modifyPosition(QDiscordRest& rest,
+                               const QDiscordID& channel,
+                               int position,
+                               std::function<void(QDiscordChannel)> callback);
+
+    void modifyPosition(int position);
+
+    void modifyPosition(int position,
+                        std::function<void(QDiscordChannel)> callback);
+
+    static void modifyTopic(QDiscordRest& rest,
+                            const QDiscordID& channel,
+                            const QString& topic);
+
+    static void modifyTopic(QDiscordRest& rest,
+                            const QDiscordID& channel,
+                            const QString& topic,
+                            std::function<void(QDiscordChannel)> callback);
+
+    void modifyTopic(const QString& topic);
+
+    void modifyTopic(const QString& topic,
+                     std::function<void(QDiscordChannel)> callback);
+
+    static void
+    modifyBitrate(QDiscordRest& rest, const QDiscordID& channel, int bitrate);
+
+    static void modifyBitrate(QDiscordRest& rest,
+                              const QDiscordID& channel,
+                              int bitrate,
+                              std::function<void(QDiscordChannel)> callback);
+
+    void modifyBitrate(int bitrate);
+
+    void modifyBitrate(int bitrate,
+                       std::function<void(QDiscordChannel)> callback);
+
+    static void modifyUserLimit(QDiscordRest& rest,
+                                const QDiscordID& channel,
+                                int userLimit);
+
+    static void modifyUserLimit(QDiscordRest& rest,
+                                const QDiscordID& channel,
+                                int userLimit,
+                                std::function<void(QDiscordChannel)> callback);
+
+    void modifyUserLimit(int userLimit);
+
+    void modifyUserLimit(int userLimit,
+                         std::function<void(QDiscordChannel)> callback);
+
     static void remove(QDiscordRest& rest, const QDiscordID& channel);
 
     static void remove(QDiscordRest& rest,

@@ -73,8 +73,6 @@ void QDiscordWs::getGateway(QDiscordRest& rest,
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Self::gateway(),
                  [callback](QNetworkReply* reply) {
-                     if(!callback)
-                         return;
                      if(reply->error() != QNetworkReply::NoError)
                      {
                          callback(QString());

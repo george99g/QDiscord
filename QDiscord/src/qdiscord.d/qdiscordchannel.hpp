@@ -45,6 +45,86 @@ public:
     void getMessage(const QDiscordID& message,
                     std::function<void(QDiscordMessage)> callback);
 
+    static void
+    getMessages(QDiscordRest& rest,
+                const QDiscordID& channel,
+                int limit,
+                std::function<void(QList<QDiscordMessage>)> callback);
+
+    static void
+    getMessages(QDiscordRest& rest,
+                const QDiscordID& channel,
+                std::function<void(QList<QDiscordMessage>)> callback);
+
+    void getMessages(int limit,
+                     std::function<void(QList<QDiscordMessage>)> callback);
+
+    void getMessages(std::function<void(QList<QDiscordMessage>)> callback);
+
+    static void
+    getMessagesAfter(QDiscordRest& rest,
+                     const QDiscordID& channel,
+                     const QDiscordID& message,
+                     int limit,
+                     std::function<void(QList<QDiscordMessage>)> callback);
+
+    static void
+    getMessagesAfter(QDiscordRest& rest,
+                     const QDiscordID& channel,
+                     const QDiscordID& message,
+                     std::function<void(QList<QDiscordMessage>)> callback);
+
+    void getMessagesAfter(const QDiscordID& message,
+                          int limit,
+                          std::function<void(QList<QDiscordMessage>)> callback);
+
+    void getMessagesAfter(const QDiscordID& message,
+                          std::function<void(QList<QDiscordMessage>)> callback);
+
+    static void
+    getMessagesBefore(QDiscordRest& rest,
+                      const QDiscordID& channel,
+                      const QDiscordID& message,
+                      int limit,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
+    static void
+    getMessagesBefore(QDiscordRest& rest,
+                      const QDiscordID& channel,
+                      const QDiscordID& message,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
+    void
+    getMessagesBefore(const QDiscordID& message,
+                      int limit,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
+    void
+    getMessagesBefore(const QDiscordID& message,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
+    static void
+    getMessagesAround(QDiscordRest& rest,
+                      const QDiscordID& channel,
+                      const QDiscordID& message,
+                      int limit,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
+    static void
+    getMessagesAround(QDiscordRest& rest,
+                      const QDiscordID& channel,
+                      const QDiscordID& message,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
+    void
+    getMessagesAround(const QDiscordID& message,
+                      int limit,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
+    void
+    getMessagesAround(const QDiscordID& message,
+                      std::function<void(QList<QDiscordMessage>)> callback);
+
     static void modify(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QJsonObject& data);

@@ -67,6 +67,261 @@ void QDiscordChannel::getMessage(const QDiscordID& message,
     QDiscordMessage::get(*_rest, _id, message, callback);
 }
 
+void QDiscordChannel::getMessages(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Messages::getMessageHistory(channel, limit),
+                 [&rest, callback](QNetworkReply* reply) {
+                     QList<QDiscordMessage> list;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(list);
+                         return;
+                     }
+                     QJsonArray messageArray =
+                         QJsonDocument::fromJson(reply->readAll()).array();
+                     for(const QJsonValue& value : messageArray)
+                     {
+                         QDiscordMessage m(value.toObject());
+                         m.setRest(&rest);
+                         list.append(m);
+                     }
+                     callback(list);
+                 });
+}
+
+void QDiscordChannel::getMessages(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessages(rest, channel, 50, callback);
+}
+
+void QDiscordChannel::getMessages(
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    if(!_rest)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    QDiscordChannel::getMessages(*_rest, _id, limit, callback);
+}
+
+void QDiscordChannel::getMessages(
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessages(50, callback);
+}
+
+void QDiscordChannel::getMessagesAfter(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QDiscordID& message,
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Messages::getMessageHistoryAfter(
+                     channel, limit, message),
+                 [&rest, callback](QNetworkReply* reply) {
+                     QList<QDiscordMessage> list;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(list);
+                         return;
+                     }
+                     QJsonArray messageArray =
+                         QJsonDocument::fromJson(reply->readAll()).array();
+                     for(const QJsonValue& value : messageArray)
+                     {
+                         QDiscordMessage m(value.toObject());
+                         m.setRest(&rest);
+                         list.append(m);
+                     }
+                     callback(list);
+                 });
+}
+
+void QDiscordChannel::getMessagesAfter(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QDiscordID& message,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessagesAfter(rest, channel, message, 50, callback);
+}
+
+void QDiscordChannel::getMessagesAfter(
+    const QDiscordID& message,
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    if(!_rest)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    QDiscordChannel::getMessagesAfter(*_rest, _id, message, limit, callback);
+}
+
+void QDiscordChannel::getMessagesAfter(
+    const QDiscordID& message,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessagesAfter(message, 50, callback);
+}
+
+void QDiscordChannel::getMessagesBefore(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QDiscordID& message,
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Messages::getMessageHistoryBefore(
+                     channel, limit, message),
+                 [&rest, callback](QNetworkReply* reply) {
+                     QList<QDiscordMessage> list;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(list);
+                         return;
+                     }
+                     QJsonArray messageArray =
+                         QJsonDocument::fromJson(reply->readAll()).array();
+                     for(const QJsonValue& value : messageArray)
+                     {
+                         QDiscordMessage m(value.toObject());
+                         m.setRest(&rest);
+                         list.append(m);
+                     }
+                     callback(list);
+                 });
+}
+
+void QDiscordChannel::getMessagesBefore(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QDiscordID& message,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessagesBefore(rest, channel, message, 50, callback);
+}
+
+void QDiscordChannel::getMessagesBefore(
+    const QDiscordID& message,
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    if(!_rest)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    QDiscordChannel::getMessagesBefore(*_rest, _id, message, limit, callback);
+}
+
+void QDiscordChannel::getMessagesBefore(
+    const QDiscordID& message,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessagesBefore(message, 50, callback);
+}
+
+void QDiscordChannel::getMessagesAround(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QDiscordID& message,
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Messages::getMessageHistoryAround(
+                     channel, limit, message),
+                 [&rest, callback](QNetworkReply* reply) {
+                     QList<QDiscordMessage> list;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(list);
+                         return;
+                     }
+                     QJsonArray messageArray =
+                         QJsonDocument::fromJson(reply->readAll()).array();
+                     for(const QJsonValue& value : messageArray)
+                     {
+                         QDiscordMessage m(value.toObject());
+                         m.setRest(&rest);
+                         list.append(m);
+                     }
+                     callback(list);
+                 });
+}
+
+void QDiscordChannel::getMessagesAround(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QDiscordID& message,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessagesAround(rest, channel, message, 50, callback);
+}
+
+void QDiscordChannel::getMessagesAround(
+    const QDiscordID& message,
+    int limit,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    if(!_rest)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QList<QDiscordMessage>());
+        return;
+    }
+
+    QDiscordChannel::getMessagesAround(*_rest, _id, message, limit, callback);
+}
+
+void QDiscordChannel::getMessagesAround(
+    const QDiscordID& message,
+    std::function<void(QList<QDiscordMessage>)> callback)
+{
+    getMessagesAround(message, 50, callback);
+}
+
 void QDiscordChannel::modify(QDiscordRest& rest,
                              const QDiscordID& channel,
                              const QJsonObject& data)

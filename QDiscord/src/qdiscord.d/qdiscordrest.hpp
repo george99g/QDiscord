@@ -79,7 +79,8 @@ public:
 #endif
 
         QNetworkRequest r = request;
-        r.setUrl(QUrl(route.fullUrl()));
+        if(r.url().isEmpty())
+            r.setUrl(QUrl(route.fullUrl()));
         if(!_token.isEmpty())
             r.setRawHeader("Authorization", _token.fullToken().toUtf8());
         r.setHeader(QNetworkRequest::UserAgentHeader, _userAgent.toString());

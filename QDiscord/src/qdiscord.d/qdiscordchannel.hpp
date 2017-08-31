@@ -25,6 +25,7 @@
 #include <QJsonObject>
 #include <QSharedPointer>
 
+class QDiscordMessage;
 class QDiscordGuild;
 class QDiscordRest;
 
@@ -35,6 +36,14 @@ public:
     static void get(QDiscordRest& rest,
                     const QDiscordID& channel,
                     std::function<void(QDiscordChannel)> callback);
+
+    static void getMessage(QDiscordRest& rest,
+                           const QDiscordID& channel,
+                           const QDiscordID& message,
+                           std::function<void(QDiscordMessage)> callback);
+
+    void getMessage(const QDiscordID& message,
+                    std::function<void(QDiscordMessage)> callback);
 
     static void modify(QDiscordRest& rest,
                        const QDiscordID& channel,

@@ -18,6 +18,7 @@
 
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
+#include "qdiscordmessage.hpp"
 #include "qdiscordrest.hpp"
 
 void QDiscordChannel::get(QDiscordRest& rest,
@@ -38,6 +39,32 @@ void QDiscordChannel::get(QDiscordRest& rest,
                      c.setRest(&rest);
                      callback(c);
                  });
+}
+
+void QDiscordChannel::getMessage(QDiscordRest& rest,
+                                 const QDiscordID& channel,
+                                 const QDiscordID& message,
+                                 std::function<void(QDiscordMessage)> callback)
+{
+    QDiscordMessage::get(rest, channel, message, callback);
+}
+
+void QDiscordChannel::getMessage(const QDiscordID& message,
+                                 std::function<void(QDiscordMessage)> callback)
+{
+    if(!_rest)
+    {
+        callback(QDiscordMessage());
+        return;
+    }
+
+    if(!_id)
+    {
+        callback(QDiscordMessage());
+        return;
+    }
+
+    QDiscordMessage::get(*_rest, _id, message, callback);
 }
 
 void QDiscordChannel::modify(QDiscordRest& rest,

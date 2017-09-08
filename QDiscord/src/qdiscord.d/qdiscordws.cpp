@@ -109,6 +109,11 @@ QDiscordWs::QDiscordWs(QDiscordAbstractState* state, QObject* parent)
 
 bool QDiscordWs::open(QString endpoint, QDiscordToken token)
 {
+    return open(QUrl(endpoint), token);
+}
+
+bool QDiscordWs::open(QUrl endpoint, QDiscordToken token)
+{
     if(_ws.state() != QAbstractSocket::UnconnectedState)
     {
         _error = Error::AlreadyConnected;
@@ -123,28 +128,32 @@ bool QDiscordWs::open(QString endpoint, QDiscordToken token)
         emit error(Error::NoToken);
         return false;
     }
-    if(!endpoint.contains('?')) // A little bit hacky, but it should work
+
+    if(!endpoint.path().endsWith('/'))
+        endpoint.setPath(endpoint.path().append('/'));
+
+    if(!endpoint.hasQuery())
     {
-        if(!endpoint.endsWith('/'))
-            endpoint.append('/');
-        endpoint.append("?v=").append(QString::number(_version));
-        endpoint.append("&encoding=");
+        QUrlQuery query;
+        query.addQueryItem("v", QString::number(_version));
         switch(_encoding)
         {
         default:
         case Encoding::JSON:
-            endpoint.append("json");
+            query.addQueryItem("encoding", "json");
             break;
         case Encoding::ETF:
-            endpoint.append("etf");
+            query.addQueryItem("encoding", "etf");
             break;
         }
+        endpoint.setQuery(query);
     }
+
     _endpoint = endpoint;
     setCState(ConnectionState::Connecting);
-    _ws.open(QUrl(endpoint));
+    _ws.open(endpoint);
 #ifdef QDISCORD_LIBRARY_DEBUG
-    qDebug() << this << "WebSocket connecting to" << endpoint;
+    qDebug() << this << "WebSocket connecting to" << endpoint.toString();
 #endif
     return true;
 }

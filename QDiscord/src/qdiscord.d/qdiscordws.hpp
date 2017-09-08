@@ -29,6 +29,7 @@
 #include <QSysInfo>
 #include <QTimer>
 #include <QUrl>
+#include <QUrlQuery>
 #include <QWebSocket>
 
 class QDiscordRest;
@@ -86,6 +87,7 @@ public:
     explicit QDiscordWs(QDiscordAbstractState* state = nullptr,
                         QObject* parent = nullptr);
     bool open(QString endpoint, QDiscordToken token = QDiscordToken());
+    bool open(QUrl endpoint, QDiscordToken token = QDiscordToken());
     void close(QWebSocketProtocol::CloseCode closeCode =
                    QWebSocketProtocol::CloseCodeNormal);
     void abort();
@@ -140,7 +142,7 @@ private:
     Error _error;
     quint8 _version = 6;
     Encoding _encoding = Encoding::JSON;
-    QString _endpoint;
+    QUrl _endpoint;
     QDiscordToken _token;
     QString _sessionId;
     qint32 _latestSequence = -1;

@@ -120,13 +120,10 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
 QDiscordGuild::QDiscordGuild()
 {
     _afkTimeout = -1;
-    _embedEnabled = false;
     _verificationLevel = VerificationLevel::Unknown;
     _defaultMessageNotifications = NotificationLevel::Unknown;
     _explicitContentFilter = ExplicitContentFilterLevel::Unknown;
     _mfaLevel = -1;
-    _large = false;
-    _unavailable = false;
     _memberCount = -1;
     _rest = nullptr;
 
@@ -146,7 +143,7 @@ void QDiscordGuild::deserialize(const QJsonObject& object)
 {
     _id = QDiscordID(object["id"].toString());
     _unavailable = object["unavailable"].toBool(false);
-    if(!_unavailable)
+    if(!_unavailable.value())
     {
         _name = object["name"].toString();
         _icon = object["icon"].toString();
@@ -156,7 +153,8 @@ void QDiscordGuild::deserialize(const QJsonObject& object)
         if(!object["afk_channel_id"].isNull())
             _afkChannelId = QDiscordID(object["afk_channel_id"].toString());
         _afkTimeout = object["afk_timeout"].toInt(-1);
-        _embedEnabled = object["embed_enabled"].toBool(false);
+        if(object.contains("embed_enabled"))
+            _embedEnabled = object["embed_enabled"].toBool(false);
         if(!object["embed_channel_id"].isNull())
             _embedChannelId = QDiscordID(object["embed_channel_id"].toString());
         _verificationLevel = vlFromInt(object["verification_level"].toInt(-1));
@@ -174,7 +172,8 @@ void QDiscordGuild::deserialize(const QJsonObject& object)
         _mfaLevel = object["mfa_level"].toInt(-1);
         _joinedAt = QDateTime::fromString(object["joined_at"].toString(),
                                           Qt::ISODateWithMs);
-        _large = object["large"].toBool(false);
+        if(object.contains("large"))
+            _large = object["large"].toBool(false);
         _memberCount = object["member_count"].toInt(-1);
         if(!object["application_id"].isNull())
             _applicationId = QDiscordID(object["application_id"].toString());
@@ -200,7 +199,8 @@ QJsonObject QDiscordGuild::serialize()
     QJsonObject object;
 
     object["id"] = _id.toString();
-    object["unavailable"] = _unavailable;
+    if(_unavailable.has_value())
+        object["unavailable"] = _unavailable.value();
     if(!_unavailable)
     {
         object["name"] = _name;
@@ -211,7 +211,8 @@ QJsonObject QDiscordGuild::serialize()
         object["afk_channel_id"] =
             _afkChannelId ? _afkChannelId.toString() : QJsonValue();
         object["afk_timeout"] = _afkTimeout;
-        object["embed_enabled"] = _embedEnabled;
+        if(_embedEnabled.has_value())
+            object["embed_enabled"] = _embedEnabled.value();
         object["embed_channel_id"] =
             _embedChannelId ? _embedChannelId.toString() : QJsonValue();
         object["verification_level"] = static_cast<qint8>(_verificationLevel);
@@ -230,7 +231,8 @@ QJsonObject QDiscordGuild::serialize()
             object["joined_at"] = _joinedAt.toTimeSpec(Qt::OffsetFromUTC)
                                       .toString(Qt::ISODateWithMs);
         }
-        object["large"] = _large;
+        if(_large.has_value())
+            object["large"] = _large.value();
         object["member_count"] = _memberCount;
         object["application_id"] =
             _applicationId ? _applicationId.toString() : QJsonValue();
@@ -254,109 +256,57 @@ QJsonObject QDiscordGuild::serialize()
     return object;
 }
 
-void QDiscordGuild::update(const QJsonObject& object)
+void QDiscordGuild::update(const QDiscordGuild& other)
 {
-    if(object.contains("id"))
-        _id = QDiscordID(object["id"].toString());
-    if(object.contains("unavailable"))
-        _unavailable = object["unavailable"].toBool(false);
-    if(!_unavailable)
+    if(other.id())
+        _id = other.id();
+    if(other.unavailable().has_value())
+        _unavailable = other.unavailable();
+    if(_unavailable.has_value() && !_unavailable.value())
     {
-        if(object.contains("name"))
-            _name = object["name"].toString();
-        if(object.contains("icon"))
-            _icon = object["icon"].toString();
-        if(object.contains("splash"))
-            _splash = object["splash"].toString();
-        if(object.contains("owner_id"))
-            _ownerId = QDiscordID(object["owner_id"].toString());
-        if(object.contains("region"))
-            _region = object["region"].toString();
-        if(object.contains("afk_channel_id"))
-        {
-            if(object["afk_channel_id"].isNull())
-                _afkTimeout = -1;
-            else
-                _afkTimeout = object["afk_channel_id"].toInt(-1);
-        }
-        if(object.contains("embed_enabled"))
-            _embedEnabled = object["embed_enabled"].toBool(false);
-        if(object.contains("embed_channel_id"))
-        {
-            if(object["embed_channel_id"].isNull())
-                _embedChannelId = QDiscordID();
-            else
-            {
-                _embedChannelId =
-                    QDiscordID(object["embed_channel_id"].toString());
-            }
-        }
-        if(object.contains("verification_level"))
-        {
-            _verificationLevel =
-                vlFromInt(object["verification_level"].toInt(-1));
-        }
-        if(object.contains("default_message_notifications"))
-        {
-            _defaultMessageNotifications =
-                dmnFromInt(object["default_message_notifications"].toInt(-1));
-        }
-        if(object.contains("explicit_content_filter"))
-        {
-            _explicitContentFilter =
-                ecfFromInt(object["explicit_content_filter"].toInt(-1));
-        }
-        if(object.contains("features"))
-        {
-            QStringList features;
-            for(QJsonValue value : object["features"].toArray())
-                features.append(value.toString());
-            _features = features;
-        }
-        if(object.contains("mfa_level"))
-            _mfaLevel = object["mfa_level"].toInt(-1);
-        if(object.contains("joined_at"))
-        {
-            _joinedAt = QDateTime::fromString(object["joined_at"].toString(),
-                                              Qt::ISODateWithMs);
-        }
-        if(object.contains("large"))
-            _large = object["large"].toBool(false);
-        if(object.contains("member_count"))
-            _memberCount = object["member_count"].toInt(-1);
-        if(object.contains("application_id"))
-        {
-            if(object["application_id"].isNull())
-                _applicationId = QDiscordID();
-            else
-            {
-                _applicationId =
-                    QDiscordID(object["application_id"].toString());
-            }
-        }
-        if(object.contains("members"))
-        {
-            for(const QJsonValue& item : object["members"].toArray())
-            {
-                _members.clear();
-                QSharedPointer<QDiscordMember> member =
-                    QDiscordMember::fromJson(item.toObject());
-                member->setGuild(sharedFromThis());
-                _members.insert(member->user().id(), member);
-            }
-        }
-        if(object.contains("channels"))
-        {
-            for(const QJsonValue& item : object["channels"].toArray())
-            {
-                _channels.clear();
-                QSharedPointer<QDiscordChannel> channel =
-                    QDiscordChannel::fromJson(item.toObject());
-                channel->setGuild(sharedFromThis());
-                _channels.insert(channel->id(), channel);
-            }
-        }
+        if(!other.name().isEmpty())
+            _name = other.name();
+        if(!other.icon().isEmpty())
+            _icon = other.icon();
+        if(!other.splash().isEmpty())
+            _splash = other.splash();
+        if(other.ownerId())
+            _ownerId = other.ownerId();
+        if(!other.region().isEmpty())
+            _region = other.region();
+        if(other.afkTimeout() != -1)
+            _afkTimeout = other.afkTimeout();
+        if(other.embedEnabled().has_value())
+            _embedEnabled = other.embedEnabled();
+        if(other.embedChannelId())
+            _embedChannelId = embedChannelId();
+        if(other.verificationLevel() != VerificationLevel::Unknown)
+            _verificationLevel = other.verificationLevel();
+        if(other.defaultMessageNotifications() != NotificationLevel::Unknown)
+            _defaultMessageNotifications = other.defaultMessageNotifications();
+        if(other.explicitContentFilter() != ExplicitContentFilterLevel::Unknown)
+            _explicitContentFilter = other.explicitContentFilter();
+        if(!other.features().isEmpty())
+            _features = other.features();
+        if(other.mfaLevel() != -1)
+            _mfaLevel = other.mfaLevel();
+        if(other.joinedAt().isValid())
+            _joinedAt = other.joinedAt();
+        if(other.large().has_value())
+            _large = other.large();
+        if(other.memberCount() != -1)
+            _memberCount = other.memberCount();
+        if(other.applicationId())
+            _applicationId = other.applicationId();
+        if(!other.membersMap().isEmpty())
+            _members = other.membersMap();
+        if(!other.channelsMap().isEmpty())
+            _channels = other.channelsMap();
     }
+
+#ifdef QDISCORD_LIBRARY_DEBUG
+    qDebug() << "QDiscordGuild(" << this << ") updated";
+#endif
 }
 
 void QDiscordGuild::addChannel(QSharedPointer<QDiscordChannel> channel)
@@ -401,6 +351,15 @@ bool QDiscordGuild::removeMember(QSharedPointer<QDiscordMember> member)
 bool QDiscordGuild::removeMember(QDiscordID member)
 {
     return _members.remove(member);
+}
+
+void QDiscordGuild::setRest(QDiscordRest* rest)
+{
+    _rest = rest;
+    for(QSharedPointer<QDiscordChannel> channel : _channels)
+        channel->setRest(rest);
+    for(QSharedPointer<QDiscordMember> member : _members)
+        member->setRest(rest);
 }
 
 bool QDiscordGuild::operator==(const QDiscordGuild& other) const

@@ -36,8 +36,6 @@ QDiscordUser::QDiscordUser(const QJsonObject& object)
 
 QDiscordUser::QDiscordUser()
 {
-    _bot = false;
-    _mfaEnabled = false;
     _rest = nullptr;
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordUser(" << this << ") constructed";
@@ -57,8 +55,10 @@ void QDiscordUser::deserialize(const QJsonObject& object)
     _username = object["username"].toString();
     _discriminator = QDiscordDiscriminator(object["discriminator"].toString());
     _avatar = object["avatar"].toString();
-    _bot = object["bot"].toBool(false);
-    _mfaEnabled = object["mfa_enabled"].toBool(false);
+    if(object.contains("bot"))
+        _bot = object["bot"].toBool();
+    if(object.contains("mfa_enabled"))
+        _mfaEnabled = object["mfa_enabled"].toBool();
     if(object.contains("email"))
         _email = object["email"].toString();
     if(object.contains("verified"))
@@ -73,8 +73,10 @@ QJsonObject QDiscordUser::serialize() const
     object["username"] = _username;
     object["discriminator"] = _discriminator.toString();
     object["avatar"] = _avatar.isEmpty() ? QJsonValue() : _avatar;
-    object["bot"] = _bot;
-    object["mfa_enabled"] = _mfaEnabled;
+    if(_bot.has_value())
+        object["bot"] = _bot.value();
+    if(_mfaEnabled.has_value())
+        object["mfa_enabled"] = _mfaEnabled.value();
     if(_email.has_value())
         object["email"] = _email.value();
     if(_verified.has_value())
@@ -83,27 +85,24 @@ QJsonObject QDiscordUser::serialize() const
     return object;
 }
 
-void QDiscordUser::update(const QJsonObject& object)
+void QDiscordUser::update(const QDiscordUser& other)
 {
-    if(object.contains("id"))
-        _id = QDiscordID(object["id"].toString());
-    if(object.contains("username"))
-        _username = object["username"].toString();
-    if(object.contains("discriminator"))
-    {
-        _discriminator =
-            QDiscordDiscriminator(object["discriminator"].toString());
-    }
-    if(object.contains("avatar"))
-        _avatar = object["avatar"].toString();
-    if(object.contains("bot"))
-        _bot = object["bot"].toBool(false);
-    if(object.contains("mfa_enabled"))
-        _mfaEnabled = object["mfa_enabled"].toBool(false);
-    if(object.contains("email"))
-        _email = object["email"].toString();
-    if(object.contains("verified"))
-        _verified = object["verified"].toBool(false);
+    if(other.id())
+        _id = other.id();
+    if(!other.username().isEmpty())
+        _username = other.username();
+    if(other.discriminator())
+        _discriminator = other.discriminator();
+    if(!other.avatar().isEmpty())
+        _avatar = other.avatar();
+    if(other.bot().has_value())
+        _bot = other.bot();
+    if(other.mfaEnabled().has_value())
+        _mfaEnabled = other.mfaEnabled();
+    if(other.email().has_value())
+        _email = other.email();
+    if(other.verified().has_value())
+        _verified = other.verified();
 
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordUser(" << this << ") updated";

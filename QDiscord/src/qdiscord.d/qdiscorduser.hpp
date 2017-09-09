@@ -43,6 +43,7 @@ public:
     QJsonObject serialize() const;
     ///\brief Updates the current instance from the provided parameters.
     void update(const QJsonObject& object);
+    void update(const QDiscordUser& other);
     ///\brief Returns the user's ID.
     QDiscordID id() const { return _id; }
     void setId(QDiscordID id) { _id = id; }
@@ -59,10 +60,12 @@ public:
     QString avatar() const { return _avatar; }
     void setAvatar(QString avatar) { _avatar = avatar; }
     ///\brief Returns whether the user is a bot.
-    bool bot() const { return _bot; }
+    std::experimental::optional<bool> bot() const { return _bot; }
     void setBot(bool bot) { _bot = bot; }
-    bool mfaEnabled() const { return _mfaEnabled; }
+    void resetBot() { _bot.reset(); }
+    std::experimental::optional<bool> mfaEnabled() const { return _mfaEnabled; }
     void setMfaEnabled(bool mfaEnabled) { _mfaEnabled = mfaEnabled; }
+    void resetMfaEnabled() { _mfaEnabled.reset(); }
     ///\brief Returns the user's e-mail, if it can be determined.
     std::experimental::optional<QString> email() const { return _email; }
     void setEmail(QString email) { _email = email; }
@@ -96,8 +99,8 @@ private:
     QString _username;
     QDiscordDiscriminator _discriminator;
     QString _avatar;
-    bool _bot;
-    bool _mfaEnabled;
+    std::experimental::optional<bool> _bot;
+    std::experimental::optional<bool> _mfaEnabled;
     std::experimental::optional<QString> _email;
     std::experimental::optional<bool> _verified;
     QDiscordRest* _rest;

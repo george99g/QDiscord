@@ -20,6 +20,7 @@
 #define QDISCORDWS_HPP
 
 #include "qdiscordabstractstate.hpp"
+#include "qdiscordjsondecoder.hpp"
 #include "qdiscordtoken.hpp"
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -115,7 +116,7 @@ public:
     QString sessionId() const { return _sessionId; }
     quint32 latestSequence() const { return _latestSequence; }
     QDiscordAbstractState* state() { return _state; }
-    void setState(QDiscordAbstractState* state) { _state = state; }
+    void setState(QDiscordAbstractState* state);
     ConnectionState connectionState() const { return _cState; }
     QWebSocket& webSocket() { return _ws; }
 signals:
@@ -147,6 +148,8 @@ private:
     QString _sessionId;
     qint32 _latestSequence = -1;
     QDiscordAbstractState* _state;
+    QDiscordJsonDecoder _jsonDecoder;
+    // QDiscordEtfDecoder _etfDecoder;
     ConnectionState _cState = ConnectionState::Disconnected;
     ConnectionState _lastCState = _cState;
     QWebSocket _ws;

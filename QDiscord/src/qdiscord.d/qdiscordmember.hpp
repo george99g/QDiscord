@@ -27,6 +27,7 @@
 #include <QWeakPointer>
 
 class QDiscordGuild;
+class QDiscordRest;
 
 /*!
  * \brief Represents a guild member in the Discord API.
@@ -51,6 +52,7 @@ public:
     QJsonObject serialize() const;
     ///\brief Returns a pointer to the user object contained by this object.
     QDiscordUser& user() { return _user; }
+    const QDiscordUser& constUser() const { return _user; }
     void setUser(const QDiscordUser& user) { _user = user; }
     ///\brief Returns this member's nickname.
     std::experimental::optional<QString> nickname() const { return _nickname; }
@@ -60,13 +62,15 @@ public:
     QDateTime joinedAt() const { return _joinedAt; }
     void setJoinedAt(const QDateTime& joinedAt) { _joinedAt = joinedAt; }
     ///\brief Returns whether the member has disabled their speakers.
-    bool deaf() const { return _deaf; }
+    std::experimental::optional<bool> deaf() const { return _deaf; }
     void setDeaf(bool deaf) { _deaf = deaf; }
+    void resetDeaf() { _deaf.reset(); }
     ///\brief Returns whether the member has muted their microphone.
-    bool mute() const { return _mute; }
+    std::experimental::optional<bool> mute() const { return _mute; }
     void setMute(bool mute) { _mute = mute; }
+    void resetMute() { _mute.reset(); }
     ///\brief Updates the current instance from the provided parameters.
-    void update(const QJsonObject& object);
+    void update(const QDiscordMember& other);
     ///\brief Returns a pointer to this object's parent guild.
     QSharedPointer<QDiscordGuild> guild() const { return _guild.toStrongRef(); }
     void setGuild(QWeakPointer<QDiscordGuild> guild) { _guild = guild; }
@@ -76,6 +80,10 @@ public:
     ///\brief Returns a string which allows you to mention this member using
     /// their  nickname.
     QString mentionNickname() const;
+
+    QDiscordRest* rest() const { return _user.rest(); }
+    void setRest(QDiscordRest* rest);
+
     bool isNull() const { return _user.isNull(); }
     operator bool() const;
     /*!
@@ -97,8 +105,8 @@ private:
     QDiscordUser _user;
     std::experimental::optional<QString> _nickname;
     QDateTime _joinedAt;
-    bool _deaf;
-    bool _mute;
+    std::experimental::optional<bool> _deaf;
+    std::experimental::optional<bool> _mute;
     QWeakPointer<QDiscordGuild> _guild;
 };
 

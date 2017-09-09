@@ -38,9 +38,6 @@ QDiscordMember::QDiscordMember(const QJsonObject& object)
 
 QDiscordMember::QDiscordMember()
 {
-    _deaf = false;
-    _mute = false;
-
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordMember(" << this << ") constructed";
 #endif
@@ -63,8 +60,10 @@ void QDiscordMember::deserialize(const QJsonObject& object)
     }
     _joinedAt = QDateTime::fromString(object["joined_at"].toString(),
                                       Qt::ISODateWithMs);
-    _deaf = object["deaf"].toBool(false);
-    _mute = object["mute"].toBool(false);
+    if(object.contains("deaf"))
+        _deaf = object["deaf"].toBool(false);
+    if(object.contains("mute"))
+        _mute = object["mute"].toBool(false);
     /* The guild pointer is managed by the calling class. */
 }
 
@@ -91,32 +90,24 @@ QJsonObject QDiscordMember::serialize() const
         object["joined_at"] =
             _joinedAt.toTimeSpec(Qt::OffsetFromUTC).toString(Qt::ISODateWithMs);
     }
-    object["deaf"] = _deaf;
-    object["mute"] = _mute;
+    if(_deaf.has_value())
+        object["deaf"] = _deaf.value();
+    if(_mute.has_value())
+        object["mute"] = _mute.value();
 
     return object;
 }
 
-void QDiscordMember::update(const QJsonObject& object)
+void QDiscordMember::update(const QDiscordMember& other)
 {
-    _user.update(object["user"].toObject());
-    if(object.contains("nick"))
-    {
-        if(object["nick"].isNull())
-            _nickname.reset();
-        else
-            _nickname = object["nick"].toString();
-    }
-    if(object.contains("joined_at"))
-    {
-        _joinedAt = QDateTime::fromString(object["joined_at"].toString(""),
-                                          Qt::ISODateWithMs);
-    }
-    if(object.contains("deaf"))
-        _deaf = object["deaf"].toBool(false);
-    if(object.contains("mute"))
-        _mute = object["mute"].toBool(false);
-
+    _user.update(other.constUser());
+    _nickname = other.nickname();
+    if(other.joinedAt().isValid())
+        _joinedAt = other.joinedAt();
+    if(other.deaf().has_value())
+        _deaf = other.deaf();
+    if(other.mute().has_value())
+        _mute = other.mute();
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordMember(" << this << ") updated";
 #endif
@@ -131,6 +122,11 @@ QString QDiscordMember::mentionNickname() const
 {
     return QString("<@!%1>").arg(_user.id() ? _user.id().toString() :
                                               "invalid ID");
+}
+
+void QDiscordMember::setRest(QDiscordRest* rest)
+{
+    _user.setRest(rest);
 }
 
 QDiscordMember::operator bool() const

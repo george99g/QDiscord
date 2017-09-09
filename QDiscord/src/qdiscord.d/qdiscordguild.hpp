@@ -19,6 +19,7 @@
 #ifndef QDISCORDGUILD_HPP
 #define QDISCORDGUILD_HPP
 
+#include "external/Optional/optional.hpp"
 #include "qdiscordchannel.hpp"
 #include "qdiscordmember.hpp"
 #include <QDateTime>
@@ -93,8 +94,12 @@ public:
      */
     int afkTimeout() const { return _afkTimeout; }
     void setAfkTimeout(int afkTimeout) { _afkTimeout = afkTimeout; }
-    bool embedEnabled() const { return _embedEnabled; }
+    std::experimental::optional<bool> embedEnabled() const
+    {
+        return _embedEnabled;
+    }
     void setEmbedEnabled(bool embedEnabled) { _embedEnabled = embedEnabled; }
+    void resetEmbedEnabled() { _embedEnabled.reset(); }
     QDiscordID embedChannelId() const { return _embedChannelId; }
     void setEmbedChannelId(QDiscordID embedChannelId)
     {
@@ -131,19 +136,24 @@ public:
     ///\brief Returns the date the current user joined this guild.
     QDateTime joinedAt() const { return _joinedAt; }
     void setJoinedAt(const QDateTime& joinedAt) { _joinedAt = joinedAt; }
-    bool large() const { return _large; }
+    std::experimental::optional<bool> large() const { return _large; }
     void setLarge(bool large) { _large = large; }
+    void resetLarge() { _large.reset(); }
     /*!
      * \brief Returns whether the guild is unavailable.
      *
      * If this is true, a majority of guild information will not be available.
      */
-    bool unavailable() const { return _unavailable; }
+    std::experimental::optional<bool> unavailable() const
+    {
+        return _unavailable;
+    }
     void setUnavailable(bool unavailable) { _unavailable = unavailable; }
+    void resetUnavailable() { _unavailable.reset(); }
     ///\brief Returns the guild's member count.
     int memberCount() const { return _memberCount; }
     void setMemberCount(int memberCount) { _memberCount = memberCount; }
-    void update(const QJsonObject& object);
+    void update(const QDiscordGuild& other);
     ///\brief Returns a map of pointers to the guild's members and their IDs.
     QMap<QDiscordID, QSharedPointer<QDiscordMember>> membersMap() const
     {
@@ -202,7 +212,7 @@ public:
     bool removeMember(QDiscordID member);
 
     QDiscordRest* rest() const { return _rest; }
-    void setRest(QDiscordRest* rest) { _rest = rest; }
+    void setRest(QDiscordRest* rest);
 
     bool isNull() const { return _id.isNull(); }
     operator bool() const;
@@ -223,7 +233,7 @@ private:
     QString _region;
     QDiscordID _afkChannelId;
     int _afkTimeout;
-    bool _embedEnabled;
+    std::experimental::optional<bool> _embedEnabled;
     QDiscordID _embedChannelId;
     VerificationLevel _verificationLevel;
     NotificationLevel _defaultMessageNotifications;
@@ -231,8 +241,8 @@ private:
     QStringList _features;
     int _mfaLevel;
     QDateTime _joinedAt;
-    bool _large;
-    bool _unavailable;
+    std::experimental::optional<bool> _large;
+    std::experimental::optional<bool> _unavailable;
     int _memberCount;
     QMap<QDiscordID, QSharedPointer<QDiscordMember>> _members;
     QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _channels;

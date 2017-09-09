@@ -29,32 +29,44 @@ class QDiscordState : public QDiscordAbstractState
 public:
     explicit QDiscordState(QObject* parent = nullptr);
     virtual ~QDiscordState();
-    virtual void readyReceived(const QJsonObject& object) override;
-    virtual void channelCreateReceived(const QJsonObject& object) override;
-    virtual void channelUpdateReceived(const QJsonObject& object) override;
-    virtual void channelDeleteReceived(const QJsonObject& object) override;
-    virtual void guildCreateReceived(const QJsonObject& object) override;
-    virtual void guildUpdateReceived(const QJsonObject& object) override;
-    virtual void guildDeleteReceived(const QJsonObject& object) override;
+    virtual void readyReceived(int protocolVersion,
+                               QSharedPointer<QDiscordUser> user) override;
+    virtual void
+    channelCreateReceived(QSharedPointer<QDiscordChannel> channel) override;
+    virtual void
+    channelUpdateReceived(QSharedPointer<QDiscordChannel> channel) override;
+    virtual void
+    channelDeleteReceived(QSharedPointer<QDiscordChannel> channel) override;
+    virtual void
+    guildCreateReceived(QSharedPointer<QDiscordGuild> guild) override;
+    virtual void
+    guildUpdateReceived(QSharedPointer<QDiscordGuild> guild) override;
+    virtual void
+    guildDeleteReceived(QSharedPointer<QDiscordGuild> guild) override;
     virtual void guildBanAddReceived(const QJsonObject& object) override;
     virtual void guildBanRemoveReceived(const QJsonObject& object) override;
     virtual void guildEmojisUpdateReceived(const QJsonObject& object) override;
     virtual void
     guildIntegrationsUpdateReceived(const QJsonObject& object) override;
-    virtual void guildMemberAddReceived(const QJsonObject& object) override;
-    virtual void guildMemberRemoveReceived(const QJsonObject& object) override;
-    virtual void guildMemberUpdateReceived(const QJsonObject& object) override;
+    virtual void guildMemberAddReceived(QSharedPointer<QDiscordMember> member,
+                                        QDiscordID guildId) override;
+    virtual void
+    guildMemberRemoveReceived(QSharedPointer<QDiscordMember> member,
+                              QDiscordID guildId) override;
+    virtual void
+    guildMemberUpdateReceived(QSharedPointer<QDiscordMember> member,
+                              QDiscordID guildId) override;
     virtual void guildMembersChunkReceived(const QJsonObject& object) override;
     virtual void guildRoleCreateReceived(const QJsonObject& object) override;
     virtual void guildRoleUpdateReceived(const QJsonObject& object) override;
     virtual void guildRoleDeleteReceived(const QJsonObject& object) override;
-    virtual void messageCreateReceived(const QJsonObject& object) override;
-    virtual void messageUpdateReceived(const QJsonObject& object) override;
-    virtual void messageDeleteReceived(const QJsonObject& object) override;
+    virtual void messageCreateReceived(QDiscordMessage message) override;
+    virtual void messageUpdateReceived(QDiscordMessage message) override;
+    virtual void messageDeleteReceived(QDiscordMessage message) override;
     virtual void messageDeleteBulkReceived(const QJsonObject& object) override;
     virtual void presenceUpdateReceived(const QJsonObject& object) override;
     virtual void typingStartReceived(const QJsonObject& object) override;
-    virtual void userUpdateReceived(const QJsonObject& object) override;
+    virtual void userUpdateReceived(QSharedPointer<QDiscordUser> user) override;
     virtual void voiceStateUpdateReceived(const QJsonObject& object) override;
     virtual void voiceServerUpdateReceived(const QJsonObject& object) override;
     // TODO: Add ETF support
@@ -64,6 +76,10 @@ public:
     void setRest(QDiscordRest* rest) { _rest = rest; }
 
     int protocolVersion() const { return _protocolVersion; }
+
+    QSharedPointer<QDiscordUser> user() const { return _user; }
+    void setUser(QSharedPointer<QDiscordUser> user) { _user = user; }
+
     QSharedPointer<QDiscordChannel> dmChannel(QDiscordID id) const
     {
         return _dmChannels.value(id);

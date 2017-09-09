@@ -20,53 +20,6 @@
 #include "qdiscordrest.hpp"
 #include "qdiscorduseragent.hpp"
 
-namespace {
-    const QMap<QString, void (QDiscordAbstractState::*)(const QJsonObject&)>
-        jsonDispatchTable = {
-            {"READY", &QDiscordAbstractState::readyReceived},
-            {"CHANNEL_CREATE", &QDiscordAbstractState::channelCreateReceived},
-            {"CHANNEL_UPDATE", &QDiscordAbstractState::channelUpdateReceived},
-            {"CHANNEL_DELETE", &QDiscordAbstractState::channelDeleteReceived},
-            {"GUILD_CREATE", &QDiscordAbstractState::guildCreateReceived},
-            {"GUILD_UPDATE", &QDiscordAbstractState::guildUpdateReceived},
-            {"GUILD_DELETE", &QDiscordAbstractState::guildDeleteReceived},
-            {"GUILD_BAN_ADD", &QDiscordAbstractState::guildBanAddReceived},
-            {"GUILD_BAN_REMOVE",
-             &QDiscordAbstractState::guildBanRemoveReceived},
-            {"GUILD_EMOJIS_UPDATE",
-             &QDiscordAbstractState::guildEmojisUpdateReceived},
-            {"GUILD_INTEGRATIONS_UPDATE",
-             &QDiscordAbstractState::guildIntegrationsUpdateReceived},
-            {"GUILD_MEMBER_ADD",
-             &QDiscordAbstractState::guildMemberAddReceived},
-            {"GUILD_MEMBER_REMOVE",
-             &QDiscordAbstractState::guildMemberRemoveReceived},
-            {"GUILD_MEMBER_UPDATE",
-             &QDiscordAbstractState::guildMemberUpdateReceived},
-            {"GUILD_MEMBERS_CHUNK",
-             &QDiscordAbstractState::guildMembersChunkReceived},
-            {"GUILD_ROLE_CREATE",
-             &QDiscordAbstractState::guildRoleCreateReceived},
-            {"GUILD_ROLE_UPDATE",
-             &QDiscordAbstractState::guildRoleUpdateReceived},
-            {"GUILD_ROLE_DELETE",
-             &QDiscordAbstractState::guildRoleDeleteReceived},
-            {"MESSAGE_CREATE", &QDiscordAbstractState::messageCreateReceived},
-            {"MESSAGE_UPDATE", &QDiscordAbstractState::messageUpdateReceived},
-            {"MESSAGE_DELETE", &QDiscordAbstractState::messageDeleteReceived},
-            {"MESSSAGE_DELETE_BULK",
-             &QDiscordAbstractState::messageDeleteBulkReceived},
-            {"PRESENCE_UPDATE", &QDiscordAbstractState::presenceUpdateReceived},
-            {"TYPING_START", &QDiscordAbstractState::typingStartReceived},
-            {"USER_UPDATE", &QDiscordAbstractState::userUpdateReceived},
-            {"VOICE_STATE_UPDATE",
-             &QDiscordAbstractState::voiceStateUpdateReceived},
-            {"VOICE_SERVER_UPDATE",
-             &QDiscordAbstractState::voiceServerUpdateReceived},
-    };
-    // TODO: Add a map for ETF support here
-} // namespace
-
 void QDiscordWs::getGateway(QDiscordRest& rest,
                             std::function<void(QString)> callback)
 {
@@ -246,6 +199,13 @@ bool QDiscordWs::setToken(const QDiscordToken& token)
     }
     _token = token;
     return true;
+}
+
+void QDiscordWs::setState(QDiscordAbstractState* state)
+{
+    _jsonDecoder.setState(state);
+    //_etfDecoder.setState(state);
+    _state = state;
 }
 
 void QDiscordWs::setCState(QDiscordWs::ConnectionState state)
@@ -429,17 +389,11 @@ void QDiscordWs::dispatchDispatchJson(const QJsonObject& d, const QString& t)
     }
     else if(t == "RESUMED")
         setCState(ConnectionState::Authenticated);
-    if(jsonDispatchTable.keys().contains(t))
-    {
-        if(_state)
-            (_state->*jsonDispatchTable[t])(d);
-    }
-    else
-    {
-#ifdef QDISCORD_LIBRARY_DEBUG
-        qDebug() << this << "No dispatch table entry found for " << t;
-#endif
-    }
+
+    if(!_state || _encoding != Encoding::JSON)
+        return;
+
+    _jsonDecoder.input(d, t);
 }
 
 void QDiscordWs::dispatchInvalidSession()

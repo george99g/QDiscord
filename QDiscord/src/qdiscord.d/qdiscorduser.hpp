@@ -103,7 +103,7 @@ private:
     std::experimental::optional<bool> _mfaEnabled;
     std::experimental::optional<QString> _email;
     std::experimental::optional<bool> _verified;
-    QDiscordRest* _rest;
+    QDiscordRest* _rest = nullptr;
 };
 
 Q_DECLARE_METATYPE(QDiscordUser)

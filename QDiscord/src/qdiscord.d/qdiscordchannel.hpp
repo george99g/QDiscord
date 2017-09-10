@@ -339,20 +339,20 @@ public:
 
 private:
     QDiscordID _id;
-    Type _type;
+    Type _type = Type::UnknownType;
     QDiscordID _guildId;
-    int _position;
+    int _position = -1;
     QString _name;
     QString _topic;
     QDiscordID _lastMessageId;
-    int _bitrate;
-    int _userLimit;
+    int _bitrate = -1;
+    int _userLimit = -1;
     QList<QSharedPointer<QDiscordUser>> _recipients;
     QString _icon;
     QDiscordID _ownerId;
     QDiscordID _applicationId;
     QWeakPointer<QDiscordGuild> _guild;
-    QDiscordRest* _rest;
+    QDiscordRest* _rest = nullptr;
 };
 
 Q_DECLARE_METATYPE(QDiscordChannel::Type)

@@ -22,7 +22,6 @@
 QDiscordState::QDiscordState(QObject* parent)
     : QDiscordAbstractState(parent)
 {
-    _rest = nullptr;
 }
 
 QDiscordState::~QDiscordState() {}

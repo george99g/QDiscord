@@ -119,14 +119,6 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
 
 QDiscordGuild::QDiscordGuild()
 {
-    _afkTimeout = -1;
-    _verificationLevel = VerificationLevel::Unknown;
-    _defaultMessageNotifications = NotificationLevel::Unknown;
-    _explicitContentFilter = ExplicitContentFilterLevel::Unknown;
-    _mfaLevel = -1;
-    _memberCount = -1;
-    _rest = nullptr;
-
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordGuild(" << this << ") constructed";
 #endif

@@ -20,6 +20,7 @@
 #define QDISCORDMESSAGE_HPP
 
 #include "external/Optional/optional.hpp"
+#include "qdiscordattachment.hpp"
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
 #include "qdiscordmember.hpp"
@@ -189,6 +190,11 @@ public:
     ///\brief Returns a list of users mentioned in this message.
     QList<QDiscordUser> mentions() const { return _mentions; }
     void setMentions(QList<QDiscordUser> mentions) { _mentions = mentions; }
+    QList<QDiscordAttachment> attachments() const { return _attachments; }
+    void setAttachments(const QList<QDiscordAttachment>& attachments)
+    {
+        _attachments = attachments;
+    }
     QDiscordID nonce() const { return _nonce; }
     void setNonce(QDiscordID nonce) { _nonce = nonce; }
     bool pinned() const { return _pinned; }
@@ -225,13 +231,14 @@ private:
     QString _content;
     QDateTime _timestamp;
     std::experimental::optional<QDateTime> _editedTimestamp;
-    bool _tts;
-    bool _mentionEveryone;
+    bool _tts = false;
+    bool _mentionEveryone = false;
     QList<QDiscordUser> _mentions;
+    QList<QDiscordAttachment> _attachments;
     QDiscordID _nonce;
-    bool _pinned;
+    bool _pinned = false;
     QSharedPointer<QDiscordChannel> _channel;
-    QDiscordRest* _rest;
+    QDiscordRest* _rest = nullptr;
 };
 
 Q_DECLARE_METATYPE(QDiscordMessage)

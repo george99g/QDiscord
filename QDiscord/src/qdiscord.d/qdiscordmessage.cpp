@@ -388,11 +388,6 @@ QDiscordMessage::QDiscordMessage(const QJsonObject& object)
 
 QDiscordMessage::QDiscordMessage()
 {
-    _mentionEveryone = false;
-    _tts = false;
-    _pinned = false;
-    _rest = nullptr;
-
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordMessage(" << this << ") constructed";
 #endif
@@ -422,10 +417,11 @@ void QDiscordMessage::deserialize(const QJsonObject& object)
     _mentionEveryone = object["mention_everyone"].toBool(false);
     _nonce = QDiscordID(object["nonce"].toString());
     QJsonArray mentionsArray = object["mentions"].toArray();
-    for(const QJsonValue item : mentionsArray)
-    {
+    for(const QJsonValue& item : mentionsArray)
         _mentions.append(QDiscordUser(item.toObject()));
-    }
+    QJsonArray attachmentsArray = object["attachments"].toArray();
+    for(const QJsonValue& item : attachmentsArray)
+        _attachments.append(QDiscordAttachment(item.toObject()));
     _pinned = object["pinned"].toBool(false);
     /* The channel pointer is handled by the calling class */
 }
@@ -462,11 +458,12 @@ QJsonObject QDiscordMessage::serialize()
     object["tts"] = _tts;
     object["mention_everyone"] = _mentionEveryone;
     QJsonArray mentions;
-    for(const QDiscordUser& u : _mentions)
-    {
-        mentions.append(u.serialize());
-    }
+    for(const QDiscordUser& user : _mentions)
+        mentions.append(user.serialize());
     object["mentions"] = mentions;
+    QJsonArray attachments;
+    for(const QDiscordAttachment& attachment : _attachments)
+        attachments.append(attachment.serialize());
     if(_nonce.isNull())
         object["nonce"] = QJsonValue();
     else

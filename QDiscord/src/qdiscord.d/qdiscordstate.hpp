@@ -111,7 +111,7 @@ private:
     QSharedPointer<QDiscordUser> _user;
     QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _dmChannels;
     QMap<QDiscordID, QSharedPointer<QDiscordGuild>> _guilds;
-    QDiscordRest* _rest;
+    QDiscordRest* _rest = nullptr;
 };
 
 #endif // QDISCORDSTATE_HPP

@@ -232,21 +232,22 @@ private:
     QDiscordID _applicationId;
     QString _region;
     QDiscordID _afkChannelId;
-    int _afkTimeout;
+    int _afkTimeout = -1;
     std::experimental::optional<bool> _embedEnabled;
     QDiscordID _embedChannelId;
-    VerificationLevel _verificationLevel;
-    NotificationLevel _defaultMessageNotifications;
-    ExplicitContentFilterLevel _explicitContentFilter;
+    VerificationLevel _verificationLevel = VerificationLevel::Unknown;
+    NotificationLevel _defaultMessageNotifications = NotificationLevel::Unknown;
+    ExplicitContentFilterLevel _explicitContentFilter =
+        ExplicitContentFilterLevel::Unknown;
     QStringList _features;
-    int _mfaLevel;
+    int _mfaLevel = -1;
     QDateTime _joinedAt;
     std::experimental::optional<bool> _large;
     std::experimental::optional<bool> _unavailable;
-    int _memberCount;
+    int _memberCount = -1;
     QMap<QDiscordID, QSharedPointer<QDiscordMember>> _members;
     QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _channels;
-    QDiscordRest* _rest;
+    QDiscordRest* _rest = nullptr;
 };
 
 Q_DECLARE_METATYPE(QDiscordGuild)

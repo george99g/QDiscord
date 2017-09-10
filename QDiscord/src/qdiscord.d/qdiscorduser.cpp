@@ -32,11 +32,14 @@ QSharedPointer<QDiscordUser> QDiscordUser::fromJson(const QJsonObject& object)
 QDiscordUser::QDiscordUser(const QJsonObject& object)
 {
     deserialize(object);
+
+#ifdef QDISCORD_LIBRARY_DEBUG
+    qDebug() << "QDiscordUser(" << this << ") constructed";
+#endif
 }
 
 QDiscordUser::QDiscordUser()
 {
-    _rest = nullptr;
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordUser(" << this << ") constructed";
 #endif

@@ -635,12 +635,6 @@ QDiscordChannel::QDiscordChannel(const QJsonObject& object)
 
 QDiscordChannel::QDiscordChannel()
 {
-    _position = -1;
-    _type = Type::UnknownType;
-    _bitrate = -1;
-    _userLimit = -1;
-    _rest = nullptr;
-
 #ifdef QDISCORD_LIBRARY_DEBUG
     qDebug() << "QDiscordChannel(" << this << ") constructed";
 #endif

@@ -52,13 +52,7 @@ void QDiscordChannel::getMessage(QDiscordRest& rest,
 void QDiscordChannel::getMessage(const QDiscordID& message,
                                  std::function<void(QDiscordMessage)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordMessage());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordMessage());
         return;
@@ -106,13 +100,7 @@ void QDiscordChannel::getMessages(
     int limit,
     std::function<void(QList<QDiscordMessage>)> callback)
 {
-    if(!_rest)
-    {
-        callback(QList<QDiscordMessage>());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QList<QDiscordMessage>());
         return;
@@ -170,13 +158,7 @@ void QDiscordChannel::getMessagesAfter(
     int limit,
     std::function<void(QList<QDiscordMessage>)> callback)
 {
-    if(!_rest)
-    {
-        callback(QList<QDiscordMessage>());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QList<QDiscordMessage>());
         return;
@@ -235,13 +217,7 @@ void QDiscordChannel::getMessagesBefore(
     int limit,
     std::function<void(QList<QDiscordMessage>)> callback)
 {
-    if(!_rest)
-    {
-        callback(QList<QDiscordMessage>());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QList<QDiscordMessage>());
         return;
@@ -300,13 +276,7 @@ void QDiscordChannel::getMessagesAround(
     int limit,
     std::function<void(QList<QDiscordMessage>)> callback)
 {
-    if(!_rest)
-    {
-        callback(QList<QDiscordMessage>());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QList<QDiscordMessage>());
         return;
@@ -356,10 +326,7 @@ void QDiscordChannel::modify(QDiscordRest& rest,
 
 void QDiscordChannel::modify(const QJsonObject& data)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     QDiscordChannel::modify(*_rest, _id, data);
@@ -368,13 +335,7 @@ void QDiscordChannel::modify(const QJsonObject& data)
 void QDiscordChannel::modify(const QJsonObject& data,
                              std::function<void(QDiscordChannel)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordChannel());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordChannel());
         return;
@@ -402,10 +363,7 @@ void QDiscordChannel::modifyName(QDiscordRest& rest,
 
 void QDiscordChannel::modifyName(const QString& name)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     QDiscordChannel::modifyName(*_rest, _id, name);
@@ -414,13 +372,7 @@ void QDiscordChannel::modifyName(const QString& name)
 void QDiscordChannel::modifyName(const QString& name,
                                  std::function<void(QDiscordChannel)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordChannel());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordChannel());
         return;
@@ -449,10 +401,7 @@ void QDiscordChannel::modifyPosition(
 
 void QDiscordChannel::modifyPosition(int position)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     QDiscordChannel::modifyPosition(*_rest, _id, position);
@@ -462,13 +411,7 @@ void QDiscordChannel::modifyPosition(
     int position,
     std::function<void(QDiscordChannel)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordChannel());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordChannel());
         return;
@@ -496,10 +439,7 @@ void QDiscordChannel::modifyTopic(QDiscordRest& rest,
 
 void QDiscordChannel::modifyTopic(const QString& topic)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     QDiscordChannel::modifyTopic(*_rest, _id, topic);
@@ -508,13 +448,7 @@ void QDiscordChannel::modifyTopic(const QString& topic)
 void QDiscordChannel::modifyTopic(const QString& topic,
                                   std::function<void(QDiscordChannel)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordChannel());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordChannel());
         return;
@@ -543,10 +477,7 @@ void QDiscordChannel::modifyBitrate(
 
 void QDiscordChannel::modifyBitrate(int bitrate)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     QDiscordChannel::modifyBitrate(*_rest, _id, bitrate);
@@ -556,13 +487,7 @@ void QDiscordChannel::modifyBitrate(
     int bitrate,
     std::function<void(QDiscordChannel)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordChannel());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordChannel());
         return;
@@ -591,10 +516,7 @@ void QDiscordChannel::modifyUserLimit(
 
 void QDiscordChannel::modifyUserLimit(int userLimit)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     QDiscordChannel::modifyUserLimit(*_rest, _id, userLimit);
@@ -604,19 +526,49 @@ void QDiscordChannel::modifyUserLimit(
     int userLimit,
     std::function<void(QDiscordChannel)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordChannel());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordChannel());
         return;
     }
 
     QDiscordChannel::modifyUserLimit(*_rest, _id, userLimit, callback);
+}
+
+void QDiscordChannel::triggerTyping(QDiscordRest& rest,
+                                    const QDiscordID& channel)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Channels::sendTyping(channel));
+}
+
+void QDiscordChannel::triggerTyping(QDiscordRest& rest,
+                                    const QDiscordID& channel,
+                                    std::function<void(bool)> callback)
+{
+    rest.request(
+        QNetworkRequest(),
+        QDiscordRoutes::Channels::sendTyping(channel),
+        [callback](QNetworkReply* reply) { callback(reply->error() == 204); });
+}
+
+void QDiscordChannel::triggerTyping()
+{
+    if(!_rest || !_id)
+        return;
+
+    QDiscordChannel::triggerTyping(*_rest, _id);
+}
+
+void QDiscordChannel::triggerTyping(std::function<void(bool)> callback)
+{
+    if(!_rest || !_id)
+    {
+        callback(false);
+        return;
+    }
+
+    QDiscordChannel::triggerTyping(*_rest, _id, callback);
 }
 
 void QDiscordChannel::remove(QDiscordRest& rest, const QDiscordID& channel)
@@ -648,10 +600,7 @@ void QDiscordChannel::remove(QDiscordRest& rest,
 
 void QDiscordChannel::remove()
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     QDiscordChannel::remove(*_rest, _id);
@@ -659,13 +608,7 @@ void QDiscordChannel::remove()
 
 void QDiscordChannel::remove(std::function<void(QDiscordChannel)> callback)
 {
-    if(!_rest)
-    {
-        callback(QDiscordChannel());
-        return;
-    }
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordChannel());
         return;

@@ -207,6 +207,16 @@ public:
     void modifyUserLimit(int userLimit,
                          std::function<void(QDiscordChannel)> callback);
 
+    static void triggerTyping(QDiscordRest& rest, const QDiscordID& channel);
+
+    static void triggerTyping(QDiscordRest& rest,
+                              const QDiscordID& channel,
+                              std::function<void(bool)> callback);
+
+    void triggerTyping();
+
+    void triggerTyping(std::function<void(bool)> callback);
+
     static void remove(QDiscordRest& rest, const QDiscordID& channel);
 
     static void remove(QDiscordRest& rest,

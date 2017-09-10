@@ -123,10 +123,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
 
 void QDiscordMessage::send()
 {
-    if(!_rest)
-        return;
-
-    if(_content.isEmpty())
+    if(!_rest || _content.isEmpty())
         return;
 
     if(!_channelId)
@@ -148,10 +145,7 @@ void QDiscordMessage::send()
 
 void QDiscordMessage::send(std::function<void(QDiscordMessage)> callback)
 {
-    if(!_rest)
-        return;
-
-    if(_content.isEmpty())
+    if(!_rest || _content.isEmpty())
     {
         callback(QDiscordMessage());
         return;
@@ -231,10 +225,7 @@ void QDiscordMessage::edit(QDiscordRest& rest,
 
 void QDiscordMessage::edit(const QString& newContent)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     if(!_channelId)
@@ -251,10 +242,7 @@ void QDiscordMessage::edit(const QString& newContent)
 void QDiscordMessage::edit(const QString& newContent,
                            std::function<void(QDiscordMessage)> callback)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(QDiscordMessage());
         return;
@@ -295,10 +283,7 @@ void QDiscordMessage::remove(QDiscordRest& rest,
 
 void QDiscordMessage::remove()
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
         return;
 
     if(!_channelId)
@@ -314,10 +299,7 @@ void QDiscordMessage::remove()
 
 void QDiscordMessage::remove(std::function<void(bool)> callback)
 {
-    if(!_rest)
-        return;
-
-    if(!_id)
+    if(!_rest || !_id)
     {
         callback(false);
         return;

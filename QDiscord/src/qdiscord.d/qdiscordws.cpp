@@ -18,7 +18,6 @@
 
 #include "qdiscordws.hpp"
 #include "qdiscordrest.hpp"
-#include "qdiscorduseragent.hpp"
 
 void QDiscordWs::getGateway(QDiscordRest& rest,
                             std::function<void(QString)> callback)
@@ -41,6 +40,7 @@ void QDiscordWs::getGateway(QDiscordRest& rest,
 QDiscordWs::QDiscordWs(QDiscordAbstractState* state, QObject* parent)
     : QObject(parent)
     , _state(state)
+    , _userAgent(QDiscordUserAgent::global())
 {
     connect(&_ws, &QWebSocket::connected, this, &QDiscordWs::wsConnected);
     connect(&_ws, &QWebSocket::disconnected, this, &QDiscordWs::wsDisconnected);
@@ -458,17 +458,15 @@ void QDiscordWs::sendIdentify()
         QJsonObject obj = {
             {"op", static_cast<int>(GatewayOp::Identify)},
             {"d",
-             QJsonObject(
-                 {{"token", _token.fullToken()},
-                  {"properties",
-                   QJsonObject(
-                       {{"$os", QSysInfo::kernelType()},
-                        {"$browser", QDiscordUserAgent::global().libraryName()},
-                        {"$device", QDiscordUserAgent::global().libraryName()},
-                        {"$referrer", ""},
-                        {"$referring_domain", ""}})},
-                  {"compress", false},
-                  {"large_threshold", 250}})}};
+             QJsonObject({{"token", _token.fullToken()},
+                          {"properties",
+                           QJsonObject({{"$os", QSysInfo::kernelType()},
+                                        {"$browser", _userAgent.libraryName()},
+                                        {"$device", _userAgent.libraryName()},
+                                        {"$referrer", ""},
+                                        {"$referring_domain", ""}})},
+                          {"compress", false},
+                          {"large_threshold", 250}})}};
         setCState(ConnectionState::IdentifySent);
         _ws.sendTextMessage(QJsonDocument(obj).toJson());
         _ws.flush();

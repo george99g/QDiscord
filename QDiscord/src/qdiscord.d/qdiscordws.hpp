@@ -22,6 +22,7 @@
 #include "qdiscordabstractstate.hpp"
 #include "qdiscordjsondecoder.hpp"
 #include "qdiscordtoken.hpp"
+#include "qdiscorduseragent.hpp"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -119,6 +120,12 @@ public:
     void setState(QDiscordAbstractState* state);
     ConnectionState connectionState() const { return _cState; }
     QWebSocket& webSocket() { return _ws; }
+
+    QDiscordUserAgent userAgent() const { return _userAgent; }
+    void setUserAgent(const QDiscordUserAgent& userAgent)
+    {
+        _userAgent = userAgent;
+    }
 signals:
     void error(Error error);
     void loggedIn();
@@ -150,6 +157,7 @@ private:
     QDiscordAbstractState* _state;
     QDiscordJsonDecoder _jsonDecoder;
     // QDiscordEtfDecoder _etfDecoder;
+    QDiscordUserAgent _userAgent;
     ConnectionState _cState = ConnectionState::Disconnected;
     ConnectionState _lastCState = _cState;
     QWebSocket _ws;

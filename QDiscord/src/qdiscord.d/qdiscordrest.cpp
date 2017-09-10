@@ -22,6 +22,7 @@
 
 QDiscordRest::QDiscordRest(QObject* parent)
     : QObject(parent)
+    , _userAgent(QDiscordUserAgent::global())
 {
     _bucketTimer.setInterval(DEFAULT_TIMER_INTERVAL * 1000);
     _bucketTimer.setSingleShot(false);

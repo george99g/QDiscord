@@ -19,7 +19,10 @@
 #include "qdiscorduseragent.hpp"
 #include "qdiscordutilities.hpp"
 
-QDiscordUserAgent::QDiscordUserAgent() {}
+QDiscordUserAgent::QDiscordUserAgent()
+{
+    _libraryVersion = QDiscordLibraryVersion{0, 0};
+}
 
 const QDiscordUserAgent& QDiscordUserAgent::global()
 {

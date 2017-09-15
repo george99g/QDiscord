@@ -24,6 +24,7 @@
 #include "qdiscordchannel.hpp"
 #include "qdiscordguild.hpp"
 #include "qdiscordmember.hpp"
+#include <QFileInfo>
 #include <functional>
 
 class QDiscordRest;
@@ -91,6 +92,138 @@ public:
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QJsonObject& data);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QJsonObject& data);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       TTS tts = false);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
+                       TTS tts = false);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QJsonObject& data);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       TTS tts = false);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
+                       TTS tts = false);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QJsonObject& data,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
+                       TTS tts,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       TTS tts,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QJsonObject& data,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
+                       TTS tts,
+                       std::function<void(QDiscordMessage)> callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       TTS tts,
+                       std::function<void(QDiscordMessage)> callback);
 
     void send();
 

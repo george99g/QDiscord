@@ -73,4 +73,6 @@ private:
     std::experimental::optional<int> _width;
 };
 
+Q_DECLARE_METATYPE(QDiscordAttachment)
+
 #endif // QDISCORDATTACHMENT_HPP

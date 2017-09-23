@@ -364,6 +364,11 @@ void QDiscordPermission::setManageEmojis(bool value)
     set(30, value);
 }
 
+quint64 QDiscordPermission::value() const
+{
+    return _value;
+}
+
 bool QDiscordPermission::operator==(const QDiscordPermission& other) const
 {
     return _value == other._value;

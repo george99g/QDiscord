@@ -36,7 +36,8 @@ SOURCES += $$PWD/qdiscord.d/qdiscord.cpp \
     $$PWD/qdiscord.d/qdiscordjsondecoder.cpp \
     $$PWD/qdiscord.d/qdiscordattachment.cpp \
     $$PWD/qdiscord.d/qdiscordpermission.cpp \
-    $$PWD/qdiscord.d/qdiscordpermissionoverwrite.cpp
+    $$PWD/qdiscord.d/qdiscordpermissionoverwrite.cpp \
+    $$PWD/qdiscord.d/qdiscordrole.cpp
 
 TOPHEADERS += $$PWD/QDiscord \
               $$PWD/QDiscordRest \
@@ -64,7 +65,8 @@ DIRHEADERS += $$PWD/qdiscord.d/qdiscord.hpp \
     $$PWD/qdiscord.d/qdiscordjsondecoder.hpp \
     $$PWD/qdiscord.d/qdiscordattachment.hpp \
     $$PWD/qdiscord.d/qdiscordpermission.hpp \
-    $$PWD/qdiscord.d/qdiscordpermissionoverwrite.hpp
+    $$PWD/qdiscord.d/qdiscordpermissionoverwrite.hpp \
+    $$PWD/qdiscord.d/qdiscordrole.hpp
 
 LIBOPTIONALHEADERS += $$PWD/qdiscord.d/external/Optional/optional.hpp
 

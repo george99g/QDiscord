@@ -25,6 +25,8 @@
 
 class QDiscordPermission
 {
+    friend class QDiscordPermissionOverwrite;
+
 public:
     static constexpr quint8 bits = 53;
 
@@ -103,6 +105,8 @@ public:
     bool manageEmojis() const;
     void setManageEmojis(bool value);
 
+    quint64 value() const;
+
     bool operator==(const QDiscordPermission& other) const;
     bool operator!=(const QDiscordPermission& other) const;
     bool operator>(const QDiscordPermission& other) const;
@@ -111,8 +115,6 @@ public:
     bool operator<=(const QDiscordPermission& other) const;
 
 private:
-    friend class QDiscordPermissionOverwrite;
-
     bool bit(quint8 index) const;
     void set(quint8 index, bool value);
 

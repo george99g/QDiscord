@@ -96,6 +96,13 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
     _memberCount = other._memberCount;
     _joinedAt = other._joinedAt;
     _applicationId = other._applicationId;
+    for(QSharedPointer<QDiscordRole> item : other.roles())
+    {
+        QSharedPointer<QDiscordRole> newRole(new QDiscordRole(*item));
+        newRole->setGuild(sharedFromThis());
+        _roles.insert(newRole->id(), newRole);
+    }
+
     for(QSharedPointer<QDiscordChannel> item : other.channels())
     {
         QSharedPointer<QDiscordChannel> newChannel =
@@ -169,6 +176,13 @@ void QDiscordGuild::deserialize(const QJsonObject& object)
         _memberCount = object["member_count"].toInt(-1);
         if(!object["application_id"].isNull())
             _applicationId = QDiscordID(object["application_id"].toString());
+        for(const QJsonValue& item : object["roles"].toArray())
+        {
+            QSharedPointer<QDiscordRole> role =
+                QDiscordRole::fromJson(item.toObject());
+            role->setGuild(sharedFromThis());
+            _roles.insert(role->id(), role);
+        }
         for(const QJsonValue& item : object["members"].toArray())
         {
             QSharedPointer<QDiscordMember> member =
@@ -228,6 +242,12 @@ QJsonObject QDiscordGuild::serialize()
         object["member_count"] = _memberCount;
         object["application_id"] =
             _applicationId ? _applicationId.toString() : QJsonValue();
+        {
+            QJsonArray roles;
+            for(const QSharedPointer<QDiscordRole> role : _roles.values())
+                roles.append(role->serialize());
+            object["roles"] = roles;
+        }
         {
             QJsonArray members;
             for(const QSharedPointer<QDiscordMember> member : _members.values())

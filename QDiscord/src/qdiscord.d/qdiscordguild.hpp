@@ -22,6 +22,7 @@
 #include "external/Optional/optional.hpp"
 #include "qdiscordchannel.hpp"
 #include "qdiscordmember.hpp"
+#include "qdiscordrole.hpp"
 #include <QDateTime>
 #include <QDebug>
 #include <QJsonArray>
@@ -154,6 +155,10 @@ public:
     int memberCount() const { return _memberCount; }
     void setMemberCount(int memberCount) { _memberCount = memberCount; }
     void update(const QDiscordGuild& other);
+    QMap<QDiscordID, QSharedPointer<QDiscordRole>> rolesMap() const
+    {
+        return _roles;
+    }
     ///\brief Returns a map of pointers to the guild's members and their IDs.
     QMap<QDiscordID, QSharedPointer<QDiscordMember>> membersMap() const
     {
@@ -163,6 +168,10 @@ public:
     QMap<QDiscordID, QSharedPointer<QDiscordChannel>> channelsMap() const
     {
         return _channels;
+    }
+    QList<QSharedPointer<QDiscordRole>> roles() const
+    {
+        return _roles.values();
     }
     QList<QSharedPointer<QDiscordMember>> members() const
     {
@@ -245,6 +254,7 @@ private:
     std::experimental::optional<bool> _large;
     std::experimental::optional<bool> _unavailable;
     int _memberCount = -1;
+    QMap<QDiscordID, QSharedPointer<QDiscordRole>> _roles;
     QMap<QDiscordID, QSharedPointer<QDiscordMember>> _members;
     QMap<QDiscordID, QSharedPointer<QDiscordChannel>> _channels;
     QDiscordRest* _rest = nullptr;

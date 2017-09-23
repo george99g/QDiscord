@@ -48,7 +48,7 @@ QDiscordPermission QDiscordPermission::voice()
     return QDiscordPermission(0x3f00000);
 }
 
-QDiscordPermission::QDiscordPermission(quint32 value)
+QDiscordPermission::QDiscordPermission(quint64 value)
     : _value(value)
 {
 }
@@ -73,7 +73,7 @@ bool QDiscordPermission::isStrictSuperset(const QDiscordPermission& other) const
     return isSuperset(other) && operator!=(other);
 }
 
-void QDiscordPermission::handleOverwrite(quint32 allow, quint32 deny)
+void QDiscordPermission::handleOverwrite(quint64 allow, quint64 deny)
 {
     _value = (_value & ~deny) | allow;
 }

@@ -26,6 +26,8 @@
 class QDiscordPermission
 {
 public:
+    static constexpr quint8 bits = 53;
+
     static QDiscordPermission none();
     static QDiscordPermission all();
     static QDiscordPermission allChannel();
@@ -33,14 +35,14 @@ public:
     static QDiscordPermission text();
     static QDiscordPermission voice();
 
-    QDiscordPermission(quint32 value = 0);
+    QDiscordPermission(quint64 value = 0);
 
     bool isSubset(const QDiscordPermission& other) const;
     bool isSuperset(const QDiscordPermission& other) const;
     bool isStrictSubset(const QDiscordPermission& other) const;
     bool isStrictSuperset(const QDiscordPermission& other) const;
 
-    void handleOverwrite(quint32 allow, quint32 deny);
+    void handleOverwrite(quint64 allow, quint64 deny);
     void handleOverwrite(const QDiscordPermission& allow,
                          const QDiscordPermission& deny);
 
@@ -109,10 +111,12 @@ public:
     bool operator<=(const QDiscordPermission& other) const;
 
 private:
+    friend class QDiscordPermissionOverwrite;
+
     bool bit(quint8 index) const;
     void set(quint8 index, bool value);
 
-    quint32 _value;
+    quint64 _value;
 };
 
 Q_DECLARE_METATYPE(QDiscordPermission)

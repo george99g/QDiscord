@@ -62,6 +62,8 @@ public:
     QSharedPointer<QDiscordGuild> guild() const { return _guild.lock(); }
     void setGuild(QWeakPointer<QDiscordGuild> guild) { _guild = guild; }
 
+    bool isEveryone() const;
+
     QString mention() const;
 
     bool isNull() const { return _id.isNull(); }

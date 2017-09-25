@@ -60,6 +60,16 @@ QJsonObject QDiscordRole::serialize() const
     return object;
 }
 
+bool QDiscordRole::isEveryone() const
+{
+    QSharedPointer<QDiscordGuild> guild = _guild.lock();
+    if(!guild)
+        return false;
+    if(guild->id() == _id)
+        return true;
+    return false;
+}
+
 QString QDiscordRole::mention() const
 {
     return "<@&" + _id.toString() + ">";

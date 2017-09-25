@@ -310,6 +310,8 @@ void QDiscordGuild::update(const QDiscordGuild& other)
             _memberCount = other.memberCount();
         if(other.applicationId())
             _applicationId = other.applicationId();
+        if(!other.rolesMap().isEmpty())
+            _roles = other.rolesMap();
         if(!other.membersMap().isEmpty())
             _members = other.membersMap();
         if(!other.channelsMap().isEmpty())

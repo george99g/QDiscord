@@ -31,7 +31,6 @@ namespace QDiscordUtilities {
     ///\brief A struct used for storing the Discord API endpoints.
     struct EndPoints
     {
-        QString base; ///<\brief The base Discord endpoint.
         QString apiBase; ///<\brief The base Discord API endpoint.
         QString gateway; ///<\brief The gateway endpoint.
         QString users; ///<\brief The users endpoint.

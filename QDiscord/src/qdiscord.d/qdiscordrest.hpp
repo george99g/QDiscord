@@ -48,6 +48,11 @@ public:
     {
         _userAgent = userAgent;
     }
+    QString discordBase() const { return _discordBase; }
+    void setDiscordBase(const QString& discordBase)
+    {
+        _discordBase = discordBase;
+    }
 
     // <spaghetti>
 
@@ -80,7 +85,7 @@ public:
 
         QNetworkRequest r = request;
         if(r.url().isEmpty())
-            r.setUrl(QUrl(route.fullUrl()));
+            r.setUrl(QUrl(_discordBase + route.fullUrl()));
         if(!_token.isEmpty())
             r.setRawHeader("Authorization", _token.fullToken().toUtf8());
         r.setHeader(QNetworkRequest::UserAgentHeader, _userAgent.toString());
@@ -173,7 +178,7 @@ public:
 #endif
 
         QNetworkRequest r = request;
-        r.setUrl(QUrl(route.fullUrl()));
+        r.setUrl(QUrl(_discordBase + route.fullUrl()));
         if(!_token.isEmpty())
             r.setRawHeader("Authorization", _token.fullToken().toUtf8());
         r.setHeader(QNetworkRequest::UserAgentHeader, _userAgent.toString());
@@ -276,7 +281,7 @@ public:
 #endif
 
         QNetworkRequest r = request;
-        r.setUrl(QUrl(route.fullUrl()));
+        r.setUrl(QUrl(_discordBase + route.fullUrl()));
         if(!_token.isEmpty())
             r.setRawHeader("Authorization", _token.fullToken().toUtf8());
         r.setHeader(QNetworkRequest::UserAgentHeader, _userAgent.toString());
@@ -367,6 +372,7 @@ private:
     QMap<QString, QSharedPointer<QDiscordBucket>> _buckets;
     QNetworkAccessManager _manager;
     QDiscordToken _token;
+    QString _discordBase = "https://discordapp.com";
     QDiscordUserAgent _userAgent;
 };
 

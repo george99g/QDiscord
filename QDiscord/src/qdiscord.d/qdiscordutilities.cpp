@@ -49,8 +49,7 @@ const qlonglong QDiscordUtilities::discordEpoch = 1420070400000;
 const QDiscordUtilities::EndPoints QDiscordUtilities::endPoints =
     []() -> QDiscordUtilities::EndPoints {
     QDiscordUtilities::EndPoints init;
-    init.base = "https://discordapp.com";
-    init.apiBase = init.base + "/api/v" + apiVersion;
+    init.apiBase = "/api/v" + apiVersion;
     init.gateway = init.apiBase + "/gateway?encoding=json&v=" + apiVersion;
     init.users = init.apiBase + "/users";
     init.me = init.users + "/@me";

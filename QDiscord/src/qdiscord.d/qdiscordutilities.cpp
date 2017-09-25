@@ -110,9 +110,3 @@ QDiscordUtilities::networkErrorToString(QNetworkReply::NetworkError error)
             return "xxx (UNKNOWN): Unknown error.";
     }
 }
-
-QString QDiscordUtilities::userAgent()
-{
-    return "DiscordBot (" + libLink + ", v" + libMajor + ":" + libMinor + "); "
-           + botName;
-}

@@ -53,8 +53,6 @@ namespace QDiscordUtilities {
      * \param error The network error returned by a failed method.
      */
     QString networkErrorToString(QNetworkReply::NetworkError error);
-    ///\brief Generates a user-agent from the information in this namespace.
-    QString userAgent();
     ///\brief Discord's epoch value for snowflake generation.
     extern const qlonglong discordEpoch;
     /*!

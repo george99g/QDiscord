@@ -323,6 +323,25 @@ void QDiscordGuild::update(const QDiscordGuild& other)
 #endif
 }
 
+void QDiscordGuild::addRole(QSharedPointer<QDiscordRole> role)
+{
+    if(!role)
+        return;
+    _roles.insert(role->id(), role);
+}
+
+bool QDiscordGuild::removeRole(QSharedPointer<QDiscordRole> role)
+{
+    if(!role)
+        return false;
+    return _roles.remove(role->id());
+}
+
+bool QDiscordGuild::removeRole(QDiscordID role)
+{
+    return _roles.remove(role);
+}
+
 void QDiscordGuild::addChannel(QSharedPointer<QDiscordChannel> channel)
 {
     if(!channel)
@@ -334,10 +353,7 @@ bool QDiscordGuild::removeChannel(QSharedPointer<QDiscordChannel> channel)
 {
     if(!channel)
         return false;
-    if(!_channels.keys().contains(channel->id()))
-        return false;
-    _channels.remove(channel->id());
-    return true;
+    return _channels.remove(channel->id());
 }
 
 bool QDiscordGuild::removeChannel(QDiscordID channel)
@@ -356,10 +372,7 @@ bool QDiscordGuild::removeMember(QSharedPointer<QDiscordMember> member)
 {
     if(!member)
         return false;
-    if(!_members.keys().contains(member->user().id()))
-        return false;
-    _members.remove(member->user().id());
-    return true;
+    return _members.remove(member->user().id());
 }
 
 bool QDiscordGuild::removeMember(QDiscordID member)

@@ -181,6 +181,10 @@ public:
     {
         return _channels.values();
     }
+    QSharedPointer<QDiscordRole> role(const QDiscordID& id) const
+    {
+        return _roles.value(id, QSharedPointer<QDiscordRole>());
+    }
     /*!
      * \brief Returns a pointer to a guild channel that has the provided ID.
      *
@@ -199,6 +203,9 @@ public:
     {
         return _members.value(id, QSharedPointer<QDiscordMember>());
     }
+    void addRole(QSharedPointer<QDiscordRole> role);
+    bool removeRole(QSharedPointer<QDiscordRole> role);
+    bool removeRole(QDiscordID role);
     ///\brief Adds the provided channel to the guild.
     void addChannel(QSharedPointer<QDiscordChannel> channel);
     /*!

@@ -57,9 +57,12 @@ public:
     guildMemberUpdateReceived(QSharedPointer<QDiscordMember> member,
                               QDiscordID guildId) override;
     virtual void guildMembersChunkReceived(const QJsonObject& object) override;
-    virtual void guildRoleCreateReceived(const QJsonObject& object) override;
-    virtual void guildRoleUpdateReceived(const QJsonObject& object) override;
-    virtual void guildRoleDeleteReceived(const QJsonObject& object) override;
+    virtual void guildRoleCreateReceived(QSharedPointer<QDiscordRole> role,
+                                         QDiscordID guildId) override;
+    virtual void guildRoleUpdateReceived(QSharedPointer<QDiscordRole> role,
+                                         QDiscordID guildId) override;
+    virtual void guildRoleDeleteReceived(QDiscordID roleId,
+                                         QDiscordID guildId) override;
     virtual void messageCreateReceived(QDiscordMessage message) override;
     virtual void messageUpdateReceived(QDiscordMessage message) override;
     virtual void messageDeleteReceived(QDiscordMessage message) override;

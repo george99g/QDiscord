@@ -25,6 +25,7 @@
 #include <QSharedPointer>
 
 class QDiscordGuild;
+class QDiscordRest;
 
 class QDiscordRole
 {
@@ -66,6 +67,9 @@ public:
 
     QString mention() const;
 
+    QDiscordRest* rest() const { return _rest; }
+    void setRest(QDiscordRest* rest) { _rest = rest; }
+
     bool isNull() const { return _id.isNull(); }
     operator bool() const { return _id; }
 
@@ -86,6 +90,7 @@ private:
     bool _managed = false;
     bool _mentionable = false;
     QWeakPointer<QDiscordGuild> _guild;
+    QDiscordRest* _rest = nullptr;
 };
 
 Q_DECLARE_METATYPE(QDiscordRole)

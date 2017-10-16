@@ -197,22 +197,41 @@ void QDiscordState::guildMembersChunkReceived(const QJsonObject& object)
     // TODO: Implement this
 }
 
-void QDiscordState::guildRoleCreateReceived(const QJsonObject& object)
+void QDiscordState::guildRoleCreateReceived(QSharedPointer<QDiscordRole> role,
+                                            QDiscordID guildId)
 {
-    Q_UNUSED(object);
-    // TODO: Implement this
+    if(_rest)
+        role->setRest(_rest);
+    role->setGuild(guild(guildId));
+    if(!role->guild())
+        return;
+    role->guild()->addRole(role);
+    emit guildRoleCreated(role);
 }
 
-void QDiscordState::guildRoleUpdateReceived(const QJsonObject& object)
+void QDiscordState::guildRoleUpdateReceived(QSharedPointer<QDiscordRole> role,
+                                            QDiscordID guildId)
 {
-    Q_UNUSED(object);
-    // TODO: Implement this
+    if(_rest)
+        role->setRest(_rest);
+    role->setGuild(guild(guildId));
+    if(!role->guild())
+        return;
+    role->guild()->addRole(role);
+    emit guildRoleUpdated(role);
 }
 
-void QDiscordState::guildRoleDeleteReceived(const QJsonObject& object)
+void QDiscordState::guildRoleDeleteReceived(QDiscordID roleId,
+                                            QDiscordID guildId)
 {
-    Q_UNUSED(object);
-    // TODO: Implement this
+    QSharedPointer<QDiscordGuild> guild = QDiscordState::guild(guildId);
+    if(!guild)
+        return;
+    QSharedPointer<QDiscordRole> role = guild->role(roleId);
+    if(!role)
+        return;
+    guild->removeRole(role);
+    emit guildRoleDeleted(role);
 }
 
 void QDiscordState::messageCreateReceived(QDiscordMessage message)

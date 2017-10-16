@@ -55,9 +55,12 @@ public:
     guildMemberUpdateReceived(QSharedPointer<QDiscordMember> member,
                               QDiscordID guildId) = 0;
     virtual void guildMembersChunkReceived(const QJsonObject& object) = 0;
-    virtual void guildRoleCreateReceived(const QJsonObject& object) = 0;
-    virtual void guildRoleUpdateReceived(const QJsonObject& object) = 0;
-    virtual void guildRoleDeleteReceived(const QJsonObject& object) = 0;
+    virtual void guildRoleCreateReceived(QSharedPointer<QDiscordRole> role,
+                                         QDiscordID guildId) = 0;
+    virtual void guildRoleUpdateReceived(QSharedPointer<QDiscordRole> role,
+                                         QDiscordID guildId) = 0;
+    virtual void guildRoleDeleteReceived(QDiscordID roleId,
+                                         QDiscordID guildId) = 0;
     virtual void messageCreateReceived(QDiscordMessage message) = 0;
     virtual void messageUpdateReceived(QDiscordMessage message) = 0;
     virtual void messageDeleteReceived(QDiscordMessage message) = 0;
@@ -89,9 +92,9 @@ signals:
     void guildMemberUpdated(QSharedPointer<QDiscordMember> member);
     void guildMembersChunk(QSharedPointer<QDiscordGuild> guild,
                            QList<QSharedPointer<QDiscordMember>> members);
-    void guildRoleCreated(/* TODO: Fill this in */);
-    void guildRoleUpdated(/* TODO: Fill this in */);
-    void guildRoleDeleted(/* TODO: Fill this in */);
+    void guildRoleCreated(QSharedPointer<QDiscordRole> role);
+    void guildRoleUpdated(QSharedPointer<QDiscordRole> role);
+    void guildRoleDeleted(QSharedPointer<QDiscordRole> role);
     void messageCreated(QDiscordMessage message);
     void messageUpdated(QDiscordMessage message);
     void messageDeleted(QDiscordMessage message);

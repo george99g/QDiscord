@@ -1,5 +1,6 @@
 #include "qdiscordrole.hpp"
 #include "qdiscordguild.hpp"
+#include "qdiscordrest.hpp"
 
 QSharedPointer<QDiscordRole> QDiscordRole::fromJson(const QJsonObject& object)
 {

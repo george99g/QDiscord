@@ -188,20 +188,32 @@ void QDiscordJsonDecoder::guildMembersChunkReceived(const QJsonObject& object)
 
 void QDiscordJsonDecoder::guildRoleCreateReceived(const QJsonObject& object)
 {
-    Q_UNUSED(object);
-    // TODO: Implement this
+    if(_state)
+    {
+        _state->guildRoleCreateReceived(
+            QDiscordRole::fromJson(object),
+            QDiscordID(object["guild_id"].toString()));
+    }
 }
 
 void QDiscordJsonDecoder::guildRoleUpdateReceived(const QJsonObject& object)
 {
-    Q_UNUSED(object);
-    // TODO: Implement this
+    if(_state)
+    {
+        _state->guildRoleUpdateReceived(
+            QDiscordRole::fromJson(object),
+            QDiscordID(object["guild_id"].toString()));
+    }
 }
 
 void QDiscordJsonDecoder::guildRoleDeleteReceived(const QJsonObject& object)
 {
-    Q_UNUSED(object);
-    // TODO: Implement this
+    if(_state)
+    {
+        _state->guildRoleDeleteReceived(
+            QDiscordID(object["role_id"].toString()),
+            QDiscordID(object["guild_id"].toString()));
+    }
 }
 
 void QDiscordJsonDecoder::messageCreateReceived(const QJsonObject& object)

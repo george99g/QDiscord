@@ -159,6 +159,56 @@ QDiscordRoute QDiscordRoutes::Guilds::modifyChannels(const QDiscordID& guild)
                          guild.toString());
 }
 
+QDiscordRoute QDiscordRoutes::Guilds::getGuildMember(const QDiscordID& guild,
+                                                     const QDiscordID& user)
+{
+    return QDiscordRoute(QDiscordRoute::Method::GET,
+                         QDiscordUtilities::endPoints.guilds
+                             + "/{guild}/members/{user}",
+                         guild.toString(),
+                         user.toString());
+}
+
+QDiscordRoute QDiscordRoutes::Guilds::listGuildMembers(const QDiscordID& guild)
+{
+    return QDiscordRoute(QDiscordRoute::Method::GET,
+                         QDiscordUtilities::endPoints.guilds
+                             + "/{guild}/members",
+                         guild.toString());
+}
+
+QDiscordRoute QDiscordRoutes::Guilds::listGuildMembers(const QDiscordID& guild,
+                                                       uint16_t limit)
+{
+    return QDiscordRoute(QDiscordRoute::Method::GET,
+                         QDiscordUtilities::endPoints.guilds
+                             + "/{guild}/members?limit={limit}",
+                         guild.toString(),
+                         QString::number(limit));
+}
+
+QDiscordRoute QDiscordRoutes::Guilds::listGuildMembers(const QDiscordID& guild,
+                                                       uint16_t limit,
+                                                       const QDiscordID& after)
+{
+    return QDiscordRoute(QDiscordRoute::Method::GET,
+                         QDiscordUtilities::endPoints.guilds
+                             + "/{guild}/members?limit={limit}&after={after}",
+                         guild.toString(),
+                         QString::number(limit),
+                         after.toString());
+}
+
+QDiscordRoute QDiscordRoutes::Guilds::listGuildMembers(const QDiscordID& guild,
+                                                       const QDiscordID& after)
+{
+    return QDiscordRoute(QDiscordRoute::Method::GET,
+                         QDiscordUtilities::endPoints.guilds
+                             + "/{guild}/members?after={after}",
+                         guild.toString(),
+                         after.toString());
+}
+
 QDiscordRoute QDiscordRoutes::Guilds::getBans(const QDiscordID& guild)
 {
     return QDiscordRoute(QDiscordRoute::Method::GET,

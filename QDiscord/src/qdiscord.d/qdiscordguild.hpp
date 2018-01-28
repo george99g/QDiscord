@@ -60,6 +60,42 @@ public:
         Unknown = -1
     };
 
+    static void
+    listMembers(QDiscordRest& rest,
+                const QDiscordID& guild,
+                std::function<void(QList<QDiscordMember>)> callback);
+
+    static void
+    listMembers(QDiscordRest& rest,
+                const QDiscordID& guild,
+                uint16_t limit,
+                std::function<void(QList<QDiscordMember>)> callback);
+
+    static void
+    listMembers(QDiscordRest& rest,
+                const QDiscordID& guild,
+                uint16_t limit,
+                const QDiscordID& after,
+                std::function<void(QList<QDiscordMember>)> callback);
+
+    static void
+    listMembers(QDiscordRest& rest,
+                const QDiscordID& guild,
+                const QDiscordID& after,
+                std::function<void(QList<QDiscordMember>)> callback);
+
+    void listMembers(std::function<void(QList<QDiscordMember>)> callback);
+
+    void listMembers(uint16_t limit,
+                     std::function<void(QList<QDiscordMember>)> callback);
+
+    void listMembers(uint16_t limit,
+                     const QDiscordID& after,
+                     std::function<void(QList<QDiscordMember>)> callback);
+
+    void listMembers(const QDiscordID& after,
+                     std::function<void(QList<QDiscordMember>)> callback);
+
     QDiscordGuild(const QDiscordGuild& other);
     QDiscordGuild();
     ~QDiscordGuild();

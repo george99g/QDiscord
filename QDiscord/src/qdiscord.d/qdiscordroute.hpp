@@ -113,6 +113,15 @@ namespace QDiscordRoutes {
         QDiscordRoute createChannel(const QDiscordID& guild);
         QDiscordRoute getChannels(const QDiscordID& guild);
         QDiscordRoute modifyChannels(const QDiscordID& guild);
+        QDiscordRoute getGuildMember(const QDiscordID& guild,
+                                     const QDiscordID& user);
+        QDiscordRoute listGuildMembers(const QDiscordID& guild);
+        QDiscordRoute listGuildMembers(const QDiscordID& guild, uint16_t limit);
+        QDiscordRoute listGuildMembers(const QDiscordID& guild,
+                                       uint16_t limit,
+                                       const QDiscordID& after);
+        QDiscordRoute listGuildMembers(const QDiscordID& guild,
+                                       const QDiscordID& after);
         QDiscordRoute getBans(const QDiscordID& guild);
         QDiscordRoute ban(const QDiscordID& guild, const QDiscordID& user);
         QDiscordRoute banWithDelete(const QDiscordID& guild,

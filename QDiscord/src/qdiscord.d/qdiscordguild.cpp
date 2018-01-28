@@ -18,6 +18,7 @@
 
 #include "qdiscordguild.hpp"
 #include "qdiscordchannel.hpp"
+#include "qdiscordrest.hpp"
 
 namespace {
     QDiscordGuild::VerificationLevel vlFromInt(int i)
@@ -71,6 +72,88 @@ QSharedPointer<QDiscordGuild> QDiscordGuild::fromJson(const QJsonObject& object)
     QSharedPointer<QDiscordGuild> guild(new QDiscordGuild());
     guild->deserialize(object);
     return guild;
+}
+
+void QDiscordGuild::listMembers(
+    QDiscordRest& rest,
+    const QDiscordID& guild,
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    QDiscordGuild::listMembers(rest, guild, 1, QDiscordID(0), callback);
+}
+
+void QDiscordGuild::listMembers(
+    QDiscordRest& rest,
+    const QDiscordID& guild,
+    uint16_t limit,
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    QDiscordGuild::listMembers(rest, guild, limit, QDiscordID(0), callback);
+}
+
+void QDiscordGuild::listMembers(
+    QDiscordRest& rest,
+    const QDiscordID& guild,
+    const QDiscordID& after,
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    QDiscordGuild::listMembers(rest, guild, 1, after, callback);
+}
+
+void QDiscordGuild::listMembers(
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    QDiscordGuild::listMembers(1, QDiscordID(0), callback);
+}
+
+void QDiscordGuild::listMembers(
+    uint16_t limit,
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    QDiscordGuild::listMembers(limit, QDiscordID(0), callback);
+}
+
+void QDiscordGuild::listMembers(
+    const QDiscordID& after,
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    QDiscordGuild::listMembers(1, after, callback);
+}
+
+void QDiscordGuild::listMembers(
+    QDiscordRest& rest,
+    const QDiscordID& guild,
+    uint16_t limit,
+    const QDiscordID& after,
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Guilds::listGuildMembers(guild, limit, after),
+                 [&rest, callback](QNetworkReply* reply) {
+                     QList<QDiscordMember> memberList;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(memberList);
+                         return;
+                     }
+                     QJsonArray array =
+                         QJsonDocument::fromJson(reply->readAll()).array();
+                     for(const QJsonValue v : array)
+                     {
+                         QDiscordMember member(v.toObject());
+                         member.setRest(&rest);
+                         memberList.append(member);
+                     }
+                     callback(memberList);
+                 });
+}
+
+void QDiscordGuild::listMembers(
+    uint16_t limit,
+    const QDiscordID& after,
+    std::function<void(QList<QDiscordMember>)> callback)
+{
+    QDiscordGuild::listMembers(*_rest, _id, limit, after, callback);
 }
 
 QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)

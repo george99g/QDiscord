@@ -41,6 +41,31 @@ void QDiscordChannel::get(QDiscordRest& rest,
                  });
 }
 
+void QDiscordChannel::getPrivateChannels(
+    QDiscordRest& rest,
+    std::function<void(QList<QDiscordChannel>)> callback)
+{
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Self::getPrivateChannels(),
+                 [&rest, callback](QNetworkReply* reply) {
+                     QList<QDiscordChannel> channelList;
+                     if(reply->error() != QNetworkReply::NoError)
+                     {
+                         callback(channelList);
+                         return;
+                     }
+                     QJsonArray array =
+                         QJsonDocument::fromJson(reply->readAll()).array();
+                     for(const QJsonValue& v : array)
+                     {
+                         QDiscordChannel channel(v.toObject());
+                         channel.setRest(&rest);
+                         channelList.append(channel);
+                     }
+                     callback(channelList);
+                 });
+}
+
 void QDiscordChannel::getMessage(QDiscordRest& rest,
                                  const QDiscordID& channel,
                                  const QDiscordID& message,

@@ -37,6 +37,10 @@ public:
                     const QDiscordID& channel,
                     std::function<void(QDiscordChannel)> callback);
 
+    static void
+    getPrivateChannels(QDiscordRest& rest,
+                       std::function<void(QList<QDiscordChannel>)> callback);
+
     static void getMessage(QDiscordRest& rest,
                            const QDiscordID& channel,
                            const QDiscordID& message,

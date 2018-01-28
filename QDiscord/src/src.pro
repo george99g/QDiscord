@@ -5,6 +5,14 @@ TARGET = QDiscord
 TEMPLATE = lib
 CONFIG += staticlib c++11
 
+isEmpty(PREFIX) {
+    PREFIX=/usr/local
+} else {
+    equals(PREFIX, "/") {
+        PREFIX=""
+    }
+}
+
 include(../config.pri)
 
 SOURCES += $$PWD/qdiscord.d/qdiscord.cpp \
@@ -68,14 +76,14 @@ HEADERS += $$TOPHEADERS \
     $$LIBOPTIONALHEADERS
 
 unix {
-    target.path = /lib
+    target.path = $$PREFIX/lib
     topheaders.files = $$TOPHEADERS
-    topheaders.path = /include
+    topheaders.path = $$PREFIX/include
     dirheaders.files = $$DIRHEADERS
-    dirheaders.path = /include/qdiscord.d
+    dirheaders.path = $$PREFIX/include/qdiscord.d
     externalheaders.files = $$EXTERNALHEADERS
-    externalheaders.path = /include/qdiscord.d/external
+    externalheaders.path = $$PREFIX/include/qdiscord.d/external
     liboptionalheaders.files = $$LIBOPTIONALHEADERS
-    liboptionalheaders.path = /include/qdiscord.d/external/Optional
+    liboptionalheaders.path = $$PREFIX/include/qdiscord.d/external/Optional
     INSTALLS += target topheaders dirheaders externalheaders liboptionalheaders
 }

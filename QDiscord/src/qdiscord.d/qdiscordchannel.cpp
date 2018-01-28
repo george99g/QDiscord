@@ -677,6 +677,7 @@ void QDiscordChannel::deserialize(const QJsonObject& object)
     _id = QDiscordID(object["id"].toString());
     _type = static_cast<Type>(object["type"].toInt(255));
     _name = object["name"].toString();
+    _parentId = object["parent_id"].toString();
 
     switch(_type)
     {
@@ -719,6 +720,8 @@ QJsonObject QDiscordChannel::serialize() const
     object["id"] = _id.toString();
     object["type"] = static_cast<int>(_type);
     object["name"] = _name;
+    if(_parentId)
+        object["parent_id"] = _parentId.toString();
 
     switch(_type)
     {

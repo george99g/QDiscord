@@ -280,6 +280,11 @@ void QDiscordGuild::deserialize(const QJsonObject& object)
             channel->setGuild(sharedFromThis());
             _channels.insert(channel->id(), channel);
         }
+        for(QSharedPointer<QDiscordChannel> channel : _channels)
+        {
+            if(channel->parentId())
+                channel->setParent(_channels.value(channel->parentId()));
+        }
     }
 }
 

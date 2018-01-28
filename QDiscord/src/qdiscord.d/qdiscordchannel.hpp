@@ -315,6 +315,10 @@ public:
     {
         _applicationId = applicationId;
     }
+    QDiscordID parentId() const { return _parentId; }
+    void setParentId(QDiscordID parentId) { _parentId = parentId; }
+    QSharedPointer<QDiscordChannel> parent() const { return _parent; }
+    void setParent(QSharedPointer<QDiscordChannel> parent) { _parent = parent; }
     ///\brief Returns a pointer to this channel's parent guild.
     QSharedPointer<QDiscordGuild> guild() const { return _guild; }
     /*!
@@ -355,6 +359,8 @@ private:
     QString _icon;
     QDiscordID _ownerId;
     QDiscordID _applicationId;
+    QDiscordID _parentId;
+    QWeakPointer<QDiscordChannel> _parent;
     QWeakPointer<QDiscordGuild> _guild;
     QDiscordRest* _rest = nullptr;
 };

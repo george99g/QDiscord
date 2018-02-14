@@ -45,13 +45,13 @@ tst_QDiscordMember::tst_QDiscordMember():
 									})}
 		}),
 	_testUser(
-		QJsonObject({
-			{"id", "111264179623531612"}
-		})
+        QJsonObject({
+            {"id", "111264179623531612"}
+        })
 		),
-	_guild(new QDiscordGuild({
+    _guild(new QDiscordGuild(QJsonObject({
 			{"id", "111264349623531632"}
-		}))
+        })))
 {
 
 }

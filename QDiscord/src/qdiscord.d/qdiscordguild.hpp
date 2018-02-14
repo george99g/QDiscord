@@ -34,7 +34,7 @@ public:
 	 * \brief Creates an instance from the provided parameters.
 	 * \param object A JSON object of a Discord guild.
 	 */
-	QDiscordGuild(const QJsonObject& object);
+    QDiscordGuild(const QJsonObject& object);
 	QDiscordGuild(const QDiscordGuild& other);
 	QDiscordGuild();
 	~QDiscordGuild();

@@ -45,3 +45,12 @@ DEFINES += QDISCORD_DISCORD_API_VERSION=\\\"$${QDISCORD_DISCORD_API_VERSION}\\\"
 equals(QDISCORD_LIBRARY_DEBUG, "true") {
     DEFINES += QDISCORD_LIBRARY_DEBUG
 }
+
+win32-msvc* { #https://stackoverflow.com/questions/23381727/qt-pro-file-how-to-check-if-im-compiling-with-msvc-2013-toolset
+    MSVC_VERSION = $$(VisualStudioVersion)
+    equals(MSVC_VERSION, 12.0){ # checking if is msvc 2013
+        DEFINES += Q_COMPILER_INITIALIZER_LISTS
+    }
+}
+
+

@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+
+find_package(Qt5 5.8 COMPONENTS Core Network WebSockets REQUIRED)
+
+include("${CMAKE_CURRENT_LIST_DIR}/qdiscord-targets.cmake")

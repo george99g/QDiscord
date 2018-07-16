@@ -39,8 +39,3 @@ CMakeLists.txt.user
 # Translations
 *.qm
 
-# Documentation
-QDiscord/docs
-
-# Configuration file. Commit with git add --force.
-QDiscord/config.pri

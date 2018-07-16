@@ -1,0 +1,51 @@
+set(LICENSE
+    ../COPYING
+)
+
+set(README
+    ../readme.md
+)
+
+set(DEPENDS
+    "libqt5core5a (>= 5.8)"
+    "libqt5network5 (>= 5.8)"
+    "libqt5websockets5 (>= 5.8)"
+)
+
+string(TOLOWER ${PROJECT_NAME} CPACK_PACKAGE_NAME)
+
+set(CPACK_PACKAGE_VENDOR "george99g")
+
+set(CPACK_PACKAGE_CONTACT "george99g <georgi_99g@abv.bg>")
+
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/cpack-build")
+
+set(CPACK_PACKAGE_VERSION_MAJOR ${QDISCORD_VERSION_MAJOR})
+
+set(CPACK_PACKAGE_VERSION_MINOR ${QDISCORD_VERSION_MINOR})
+
+set(CPACK_PACKAGE_VERSION_PATCH ${QDISCORD_VERSION_PATCH})
+
+set(CPACK_PACKAGE_LICENSE "LGPLv3")
+
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack-package-description.txt")
+
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An unofficial C++ and Qt wrapper for the Discord API.")
+
+set(CPACK_RESOURCE_FILE_LICENSE ${LICENSE})
+
+set(CPACK_RESOURCE_FILE_README ${README})
+
+string(REPLACE ";" ", " CPACK_DEBIAN_PACKAGE_DEPENDS "${DEPENDS}")
+
+set(CPACK_GENERATOR
+    TBZ2
+    TGZ
+    TXZ
+    TZ
+    ZIP
+    DEB
+    RPM
+)
+
+include(CPack)

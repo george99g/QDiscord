@@ -28,6 +28,15 @@ QDiscordID::QDiscordID(quint64 id)
     _id = id;
 }
 
+QDiscordID::QDiscordID(const char* id)
+{
+    bool ok;
+    _id = QString(id).toULongLong(&ok);
+
+    if(!ok)
+        _id = 0;
+}
+
 QDiscordID::QDiscordID(const QString& id)
 {
     bool ok;

@@ -79,7 +79,7 @@ void QDiscordGuild::listMembers(
     const QDiscordID& guild,
     std::function<void(QList<QDiscordMember>)> callback)
 {
-    QDiscordGuild::listMembers(rest, guild, 1, QDiscordID(0), callback);
+    QDiscordGuild::listMembers(rest, guild, 1, QDiscordID(), callback);
 }
 
 void QDiscordGuild::listMembers(
@@ -88,7 +88,7 @@ void QDiscordGuild::listMembers(
     uint16_t limit,
     std::function<void(QList<QDiscordMember>)> callback)
 {
-    QDiscordGuild::listMembers(rest, guild, limit, QDiscordID(0), callback);
+    QDiscordGuild::listMembers(rest, guild, limit, QDiscordID(), callback);
 }
 
 void QDiscordGuild::listMembers(
@@ -103,14 +103,14 @@ void QDiscordGuild::listMembers(
 void QDiscordGuild::listMembers(
     std::function<void(QList<QDiscordMember>)> callback)
 {
-    QDiscordGuild::listMembers(1, QDiscordID(0), callback);
+    QDiscordGuild::listMembers(1, QDiscordID(), callback);
 }
 
 void QDiscordGuild::listMembers(
     uint16_t limit,
     std::function<void(QList<QDiscordMember>)> callback)
 {
-    QDiscordGuild::listMembers(limit, QDiscordID(0), callback);
+    QDiscordGuild::listMembers(limit, QDiscordID(), callback);
 }
 
 void QDiscordGuild::listMembers(

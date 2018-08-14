@@ -29,6 +29,7 @@ class QDiscordID
 public:
     QDiscordID();
     explicit QDiscordID(quint64 id);
+    QDiscordID(const char* id);
     QDiscordID(const QString& id);
     QString toString() const;
     quint64 value() const;

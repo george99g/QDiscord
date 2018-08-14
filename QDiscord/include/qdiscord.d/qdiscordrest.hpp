@@ -59,7 +59,7 @@ public:
     template<class Functor>
     void request(const QNetworkRequest& request,
                  const QDiscordRoute& route,
-                 Functor callback)
+                 Functor&& callback)
     {
         auto recallLambda = [request, route, callback, this]() {
             QDiscordRest::request(request, route, callback);
@@ -256,7 +256,7 @@ public:
     void request(const QNetworkRequest& request,
                  const QDiscordRoute& route,
                  QHttpMultiPart* data,
-                 Functor callback)
+                 Functor&& callback)
     {
         auto recallLambda = [request, route, data, callback, this]() {
             QDiscordRest::request(request, route, data, callback);
@@ -341,15 +341,6 @@ public:
 
     void request(const QNetworkRequest& request,
                  const QDiscordRoute& route,
-                 const QJsonObject& data);
-    void request(const QNetworkRequest& request,
-                 const QDiscordRoute& route,
-                 const QJsonArray& data);
-    void request(const QNetworkRequest& request,
-                 const QDiscordRoute& route,
-                 const QByteArray& data);
-    void request(const QNetworkRequest& request,
-                 const QDiscordRoute& route,
                  QHttpMultiPart* data);
     void request(const QNetworkRequest& request, const QDiscordRoute& route);
 
@@ -393,5 +384,65 @@ struct QDiscordRest::contentType<QByteArray>
 {
     const QString type;
 };
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QJsonObject& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QJsonObject&& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonObject& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonObject&& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QJsonArray& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QJsonArray&& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonArray& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonArray&& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QByteArray& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QByteArray&& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QByteArray& data);
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QByteArray&& data);
 
 #endif // QDISCORDREST_HPP

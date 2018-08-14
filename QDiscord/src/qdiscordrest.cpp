@@ -42,6 +42,7 @@ QDiscordRest::~QDiscordRest()
 #endif
 }
 
+template<>
 void QDiscordRest::request(const QNetworkRequest& request,
                            const QDiscordRoute& route,
                            const QJsonObject& data)
@@ -49,6 +50,31 @@ void QDiscordRest::request(const QNetworkRequest& request,
     QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }
 
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QJsonObject&& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonObject& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonObject&& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
 void QDiscordRest::request(const QNetworkRequest& request,
                            const QDiscordRoute& route,
                            const QJsonArray& data)
@@ -56,9 +82,58 @@ void QDiscordRest::request(const QNetworkRequest& request,
     QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }
 
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QJsonArray&& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonArray& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QJsonArray&& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
 void QDiscordRest::request(const QNetworkRequest& request,
                            const QDiscordRoute& route,
                            const QByteArray& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           const QByteArray&& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QByteArray& data)
+{
+    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
+}
+
+template<>
+void QDiscordRest::request(const QNetworkRequest& request,
+                           const QDiscordRoute& route,
+                           QByteArray&& data)
 {
     QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }

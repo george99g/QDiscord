@@ -42,6 +42,14 @@ QDiscordRest::~QDiscordRest()
 #endif
 }
 
+void QDiscordRest::setLastAckToken(QDiscordToken lastAckToken)
+{
+#ifdef QDISCORD_PRINT_DEBUG
+    qDebug() << this << "setting lastAckToken to" << lastAckToken.rawToken();
+#endif
+    _lastAckToken = lastAckToken;
+}
+
 template<>
 void QDiscordRest::request(const QNetworkRequest& request,
                            const QDiscordRoute& route,

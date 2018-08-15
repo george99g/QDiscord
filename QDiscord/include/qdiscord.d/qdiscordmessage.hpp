@@ -282,6 +282,17 @@ public:
                     const QDiscordID& message,
                     std::function<void(QDiscordMessage)> callback);
 
+    static void ack(QDiscordRest& rest,
+                    const QDiscordID& channel,
+                    const QDiscordID& message);
+    static void ack(QDiscordRest& rest,
+                    const QDiscordID& channel,
+                    const QDiscordID& message,
+                    std::function<void(bool)> callback);
+
+    void ack();
+    void ack(std::function<void(bool)> callback);
+
     QDiscordMessage(const QJsonObject& object);
     QDiscordMessage();
     ~QDiscordMessage();

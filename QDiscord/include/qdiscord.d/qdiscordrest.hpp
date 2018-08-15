@@ -43,6 +43,8 @@ public:
 
     QDiscordToken token() const { return _token; }
     void setToken(QDiscordToken token) { _token = token; }
+    QDiscordToken lastAckToken() const { return _token; }
+    void setLastAckToken(QDiscordToken lastAckToken);
     QDiscordUserAgent userAgent() const { return _userAgent; }
     void setUserAgent(const QDiscordUserAgent& userAgent)
     {
@@ -363,6 +365,7 @@ private:
     QMap<QString, QSharedPointer<QDiscordBucket>> _buckets;
     QNetworkAccessManager _manager;
     QDiscordToken _token;
+    QDiscordToken _lastAckToken;
     QString _discordBase = "https://discordapp.com";
     QDiscordUserAgent _userAgent;
 };

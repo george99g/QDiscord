@@ -216,6 +216,9 @@ namespace QDiscordRoutes {
                                               int limit,
                                               const QDiscordID& around);
 
+        QDiscordRoute ackMessage(const QDiscordID& channel,
+                                 const QDiscordID& message);
+
         // Bot-only
         QDiscordRoute getMessage(const QDiscordID& channel,
                                  const QDiscordID& message);

@@ -736,3 +736,13 @@ QDebug& operator<<(QDebug& d, const QDiscordRoute& route)
     return d.maybeSpace();
 }
 #endif
+
+QDiscordRoute QDiscordRoutes::Messages::ackMessage(const QDiscordID& channel,
+                                                   const QDiscordID& message)
+{
+    return QDiscordRoute(QDiscordRoute::Method::POST,
+                         QDiscordUtilities::endPoints.channels
+                             + "/{channel}/messages/{message}/ack",
+                         channel.toString(),
+                         message.toString());
+}

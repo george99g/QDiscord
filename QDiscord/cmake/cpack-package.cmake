@@ -1,9 +1,9 @@
 set(LICENSE
-    ../COPYING
+    "${CMAKE_CURRENT_SOURCE_DIR}/../COPYING"
 )
 
 set(README
-    ../readme.md
+    "${CMAKE_CURRENT_SOURCE_DIR}/../readme.md"
 )
 
 set(DEPENDS

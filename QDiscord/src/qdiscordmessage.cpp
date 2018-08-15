@@ -857,6 +857,84 @@ void QDiscordMessage::get(QDiscordRest& rest,
         });
 }
 
+void QDiscordMessage::ack(QDiscordRest& rest,
+                          const QDiscordID& channel,
+                          const QDiscordID& message)
+{
+    QJsonObject data;
+
+    if(rest.lastAckToken().isEmpty())
+        data["token"] = QJsonValue();
+    else
+        data["token"] = rest.lastAckToken().rawToken();
+
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Messages::ackMessage(channel, message),
+                 data,
+                 [&rest](QNetworkReply* reply) {
+                     if(reply->error() == QNetworkReply::NoError)
+                     {
+                         rest.setLastAckToken(QDiscordToken(
+                             QJsonDocument::fromJson(reply->readAll())
+                                 .object()["token"]
+                                 .toString(),
+                             QDiscordToken::Type::None));
+                     }
+
+                 });
+}
+
+void QDiscordMessage::ack(QDiscordRest& rest,
+                          const QDiscordID& channel,
+                          const QDiscordID& message,
+                          std::function<void(bool)> callback)
+{
+    QJsonObject data;
+
+    if(rest.lastAckToken().isEmpty())
+        data["token"] = QJsonValue();
+    else
+        data["token"] = rest.lastAckToken().rawToken();
+
+    rest.request(QNetworkRequest(),
+                 QDiscordRoutes::Messages::ackMessage(channel, message),
+                 data,
+                 [&rest, callback](QNetworkReply* reply) {
+                     if(reply->error() == QNetworkReply::NoError)
+                     {
+                         rest.setLastAckToken(QDiscordToken(
+                             QJsonDocument::fromJson(reply->readAll())
+                                 .object()["token"]
+                                 .toString(),
+                             QDiscordToken::Type::None));
+                         callback(true);
+                     }
+                     else
+                         callback(false);
+
+                 });
+}
+
+void QDiscordMessage::ack()
+{
+    if(!_rest || !_id || !_channelId)
+        return;
+
+    QDiscordMessage::ack(*_rest, _channelId, _id);
+}
+
+void QDiscordMessage::ack(std::function<void(bool)> callback)
+{
+    if(!_rest || !_id || !_channelId)
+    {
+        callback(false);
+
+        return;
+    }
+
+    QDiscordMessage::ack(*_rest, _channelId, _id, callback);
+}
+
 QDiscordMessage::QDiscordMessage(const QJsonObject& object)
 {
     deserialize(object);

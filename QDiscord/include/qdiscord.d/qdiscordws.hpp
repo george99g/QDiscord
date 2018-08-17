@@ -94,6 +94,10 @@ public:
                    QWebSocketProtocol::CloseCodeNormal);
     void abort();
     void reconnect();
+
+    qint64 sendTextMessage(const QString& message);
+    qint64 sendBinaryMessage(const QByteArray& data);
+
     Error error() const { return _error; }
     QString errorString() const;
     quint8 version() const { return _version; }

@@ -134,6 +134,16 @@ void QDiscordWs::reconnect()
     _ws.close(QWebSocketProtocol::CloseCodeAbnormalDisconnection);
 }
 
+qint64 QDiscordWs::sendTextMessage(const QString& message)
+{
+    return _ws.sendTextMessage(message);
+}
+
+qint64 QDiscordWs::sendBinaryMessage(const QByteArray& data)
+{
+    return _ws.sendBinaryMessage(data);
+}
+
 QString QDiscordWs::errorString() const
 {
     switch(_error)

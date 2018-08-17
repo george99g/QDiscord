@@ -9,7 +9,7 @@ set(QDISCORD_VERSION_MAJOR "0")
 
 # The library's minor version. This is used to form the user-agent and set the
 # library's version.
-set(QDISCORD_VERSION_MINOR "21")
+set(QDISCORD_VERSION_MINOR "22")
 
 # The library's patch version. This is used to form the user-agent and set the
 # library's version.

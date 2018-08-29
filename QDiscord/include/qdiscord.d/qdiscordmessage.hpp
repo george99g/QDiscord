@@ -20,10 +20,10 @@
 #define QDISCORDMESSAGE_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
+#include "qdiscord.d/models/qdiscordmember.hpp"
 #include "qdiscord.d/qdiscordattachment.hpp"
 #include "qdiscord.d/qdiscordchannel.hpp"
 #include "qdiscord.d/qdiscordguild.hpp"
-#include "qdiscord.d/qdiscordmember.hpp"
 #include <QFileInfo>
 #include <functional>
 

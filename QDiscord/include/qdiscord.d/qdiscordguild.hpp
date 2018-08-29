@@ -20,8 +20,8 @@
 #define QDISCORDGUILD_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
+#include "qdiscord.d/models/qdiscordmember.hpp"
 #include "qdiscord.d/qdiscordchannel.hpp"
-#include "qdiscord.d/qdiscordmember.hpp"
 #include "qdiscord.d/qdiscordrole.hpp"
 #include <QDateTime>
 #include <QDebug>

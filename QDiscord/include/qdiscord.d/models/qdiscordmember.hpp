@@ -20,7 +20,7 @@
 #define QDISCORDMEMBER_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
-#include "qdiscord.d/qdiscorduser.hpp"
+#include "qdiscord.d/models/qdiscorduser.hpp"
 #include <QDateTime>
 #include <QDebug>
 #include <QSharedPointer>
@@ -36,7 +36,7 @@ class QDiscordRest;
  * about the guild member.\n
  * You may acquire a pointer to it using QDiscordMember::user.
  */
-class QDiscordMember
+class QDiscordMember : public QDiscordModelBase<QDiscordMember>
 {
 public:
     static QSharedPointer<QDiscordMember> fromJson(const QJsonObject& object);
@@ -100,6 +100,28 @@ public:
      * same member. If a pointer is null, returns true.
      */
     bool operator!=(const QDiscordMember& other) const;
+
+    template<class Action>
+    void map(Action& a)
+    {
+        using namespace QDiscordModel;
+        field(a, _user, "user");
+        field(a, _nickname, "nick");
+        field(a, _joinedAt, "joined_at");
+        field(a, _deaf, "deaf");
+        field(a, _mute, "mute");
+    }
+
+    template<class Action>
+    void map(Action& a) const
+    {
+        using namespace QDiscordModel;
+        field(a, _user, "user");
+        field(a, _nickname, "nick");
+        field(a, _joinedAt, "joined_at");
+        field(a, _deaf, "deaf");
+        field(a, _mute, "mute");
+    }
 
 private:
     QDiscordUser _user;

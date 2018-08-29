@@ -20,7 +20,7 @@
 #define QDISCORDCHANNEL_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
-#include "qdiscord.d/qdiscorduser.hpp"
+#include "qdiscord.d/models/qdiscorduser.hpp"
 #include <QDateTime>
 #include <QJsonObject>
 #include <QSharedPointer>

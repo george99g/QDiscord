@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordmember.hpp"
+#include "qdiscord.d/models/qdiscordmember.hpp"
 #include "qdiscord.d/qdiscordguild.hpp"
 
 QSharedPointer<QDiscordMember>
@@ -52,50 +52,14 @@ QDiscordMember::~QDiscordMember()
 
 void QDiscordMember::deserialize(const QJsonObject& object)
 {
-    _user = QDiscordUser(object["user"].toObject());
-    if(object.contains("nick"))
-    {
-        if(!object["nick"].isNull())
-            _nickname = object["nick"].toString();
-    }
-    _joinedAt = QDateTime::fromString(object["joined_at"].toString(),
-                                      Qt::ISODateWithMs);
-    if(object.contains("deaf"))
-        _deaf = object["deaf"].toBool(false);
-    if(object.contains("mute"))
-        _mute = object["mute"].toBool(false);
+    deserializeJson(object);
+
     /* The guild pointer is managed by the calling class. */
 }
 
 QJsonObject QDiscordMember::serialize() const
 {
-    QJsonObject object;
-
-    {
-        // Apparently the `bot` and `mfa_enabled` fields should be removed if
-        // they're false, but only when in a member's `user` field.
-        // Why? I have not a clue, but I'll go with it.
-        QJsonObject user = _user.serialize();
-
-        if(user["mfa_enabled"].toBool(false) == false)
-            user.remove("mfa_enabled");
-        if(user["bot"].toBool(false) == false)
-            user.remove("bot");
-
-        object["user"] = user;
-    }
-
-    object["nick"] = _nickname.has_value() ? _nickname.value() : QJsonValue();
-    {
-        object["joined_at"] =
-            _joinedAt.toTimeSpec(Qt::OffsetFromUTC).toString(Qt::ISODateWithMs);
-    }
-    if(_deaf.has_value())
-        object["deaf"] = _deaf.value();
-    if(_mute.has_value())
-        object["mute"] = _mute.value();
-
-    return object;
+    return serializeJson();
 }
 
 void QDiscordMember::update(const QDiscordMember& other)

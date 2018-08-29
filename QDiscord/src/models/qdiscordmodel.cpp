@@ -17,6 +17,7 @@
  */
 
 #include "qdiscord.d/models/qdiscordmodel.hpp"
+#include <QDateTime>
 
 template<>
 void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
@@ -152,4 +153,22 @@ void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
 {
     if(value.has_value())
         action.data().insert(name, value.value());
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const QDateTime& value,
+                          const QString& name)
+{
+    action.data()[name] =
+        value.toTimeSpec(Qt::OffsetFromUTC).toString(Qt::ISODateWithMs);
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          QDateTime& value,
+                          const QString& name)
+{
+    value = QDateTime::fromString(action.data()[name].toString(),
+                                  Qt::ISODateWithMs);
 }

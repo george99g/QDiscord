@@ -24,6 +24,8 @@
 #include <QJsonObject>
 #include <string>
 
+class QDateTime;
+
 namespace QDiscordModel {
     template<class Action, typename T>
     void field(Action& action, T& value, const QString& name);
@@ -72,6 +74,16 @@ private:
 };
 
 namespace QDiscordModel {
+    template<class T>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               T& value,
+               const QString& name)
+    {
+        T newVal;
+        newVal.deserializeJson(action.data()[name].toObject());
+        value = newVal;
+    }
+
     template<>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QString& value,
@@ -110,6 +122,11 @@ namespace QDiscordModel {
     template<>
     void field(QDiscordModel::DeserializeJsonAction& action,
                std::experimental::optional<int>& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDateTime& value,
                const QString& name);
 
     template<typename T>
@@ -156,6 +173,14 @@ namespace QDiscordModel {
 
     // ---
 
+    template<class T>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               T& value,
+               const QString& name)
+    {
+        action.data()[name] = value.serializeJson();
+    }
+
     template<>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QString& value,
@@ -194,6 +219,11 @@ namespace QDiscordModel {
     template<>
     void field(QDiscordModel::SerializeJsonAction& action,
                const std::experimental::optional<int>& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDateTime& value,
                const QString& name);
 
     template<typename T>

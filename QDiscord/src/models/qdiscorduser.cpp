@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscorduser.hpp"
+#include "qdiscord.d/models/qdiscorduser.hpp"
 #include "qdiscord.d/qdiscordrest.hpp"
 #include "qdiscord.d/qdiscordutilities.hpp"
 

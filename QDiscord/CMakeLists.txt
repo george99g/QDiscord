@@ -7,12 +7,12 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5 5.8 COMPONENTS Core Network WebSockets REQUIRED)
 
 set(SOURCES
+    src/models/qdiscordattachment.cpp
     src/models/qdiscordmember.cpp
     src/models/qdiscordmodel.cpp
     src/models/qdiscorduser.cpp
     src/qdiscord.cpp
     src/qdiscordabstractstate.cpp
-    src/qdiscordattachment.cpp
     src/qdiscordbucket.cpp
     src/qdiscordchannel.cpp
     src/qdiscorddiscriminator.cpp
@@ -38,12 +38,12 @@ set(HEADERS
     include/QDiscordRest
     include/QDiscordState
     include/QDiscordWs
+    include/qdiscord.d/models/qdiscordattachment.hpp
     include/qdiscord.d/models/qdiscordmember.hpp
     include/qdiscord.d/models/qdiscordmodel.hpp
     include/qdiscord.d/models/qdiscorduser.hpp
     include/qdiscord.d/qdiscord.hpp
     include/qdiscord.d/qdiscordabstractstate.hpp
-    include/qdiscord.d/qdiscordattachment.hpp
     include/qdiscord.d/qdiscordbucket.hpp
     include/qdiscord.d/qdiscordchannel.hpp
     include/qdiscord.d/qdiscorddiscriminator.hpp
@@ -66,8 +66,6 @@ set(HEADERS
 )
 
 add_library(qdiscord STATIC ${SOURCES} ${HEADERS})
-
-target_include_directories(qdiscord PRIVATE include)
 
 target_include_directories(qdiscord PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"

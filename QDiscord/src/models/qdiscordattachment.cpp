@@ -51,32 +51,12 @@ QDiscordAttachment::~QDiscordAttachment()
 
 void QDiscordAttachment::deserialize(const QJsonObject& object)
 {
-    _id = QDiscordID(object["id"].toString());
-    _filename = object["filename"].toString();
-    _size = object["size"].toInt();
-    _url = object["url"].toString();
-    _proxyUrl = object["proxy_url"].toString();
-    if(object.contains("height"))
-        _height = object["height"].toInt();
-    if(object.contains("width"))
-        _width = object["width"].toInt();
+    deserializeJson(object);
 }
 
 QJsonObject QDiscordAttachment::serialize() const
 {
-    QJsonObject object;
-
-    object["id"] = _id ? _id.toString() : QJsonValue();
-    object["filename"] = _filename;
-    object["size"] = _size;
-    object["url"] = _url;
-    object["proxy_url"] = _proxyUrl;
-    if(_height.has_value())
-        object["height"] = _height.value();
-    if(_width.has_value())
-        object["width"] = _width.value();
-
-    return object;
+    return serializeJson();
 }
 
 bool QDiscordAttachment::operator==(const QDiscordAttachment& other) const

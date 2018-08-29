@@ -23,7 +23,7 @@
 #include "qdiscord.d/qdiscordid.hpp"
 #include <QJsonObject>
 
-class QDiscordAttachment
+class QDiscordAttachment : public QDiscordModelBase<QDiscordAttachment>
 {
 public:
     static QSharedPointer<QDiscordAttachment>
@@ -63,10 +63,36 @@ public:
     bool operator<=(const QDiscordAttachment& other) const;
     bool operator>=(const QDiscordAttachment& other) const;
 
+    template<class Action>
+    void map(Action& a)
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _filename, "filename");
+        field(a, _size, "size");
+        field(a, _url, "url");
+        field(a, _proxyUrl, "proxy_url");
+        field(a, _height, "height");
+        field(a, _width, "width");
+    }
+
+    template<class Action>
+    void map(Action& a) const
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _filename, "filename");
+        field(a, _size, "size");
+        field(a, _url, "url");
+        field(a, _proxyUrl, "proxy_url");
+        field(a, _height, "height");
+        field(a, _width, "width");
+    }
+
 private:
     QDiscordID _id;
     QString _filename;
-    qint64 _size = -1;
+    int _size = -1;
     QString _url;
     QString _proxyUrl;
     std::experimental::optional<int> _height;

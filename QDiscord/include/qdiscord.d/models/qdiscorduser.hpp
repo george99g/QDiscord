@@ -20,6 +20,7 @@
 #define QDISCORDUSER_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
+#include "qdiscord.d/models/qdiscordmodel.hpp"
 #include "qdiscord.d/qdiscorddiscriminator.hpp"
 #include "qdiscord.d/qdiscordid.hpp"
 #include <QDebug>
@@ -28,7 +29,7 @@
 class QDiscordRest;
 
 ///\brief Represents a user in the Discord API.
-class QDiscordUser
+class QDiscordUser : public QDiscordModelBase<QDiscordUser>
 {
 public:
     static QSharedPointer<QDiscordUser> fromJson(const QJsonObject& object);
@@ -44,6 +45,7 @@ public:
     ///\brief Updates the current instance from the provided parameters.
     void update(const QJsonObject& object);
     void update(const QDiscordUser& other);
+
     ///\brief Returns the user's ID.
     QDiscordID id() const { return _id; }
     void setId(QDiscordID id) { _id = id; }
@@ -93,6 +95,34 @@ public:
     bool operator>(const QDiscordUser& other) const;
     bool operator<=(const QDiscordUser& other) const;
     bool operator>=(const QDiscordUser& other) const;
+
+    template<class Action>
+    void map(Action& a)
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _username, "username");
+        field(a, _discriminator, "discriminator");
+        field(a, _avatar, "avatar");
+        field(a, _bot, "bot");
+        field(a, _mfaEnabled, "mfa_enabled");
+        field(a, _email, "email");
+        field(a, _verified, "verified");
+    }
+
+    template<class Action>
+    void map(Action& a) const
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _username, "username");
+        field(a, _discriminator, "discriminator");
+        field(a, _avatar, "avatar");
+        field(a, _bot, "bot");
+        field(a, _mfaEnabled, "mfa_enabled");
+        field(a, _email, "email");
+        field(a, _verified, "verified");
+    }
 
 private:
     QDiscordID _id;

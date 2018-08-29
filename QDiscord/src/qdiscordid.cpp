@@ -137,3 +137,19 @@ bool QDiscordID::operator>=(quint64 other) const
 {
     return _id >= other;
 }
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          QDiscordID& value,
+                          const QString& name)
+{
+    value = action.data()[name].toString();
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const QDiscordID& value,
+                          const QString& name)
+{
+    action.data().insert(name, value.toString());
+}

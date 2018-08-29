@@ -19,6 +19,7 @@
 #ifndef QDISCORDDISCRIMINATOR_HPP
 #define QDISCORDDISCRIMINATOR_HPP
 
+#include "qdiscord.d/models/qdiscordmodel.hpp"
 #include <QMetaType>
 #include <QString>
 
@@ -51,5 +52,17 @@ private:
 };
 
 Q_DECLARE_METATYPE(QDiscordDiscriminator)
+
+namespace QDiscordModel {
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordDiscriminator& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordDiscriminator& value,
+               const QString& name);
+} // namespace QDiscordModel
 
 #endif // QDISCORDDISCRIMINATOR_HPP

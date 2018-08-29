@@ -54,38 +54,12 @@ QDiscordUser::~QDiscordUser()
 
 void QDiscordUser::deserialize(const QJsonObject& object)
 {
-    _id = QDiscordID(object["id"].toString());
-    _username = object["username"].toString();
-    _discriminator = QDiscordDiscriminator(object["discriminator"].toString());
-    _avatar = object["avatar"].toString();
-    if(object.contains("bot"))
-        _bot = object["bot"].toBool();
-    if(object.contains("mfa_enabled"))
-        _mfaEnabled = object["mfa_enabled"].toBool();
-    if(object.contains("email"))
-        _email = object["email"].toString();
-    if(object.contains("verified"))
-        _verified = object["verified"].toBool();
+    deserializeJson(object);
 }
 
 QJsonObject QDiscordUser::serialize() const
 {
-    QJsonObject object;
-
-    object["id"] = _id.toString();
-    object["username"] = _username;
-    object["discriminator"] = _discriminator.toString();
-    object["avatar"] = _avatar.isEmpty() ? QJsonValue() : _avatar;
-    if(_bot.has_value())
-        object["bot"] = _bot.value();
-    if(_mfaEnabled.has_value())
-        object["mfa_enabled"] = _mfaEnabled.value();
-    if(_email.has_value())
-        object["email"] = _email.value();
-    if(_verified.has_value())
-        object["verified"] = _verified.value();
-
-    return object;
+    return serializeJson();
 }
 
 void QDiscordUser::update(const QDiscordUser& other)

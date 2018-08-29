@@ -19,6 +19,7 @@
 #ifndef QDISCORDID_HPP
 #define QDISCORDID_HPP
 
+#include "qdiscord.d/models/qdiscordmodel.hpp"
 #include "qdiscord.d/qdiscordutilities.hpp"
 #include <QDateTime>
 #include <QMetaType>
@@ -55,5 +56,17 @@ private:
 };
 
 Q_DECLARE_METATYPE(QDiscordID)
+
+namespace QDiscordModel {
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordID& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordID& value,
+               const QString& name);
+} // namespace QDiscordModel
 
 #endif // QDISCORDID_HPP

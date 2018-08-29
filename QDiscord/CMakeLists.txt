@@ -7,6 +7,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5 5.8 COMPONENTS Core Network WebSockets REQUIRED)
 
 set(SOURCES
+    src/models/qdiscordmodel.cpp
+    src/models/qdiscorduser.cpp
     src/qdiscord.cpp
     src/qdiscordabstractstate.cpp
     src/qdiscordattachment.cpp
@@ -26,7 +28,6 @@ set(SOURCES
     src/qdiscordroute.cpp
     src/qdiscordstate.cpp
     src/qdiscordtoken.cpp
-    src/qdiscorduser.cpp
     src/qdiscorduseragent.cpp
     src/qdiscordutilities.cpp
     src/qdiscordws.cpp
@@ -37,6 +38,8 @@ set(HEADERS
     include/QDiscordRest
     include/QDiscordState
     include/QDiscordWs
+    include/qdiscord.d/models/qdiscordmodel.hpp
+    include/qdiscord.d/models/qdiscorduser.hpp
     include/qdiscord.d/qdiscord.hpp
     include/qdiscord.d/qdiscordabstractstate.hpp
     include/qdiscord.d/qdiscordattachment.hpp
@@ -56,7 +59,6 @@ set(HEADERS
     include/qdiscord.d/qdiscordroute.hpp
     include/qdiscord.d/qdiscordstate.hpp
     include/qdiscord.d/qdiscordtoken.hpp
-    include/qdiscord.d/qdiscorduser.hpp
     include/qdiscord.d/qdiscorduseragent.hpp
     include/qdiscord.d/qdiscordutilities.hpp
     include/qdiscord.d/qdiscordws.hpp

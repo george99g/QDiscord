@@ -122,3 +122,19 @@ bool QDiscordDiscriminator::operator>=(qint16 other) const
 {
     return _discriminator >= other;
 }
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          QDiscordDiscriminator& value,
+                          const QString& name)
+{
+    value = QDiscordDiscriminator(action.data()[name].toString());
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const QDiscordDiscriminator& value,
+                          const QString& name)
+{
+    action.data().insert(name, value.toString());
+}

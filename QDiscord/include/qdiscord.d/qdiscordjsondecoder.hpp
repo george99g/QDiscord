@@ -20,10 +20,10 @@
 #define QDISCORDJSONDECODER_HPP
 
 #include "qdiscord.d/models/qdiscordmember.hpp"
+#include "qdiscord.d/models/qdiscordmessage.hpp"
 #include "qdiscord.d/models/qdiscorduser.hpp"
 #include "qdiscord.d/qdiscordabstractstate.hpp"
 #include "qdiscord.d/qdiscordchannel.hpp"
-#include "qdiscord.d/qdiscordmessage.hpp"
 #include <QObject>
 
 class QDiscordJsonDecoder : QObject

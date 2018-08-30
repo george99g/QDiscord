@@ -17,8 +17,8 @@
  */
 
 #include "qdiscord.d/qdiscordchannel.hpp"
+#include "qdiscord.d/models/qdiscordmessage.hpp"
 #include "qdiscord.d/qdiscordguild.hpp"
-#include "qdiscord.d/qdiscordmessage.hpp"
 #include "qdiscord.d/qdiscordrest.hpp"
 
 void QDiscordChannel::get(QDiscordRest& rest,

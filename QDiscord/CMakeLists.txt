@@ -9,6 +9,7 @@ find_package(Qt5 5.8 COMPONENTS Core Network WebSockets REQUIRED)
 set(SOURCES
     src/models/qdiscordattachment.cpp
     src/models/qdiscordmember.cpp
+    src/models/qdiscordmessage.cpp
     src/models/qdiscordmodel.cpp
     src/models/qdiscorduser.cpp
     src/qdiscord.cpp
@@ -20,7 +21,6 @@ set(SOURCES
     src/qdiscordguild.cpp
     src/qdiscordid.cpp
     src/qdiscordjsondecoder.cpp
-    src/qdiscordmessage.cpp
     src/qdiscordpermission.cpp
     src/qdiscordpermissionoverwrite.cpp
     src/qdiscordrest.cpp
@@ -40,6 +40,7 @@ set(HEADERS
     include/QDiscordWs
     include/qdiscord.d/models/qdiscordattachment.hpp
     include/qdiscord.d/models/qdiscordmember.hpp
+    include/qdiscord.d/models/qdiscordmessage.hpp
     include/qdiscord.d/models/qdiscordmodel.hpp
     include/qdiscord.d/models/qdiscorduser.hpp
     include/qdiscord.d/qdiscord.hpp
@@ -51,7 +52,6 @@ set(HEADERS
     include/qdiscord.d/qdiscordguild.hpp
     include/qdiscord.d/qdiscordid.hpp
     include/qdiscord.d/qdiscordjsondecoder.hpp
-    include/qdiscord.d/qdiscordmessage.hpp
     include/qdiscord.d/qdiscordpermission.hpp
     include/qdiscord.d/qdiscordpermissionoverwrite.hpp
     include/qdiscord.d/qdiscordrest.hpp

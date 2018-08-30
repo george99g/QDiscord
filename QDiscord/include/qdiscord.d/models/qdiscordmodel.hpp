@@ -129,6 +129,11 @@ namespace QDiscordModel {
                QDateTime& value,
                const QString& name);
 
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               std::experimental::optional<QDateTime>& value,
+               const QString& name);
+
     template<typename T>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QList<T>& value,
@@ -224,6 +229,11 @@ namespace QDiscordModel {
     template<>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QDateTime& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const std::experimental::optional<QDateTime>& value,
                const QString& name);
 
     template<typename T>

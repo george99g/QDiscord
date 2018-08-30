@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordmessage.hpp"
+#include "qdiscord.d/models/qdiscordmessage.hpp"
 #include "qdiscord.d/qdiscordrest.hpp"
 #include <QHttpMultiPart>
 #include <QHttpPart>
@@ -960,75 +960,13 @@ QDiscordMessage::~QDiscordMessage()
 
 void QDiscordMessage::deserialize(const QJsonObject& object)
 {
-    _id = QDiscordID(object["id"].toString());
-    _channelId = QDiscordID(object["channel_id"].toString());
-    _author = QDiscordUser(object["author"].toObject());
-    _content = object["content"].toString();
-    _timestamp = QDateTime::fromString(object["timestamp"].toString(),
-                                       Qt::ISODateWithMs);
-    if(!object["edited_timestamp"].isNull())
-    {
-        _editedTimestamp = QDateTime::fromString(
-            object["edited_timestamp"].toString(), Qt::ISODateWithMs);
-    }
-    _tts = object["tts"].toBool(false);
-    _mentionEveryone = object["mention_everyone"].toBool(false);
-    _nonce = QDiscordID(object["nonce"].toString());
-    QJsonArray mentionsArray = object["mentions"].toArray();
-    for(const QJsonValue& item : mentionsArray)
-        _mentions.append(QDiscordUser(item.toObject()));
-    QJsonArray attachmentsArray = object["attachments"].toArray();
-    for(const QJsonValue& item : attachmentsArray)
-        _attachments.append(QDiscordAttachment(item.toObject()));
-    _pinned = object["pinned"].toBool(false);
+    deserializeJson(object);
     /* The channel pointer is handled by the calling class */
 }
 
 QJsonObject QDiscordMessage::serialize()
 {
-    QJsonObject object;
-
-    object["id"] = _id.toString();
-    object["channel_id"] = _channelId.toString();
-    {
-        QJsonObject user = _author.serialize();
-
-        if(user["bot"].toBool(false) == false)
-            user.remove("bot");
-        if(user["mfa_enabled"].toBool(false) == false)
-            user.remove("mfa_enabled");
-
-        object["author"] = user;
-    }
-    object["content"] = _content;
-    {
-        object["timestamp"] = _timestamp.toTimeSpec(Qt::OffsetFromUTC)
-                                  .toString(Qt::ISODateWithMs);
-    }
-    if(_editedTimestamp.has_value())
-    {
-        object["edited_timestamp"] = _editedTimestamp.value()
-                                         .toTimeSpec(Qt::OffsetFromUTC)
-                                         .toString(Qt::ISODateWithMs);
-    }
-    else
-        object["edited_timestamp"] = QJsonValue();
-    object["tts"] = _tts;
-    object["mention_everyone"] = _mentionEveryone;
-    QJsonArray mentions;
-    for(const QDiscordUser& user : _mentions)
-        mentions.append(user.serialize());
-    object["mentions"] = mentions;
-    QJsonArray attachments;
-    for(const QDiscordAttachment& attachment : _attachments)
-        attachments.append(attachment.serialize());
-    if(_nonce.isNull())
-        object["nonce"] = QJsonValue();
-    else
-        object["nonce"] = _nonce.toString();
-    object["pinned"] = _pinned;
-
-    return object;
+    return serializeJson();
 }
 
 QSharedPointer<QDiscordGuild> QDiscordMessage::guild() const

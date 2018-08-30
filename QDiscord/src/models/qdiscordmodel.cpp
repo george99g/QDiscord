@@ -172,3 +172,26 @@ void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
     value = QDateTime::fromString(action.data()[name].toString(),
                                   Qt::ISODateWithMs);
 }
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          std::experimental::optional<QDateTime>& value,
+                          const QString& name)
+{
+    if(action.data().contains(name))
+    {
+        value = QDateTime::fromString(action.data()[name].toString(),
+                                      Qt::ISODateWithMs);
+    }
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const std::experimental::optional<QDateTime>& value,
+                          const QString& name)
+{
+    if(value.has_value())
+    {
+        action.data()[name] = value.value().toString(Qt::ISODateWithMs);
+    }
+}

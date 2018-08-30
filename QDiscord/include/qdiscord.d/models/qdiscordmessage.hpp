@@ -32,7 +32,7 @@ class QDiscordRest;
 /*!
  * \brief Represents a message in the Discord API.
  */
-class QDiscordMessage
+class QDiscordMessage : public QDiscordModelBase<QDiscordMessage>
 {
 public:
     static QSharedPointer<QDiscordMessage> fromJson(const QJsonObject& object);
@@ -367,6 +367,42 @@ public:
     bool operator<(const QDiscordMessage& other) const;
     bool operator<=(const QDiscordMessage& other) const;
     bool operator>=(const QDiscordMessage& other) const;
+
+    template<class Action>
+    void map(Action& a)
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _channelId, "channel_id");
+        field(a, _author, "author");
+        field(a, _content, "content");
+        field(a, _timestamp, "timestamp");
+        field(a, _editedTimestamp, "edited_timestamp");
+        field(a, _tts, "tts");
+        field(a, _mentionEveryone, "mention_everyone");
+        field(a, _nonce, "nonce");
+        field(a, _mentions, "mentions");
+        field(a, _attachments, "attachments");
+        field(a, _pinned, "pinned");
+    }
+
+    template<class Action>
+    void map(Action& a) const
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _channelId, "channel_id");
+        field(a, _author, "author");
+        field(a, _content, "content");
+        field(a, _timestamp, "timestamp");
+        field(a, _editedTimestamp, "edited_timestamp");
+        field(a, _tts, "tts");
+        field(a, _mentionEveryone, "mention_everyone");
+        field(a, _nonce, "nonce");
+        field(a, _mentions, "mentions");
+        field(a, _attachments, "attachments");
+        field(a, _pinned, "pinned");
+    }
 
 private:
     QDiscordID _id;

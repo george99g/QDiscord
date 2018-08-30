@@ -20,7 +20,7 @@
 #define QDISCORDPERMISSIONOVERWRITE_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
-#include "qdiscord.d/qdiscordpermission.hpp"
+#include "qdiscord.d/models/qdiscordpermission.hpp"
 #include <QMetaType>
 #include <QPair>
 #include <array>

@@ -19,8 +19,8 @@
 #ifndef QDISCORDROLE_HPP
 #define QDISCORDROLE_HPP
 
-#include "qdiscord.d/qdiscordid.hpp"
-#include "qdiscord.d/qdiscordpermission.hpp"
+#include "qdiscord.d/models/qdiscordid.hpp"
+#include "qdiscord.d/models/qdiscordpermission.hpp"
 #include <QJsonObject>
 #include <QSharedPointer>
 

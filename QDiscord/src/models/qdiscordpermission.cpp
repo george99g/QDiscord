@@ -16,7 +16,8 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordpermission.hpp"
+#include "qdiscord.d/models/qdiscordpermission.hpp"
+#include <QVariant>
 
 QDiscordPermission QDiscordPermission::none()
 {
@@ -410,4 +411,20 @@ void QDiscordPermission::set(quint8 index, bool value)
         _value |= (1 << index);
     else
         _value &= ~(1 << index);
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          QDiscordPermission& value,
+                          const QString& name)
+{
+    value = QDiscordPermission(action.data()[name].toVariant().toULongLong());
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const QDiscordPermission& value,
+                          const QString& name)
+{
+    action.data()[name] = QString::number(value.value());
 }

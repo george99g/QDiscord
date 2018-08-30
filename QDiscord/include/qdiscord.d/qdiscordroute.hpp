@@ -27,7 +27,7 @@
  * https://github.com/DV8FromTheWorld/JDA/blob/master/src/main/java/net/dv8tion/jda/core/requests/Route.java
  */
 
-#include "qdiscord.d/qdiscordid.hpp"
+#include "qdiscord.d/models/qdiscordid.hpp"
 #include <QString>
 
 class QDiscordRoute

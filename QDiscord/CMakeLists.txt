@@ -9,19 +9,19 @@ find_package(Qt5 5.8 COMPONENTS Core Network WebSockets REQUIRED)
 set(SOURCES
     src/models/qdiscordattachment.cpp
     src/models/qdiscordchannel.cpp
+    src/models/qdiscorddiscriminator.cpp
     src/models/qdiscordgame.cpp
+    src/models/qdiscordid.cpp
     src/models/qdiscordmember.cpp
     src/models/qdiscordmessage.cpp
     src/models/qdiscordmodel.cpp
+    src/models/qdiscordpermission.cpp
     src/models/qdiscorduser.cpp
     src/qdiscord.cpp
     src/qdiscordabstractstate.cpp
     src/qdiscordbucket.cpp
-    src/qdiscorddiscriminator.cpp
     src/qdiscordguild.cpp
-    src/qdiscordid.cpp
     src/qdiscordjsondecoder.cpp
-    src/qdiscordpermission.cpp
     src/qdiscordpermissionoverwrite.cpp
     src/qdiscordrest.cpp
     src/qdiscordrole.cpp
@@ -40,19 +40,19 @@ set(HEADERS
     include/QDiscordWs
     include/qdiscord.d/models/qdiscordattachment.hpp
     include/qdiscord.d/models/qdiscordchannel.hpp
+    include/qdiscord.d/models/qdiscorddiscriminator.hpp
     include/qdiscord.d/models/qdiscordgame.hpp
+    include/qdiscord.d/models/qdiscordid.hpp
     include/qdiscord.d/models/qdiscordmember.hpp
     include/qdiscord.d/models/qdiscordmessage.hpp
     include/qdiscord.d/models/qdiscordmodel.hpp
+    include/qdiscord.d/models/qdiscordpermission.hpp
     include/qdiscord.d/models/qdiscorduser.hpp
     include/qdiscord.d/qdiscord.hpp
     include/qdiscord.d/qdiscordabstractstate.hpp
     include/qdiscord.d/qdiscordbucket.hpp
-    include/qdiscord.d/qdiscorddiscriminator.hpp
     include/qdiscord.d/qdiscordguild.hpp
-    include/qdiscord.d/qdiscordid.hpp
     include/qdiscord.d/qdiscordjsondecoder.hpp
-    include/qdiscord.d/qdiscordpermission.hpp
     include/qdiscord.d/qdiscordpermissionoverwrite.hpp
     include/qdiscord.d/qdiscordrest.hpp
     include/qdiscord.d/qdiscordrole.hpp

@@ -20,7 +20,7 @@
 #define QDISCORDATTACHMENT_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
-#include "qdiscord.d/qdiscordid.hpp"
+#include "qdiscord.d/models/qdiscordid.hpp"
 #include <QJsonObject>
 
 class QDiscordAttachment : public QDiscordModelBase<QDiscordAttachment>

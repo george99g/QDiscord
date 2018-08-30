@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordid.hpp"
+#include "qdiscord.d/models/qdiscordid.hpp"
 
 QDiscordID::QDiscordID()
 {

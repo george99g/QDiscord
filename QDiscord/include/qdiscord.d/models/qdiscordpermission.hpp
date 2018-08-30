@@ -19,6 +19,7 @@
 #ifndef QDISCORDPERMISSION_HPP
 #define QDISCORDPERMISSION_HPP
 
+#include "qdiscord.d/models/qdiscordmodel.hpp"
 #include <QMetaType>
 
 // Based on https://github.com/Rapptz/discord.py
@@ -122,5 +123,17 @@ private:
 };
 
 Q_DECLARE_METATYPE(QDiscordPermission)
+
+namespace QDiscordModel {
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordPermission& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordPermission& value,
+               const QString& name);
+} // namespace QDiscordModel
 
 #endif // QDISCORDPERMISSION_HPP

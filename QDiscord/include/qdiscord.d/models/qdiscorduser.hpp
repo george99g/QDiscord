@@ -20,9 +20,9 @@
 #define QDISCORDUSER_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
+#include "qdiscord.d/models/qdiscorddiscriminator.hpp"
+#include "qdiscord.d/models/qdiscordid.hpp"
 #include "qdiscord.d/models/qdiscordmodel.hpp"
-#include "qdiscord.d/qdiscorddiscriminator.hpp"
-#include "qdiscord.d/qdiscordid.hpp"
 #include <QDebug>
 #include <QJsonObject>
 

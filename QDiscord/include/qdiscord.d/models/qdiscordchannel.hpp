@@ -30,7 +30,7 @@ class QDiscordGuild;
 class QDiscordRest;
 
 ///\brief Represents either a private or guild channel in the Discord API.
-class QDiscordChannel
+class QDiscordChannel : public QDiscordModelBase<QDiscordChannel>
 {
 public:
     static void get(QDiscordRest& rest,
@@ -345,6 +345,82 @@ public:
     bool operator<=(const QDiscordChannel& other) const;
     bool operator>=(const QDiscordChannel& other) const;
 
+    template<class Action>
+    void map(Action& a)
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _type, "type");
+        field(a, _name, "name");
+        field(a, _parentId, "parent_id");
+        switch(_type)
+        {
+        case Type::Category:
+        case Type::Text:
+        case Type::Voice:
+            field(a, _guildId, "guild_id");
+            field(a, _position, "position");
+            break;
+        case Type::DirectMessage:
+        case Type::GroupDirectMessage:
+            field(a, _icon, "icon");
+            field(a, _recipients, "recipients");
+            field(a, _ownerId, "owner_id");
+            field(a, _applicationId, "application_id");
+        case Type::UnknownType:;
+        }
+
+        if(_type == Type::Text)
+        {
+            field(a, _topic, "topic");
+            field(a, _lastMessageId, "last_message_id");
+        }
+
+        if(_type == Type::Voice)
+        {
+            field(a, _bitrate, "bitrate");
+            field(a, _userLimit, "user_limit");
+        }
+    }
+
+    template<class Action>
+    void map(Action& a) const
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _type, "type");
+        field(a, _name, "name");
+        field(a, _parentId, "parent_id");
+        switch(_type)
+        {
+        case Type::Category:
+        case Type::Text:
+        case Type::Voice:
+            field(a, _guildId, "guild_id");
+            field(a, _position, "position");
+            break;
+        case Type::DirectMessage:
+        case Type::GroupDirectMessage:
+            field(a, _icon, "icon");
+            field(a, _recipients, "recipients");
+            field(a, _ownerId, "owner_id");
+            field(a, _applicationId, "application_id");
+        case Type::UnknownType:;
+        }
+
+        if(_type == Type::Text)
+        {
+            field(a, _topic, "topic");
+            field(a, _lastMessageId, "last_message_id");
+        }
+
+        if(_type == Type::Voice)
+        {
+            field(a, _bitrate, "bitrate");
+            field(a, _userLimit, "user_limit");
+        }
+    }
+
 private:
     QDiscordID _id;
     Type _type = Type::UnknownType;
@@ -367,5 +443,17 @@ private:
 
 Q_DECLARE_METATYPE(QDiscordChannel::Type)
 Q_DECLARE_METATYPE(QDiscordChannel)
+
+namespace QDiscordModel {
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordChannel::Type& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordChannel::Type& value,
+               const QString& name);
+} // namespace QDiscordModel
 
 #endif // QDISCORDCHANNEL_HPP

@@ -19,10 +19,10 @@
 #ifndef QDISCORDABSTRACTSTATE_HPP
 #define QDISCORDABSTRACTSTATE_HPP
 
+#include "qdiscord.d/models/qdiscordchannel.hpp"
 #include "qdiscord.d/models/qdiscordmember.hpp"
 #include "qdiscord.d/models/qdiscordmessage.hpp"
 #include "qdiscord.d/models/qdiscorduser.hpp"
-#include "qdiscord.d/qdiscordchannel.hpp"
 #include <QObject>
 
 class QDiscordAbstractState : public QObject

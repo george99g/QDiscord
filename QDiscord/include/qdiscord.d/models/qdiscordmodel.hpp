@@ -22,6 +22,7 @@
 #include "qdiscord.d/external/optional/optional.hpp"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QSharedPointer>
 #include <string>
 
 class QDateTime;
@@ -176,6 +177,48 @@ namespace QDiscordModel {
         }
     }
 
+    template<typename T>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QList<QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        value.clear();
+        for(const QJsonValue& i : action.data()[name].toArray())
+        {
+            QSharedPointer<T> item = QSharedPointer<T>(new T());
+            item->deserializeJson(i.toObject());
+            value.append(item);
+        }
+    }
+
+    template<typename T>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QLinkedList<QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        value.clear();
+        for(const QJsonValue& i : action.data()[name].toArray())
+        {
+            QSharedPointer<T> item = QSharedPointer<T>(new T());
+            item->deserializeJson(i.toObject());
+            value.append(item);
+        }
+    }
+
+    template<typename T>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QVector<QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        value.clear();
+        for(const QJsonValue& i : action.data()[name].toArray())
+        {
+            QSharedPointer<T> item = QSharedPointer<T>(new T());
+            item->deserializeJson(i.toObject());
+            value.append(item);
+        }
+    }
+
     // ---
 
     template<class T>
@@ -271,6 +314,45 @@ namespace QDiscordModel {
 
         for(const T& i : value)
             output.append(i.serializeJson());
+
+        action.data().insert(name, output);
+    }
+
+    template<typename T>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QList<QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        QJsonArray output;
+
+        for(const QSharedPointer<T>& i : value)
+            output.append(i->serializeJson());
+
+        action.data().insert(name, output);
+    }
+
+    template<typename T>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QLinkedList<QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        QJsonArray output;
+
+        for(const QSharedPointer<T>& i : value)
+            output.append(i->serializeJson());
+
+        action.data().insert(name, output);
+    }
+
+    template<typename T>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QVector<QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        QJsonArray output;
+
+        for(const QSharedPointer<T>& i : value)
+            output.append(i->serializeJson());
 
         action.data().insert(name, output);
     }

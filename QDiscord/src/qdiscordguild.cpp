@@ -17,7 +17,7 @@
  */
 
 #include "qdiscord.d/qdiscordguild.hpp"
-#include "qdiscord.d/qdiscordchannel.hpp"
+#include "qdiscord.d/models/qdiscordchannel.hpp"
 #include "qdiscord.d/qdiscordrest.hpp"
 
 namespace {

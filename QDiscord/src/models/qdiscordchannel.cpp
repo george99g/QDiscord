@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordchannel.hpp"
+#include "qdiscord.d/models/qdiscordchannel.hpp"
 #include "qdiscord.d/models/qdiscordmessage.hpp"
 #include "qdiscord.d/qdiscordguild.hpp"
 #include "qdiscord.d/qdiscordrest.hpp"
@@ -674,100 +674,12 @@ QDiscordChannel::~QDiscordChannel()
 
 void QDiscordChannel::deserialize(const QJsonObject& object)
 {
-    _id = QDiscordID(object["id"].toString());
-    _type = static_cast<Type>(object["type"].toInt(255));
-    _name = object["name"].toString();
-    _parentId = object["parent_id"].toString();
-
-    switch(_type)
-    {
-    case Type::Category:
-    case Type::Text:
-    case Type::Voice:
-        _guildId = QDiscordID(object["guild_id"].toString());
-        _position = object["position"].toInt(-1);
-        break;
-    case Type::DirectMessage:
-    case Type::GroupDirectMessage:
-    {
-        _icon = object["icon"].toString();
-        QList<QSharedPointer<QDiscordUser>> users;
-        for(QJsonValue recipient : object["recipients"].toArray())
-            users.append(QDiscordUser::fromJson(recipient.toObject()));
-        _recipients = users;
-        _ownerId = QDiscordID(object["owner_id"].toString());
-        _applicationId = QDiscordID(object["application_id"].toString());
-    }
-    default:;
-    }
-
-    if(_type == Type::Text)
-    {
-        _topic = object["topic"].toString();
-        _lastMessageId = QDiscordID(object["last_message_id"].toString());
-    }
-    if(_type == Type::Voice)
-    {
-        _bitrate = object["bitrate"].toInt(-1);
-        _userLimit = object["user_limit"].toInt(-1);
-    }
+    deserializeJson(object);
 }
 
 QJsonObject QDiscordChannel::serialize() const
 {
-    QJsonObject object;
-
-    object["id"] = _id.toString();
-    object["type"] = static_cast<int>(_type);
-    object["name"] = _name;
-    if(_parentId)
-        object["parent_id"] = _parentId.toString();
-
-    switch(_type)
-    {
-    case Type::Category:
-    case Type::Text:
-    case Type::Voice:
-        object["guild_id"] = _guildId.toString();
-        object["position"] = _position;
-        break;
-    case Type::DirectMessage:
-    case Type::GroupDirectMessage:
-    {
-        if(!_icon.isEmpty())
-            object["icon"] = _icon;
-        QJsonArray recipientArray;
-        QList<QSharedPointer<QDiscordUser>> users = _recipients;
-        for(QSharedPointer<QDiscordUser> user : users)
-        {
-            QJsonObject jsonUser = user->serialize();
-            if(jsonUser["mfa_enabled"].toBool(false) == false)
-                jsonUser.remove("mfa_enabled");
-            if(jsonUser["bot"].toBool(false) == false)
-                jsonUser.remove("bot");
-            recipientArray.append(jsonUser);
-        }
-        object["recipients"] = recipientArray;
-        object["owner_id"] = _ownerId ? _ownerId.toString() : QJsonValue();
-        object["application_id"] =
-            _applicationId ? _applicationId.toString() : QJsonValue();
-    }
-    default:;
-    }
-
-    if(_type == Type::Text)
-    {
-        object["topic"] = _topic;
-        object["last_message_id"] =
-            _lastMessageId ? _lastMessageId.toString() : QJsonValue();
-    }
-    if(_type == Type::Voice)
-    {
-        object["bitrate"] = _bitrate;
-        object["user_limit"] = _userLimit;
-    }
-
-    return object;
+    return serializeJson();
 }
 
 void QDiscordChannel::setGuild(QSharedPointer<QDiscordGuild> guild)
@@ -809,4 +721,20 @@ bool QDiscordChannel::operator<=(const QDiscordChannel& other) const
 bool QDiscordChannel::operator>=(const QDiscordChannel& other) const
 {
     return _id >= other._id;
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          QDiscordChannel::Type& value,
+                          const QString& name)
+{
+    value = static_cast<QDiscordChannel::Type>(action.data()[name].toInt(255));
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const QDiscordChannel::Type& value,
+                          const QString& name)
+{
+    action.data()[name] = static_cast<int>(value);
 }

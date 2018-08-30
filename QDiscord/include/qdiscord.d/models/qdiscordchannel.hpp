@@ -367,6 +367,7 @@ public:
             field(a, _recipients, "recipients");
             field(a, _ownerId, "owner_id");
             field(a, _applicationId, "application_id");
+        default:
         case Type::UnknownType:;
         }
 
@@ -405,6 +406,7 @@ public:
             field(a, _recipients, "recipients");
             field(a, _ownerId, "owner_id");
             field(a, _applicationId, "application_id");
+        default:
         case Type::UnknownType:;
         }
 

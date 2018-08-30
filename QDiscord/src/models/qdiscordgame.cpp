@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordgame.hpp"
+#include "qdiscord.d/models/qdiscordgame.hpp"
 
 QSharedPointer<QDiscordGame> QDiscordGame::fromJson(const QJsonObject& object)
 {
@@ -64,31 +64,12 @@ QDiscordGame::~QDiscordGame()
 
 void QDiscordGame::deserialize(const QJsonObject& object)
 {
-    _name = object["name"].toString();
-    _url = object["url"].toString();
-    switch(object["type"].toInt(-1))
-    {
-    case 0:
-        _type = GameType::Default;
-        break;
-    case 1:
-        _type = GameType::Streaming;
-        break;
-    default:
-        _type = GameType::Unknown;
-    }
+    deserializeJson(object);
 }
 
 QJsonObject QDiscordGame::serialize() const
 {
-    QJsonObject object;
-
-    object["name"] = _name;
-    if(!_url.isEmpty())
-        object["url"] = _url;
-    object["type"] = static_cast<qint8>(_type);
-
-    return object;
+    return serializeJson();
 }
 
 bool QDiscordGame::isNull() const
@@ -129,4 +110,30 @@ bool QDiscordGame::operator<=(const QDiscordGame& other) const
 bool QDiscordGame::operator>=(const QDiscordGame& other) const
 {
     return _name >= other._name;
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          QDiscordGame::GameType& value,
+                          const QString& name)
+{
+    switch(action.data()[name].toInt(-1))
+    {
+    case 0:
+        value = QDiscordGame::GameType::Default;
+        break;
+    case 1:
+        value = QDiscordGame::GameType::Streaming;
+        break;
+    default:
+        value = QDiscordGame::GameType::Unknown;
+    }
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const QDiscordGame::GameType& value,
+                          const QString& name)
+{
+    action.data()[name] = static_cast<int>(value);
 }

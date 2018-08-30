@@ -19,11 +19,12 @@
 #ifndef QDISCORDGAME_HPP
 #define QDISCORDGAME_HPP
 
+#include "qdiscord.d/models/qdiscordmodel.hpp"
 #include <QDebug>
 #include <QJsonObject>
 
 ///\brief Represents a game object in the Discord API.
-class QDiscordGame
+class QDiscordGame : public QDiscordModelBase<QDiscordGame>
 {
 public:
     static QSharedPointer<QDiscordGame> fromJson(const QJsonObject& object);
@@ -74,6 +75,22 @@ public:
     bool operator<=(const QDiscordGame& other) const;
     bool operator>=(const QDiscordGame& other) const;
 
+    template<class Action>
+    void map(Action& a)
+    {
+        field(a, _name, "name");
+        field(a, _url, "url");
+        field(a, _type, "type");
+    }
+
+    template<class Action>
+    void map(Action& a) const
+    {
+        field(a, _name, "name");
+        field(a, _url, "url");
+        field(a, _type, "type");
+    }
+
 private:
     QString _name;
     QString _url;
@@ -81,5 +98,17 @@ private:
 };
 
 Q_DECLARE_METATYPE(QDiscordGame)
+
+namespace QDiscordModel {
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordGame::GameType& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordGame::GameType& value,
+               const QString& name);
+} // namespace QDiscordModel
 
 #endif // QDISCORDGAME_HPP

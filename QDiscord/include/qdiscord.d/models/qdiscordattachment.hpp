@@ -92,7 +92,7 @@ public:
 private:
     QDiscordID _id;
     QString _filename;
-    int _size = -1;
+    qint64 _size = -1;
     QString _url;
     QString _proxyUrl;
     std::experimental::optional<int> _height;

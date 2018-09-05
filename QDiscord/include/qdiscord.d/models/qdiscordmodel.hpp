@@ -20,9 +20,11 @@
 #define QDISCORDMODEL_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
+#include <QDateTime>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QSharedPointer>
+#include <QVariant>
 #include <string>
 
 class QDateTime;
@@ -75,7 +77,9 @@ private:
 };
 
 namespace QDiscordModel {
-    template<class T>
+    template<class T,
+             class = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
                T& value,
                const QString& name)
@@ -115,15 +119,26 @@ namespace QDiscordModel {
                std::experimental::optional<bool>& value,
                const QString& name);
 
-    template<>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::numeric_limits<T>::is_integer>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
-               int& value,
-               const QString& name);
+               const T& value,
+               const QString& name)
+    {
+        value = action.data()[name].toVariant().value<T>();
+    }
 
-    template<>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::numeric_limits<T>::is_integer>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
-               std::experimental::optional<int>& value,
-               const QString& name);
+               const std::experimental::optional<T>& value,
+               const QString& name)
+    {
+        if(action.data().contains(name))
+            value = action.data()[name].toVariant().value<T>();
+    }
 
     template<>
     void field(QDiscordModel::DeserializeJsonAction& action,
@@ -135,7 +150,9 @@ namespace QDiscordModel {
                std::experimental::optional<QDateTime>& value,
                const QString& name);
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QList<T>& value,
                const QString& name)
@@ -149,7 +166,9 @@ namespace QDiscordModel {
         }
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QLinkedList<T>& value,
                const QString& name)
@@ -163,7 +182,9 @@ namespace QDiscordModel {
         }
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QVector<T>& value,
                const QString& name)
@@ -177,7 +198,9 @@ namespace QDiscordModel {
         }
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QList<QSharedPointer<T>>& value,
                const QString& name)
@@ -191,7 +214,9 @@ namespace QDiscordModel {
         }
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QLinkedList<QSharedPointer<T>>& value,
                const QString& name)
@@ -205,7 +230,9 @@ namespace QDiscordModel {
         }
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QVector<QSharedPointer<T>>& value,
                const QString& name)
@@ -221,12 +248,14 @@ namespace QDiscordModel {
 
     // ---
 
-    template<class T>
+    template<class T,
+             class = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::SerializeJsonAction& action,
                T& value,
                const QString& name)
     {
-        action.data()[name] = value.serializeJson();
+        action.data().insert(name, value.serializeJson());
     }
 
     template<>
@@ -261,16 +290,6 @@ namespace QDiscordModel {
 
     template<>
     void field(QDiscordModel::SerializeJsonAction& action,
-               const int& value,
-               const QString& name);
-
-    template<>
-    void field(QDiscordModel::SerializeJsonAction& action,
-               const std::experimental::optional<int>& value,
-               const QString& name);
-
-    template<>
-    void field(QDiscordModel::SerializeJsonAction& action,
                const QDateTime& value,
                const QString& name);
 
@@ -279,7 +298,30 @@ namespace QDiscordModel {
                const std::experimental::optional<QDateTime>& value,
                const QString& name);
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::numeric_limits<T>::is_integer>::type>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const T& value,
+               const QString& name)
+    {
+        action.data().insert(name, static_cast<const double>(value));
+    }
+
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::numeric_limits<T>::is_integer>::type>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const std::experimental::optional<T>& value,
+               const QString& name)
+    {
+        if(value.has_value())
+            action.data().insert(name, value.value());
+    }
+
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QList<T>& value,
                const QString& name)
@@ -292,7 +334,9 @@ namespace QDiscordModel {
         action.data().insert(name, output);
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QLinkedList<T>& value,
                const QString& name)
@@ -305,7 +349,9 @@ namespace QDiscordModel {
         action.data().insert(name, output);
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QVector<T>& value,
                const QString& name)
@@ -318,7 +364,9 @@ namespace QDiscordModel {
         action.data().insert(name, output);
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QList<QSharedPointer<T>>& value,
                const QString& name)
@@ -331,7 +379,9 @@ namespace QDiscordModel {
         action.data().insert(name, output);
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QLinkedList<QSharedPointer<T>>& value,
                const QString& name)
@@ -344,7 +394,9 @@ namespace QDiscordModel {
         action.data().insert(name, output);
     }
 
-    template<typename T>
+    template<typename T,
+             typename = typename std::enable_if<
+                 std::is_base_of<QDiscordModelBase<T>, T>::value>::type>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QVector<QSharedPointer<T>>& value,
                const QString& name)

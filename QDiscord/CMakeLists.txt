@@ -16,6 +16,7 @@ set(SOURCES
     src/models/qdiscordmessage.cpp
     src/models/qdiscordmodel.cpp
     src/models/qdiscordpermission.cpp
+    src/models/qdiscordrole.cpp
     src/models/qdiscorduser.cpp
     src/qdiscord.cpp
     src/qdiscordabstractstate.cpp
@@ -24,7 +25,6 @@ set(SOURCES
     src/qdiscordjsondecoder.cpp
     src/qdiscordpermissionoverwrite.cpp
     src/qdiscordrest.cpp
-    src/qdiscordrole.cpp
     src/qdiscordroute.cpp
     src/qdiscordstate.cpp
     src/qdiscordtoken.cpp
@@ -47,6 +47,7 @@ set(HEADERS
     include/qdiscord.d/models/qdiscordmessage.hpp
     include/qdiscord.d/models/qdiscordmodel.hpp
     include/qdiscord.d/models/qdiscordpermission.hpp
+    include/qdiscord.d/models/qdiscordrole.hpp
     include/qdiscord.d/models/qdiscorduser.hpp
     include/qdiscord.d/qdiscord.hpp
     include/qdiscord.d/qdiscordabstractstate.hpp
@@ -55,7 +56,6 @@ set(HEADERS
     include/qdiscord.d/qdiscordjsondecoder.hpp
     include/qdiscord.d/qdiscordpermissionoverwrite.hpp
     include/qdiscord.d/qdiscordrest.hpp
-    include/qdiscord.d/qdiscordrole.hpp
     include/qdiscord.d/qdiscordroute.hpp
     include/qdiscord.d/qdiscordstate.hpp
     include/qdiscord.d/qdiscordtoken.hpp

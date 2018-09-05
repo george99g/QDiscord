@@ -27,7 +27,7 @@
 class QDiscordGuild;
 class QDiscordRest;
 
-class QDiscordRole
+class QDiscordRole : public QDiscordModelBase<QDiscordRole>
 {
 public:
     static QSharedPointer<QDiscordRole> fromJson(const QJsonObject& object);
@@ -79,6 +79,34 @@ public:
     bool operator<(const QDiscordRole& other) const;
     bool operator>=(const QDiscordRole& other) const;
     bool operator<=(const QDiscordRole& other) const;
+
+    template<typename Action>
+    void map(Action& a)
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _name, "name");
+        field(a, _color, "color");
+        field(a, _hoist, "hoist");
+        field(a, _position, "position");
+        field(a, _permissions, "permissions");
+        field(a, _managed, "managed");
+        field(a, _mentionable, "mentionable");
+    }
+
+    template<typename Action>
+    void map(Action& a) const
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _name, "name");
+        field(a, _color, "color");
+        field(a, _hoist, "hoist");
+        field(a, _position, "position");
+        field(a, _permissions, "permissions");
+        field(a, _managed, "managed");
+        field(a, _mentionable, "mentionable");
+    }
 
 private:
     QDiscordID _id;

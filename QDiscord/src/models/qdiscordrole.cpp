@@ -1,4 +1,4 @@
-#include "qdiscord.d/qdiscordrole.hpp"
+#include "qdiscord.d/models/qdiscordrole.hpp"
 #include "qdiscord.d/qdiscordguild.hpp"
 #include "qdiscord.d/qdiscordrest.hpp"
 
@@ -34,31 +34,12 @@ QDiscordRole::~QDiscordRole()
 
 void QDiscordRole::deserialize(const QJsonObject& object)
 {
-    _id = QDiscordID(object["id"].toString());
-    _name = object["name"].toString();
-    _color = object["color"].toVariant().toUInt();
-    _hoist = object["hoist"].toBool();
-    _position = object["position"].toInt(-1);
-    _permissions =
-        QDiscordPermission(object["permissions"].toVariant().toULongLong());
-    _managed = object["managed"].toBool();
-    _mentionable = object["mentionable"].toBool();
+    deserializeJson(object);
 }
 
 QJsonObject QDiscordRole::serialize() const
 {
-    QJsonObject object;
-
-    object["id"] = _id.toString();
-    object["name"] = _name;
-    object["color"] = static_cast<qint32>(_color);
-    object["hoist"] = _hoist;
-    object["position"] = _position;
-    object["permissions"] = QString::number(_permissions.value());
-    object["managed"] = _managed;
-    object["mentionable"] = _mentionable;
-
-    return object;
+    return serializeJson();
 }
 
 bool QDiscordRole::isEveryone() const

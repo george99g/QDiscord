@@ -135,5 +135,5 @@ void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
                           const QDiscordGame::GameType& value,
                           const QString& name)
 {
-    action.data()[name] = static_cast<int>(value);
+    action.data().insert(name, static_cast<int>(value));
 }

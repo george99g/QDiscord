@@ -22,7 +22,7 @@
 #include "qdiscord.d/external/optional/optional.hpp"
 #include "qdiscord.d/models/qdiscordchannel.hpp"
 #include "qdiscord.d/models/qdiscordmember.hpp"
-#include "qdiscord.d/qdiscordrole.hpp"
+#include "qdiscord.d/models/qdiscordrole.hpp"
 #include <QDateTime>
 #include <QDebug>
 #include <QJsonArray>

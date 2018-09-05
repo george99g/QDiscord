@@ -71,23 +71,6 @@ void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
 }
 
 template<>
-void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
-                          int& value,
-                          const QString& name)
-{
-    value = action.data()[name].toInt();
-}
-
-template<>
-void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
-                          std::experimental::optional<int>& value,
-                          const QString& name)
-{
-    if(action.data().contains(name))
-        value = action.data()[name].toInt();
-}
-
-template<>
 void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
                           const QString& value,
                           const QString& name)
@@ -140,28 +123,11 @@ void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
 
 template<>
 void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
-                          const int& value,
-                          const QString& name)
-{
-    action.data().insert(name, value);
-}
-
-template<>
-void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
-                          const std::experimental::optional<int>& value,
-                          const QString& name)
-{
-    if(value.has_value())
-        action.data().insert(name, value.value());
-}
-
-template<>
-void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
                           const QDateTime& value,
                           const QString& name)
 {
-    action.data()[name] =
-        value.toTimeSpec(Qt::OffsetFromUTC).toString(Qt::ISODateWithMs);
+    action.data().insert(
+        name, value.toTimeSpec(Qt::OffsetFromUTC).toString(Qt::ISODateWithMs));
 }
 
 template<>
@@ -192,6 +158,6 @@ void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
 {
     if(value.has_value())
     {
-        action.data()[name] = value.value().toString(Qt::ISODateWithMs);
+        action.data().insert(name, value.value().toString(Qt::ISODateWithMs));
     }
 }

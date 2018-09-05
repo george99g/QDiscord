@@ -426,5 +426,5 @@ void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
                           const QDiscordPermission& value,
                           const QString& name)
 {
-    action.data()[name] = QString::number(value.value());
+    action.data().insert(name, QString::number(value.value()));
 }

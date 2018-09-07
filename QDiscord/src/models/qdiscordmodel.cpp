@@ -161,3 +161,25 @@ void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
         action.data().insert(name, value.value().toString(Qt::ISODateWithMs));
     }
 }
+
+template<>
+void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
+                          QStringList& value,
+                          const QString& name)
+{
+    for(const QJsonValue& v : action.data()[name].toArray())
+        value.append(v.toString());
+}
+
+template<>
+void QDiscordModel::field(QDiscordModel::SerializeJsonAction& action,
+                          const QStringList& value,
+                          const QString& name)
+{
+    QJsonArray array;
+
+    for(const QString& string : value)
+        array.append(string);
+
+    action.data().insert(name, array);
+}

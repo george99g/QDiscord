@@ -17,7 +17,7 @@
  */
 
 #include "qdiscord.d/models/qdiscordmember.hpp"
-#include "qdiscord.d/qdiscordguild.hpp"
+#include "qdiscord.d/models/qdiscordguild.hpp"
 
 QSharedPointer<QDiscordMember>
 QDiscordMember::fromJson(const QJsonObject& object)
@@ -91,11 +91,6 @@ QString QDiscordMember::mentionNickname() const
 void QDiscordMember::setRest(QDiscordRest* rest)
 {
     _user.setRest(rest);
-}
-
-QDiscordMember::operator bool() const
-{
-    return _user;
 }
 
 bool QDiscordMember::operator==(const QDiscordMember& other) const

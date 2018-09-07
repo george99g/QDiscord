@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordattachment.hpp"
+#include "qdiscord.d/models/qdiscordattachment.hpp"
 
 QSharedPointer<QDiscordAttachment>
 QDiscordAttachment::fromJson(const QJsonObject& object)
@@ -57,39 +57,4 @@ void QDiscordAttachment::deserialize(const QJsonObject& object)
 QJsonObject QDiscordAttachment::serialize() const
 {
     return serializeJson();
-}
-
-bool QDiscordAttachment::operator==(const QDiscordAttachment& other) const
-{
-    return _id == other._id;
-}
-
-bool QDiscordAttachment::operator!=(const QDiscordAttachment& other) const
-{
-    return !operator==(other);
-}
-
-bool QDiscordAttachment::operator<(const QDiscordAttachment& other) const
-{
-    return _id < other._id;
-}
-
-bool QDiscordAttachment::operator>(const QDiscordAttachment& other) const
-{
-    return _id > other._id;
-}
-
-bool QDiscordAttachment::operator<=(const QDiscordAttachment& other) const
-{
-    return _id <= other._id;
-}
-
-bool QDiscordAttachment::operator>=(const QDiscordAttachment& other) const
-{
-    return _id >= other._id;
-}
-
-QDiscordAttachment::operator bool() const
-{
-    return _id;
 }

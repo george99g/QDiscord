@@ -90,38 +90,3 @@ QString QDiscordUser::mention() const
 {
     return QString("<@%1>").arg(_id ? _id.toString() : "invalid ID");
 }
-
-QDiscordUser::operator bool() const
-{
-    return _id;
-}
-
-bool QDiscordUser::operator==(const QDiscordUser& other) const
-{
-    return _id == other._id;
-}
-
-bool QDiscordUser::operator<(const QDiscordUser& other) const
-{
-    return _id < other._id;
-}
-
-bool QDiscordUser::operator>(const QDiscordUser& other) const
-{
-    return _id > other._id;
-}
-
-bool QDiscordUser::operator<=(const QDiscordUser& other) const
-{
-    return _id <= other._id;
-}
-
-bool QDiscordUser::operator>=(const QDiscordUser& other) const
-{
-    return _id >= other._id;
-}
-
-bool QDiscordUser::operator!=(const QDiscordUser& other) const
-{
-    return !operator==(other);
-}

@@ -27,7 +27,9 @@
 class QDiscordGuild;
 class QDiscordRest;
 
-class QDiscordRole : public QDiscordModelBase<QDiscordRole>
+class QDiscordRole
+    : public QDiscordModelBase<QDiscordRole>
+    , public QDiscordModel::CompareById<QDiscordRole>
 {
 public:
     static QSharedPointer<QDiscordRole> fromJson(const QJsonObject& object);
@@ -69,16 +71,6 @@ public:
 
     QDiscordRest* rest() const { return _rest; }
     void setRest(QDiscordRest* rest) { _rest = rest; }
-
-    bool isNull() const { return _id.isNull(); }
-    operator bool() const { return _id; }
-
-    bool operator==(const QDiscordRole& other) const;
-    bool operator!=(const QDiscordRole& other) const;
-    bool operator>(const QDiscordRole& other) const;
-    bool operator<(const QDiscordRole& other) const;
-    bool operator>=(const QDiscordRole& other) const;
-    bool operator<=(const QDiscordRole& other) const;
 
     template<typename Action>
     void map(Action& a)

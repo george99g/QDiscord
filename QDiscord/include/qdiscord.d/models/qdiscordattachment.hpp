@@ -23,7 +23,9 @@
 #include "qdiscord.d/models/qdiscordid.hpp"
 #include <QJsonObject>
 
-class QDiscordAttachment : public QDiscordModelBase<QDiscordAttachment>
+class QDiscordAttachment
+    : public QDiscordModelBase<QDiscordAttachment>
+    , public QDiscordModel::CompareById<QDiscordAttachment>
 {
 public:
     static QSharedPointer<QDiscordAttachment>
@@ -52,16 +54,6 @@ public:
     std::experimental::optional<int> width() const { return _width; }
     void setWidth(int width) { _width = width; }
     void resetWidth() { _width.reset(); }
-
-    bool isNull() const { return _id.isNull(); }
-    operator bool() const;
-
-    bool operator==(const QDiscordAttachment& other) const;
-    bool operator!=(const QDiscordAttachment& other) const;
-    bool operator<(const QDiscordAttachment& other) const;
-    bool operator>(const QDiscordAttachment& other) const;
-    bool operator<=(const QDiscordAttachment& other) const;
-    bool operator>=(const QDiscordAttachment& other) const;
 
     template<class Action>
     void map(Action& a)

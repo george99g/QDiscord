@@ -16,7 +16,7 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/qdiscordpermissionoverwrite.hpp"
+#include "qdiscord.d/models/qdiscordpermissionoverwrite.hpp"
 
 QDiscordPermissionOverwrite::QDiscordPermissionOverwrite() {}
 

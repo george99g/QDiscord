@@ -20,10 +20,10 @@
 #define QDISCORDMESSAGE_HPP
 
 #include "qdiscord.d/external/optional/optional.hpp"
+#include "qdiscord.d/models/qdiscordattachment.hpp"
 #include "qdiscord.d/models/qdiscordchannel.hpp"
+#include "qdiscord.d/models/qdiscordguild.hpp"
 #include "qdiscord.d/models/qdiscordmember.hpp"
-#include "qdiscord.d/qdiscordattachment.hpp"
-#include "qdiscord.d/qdiscordguild.hpp"
 #include <QFileInfo>
 #include <functional>
 
@@ -32,7 +32,9 @@ class QDiscordRest;
 /*!
  * \brief Represents a message in the Discord API.
  */
-class QDiscordMessage : public QDiscordModelBase<QDiscordMessage>
+class QDiscordMessage
+    : public QDiscordModelBase<QDiscordMessage>
+    , public QDiscordModel::CompareById<QDiscordMessage>
 {
 public:
     static QSharedPointer<QDiscordMessage> fromJson(const QJsonObject& object);
@@ -359,14 +361,6 @@ public:
     QSharedPointer<QDiscordGuild> guild() const;
     QDiscordRest* rest() const { return _rest; }
     void setRest(QDiscordRest* rest) { _rest = rest; }
-    bool isNull() const { return _id.isNull(); }
-    operator bool() const;
-    bool operator==(const QDiscordMessage& other) const;
-    bool operator!=(const QDiscordMessage& other) const;
-    bool operator>(const QDiscordMessage& other) const;
-    bool operator<(const QDiscordMessage& other) const;
-    bool operator<=(const QDiscordMessage& other) const;
-    bool operator>=(const QDiscordMessage& other) const;
 
     template<class Action>
     void map(Action& a)

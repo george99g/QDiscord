@@ -58,15 +58,89 @@ private:
 Q_DECLARE_METATYPE(QDiscordID)
 
 namespace QDiscordModel {
+    template<class T>
+    class CompareById
+    {
+    public:
+        bool operator==(const T& other) const
+        {
+            return static_cast<const T*>(this)->id() == other.id();
+        }
+
+        bool operator!=(const T& other) const { return !operator==(other); }
+
+        bool operator<(const T& other) const
+        {
+            return static_cast<const T*>(this)->id() < other.id();
+        }
+
+        bool operator>(const T& other) const
+        {
+            return static_cast<const T*>(this)->id() > other.id();
+        }
+
+        bool operator<=(const T& other) const
+        {
+            return static_cast<const T*>(this)->id() <= other.id();
+        }
+
+        bool operator>=(const T& other) const
+        {
+            return static_cast<const T*>(this)->id() >= other.id();
+        }
+
+        bool isNull() const { return !static_cast<const T*>(this)->id(); }
+
+        operator bool() const { return static_cast<const T*>(this)->id(); }
+    };
+
     template<>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QDiscordID& value,
                const QString& name);
 
+    template<
+        typename T,
+        typename std::enable_if<std::is_base_of<QDiscordModelBase<T>, T>::value,
+                                T>::type* = nullptr,
+        typename std::enable_if<std::is_base_of<CompareById<T>, T>::value,
+                                T>::type* = nullptr>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QMap<QDiscordID, QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        for(const QJsonValue& item : action.data()[name].toArray())
+        {
+            QSharedPointer<T> element = QSharedPointer<T>(new T());
+            element->deserializeJson(item.toObject());
+            value.insert(element->id(), element);
+        }
+    }
+
+    // ---
+
     template<>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QDiscordID& value,
                const QString& name);
+
+    template<
+        typename T,
+        typename std::enable_if<std::is_base_of<QDiscordModelBase<T>, T>::value,
+                                T>::type* = nullptr,
+        typename std::enable_if<std::is_base_of<CompareById<T>, T>::value,
+                                T>::type* = nullptr>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QMap<QDiscordID, QSharedPointer<T>>& value,
+               const QString& name)
+    {
+        QJsonArray array;
+
+        for(const QSharedPointer<T>& item : value)
+            array.append(item->serializeJson());
+
+        action.data().insert(name, array);
+    }
 } // namespace QDiscordModel
 
 #endif // QDISCORDID_HPP

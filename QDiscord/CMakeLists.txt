@@ -11,19 +11,19 @@ set(SOURCES
     src/models/qdiscordchannel.cpp
     src/models/qdiscorddiscriminator.cpp
     src/models/qdiscordgame.cpp
+    src/models/qdiscordguild.cpp
     src/models/qdiscordid.cpp
     src/models/qdiscordmember.cpp
     src/models/qdiscordmessage.cpp
     src/models/qdiscordmodel.cpp
     src/models/qdiscordpermission.cpp
+    src/models/qdiscordpermissionoverwrite.cpp
     src/models/qdiscordrole.cpp
     src/models/qdiscorduser.cpp
     src/qdiscord.cpp
     src/qdiscordabstractstate.cpp
     src/qdiscordbucket.cpp
-    src/qdiscordguild.cpp
     src/qdiscordjsondecoder.cpp
-    src/qdiscordpermissionoverwrite.cpp
     src/qdiscordrest.cpp
     src/qdiscordroute.cpp
     src/qdiscordstate.cpp
@@ -42,19 +42,19 @@ set(HEADERS
     include/qdiscord.d/models/qdiscordchannel.hpp
     include/qdiscord.d/models/qdiscorddiscriminator.hpp
     include/qdiscord.d/models/qdiscordgame.hpp
+    include/qdiscord.d/models/qdiscordguild.hpp
     include/qdiscord.d/models/qdiscordid.hpp
     include/qdiscord.d/models/qdiscordmember.hpp
     include/qdiscord.d/models/qdiscordmessage.hpp
     include/qdiscord.d/models/qdiscordmodel.hpp
     include/qdiscord.d/models/qdiscordpermission.hpp
+    include/qdiscord.d/models/qdiscordpermissionoverwrite.hpp
     include/qdiscord.d/models/qdiscordrole.hpp
     include/qdiscord.d/models/qdiscorduser.hpp
     include/qdiscord.d/qdiscord.hpp
     include/qdiscord.d/qdiscordabstractstate.hpp
     include/qdiscord.d/qdiscordbucket.hpp
-    include/qdiscord.d/qdiscordguild.hpp
     include/qdiscord.d/qdiscordjsondecoder.hpp
-    include/qdiscord.d/qdiscordpermissionoverwrite.hpp
     include/qdiscord.d/qdiscordrest.hpp
     include/qdiscord.d/qdiscordroute.hpp
     include/qdiscord.d/qdiscordstate.hpp

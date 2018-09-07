@@ -17,8 +17,8 @@
  */
 
 #include "qdiscord.d/models/qdiscordchannel.hpp"
+#include "qdiscord.d/models/qdiscordguild.hpp"
 #include "qdiscord.d/models/qdiscordmessage.hpp"
-#include "qdiscord.d/qdiscordguild.hpp"
 #include "qdiscord.d/qdiscordrest.hpp"
 
 void QDiscordChannel::get(QDiscordRest& rest,
@@ -691,36 +691,6 @@ void QDiscordChannel::setGuild(QSharedPointer<QDiscordGuild> guild)
         return;
     }
     _guildId = guild->id();
-}
-
-bool QDiscordChannel::operator==(const QDiscordChannel& other) const
-{
-    return _id == other._id;
-}
-
-bool QDiscordChannel::operator!=(const QDiscordChannel& other) const
-{
-    return !operator==(other);
-}
-
-bool QDiscordChannel::operator>(const QDiscordChannel& other) const
-{
-    return _id > other._id;
-}
-
-bool QDiscordChannel::operator<(const QDiscordChannel& other) const
-{
-    return _id < other._id;
-}
-
-bool QDiscordChannel::operator<=(const QDiscordChannel& other) const
-{
-    return _id <= other._id;
-}
-
-bool QDiscordChannel::operator>=(const QDiscordChannel& other) const
-{
-    return _id >= other._id;
 }
 
 template<>

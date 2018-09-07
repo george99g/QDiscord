@@ -31,7 +31,10 @@
 class QDiscordRest;
 
 ///\brief Represents a guild in the Discord API.
-class QDiscordGuild : public QEnableSharedFromThis<QDiscordGuild>
+class QDiscordGuild
+    : public QEnableSharedFromThis<QDiscordGuild>
+    , public QDiscordModelBase<QDiscordGuild>
+    , public QDiscordModel::CompareById<QDiscordGuild>
 {
 public:
     static QSharedPointer<QDiscordGuild> fromJson(const QJsonObject& object);
@@ -266,16 +269,81 @@ public:
     QDiscordRest* rest() const { return _rest; }
     void setRest(QDiscordRest* rest);
 
-    bool isNull() const { return _id.isNull(); }
-    operator bool() const;
-    bool operator==(const QDiscordGuild& other) const;
-    bool operator!=(const QDiscordGuild& other) const;
-    bool operator<(const QDiscordGuild& other) const;
-    bool operator>(const QDiscordGuild& other) const;
-    bool operator<=(const QDiscordGuild& other) const;
-    bool operator>=(const QDiscordGuild& other) const;
+    template<class Action>
+    void map(Action& a)
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _unavailable, "unavailable");
+        if(!_unavailable.value_or(false))
+        {
+            field(a, _name, "name");
+            field(a, _icon, "icon");
+            field(a, _splash, "splash");
+            field(a, _ownerId, "owner_id");
+            field(a, _region, "region");
+            field(a, _afkChannelId, "afk_channel_id");
+            field(a, _afkTimeout, "afk_timeout");
+            field(a, _embedEnabled, "embed_enabled");
+            field(a, _embedChannelId, "embed_channel_id");
+            field(a, _verificationLevel, "verification_level");
+            field(a,
+                  _defaultMessageNotifications,
+                  "default_message_notifications");
+            field(a, _explicitContentFilter, "explicit_content_filter");
+            field(a, _features, "features");
+            field(a, _mfaLevel, "mfa_level");
+            field(a, _joinedAt, "joined_at");
+            field(a, _large, "large");
+            field(a, _memberCount, "member_count");
+            field(a, _applicationId, "application_id");
+            field(a, _roles, "roles");
+            field(a, _members, "members");
+            field(a, _channels, "channels");
+
+            resolveRelationships();
+        }
+    }
+
+    template<class Action>
+    void map(Action& a) const
+    {
+        using namespace QDiscordModel;
+        field(a, _id, "id");
+        field(a, _unavailable, "unavailable");
+        if(!_unavailable.value_or(false))
+        {
+            field(a, _name, "name");
+            field(a, _icon, "icon");
+            field(a, _splash, "splash");
+            field(a, _ownerId, "owner_id");
+            field(a, _region, "region");
+            field(a, _afkChannelId, "afk_channel_id");
+            field(a, _afkTimeout, "afk_timeout");
+            field(a, _embedEnabled, "embed_enabled");
+            field(a, _embedChannelId, "embed_channel_id");
+            field(a, _verificationLevel, "verification_level");
+            field(a,
+                  _defaultMessageNotifications,
+                  "default_message_notifications");
+            field(a, _explicitContentFilter, "explicit_content_filter");
+            field(a, _features, "features");
+            field(a, _mfaLevel, "mfa_level");
+            field(a, _joinedAt, "joined_at");
+            field(a, _large, "large");
+            field(a, _memberCount, "member_count");
+            field(a, _applicationId, "application_id");
+            field(a, _roles, "roles");
+            field(a, _members, "members");
+            field(a, _channels, "channels");
+
+            resolveRelationships();
+        }
+    }
 
 private:
+    void resolveRelationships();
+    void resolveRelationships() const;
     QDiscordID _id;
     QString _name;
     QString _icon;
@@ -304,5 +372,37 @@ private:
 };
 
 Q_DECLARE_METATYPE(QDiscordGuild)
+
+namespace QDiscordModel {
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordGuild::VerificationLevel& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordGuild::NotificationLevel& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::DeserializeJsonAction& action,
+               QDiscordGuild::ExplicitContentFilterLevel& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordGuild::VerificationLevel& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordGuild::NotificationLevel& value,
+               const QString& name);
+
+    template<>
+    void field(QDiscordModel::SerializeJsonAction& action,
+               const QDiscordGuild::ExplicitContentFilterLevel& value,
+               const QString& name);
+} // namespace QDiscordModel
 
 #endif // QDISCORDGUILD_HPP

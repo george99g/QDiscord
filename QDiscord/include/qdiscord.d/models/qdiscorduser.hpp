@@ -29,7 +29,9 @@
 class QDiscordRest;
 
 ///\brief Represents a user in the Discord API.
-class QDiscordUser : public QDiscordModelBase<QDiscordUser>
+class QDiscordUser
+    : public QDiscordModelBase<QDiscordUser>
+    , public QDiscordModel::CompareById<QDiscordUser>
 {
 public:
     static QSharedPointer<QDiscordUser> fromJson(const QJsonObject& object);
@@ -84,17 +86,6 @@ public:
 
     QDiscordRest* rest() const { return _rest; }
     void setRest(QDiscordRest* rest) { _rest = rest; }
-
-    bool isNull() const { return _id.isNull(); }
-    operator bool() const;
-    ///\brief Compares two users based on their ID
-    bool operator==(const QDiscordUser& other) const;
-    ///\brief Compares two users based on their ID
-    bool operator!=(const QDiscordUser& other) const;
-    bool operator<(const QDiscordUser& other) const;
-    bool operator>(const QDiscordUser& other) const;
-    bool operator<=(const QDiscordUser& other) const;
-    bool operator>=(const QDiscordUser& other) const;
 
     template<class Action>
     void map(Action& a)

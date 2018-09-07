@@ -30,7 +30,9 @@ class QDiscordGuild;
 class QDiscordRest;
 
 ///\brief Represents either a private or guild channel in the Discord API.
-class QDiscordChannel : public QDiscordModelBase<QDiscordChannel>
+class QDiscordChannel
+    : public QDiscordModelBase<QDiscordChannel>
+    , public QDiscordModel::CompareById<QDiscordChannel>
 {
 public:
     static void get(QDiscordRest& rest,
@@ -334,16 +336,6 @@ public:
      */
     ///\brief Returns a string which allows you to mention this channel.
     QString mention() const { return QString("<#" + _id.toString() + ">"); }
-    bool isNull() const { return _id.isNull(); }
-    operator bool() const { return _id; }
-    ///\brief Compares two channels based on their ID.
-    bool operator==(const QDiscordChannel& other) const;
-    ///\brief Compares two channels based on their ID.
-    bool operator!=(const QDiscordChannel& other) const;
-    bool operator>(const QDiscordChannel& other) const;
-    bool operator<(const QDiscordChannel& other) const;
-    bool operator<=(const QDiscordChannel& other) const;
-    bool operator>=(const QDiscordChannel& other) const;
 
     template<class Action>
     void map(Action& a)

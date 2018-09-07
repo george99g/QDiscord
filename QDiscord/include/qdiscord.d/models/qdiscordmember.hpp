@@ -36,7 +36,9 @@ class QDiscordRest;
  * about the guild member.\n
  * You may acquire a pointer to it using QDiscordMember::user.
  */
-class QDiscordMember : public QDiscordModelBase<QDiscordMember>
+class QDiscordMember
+    : public QDiscordModelBase<QDiscordMember>
+    , public QDiscordModel::CompareById<QDiscordMember>
 {
 public:
     static QSharedPointer<QDiscordMember> fromJson(const QJsonObject& object);
@@ -50,6 +52,8 @@ public:
     ~QDiscordMember();
     void deserialize(const QJsonObject& object);
     QJsonObject serialize() const;
+    QDiscordID id() const { return _user.id(); }
+    void setId(const QDiscordID& id) { _user.setId(id); }
     ///\brief Returns a pointer to the user object contained by this object.
     QDiscordUser& user() { return _user; }
     const QDiscordUser& constUser() const { return _user; }
@@ -84,21 +88,7 @@ public:
     QDiscordRest* rest() const { return _user.rest(); }
     void setRest(QDiscordRest* rest);
 
-    bool isNull() const { return _user.isNull(); }
-    operator bool() const;
-    /*!
-     * \brief Compares two members.
-     *
-     * This uses the users' IDs and the guilds' IDs to check if they're the
-     * same member. If a pointer is null, returns false.
-     */
     bool operator==(const QDiscordMember& other) const;
-    /*!
-     * \brief Compares two members.
-     *
-     * This uses the users' IDs and the guilds' IDs to check if they're the
-     * same member. If a pointer is null, returns true.
-     */
     bool operator!=(const QDiscordMember& other) const;
 
     template<class Action>

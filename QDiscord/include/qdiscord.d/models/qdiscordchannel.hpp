@@ -241,8 +241,7 @@ public:
      * depending on what type() and isPrivate() return.
      */
     QDiscordChannel(const QJsonObject& object);
-    QDiscordChannel();
-    ~QDiscordChannel();
+    QDiscordChannel() = default;
     void deserialize(const QJsonObject& object);
     QJsonObject serialize() const;
     /*!

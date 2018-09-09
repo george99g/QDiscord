@@ -653,23 +653,6 @@ QDiscordChannel::fromJson(const QJsonObject& object)
 QDiscordChannel::QDiscordChannel(const QJsonObject& object)
 {
     deserialize(object);
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordChannel(" << this << ") constructed";
-#endif
-}
-
-QDiscordChannel::QDiscordChannel()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordChannel(" << this << ") constructed";
-#endif
-}
-
-QDiscordChannel::~QDiscordChannel()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordChannel(" << this << ") destroyed";
-#endif
 }
 
 void QDiscordChannel::deserialize(const QJsonObject& object)

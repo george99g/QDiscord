@@ -201,24 +201,6 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
         item->setGuild(sharedFromThis());
         _members.insert(newMember->user().id(), newMember);
     }
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGuild(" << this << ") copy-constructed";
-#endif
-}
-
-QDiscordGuild::QDiscordGuild()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGuild(" << this << ") constructed";
-#endif
-}
-
-QDiscordGuild::~QDiscordGuild()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGuild(" << this << ") destroyed";
-#endif
 }
 
 void QDiscordGuild::deserialize(const QJsonObject& object)
@@ -280,10 +262,6 @@ void QDiscordGuild::update(const QDiscordGuild& other)
         if(!other.channelsMap().isEmpty())
             _channels = other.channelsMap();
     }
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGuild(" << this << ") updated";
-#endif
 }
 
 void QDiscordGuild::addRole(QSharedPointer<QDiscordRole> role)

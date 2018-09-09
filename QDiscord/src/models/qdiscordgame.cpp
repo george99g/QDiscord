@@ -28,38 +28,20 @@ QSharedPointer<QDiscordGame> QDiscordGame::fromJson(const QJsonObject& object)
 QDiscordGame::QDiscordGame(QString name,
                            QString url,
                            QDiscordGame::GameType type)
+    : _name(name)
+    , _url(url)
+    , _type(type)
 {
-    _name = name;
-    _url = url;
-    _type = type;
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGame(" << this << ") constructed";
-#endif
 }
 
 QDiscordGame::QDiscordGame()
+    : _type(GameType::Unknown)
 {
-    _type = GameType::Unknown;
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGame(" << this << ") constructed";
-#endif
 }
 
 QDiscordGame::QDiscordGame(const QJsonObject& object)
 {
     deserialize(object);
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGame(" << this << ") constructed";
-#endif
-}
-
-QDiscordGame::~QDiscordGame()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordGame(" << this << ") destroyed";
-#endif
 }
 
 void QDiscordGame::deserialize(const QJsonObject& object)

@@ -35,8 +35,7 @@ public:
     static QSharedPointer<QDiscordRole> fromJson(const QJsonObject& object);
 
     QDiscordRole(const QJsonObject& object);
-    QDiscordRole();
-    ~QDiscordRole();
+    QDiscordRole() = default;
 
     void deserialize(const QJsonObject& object);
     QJsonObject serialize() const;

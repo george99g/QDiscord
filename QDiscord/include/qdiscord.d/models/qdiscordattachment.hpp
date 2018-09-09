@@ -32,8 +32,7 @@ public:
     fromJson(const QJsonObject& object);
 
     QDiscordAttachment(const QJsonObject& object);
-    QDiscordAttachment();
-    ~QDiscordAttachment();
+    QDiscordAttachment() = default;
 
     void deserialize(const QJsonObject& object);
     QJsonObject serialize() const;

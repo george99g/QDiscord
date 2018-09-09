@@ -48,8 +48,7 @@ public:
      * \param guild A pointer to the member's parent guild.
      */
     QDiscordMember(const QJsonObject& object);
-    QDiscordMember();
-    ~QDiscordMember();
+    QDiscordMember() = default;
     void deserialize(const QJsonObject& object);
     QJsonObject serialize() const;
     QDiscordID id() const { return _user.id(); }

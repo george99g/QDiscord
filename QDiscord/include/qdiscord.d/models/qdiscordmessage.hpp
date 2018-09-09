@@ -296,8 +296,7 @@ public:
     void ack(std::function<void(bool)> callback);
 
     QDiscordMessage(const QJsonObject& object);
-    QDiscordMessage();
-    ~QDiscordMessage();
+    QDiscordMessage() = default;
     void deserialize(const QJsonObject& object);
     QJsonObject serialize();
     ///\brief Returns the message's ID.

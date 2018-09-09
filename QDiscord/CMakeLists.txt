@@ -24,6 +24,7 @@ set(SOURCES
     src/qdiscordabstractstate.cpp
     src/qdiscordbucket.cpp
     src/qdiscordjsondecoder.cpp
+    src/qdiscordlogging.cpp
     src/qdiscordrest.cpp
     src/qdiscordroute.cpp
     src/qdiscordstate.cpp
@@ -55,6 +56,7 @@ set(HEADERS
     include/qdiscord.d/qdiscordabstractstate.hpp
     include/qdiscord.d/qdiscordbucket.hpp
     include/qdiscord.d/qdiscordjsondecoder.hpp
+    include/qdiscord.d/qdiscordlogging.hpp
     include/qdiscord.d/qdiscordrest.hpp
     include/qdiscord.d/qdiscordroute.hpp
     include/qdiscord.d/qdiscordstate.hpp

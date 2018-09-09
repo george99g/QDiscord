@@ -54,7 +54,6 @@ public:
     QDiscordGame();
     ///\brief Creates an instance from the provided JSON object.
     QDiscordGame(const QJsonObject& object);
-    ~QDiscordGame();
     void deserialize(const QJsonObject& object);
     QJsonObject serialize() const;
     ///\brief Returns the game name of this object.

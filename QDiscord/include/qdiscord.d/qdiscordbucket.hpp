@@ -29,7 +29,7 @@ class QNetworkReply;
 class QDiscordBucket
 {
 public:
-    QDiscordBucket();
+    QDiscordBucket() = default;
     quint16 limit() const { return _limit; }
     void setLimit(quint16 limit) { _limit = limit; }
     quint16 remaining() const { return _remaining; }

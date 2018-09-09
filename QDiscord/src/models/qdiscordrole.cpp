@@ -30,24 +30,6 @@ QSharedPointer<QDiscordRole> QDiscordRole::fromJson(const QJsonObject& object)
 QDiscordRole::QDiscordRole(const QJsonObject& object)
 {
     deserialize(object);
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordRole(" << this << ") constructed";
-#endif
-}
-
-QDiscordRole::QDiscordRole()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordRole(" << this << ") constructed";
-#endif
-}
-
-QDiscordRole::~QDiscordRole()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordRole(" << this << ") destroyed";
-#endif
 }
 
 void QDiscordRole::deserialize(const QJsonObject& object)

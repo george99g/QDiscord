@@ -29,24 +29,16 @@ QDiscordRest::QDiscordRest(QObject* parent)
     connect(
         &_bucketTimer, &QTimer::timeout, this, &QDiscordRest::processBuckets);
     _bucketTimer.start();
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "constructed";
-#endif
 }
 
 QDiscordRest::~QDiscordRest()
 {
     _bucketTimer.stop();
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "destroyed";
-#endif
 }
 
 void QDiscordRest::setLastAckToken(QDiscordToken lastAckToken)
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "setting lastAckToken to" << lastAckToken.rawToken();
-#endif
+    qCDebug(REST, ) << "setting lastAckToken to" << lastAckToken.rawToken();
     _lastAckToken = lastAckToken;
 }
 
@@ -181,10 +173,8 @@ QSharedPointer<QDiscordBucket> QDiscordRest::getBucket(QString route)
         _buckets.insert(route,
                         QSharedPointer<QDiscordBucket>(new QDiscordBucket()));
 
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "created bucket" << _buckets[route].data() << "for"
-                 << route;
-#endif
+        qCDebug(REST, ) << "created bucket" << _buckets[route].data() << "for"
+                        << route;
     }
 
     return _buckets[route];
@@ -192,16 +182,13 @@ QSharedPointer<QDiscordBucket> QDiscordRest::getBucket(QString route)
 
 void QDiscordRest::processBuckets()
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "processing buckets";
-#endif
+    qCDebug(REST, ) << "processing buckets";
 
     // Process the buckets
     for(const QSharedPointer<QDiscordBucket>& bucket : _buckets.values())
         bucket->process();
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "finished processing buckets";
-#endif
+
+    qCDebug(REST, ) << "finished processing buckets";
 
     // Set the timer interval for the next tick
     quint64 minResetTime = std::numeric_limits<quint64>::max();
@@ -220,8 +207,7 @@ void QDiscordRest::processBuckets()
     else
         resetInterval = minResetTime - currentTime;
     _bucketTimer.start(resetInterval * 1000);
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "ticking again in" << _bucketTimer.interval() / 1000.
-             << "seconds";
-#endif
+
+    qCDebug(REST, ) << "ticking again in" << _bucketTimer.interval() / 1000.
+                    << "seconds";
 }

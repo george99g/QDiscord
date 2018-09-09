@@ -16,27 +16,14 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/models/qdiscordattachment.hpp"
+#ifndef QDISCORDLOGGING_HPP
+#define QDISCORDLOGGING_HPP
 
-QSharedPointer<QDiscordAttachment>
-QDiscordAttachment::fromJson(const QJsonObject& object)
-{
-    QSharedPointer<QDiscordAttachment> attachment(new QDiscordAttachment());
-    attachment->deserialize(object);
-    return attachment;
-}
+#include <QLoggingCategory>
 
-QDiscordAttachment::QDiscordAttachment(const QJsonObject& object)
-{
-    deserialize(object);
-}
+Q_DECLARE_LOGGING_CATEGORY(MAIN)
+Q_DECLARE_LOGGING_CATEGORY(REST)
+Q_DECLARE_LOGGING_CATEGORY(WS)
+Q_DECLARE_LOGGING_CATEGORY(STATE)
 
-void QDiscordAttachment::deserialize(const QJsonObject& object)
-{
-    deserializeJson(object);
-}
-
-QJsonObject QDiscordAttachment::serialize() const
-{
-    return serializeJson();
-}
+#endif // QDISCORDLOGGING_HPP

@@ -55,9 +55,6 @@ QDiscordWs::QDiscordWs(QDiscordAbstractState* state, QObject* parent)
     _heartbeatTimer.setSingleShot(false);
     connect(
         &_heartbeatTimer, &QTimer::timeout, this, &QDiscordWs::heartbeatTick);
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "constructed";
-#endif
 }
 
 bool QDiscordWs::open(QString endpoint, QDiscordToken token)
@@ -70,6 +67,7 @@ bool QDiscordWs::open(QUrl endpoint, QDiscordToken token)
     if(_ws.state() != QAbstractSocket::UnconnectedState)
     {
         _error = Error::AlreadyConnected;
+        qCDebug(WS, ) << "already connected";
         emit error(Error::AlreadyConnected);
         return false;
     }
@@ -78,6 +76,7 @@ bool QDiscordWs::open(QUrl endpoint, QDiscordToken token)
     if(_token.isEmpty())
     {
         _error = Error::NoToken;
+        qCDebug(WS, ) << "no token specified";
         emit error(Error::NoToken);
         return false;
     }
@@ -105,17 +104,16 @@ bool QDiscordWs::open(QUrl endpoint, QDiscordToken token)
     _endpoint = endpoint;
     setCState(ConnectionState::Connecting);
     _ws.open(endpoint);
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "WebSocket connecting to" << endpoint.toString();
-#endif
+
+    qCDebug(WS, ) << "WebSocket connecting to" << endpoint.toString();
+
     return true;
 }
 
 void QDiscordWs::close(QWebSocketProtocol::CloseCode closeCode)
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "WebSocket closing";
-#endif
+    qCDebug(WS, ) << "WebSocket closing";
+
     setCState(ConnectionState::Disconnecting);
     _ws.close(closeCode);
 }
@@ -124,9 +122,8 @@ void QDiscordWs::abort()
 {
     setCState(ConnectionState::Disconnected);
     _ws.abort();
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "WebSocket aborted";
-#endif
+
+    qCDebug(WS, ) << "WebSocket aborted";
 }
 
 void QDiscordWs::reconnect()
@@ -171,6 +168,7 @@ bool QDiscordWs::setVersion(quint8 version)
     if(_cState != ConnectionState::Disconnected)
     {
         _error = Error::AlreadyConnected;
+        qCDebug(WS, ) << "version change attempted while still connected";
         emit error(Error::AlreadyConnected);
         return false;
     }
@@ -183,6 +181,7 @@ bool QDiscordWs::setEncoding(Encoding encoding)
     if(_cState != ConnectionState::Disconnected)
     {
         _error = Error::AlreadyConnected;
+        qCDebug(WS, ) << "encoding change attempted while still connected";
         emit error(Error::AlreadyConnected);
         return false;
     }
@@ -194,6 +193,7 @@ bool QDiscordWs::setEncoding(Encoding encoding)
     case Encoding::ETF:
     default:
         _error = Error::EncodingNotSupported;
+        qCDebug(WS, ) << "ETF encoding is not supported yet";
         emit error(Error::EncodingNotSupported);
         return false;
     }
@@ -204,6 +204,7 @@ bool QDiscordWs::setToken(const QDiscordToken& token)
     if(_cState != ConnectionState::Disconnected)
     {
         _error = Error::AlreadyConnected;
+        qCDebug(WS, ) << "token change attempted while still connected";
         emit error(Error::AlreadyConnected);
         return false;
     }
@@ -222,12 +223,13 @@ void QDiscordWs::setCState(QDiscordWs::ConnectionState state)
 {
     _lastCState = _cState;
     _cState = state;
+
+    qCDebug(WS, ) << "State changed. Previous state:"
+                  << static_cast<int>(_lastCState)
+                  << "Current state:" << static_cast<int>(_cState);
+
     emit connectionStateChanged(state);
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "State changed. Previous state:"
-             << static_cast<int>(_lastCState)
-             << "Current state:" << static_cast<int>(_cState);
-#endif
+
     switch(_cState)
     {
     case ConnectionState::Disconnected:
@@ -241,6 +243,9 @@ void QDiscordWs::setCState(QDiscordWs::ConnectionState state)
         _heartbeatTimer.stop();
         _reconnectTime = 100;
         _reconnectAttempt = 0;
+
+        qCDebug(WS, ) << "disconnected";
+
         emit disconnected();
         break;
     case ConnectionState::UnexpetedlyDisconnected:
@@ -256,11 +261,10 @@ void QDiscordWs::setCState(QDiscordWs::ConnectionState state)
                 _reconnectTime = _maxReconnectTime;
             else
                 _reconnectTime *= 5;
-#ifdef QDISCORD_PRINT_DEBUG
-            qDebug() << this << "Attempting reconnect" << _reconnectAttempt + 1
-                     << "out of" << _maxReconnectAttempts << "Next attempt in "
-                     << _reconnectTime / 1000. << "seconds";
-#endif
+            qCDebug(WS, ) << "Attempting reconnect" << _reconnectAttempt + 1
+                          << "out of" << _maxReconnectAttempts
+                          << "Next attempt in" << _reconnectTime / 1000.
+                          << "seconds";
             open(_endpoint, _token);
         });
         break;
@@ -280,21 +284,18 @@ void QDiscordWs::setCState(QDiscordWs::ConnectionState state)
 
 void QDiscordWs::wsConnected()
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "WebSocket connected.";
-#endif
+    qCDebug(WS, ) << "WebSocket connected";
     setCState(ConnectionState::Connected);
 }
 
 void QDiscordWs::wsDisconnected()
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "WebSocket disconnected. Close code:" << _ws.closeCode()
-             << "Close reason:" << _ws.closeReason();
-#endif
+    qCDebug(WS, ) << "WebSocket disconnected. Close code:" << _ws.closeCode()
+                  << "Close reason:" << _ws.closeReason();
     if(static_cast<uint16_t>(_ws.closeCode()) == 4004)
     {
         setCState(ConnectionState::Disconnected);
+        qCDebug(WS, ) << "authentication failed";
         emit authFail();
     }
     if(_cState == ConnectionState::Disconnecting)
@@ -305,9 +306,7 @@ void QDiscordWs::wsDisconnected()
 
 void QDiscordWs::wsError(QAbstractSocket::SocketError)
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "WebSocket error:" << _ws.errorString();
-#endif
+    qCDebug(WS, ) << "WebSocket error:" << _ws.errorString();
     _error = Error::WebSocketError;
     emit error(Error::WebSocketError);
 }
@@ -319,10 +318,7 @@ void QDiscordWs::wsMessage(const QString& message)
         QJsonObject obj = QJsonDocument::fromJson(message.toUtf8()).object();
         if(obj.isEmpty())
         {
-#ifdef QDISCORD_PRINT_DEBUG
-            qDebug() << this << "Invalid JSON received."
-                     << "Message:" << message;
-#endif
+            qCDebug(WS, ) << "Invalid JSON received.\nMessage:" << message;
         }
         switch(static_cast<GatewayOp>(obj["op"].toInt()))
         {
@@ -344,10 +340,8 @@ void QDiscordWs::wsMessage(const QString& message)
             dispatchDispatchJson(obj["d"].toObject(), obj["t"].toString());
             return;
         default:
-#ifdef QDISCORD_PRINT_DEBUG
-            qDebug() << this << "Unknown operation received. OP:"
-                     << obj["d"].toString();
-#endif
+            qCDebug(WS, ) << "Unknown operation received. OP:"
+                          << obj["op"].toInt();
             return;
         }
     }
@@ -356,44 +350,35 @@ void QDiscordWs::wsMessage(const QString& message)
 
 void QDiscordWs::dispatchHelloJson(const QJsonObject& object)
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "Hello received.";
-#endif
+    qCDebug(WS, ) << "Hello received";
     _heartbeatTimer.start(object["heartbeat_interval"].toInt());
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "Beating every" << _heartbeatTimer.interval() / 1000.
-             << "seconds.";
-#endif
+    qCDebug(WS, ) << "beating every" << _heartbeatTimer.interval() / 1000.
+                  << "seconds";
     setCState(ConnectionState::HelloReceived);
 }
 
 void QDiscordWs::dispatchAck()
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "Received ACK";
-#endif
+    qCDebug(WS, ) << "received ACK";
     _ackReceived = true;
 }
 
 void QDiscordWs::dispatchReconnect()
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "Reconnect received, reconnecting";
-#endif
+    qCDebug(WS, ) << "reconnect received, reconnecting";
     reconnect();
 }
 
 void QDiscordWs::dispatchDispatchJson(const QJsonObject& d, const QString& t)
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "Received Dispatch. t:" << t;
-#endif
+    qCDebug(WS, ) << "Received Dispatch. t:" << t;
 
     if(t == "READY")
     {
         if(_state)
             _state->reset();
         setCState(ConnectionState::Authenticated);
+        qCDebug(WS, ) << "logged in";
         emit loggedIn();
         _sessionId = d["session_id"].toString();
     }
@@ -408,9 +393,7 @@ void QDiscordWs::dispatchDispatchJson(const QJsonObject& d, const QString& t)
 
 void QDiscordWs::dispatchInvalidSession()
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "Received Invalid Session";
-#endif
+    qCDebug(WS, ) << "received Invalid Session";
     _sessionId.clear();
     _latestSequence = -1;
     QTimer::singleShot(5000, [this]() { sendIdentify(); });
@@ -418,14 +401,10 @@ void QDiscordWs::dispatchInvalidSession()
 
 void QDiscordWs::heartbeatTick()
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "Heartbeat tick";
-#endif
+    qCDebug(WS, ) << "heartbeat tick";
     if(!_ws.isValid())
     {
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "WebSocket is not valid, stopping timer";
-#endif
+        qCDebug(WS, ) << "WebSocket is not valid, stopping timer";
         _heartbeatTimer.stop();
         return;
     }
@@ -433,9 +412,7 @@ void QDiscordWs::heartbeatTick()
         _ackReceived = false;
     else
     {
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "No ACK to previous heartbeat, reconnecting";
-#endif
+        qCDebug(WS, ) << "no ACK to previous heartbeat, reconnecting";
         reconnect();
         return;
     }
@@ -446,9 +423,7 @@ void QDiscordWs::heartbeatTick()
             {"d", _latestSequence < 0 ? QJsonValue() : _latestSequence}};
         _ws.sendTextMessage(QJsonDocument(heartbeatObject).toJson());
         _ws.flush();
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "Sent heartbeat";
-#endif
+        qCDebug(WS, ) << "sent heartbeat";
     }
     // TODO: Add ETF support
 }
@@ -457,9 +432,7 @@ void QDiscordWs::sendIdentify()
 {
     if(_token.isEmpty())
     {
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "No token specified for sendIdentify";
-#endif
+        qCDebug(WS, ) << "no token specified for sendIdentify";
         abort();
         return;
     }
@@ -480,9 +453,7 @@ void QDiscordWs::sendIdentify()
         setCState(ConnectionState::IdentifySent);
         _ws.sendTextMessage(QJsonDocument(obj).toJson());
         _ws.flush();
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "Sent identify";
-#endif
+        qCDebug(WS, ) << "sent identify";
     }
     // TODO: Add ETF support
 }
@@ -491,25 +462,19 @@ void QDiscordWs::sendResume()
 {
     if(_token.isEmpty())
     {
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "No token specified for sendResume";
-#endif
+        qCDebug(WS, ) << "no token specified for sendResume";
         reconnect();
         return;
     }
     if(_sessionId.isEmpty())
     {
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "No session ID specified for sendResume";
-#endif
+        qCDebug(WS, ) << "no session ID specified for sendResume";
         reconnect();
         return;
     }
     if(_latestSequence < 0)
     {
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "Invalid sequence specified for sendResume";
-#endif
+        qCDebug(WS, ) << "invalid sequence specified for sendResume";
         reconnect();
         return;
     }
@@ -524,9 +489,7 @@ void QDiscordWs::sendResume()
         setCState(ConnectionState::ResumeSent);
         _ws.sendTextMessage(QJsonDocument(obj).toJson());
         _ws.flush();
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "Sent resume";
-#endif
+        qCDebug(WS, ) << "sent resume";
     }
     // TODO: Add ETF support
 }

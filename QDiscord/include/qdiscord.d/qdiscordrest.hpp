@@ -79,11 +79,9 @@ public:
         bucket->setRemaining(bucket->remaining() - 1);
         bucket->setActiveRequests(bucket->activeRequests() + 1);
 
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "making request to" << route.fullUrl();
-        qDebug() << this << "remaining requests:" << bucket->remaining();
-        qDebug() << this << "active requests:" << bucket->activeRequests();
-#endif
+        qCDebug(REST, ) << "making request to" << route.fullUrl()
+                        << "remaining requests:" << bucket->remaining()
+                        << "active requests:" << bucket->activeRequests();
 
         QNetworkRequest r = request;
         if(r.url().isEmpty())
@@ -132,10 +130,8 @@ public:
                         quint32 waitTime =
                             reply->rawHeader("Retry-After").toULong();
 
-#ifdef QDISCORD_PRINT_DEBUG
-                        qDebug() << this << "global ratelimit hit, retrying in"
-                                 << waitTime << "seconds";
-#endif
+                        qCInfo(REST, ) << "global ratelimit hit, retrying in"
+                                       << waitTime << "seconds";
 
                         QTimer::singleShot(waitTime * 1000, recallLambda);
                     }
@@ -173,11 +169,9 @@ public:
         bucket->setRemaining(bucket->remaining() - 1);
         bucket->setActiveRequests(bucket->activeRequests() + 1);
 
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "making request to" << route.fullUrl();
-        qDebug() << this << "remaining requests:" << bucket->remaining();
-        qDebug() << this << "active requests:" << bucket->activeRequests();
-#endif
+        qCDebug(REST, ) << "making request to" << route.fullUrl()
+                        << "remaining requests:" << bucket->remaining()
+                        << "active requests:" << bucket->activeRequests();
 
         QNetworkRequest r = request;
         r.setUrl(QUrl(_discordBase + route.fullUrl()));
@@ -235,10 +229,8 @@ public:
                         quint32 waitTime =
                             reply->rawHeader("Retry-After").toULong();
 
-#ifdef QDISCORD_PRINT_DEBUG
-                        qDebug() << this << "global ratelimit hit, retrying in"
-                                 << waitTime << "seconds";
-#endif
+                        qCInfo(REST, ) << "global ratelimit hit, retrying in"
+                                       << waitTime << "seconds";
 
                         QTimer::singleShot(waitTime * 1000, recallLambda);
                     }
@@ -276,11 +268,9 @@ public:
         bucket->setRemaining(bucket->remaining() - 1);
         bucket->setActiveRequests(bucket->activeRequests() + 1);
 
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "making request to" << route.fullUrl();
-        qDebug() << this << "remaining requests:" << bucket->remaining();
-        qDebug() << this << "active requests:" << bucket->activeRequests();
-#endif
+        qCDebug(REST, ) << "making request to" << route.fullUrl()
+                        << "remaining requests:" << bucket->remaining()
+                        << "active requests:" << bucket->activeRequests();
 
         QNetworkRequest r = request;
         r.setUrl(QUrl(_discordBase + route.fullUrl()));
@@ -322,10 +312,8 @@ public:
                         quint32 waitTime =
                             reply->rawHeader("Retry-After").toULong();
 
-#ifdef QDISCORD_PRINT_DEBUG
-                        qDebug() << this << "global ratelimit hit, retrying in"
-                                 << waitTime << "seconds";
-#endif
+                        qCInfo(REST, ) << "global ratelimit hit, retrying in"
+                                       << waitTime << "seconds";
 
                         QTimer::singleShot(waitTime * 1000, recallLambda);
                     }

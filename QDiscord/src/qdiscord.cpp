@@ -21,9 +21,6 @@
 QDiscord::QDiscord(QObject* parent)
     : QObject(parent)
 {
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "constructed";
-#endif
     _tokenSet = false;
     _connected = false;
 
@@ -35,24 +32,21 @@ QDiscord::QDiscord(QObject* parent)
     connect(&_ws, &QDiscordWs::disconnected, this, &QDiscord::wsDisconnected);
 }
 
-QDiscord::~QDiscord()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << this << "destroyed";
-#endif
-}
-
 void QDiscord::login(const QDiscordToken& token)
 {
     if(isConnected() || isConnecting())
         return;
     setToken(token);
+    qCDebug(MAIN, ) << "getting gateway";
     QDiscordWs::getGateway(_rest, [this](QString endpoint) {
         if(endpoint.isEmpty())
         {
+            qCDebug(MAIN, ) << "getting gateway failed";
             wsConnectFailed();
             return;
         }
+
+        qCDebug(MAIN, ) << "opening WS to" << endpoint;
 
         _ws.open(endpoint);
     });
@@ -111,6 +105,8 @@ void QDiscord::wsConnectFailed()
         _loginCallback = std::function<void(bool)>();
     }
 
+    qCDebug(MAIN, ) << "login failed";
+
     emit loginFailed();
 }
 
@@ -125,6 +121,8 @@ void QDiscord::wsDisconnected()
         _logoutCallback = std::function<void()>();
     }
 
+    qCDebug(MAIN, ) << "logged out";
+
     emit loggedOut();
 }
 
@@ -137,6 +135,8 @@ void QDiscord::wsConnectSuccess()
         _loginCallback(true);
         _loginCallback = std::function<void(bool)>();
     }
+
+    qCDebug(MAIN, ) << "logged in";
 
     emit loggedIn();
 }

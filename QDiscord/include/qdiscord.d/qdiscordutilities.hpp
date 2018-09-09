@@ -19,6 +19,7 @@
 #ifndef QDISCORDUTILITIES_HPP
 #define QDISCORDUTILITIES_HPP
 
+#include "qdiscord.d/qdiscordlogging.hpp"
 #include <QDateTime>
 #include <QNetworkReply>
 #include <QString>

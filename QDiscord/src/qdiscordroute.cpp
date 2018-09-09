@@ -704,7 +704,6 @@ QDiscordRoute QDiscordRoutes::Invites::acceptInvite(const QString& code)
                          code);
 }
 
-#ifdef QDISCORD_PRINT_DEBUG
 QDebug& operator<<(QDebug& d, const QDiscordRoute& route)
 {
     d.nospace() << "QDiscordRoute(Method: ";
@@ -735,7 +734,6 @@ QDebug& operator<<(QDebug& d, const QDiscordRoute& route)
 
     return d.maybeSpace();
 }
-#endif
 
 QDiscordRoute QDiscordRoutes::Messages::ackMessage(const QDiscordID& channel,
                                                    const QDiscordID& message)

@@ -30,24 +30,6 @@ QDiscordMember::fromJson(const QJsonObject& object)
 QDiscordMember::QDiscordMember(const QJsonObject& object)
 {
     deserialize(object);
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordMember(" << this << ") constructed";
-#endif
-}
-
-QDiscordMember::QDiscordMember()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordMember(" << this << ") constructed";
-#endif
-}
-
-QDiscordMember::~QDiscordMember()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordMember(" << this << ") destroyed";
-#endif
 }
 
 void QDiscordMember::deserialize(const QJsonObject& object)
@@ -72,9 +54,6 @@ void QDiscordMember::update(const QDiscordMember& other)
         _deaf = other.deaf();
     if(other.mute().has_value())
         _mute = other.mute();
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordMember(" << this << ") updated";
-#endif
 }
 
 QString QDiscordMember::mentionUsername() const

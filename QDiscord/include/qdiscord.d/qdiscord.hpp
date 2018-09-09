@@ -30,7 +30,6 @@ class QDiscord : public QObject
     Q_OBJECT
 public:
     explicit QDiscord(QObject* parent = 0);
-    ~QDiscord();
 
     void login(const QDiscordToken& token);
     void login(const QDiscordToken& token, std::function<void(bool)> callback);

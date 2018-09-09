@@ -83,9 +83,7 @@ private:
     QString _fullUrl;
 };
 
-#ifdef QDISCORD_PRINT_DEBUG
 QDebug& operator<<(QDebug& d, const QDiscordRoute& route);
-#endif
 
 namespace QDiscordRoutes {
     namespace Self {

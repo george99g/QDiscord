@@ -68,11 +68,7 @@ void QDiscordJsonDecoder::input(const QJsonObject& d, const QString& t)
     if(_dispatchTable.contains(t))
         (this->*_dispatchTable[t])(d);
     else
-    {
-#ifdef QDISCORD_PRINT_DEBUG
-        qDebug() << this << "No dispatch table entry found for" << t;
-#endif
-    }
+        qCDebug(STATE, ) << "No dispatch table entry found for" << t;
 }
 
 void QDiscordJsonDecoder::readyReceived(const QJsonObject& object)

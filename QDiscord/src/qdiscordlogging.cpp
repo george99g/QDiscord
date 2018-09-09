@@ -16,27 +16,9 @@
  * along with this program.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qdiscord.d/models/qdiscordattachment.hpp"
+#include "qdiscord.d/qdiscordlogging.hpp"
 
-QSharedPointer<QDiscordAttachment>
-QDiscordAttachment::fromJson(const QJsonObject& object)
-{
-    QSharedPointer<QDiscordAttachment> attachment(new QDiscordAttachment());
-    attachment->deserialize(object);
-    return attachment;
-}
-
-QDiscordAttachment::QDiscordAttachment(const QJsonObject& object)
-{
-    deserialize(object);
-}
-
-void QDiscordAttachment::deserialize(const QJsonObject& object)
-{
-    deserializeJson(object);
-}
-
-QJsonObject QDiscordAttachment::serialize() const
-{
-    return serializeJson();
-}
+Q_LOGGING_CATEGORY(MAIN, "qdiscord.main", QtMsgType::QtInfoMsg)
+Q_LOGGING_CATEGORY(REST, "qdiscord.rest", QtMsgType::QtInfoMsg)
+Q_LOGGING_CATEGORY(WS, "qdiscord.ws", QtMsgType::QtInfoMsg)
+Q_LOGGING_CATEGORY(STATE, "qdiscord.state", QtMsgType::QtInfoMsg)

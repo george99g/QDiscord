@@ -100,8 +100,7 @@ public:
                      std::function<void(QList<QDiscordMember>)> callback);
 
     QDiscordGuild(const QDiscordGuild& other);
-    QDiscordGuild();
-    ~QDiscordGuild();
+    QDiscordGuild() = default;
     void deserialize(const QJsonObject& object);
     QJsonObject serialize();
     ///\brief Returns the guild's ID.

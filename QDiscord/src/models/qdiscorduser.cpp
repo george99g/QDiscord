@@ -32,24 +32,6 @@ QSharedPointer<QDiscordUser> QDiscordUser::fromJson(const QJsonObject& object)
 QDiscordUser::QDiscordUser(const QJsonObject& object)
 {
     deserialize(object);
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordUser(" << this << ") constructed";
-#endif
-}
-
-QDiscordUser::QDiscordUser()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordUser(" << this << ") constructed";
-#endif
-}
-
-QDiscordUser::~QDiscordUser()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordUser(" << this << ") destroyed";
-#endif
 }
 
 void QDiscordUser::deserialize(const QJsonObject& object)
@@ -80,10 +62,6 @@ void QDiscordUser::update(const QDiscordUser& other)
         _email = other.email();
     if(other.verified().has_value())
         _verified = other.verified();
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordUser(" << this << ") updated";
-#endif
 }
 
 QString QDiscordUser::mention() const

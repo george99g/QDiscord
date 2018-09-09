@@ -938,24 +938,6 @@ void QDiscordMessage::ack(std::function<void(bool)> callback)
 QDiscordMessage::QDiscordMessage(const QJsonObject& object)
 {
     deserialize(object);
-
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordMessage(" << this << ") constructed";
-#endif
-}
-
-QDiscordMessage::QDiscordMessage()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordMessage(" << this << ") constructed";
-#endif
-}
-
-QDiscordMessage::~QDiscordMessage()
-{
-#ifdef QDISCORD_PRINT_DEBUG
-    qDebug() << "QDiscordMessage(" << this << ") destroyed";
-#endif
 }
 
 void QDiscordMessage::deserialize(const QJsonObject& object)

@@ -40,8 +40,7 @@ public:
      * \param object A JSON object of a Discord user.
      */
     QDiscordUser(const QJsonObject& object);
-    QDiscordUser();
-    ~QDiscordUser();
+    QDiscordUser() = default;
     void deserialize(const QJsonObject& object);
     QJsonObject serialize() const;
     ///\brief Updates the current instance from the provided parameters.

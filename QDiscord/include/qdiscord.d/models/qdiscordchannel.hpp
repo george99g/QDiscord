@@ -34,6 +34,30 @@ class QDiscordChannel
     : public QDiscordModelBase<QDiscordChannel>
     , public QDiscordModel::CompareById<QDiscordChannel>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordID dId READ id WRITE setId)
+    Q_PROPERTY(QDiscordChannel::Type type READ type WRITE setType)
+    Q_PROPERTY(QDiscordID guildId READ guildId WRITE setGuildId)
+    Q_PROPERTY(int position READ position WRITE setPosition)
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QString topic READ topic WRITE setTopic)
+    Q_PROPERTY(
+        QDiscordID lastMessageId READ lastMessageId WRITE setLastMessageId)
+    Q_PROPERTY(int bitrate READ bitrate WRITE setBitrate)
+    Q_PROPERTY(int userLimit READ userLimit WRITE setUserLimit)
+    Q_PROPERTY(QList<QSharedPointer<QDiscordUser>> recipients READ recipients
+                   WRITE setRecipients)
+    Q_PROPERTY(QString icon READ icon WRITE setIcon)
+    Q_PROPERTY(QDiscordID ownerId READ ownerId WRITE setOwnerId)
+    Q_PROPERTY(
+        QDiscordID applicationId READ applicationId WRITE setApplicationId)
+    Q_PROPERTY(QDiscordID parentId READ parentId WRITE setParentId)
+    Q_PROPERTY(
+        QSharedPointer<QDiscordChannel> parent READ parent WRITE setParent)
+    Q_PROPERTY(QSharedPointer<QDiscordGuild> guild READ guild WRITE setGuild)
+    Q_PROPERTY(QString mention READ mention STORED false)
+
 public:
     static void get(QDiscordRest& rest,
                     const QDiscordID& channel,
@@ -271,6 +295,8 @@ public:
         Category = 4,
         UnknownType = 255
     };
+    Q_ENUM(Type)
+
     ///\brief Returns the channel's ID.
     QDiscordID id() const { return _id; }
     void setId(QDiscordID id) { _id = id; }
@@ -319,7 +345,7 @@ public:
     }
     QString icon() const { return _icon; }
     void setIcon(QString icon) { _icon = icon; }
-    QDiscordID ownderId() const { return _ownerId; }
+    QDiscordID ownerId() const { return _ownerId; }
     void setOwnerId(QDiscordID ownerId) { _ownerId = ownerId; }
     QDiscordID applicationId() const { return _applicationId; }
     void setApplicationId(QDiscordID applicationId)
@@ -444,7 +470,6 @@ private:
     QDiscordRest* _rest = nullptr;
 };
 
-Q_DECLARE_METATYPE(QDiscordChannel::Type)
 Q_DECLARE_METATYPE(QDiscordChannel)
 
 namespace QDiscordModel {

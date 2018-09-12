@@ -365,6 +365,16 @@ void QDiscordPermissionOverwrite::setManageEmojis(
     set(30, value);
 }
 
+QDiscordPermission QDiscordPermissionOverwrite::allow() const
+{
+    return pair().first;
+}
+
+QDiscordPermission QDiscordPermissionOverwrite::deny() const
+{
+    return pair().second;
+}
+
 QPair<QDiscordPermission, QDiscordPermission>
 QDiscordPermissionOverwrite::pair() const
 {

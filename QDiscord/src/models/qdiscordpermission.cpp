@@ -370,6 +370,11 @@ quint64 QDiscordPermission::value() const
     return _value;
 }
 
+void QDiscordPermission::setValue(const quint64 value)
+{
+    _value = value;
+}
+
 bool QDiscordPermission::operator==(const QDiscordPermission& other) const
 {
     return _value == other._value;

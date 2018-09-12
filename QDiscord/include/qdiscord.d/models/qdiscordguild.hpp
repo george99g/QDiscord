@@ -36,6 +36,44 @@ class QDiscordGuild
     , public QDiscordModelBase<QDiscordGuild>
     , public QDiscordModel::CompareById<QDiscordGuild>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordID dId READ id WRITE setId)
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QString icon READ icon WRITE setIcon)
+    Q_PROPERTY(QString splash READ splash WRITE setSplash)
+    Q_PROPERTY(QDiscordID ownerId READ ownerId WRITE setOwnerId)
+    Q_PROPERTY(
+        QDiscordID applicationId READ applicationId WRITE setApplicationId)
+    Q_PROPERTY(QString region READ region WRITE setRegion)
+    Q_PROPERTY(QDiscordID afkChannelId READ afkChannelId WRITE setAfkChannelId)
+    Q_PROPERTY(int afkTimeout READ afkTimeout WRITE setAfkTimeout)
+    Q_PROPERTY(std::experimental::optional<bool> embedEnabled READ embedEnabled
+                   WRITE setEmbedEnabled)
+    Q_PROPERTY(
+        QDiscordID embedChannelId READ embedChannelId WRITE setEmbedChannelId)
+    Q_PROPERTY(VerificationLevel verificationLevel READ verificationLevel WRITE
+                   setVerificationLevel)
+    Q_PROPERTY(
+        NotificationLevel defaultMessageNotifications READ
+            defaultMessageNotifications WRITE setDefaultMessageNotifications)
+    Q_PROPERTY(ExplicitContentFilterLevel explicitContentFilter READ
+                   explicitContentFilter WRITE setExplicitContentFilter)
+    Q_PROPERTY(QStringList features READ features WRITE setFeatures)
+    Q_PROPERTY(int mfaLevel READ mfaLevel WRITE setMfaLevel)
+    Q_PROPERTY(QDateTime joinedAt READ joinedAt WRITE setJoinedAt)
+    Q_PROPERTY(
+        std::experimental::optional<bool> large READ large WRITE setLarge)
+    Q_PROPERTY(std::experimental::optional<bool> unavailable READ unavailable
+                   WRITE setUnavailable)
+    Q_PROPERTY(int memberCount READ memberCount WRITE setMemberCount)
+    Q_PROPERTY(
+        QList<QSharedPointer<QDiscordRole>> roles READ roles STORED false)
+    Q_PROPERTY(
+        QList<QSharedPointer<QDiscordMember>> members READ members STORED false)
+    Q_PROPERTY(QList<QSharedPointer<QDiscordChannel>> channels READ channels
+                   STORED false)
+
 public:
     static QSharedPointer<QDiscordGuild> fromJson(const QJsonObject& object);
 
@@ -45,6 +83,7 @@ public:
         OnlyMentions = 1,
         Unknown = -1
     };
+    Q_ENUM(NotificationLevel)
 
     enum class VerificationLevel : qint8
     {
@@ -54,6 +93,7 @@ public:
         High = 3,
         Unknown = -1
     };
+    Q_ENUM(VerificationLevel)
 
     enum class ExplicitContentFilterLevel : qint8
     {
@@ -62,6 +102,7 @@ public:
         All = 2,
         Unknown = -1
     };
+    Q_ENUM(ExplicitContentFilterLevel)
 
     static void
     listMembers(QDiscordRest& rest,
@@ -141,7 +182,10 @@ public:
     {
         return _embedEnabled;
     }
-    void setEmbedEnabled(bool embedEnabled) { _embedEnabled = embedEnabled; }
+    void setEmbedEnabled(const std::experimental::optional<bool>& embedEnabled)
+    {
+        _embedEnabled = embedEnabled;
+    }
     void resetEmbedEnabled() { _embedEnabled.reset(); }
     QDiscordID embedChannelId() const { return _embedChannelId; }
     void setEmbedChannelId(QDiscordID embedChannelId)
@@ -180,7 +224,10 @@ public:
     QDateTime joinedAt() const { return _joinedAt; }
     void setJoinedAt(const QDateTime& joinedAt) { _joinedAt = joinedAt; }
     std::experimental::optional<bool> large() const { return _large; }
-    void setLarge(bool large) { _large = large; }
+    void setLarge(const std::experimental::optional<bool>& large)
+    {
+        _large = large;
+    }
     void resetLarge() { _large.reset(); }
     /*!
      * \brief Returns whether the guild is unavailable.
@@ -191,7 +238,10 @@ public:
     {
         return _unavailable;
     }
-    void setUnavailable(bool unavailable) { _unavailable = unavailable; }
+    void setUnavailable(const std::experimental::optional<bool>& unavailable)
+    {
+        _unavailable = unavailable;
+    }
     void resetUnavailable() { _unavailable.reset(); }
     ///\brief Returns the guild's member count.
     int memberCount() const { return _memberCount; }
@@ -223,7 +273,7 @@ public:
     {
         return _channels.values();
     }
-    QSharedPointer<QDiscordRole> role(const QDiscordID& id) const
+    Q_INVOKABLE QSharedPointer<QDiscordRole> role(const QDiscordID& id) const
     {
         return _roles.value(id, QSharedPointer<QDiscordRole>());
     }
@@ -232,7 +282,8 @@ public:
      *
      * Returns `nullptr` if the channel was not found.
      */
-    QSharedPointer<QDiscordChannel> channel(const QDiscordID& id) const
+    Q_INVOKABLE QSharedPointer<QDiscordChannel>
+    channel(const QDiscordID& id) const
     {
         return _channels.value(id, QSharedPointer<QDiscordChannel>());
     }
@@ -241,33 +292,35 @@ public:
      *
      * Returns `nullptr` if the member was not found.
      */
-    QSharedPointer<QDiscordMember> member(const QDiscordID& id) const
+    Q_INVOKABLE QSharedPointer<QDiscordMember>
+    member(const QDiscordID& id) const
     {
         return _members.value(id, QSharedPointer<QDiscordMember>());
     }
-    void addRole(const QSharedPointer<QDiscordRole>& role);
-    bool removeRole(const QSharedPointer<QDiscordRole>& role);
-    bool removeRole(QDiscordID role);
+    Q_INVOKABLE void addRole(const QSharedPointer<QDiscordRole>& role);
+    Q_INVOKABLE bool removeRole(const QSharedPointer<QDiscordRole>& role);
+    Q_INVOKABLE bool removeRole(QDiscordID role);
     ///\brief Adds the provided channel to the guild.
-    void addChannel(const QSharedPointer<QDiscordChannel>& channel);
+    Q_INVOKABLE void addChannel(const QSharedPointer<QDiscordChannel>& channel);
     /*!
      * \brief Removes the provided channel from the guild.
      *
      * Returns `true` if the channel was successfully removed. `false` if
      * `nullptr` was passed or the channel was not found.
      */
-    bool removeChannel(const QSharedPointer<QDiscordChannel>& channel);
-    bool removeChannel(QDiscordID channel);
+    Q_INVOKABLE bool
+    removeChannel(const QSharedPointer<QDiscordChannel>& channel);
+    Q_INVOKABLE bool removeChannel(QDiscordID channel);
     ///\brief Adds the provided member to the guild.
-    void addMember(const QSharedPointer<QDiscordMember>& member);
+    Q_INVOKABLE void addMember(const QSharedPointer<QDiscordMember>& member);
     /*!
      * \brief Removes the provided member from the guild.
      *
      * Returns `true` if the member was successfully removed. `false` if
      * `nullptr` was passed or the member was not found.
      */
-    bool removeMember(const QSharedPointer<QDiscordMember>& member);
-    bool removeMember(QDiscordID member);
+    Q_INVOKABLE bool removeMember(const QSharedPointer<QDiscordMember>& member);
+    Q_INVOKABLE bool removeMember(QDiscordID member);
 
     QDiscordRest* rest() const { return _rest; }
     void setRest(QDiscordRest* rest);

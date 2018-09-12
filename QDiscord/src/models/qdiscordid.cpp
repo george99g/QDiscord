@@ -55,6 +55,11 @@ quint64 QDiscordID::value() const
     return _id;
 }
 
+void QDiscordID::setValue(const quint64 value)
+{
+    _id = value;
+}
+
 QDateTime QDiscordID::createdAt() const
 {
     return QDateTime::fromSecsSinceEpoch(

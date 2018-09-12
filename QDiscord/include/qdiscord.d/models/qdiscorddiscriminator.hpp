@@ -25,12 +25,17 @@
 
 class QDiscordDiscriminator
 {
+    Q_GADGET
+
+    Q_PROPERTY(qint16 value READ value WRITE setValue)
+
 public:
     QDiscordDiscriminator();
     QDiscordDiscriminator(qint16 discriminator);
     QDiscordDiscriminator(const QString& discriminator);
-    QString toString() const;
+    Q_INVOKABLE QString toString() const;
     qint16 value() const;
+    void setValue(const qint16 value);
     bool isNull() const;
     operator bool() const;
     bool operator!() const;

@@ -24,6 +24,12 @@
 
 class QDiscordToken
 {
+    Q_GADGET
+
+    Q_PROPERTY(QString rawToken READ rawToken WRITE setRawToken)
+    Q_PROPERTY(Type type READ type WRITE setType)
+    Q_PROPERTY(QString fullToken READ fullToken STORED false)
+
 public:
     enum class Type
     {
@@ -32,6 +38,8 @@ public:
         Bot,
         None
     };
+    Q_ENUM(Type)
+
     QDiscordToken();
     QDiscordToken(const QString& token, Type type = Type::Bot);
     QString rawToken() const;
@@ -40,7 +48,7 @@ public:
     void setType(Type type);
     QString fullToken() const;
     bool isEmpty() const;
-    void clear();
+    Q_INVOKABLE void clear();
     bool operator==(const QDiscordToken& other) const;
     bool operator!=(const QDiscordToken& other) const;
     bool operator<(const QDiscordToken& other) const;
@@ -54,6 +62,5 @@ private:
 };
 
 Q_DECLARE_METATYPE(QDiscordToken)
-Q_DECLARE_METATYPE(QDiscordToken::Type)
 
 #endif // QDISCORDTOKEN_HPP

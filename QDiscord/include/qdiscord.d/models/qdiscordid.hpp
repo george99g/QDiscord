@@ -27,14 +27,20 @@
 
 class QDiscordID
 {
+    Q_GADGET
+
+    Q_PROPERTY(quint64 value READ value WRITE setValue)
+    Q_PROPERTY(QDateTime createdAt READ createdAt STORED false)
+
 public:
     QDiscordID();
     explicit QDiscordID(quint64 id);
     QDiscordID(const char* id);
     QDiscordID(const QString& id);
     QDiscordID(const QDiscordID&) = default;
-    QString toString() const;
+    Q_INVOKABLE QString toString() const;
     quint64 value() const;
+    void setValue(const quint64 value);
     QDateTime createdAt() const;
     bool isNull() const;
     operator bool() const;

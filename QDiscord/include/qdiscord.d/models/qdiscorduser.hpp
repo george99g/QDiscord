@@ -33,6 +33,21 @@ class QDiscordUser
     : public QDiscordModelBase<QDiscordUser>
     , public QDiscordModel::CompareById<QDiscordUser>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordID dId READ id WRITE setId)
+    Q_PROPERTY(QString username READ username WRITE setUsername)
+    Q_PROPERTY(QDiscordDiscriminator discriminator READ discriminator WRITE
+                   setDiscriminator)
+    Q_PROPERTY(QString avatar READ avatar WRITE setAvatar)
+    Q_PROPERTY(std::experimental::optional<bool> bot READ bot WRITE setBot)
+    Q_PROPERTY(std::experimental::optional<bool> mfaEnabled READ mfaEnabled
+                   WRITE setMfaEnabled)
+    Q_PROPERTY(
+        std::experimental::optional<QString> email READ email WRITE setEmail)
+    Q_PROPERTY(std::experimental::optional<bool> verified READ verified WRITE
+                   setVerified)
+
 public:
     static QSharedPointer<QDiscordUser> fromJson(const QJsonObject& object);
     /*!
@@ -64,18 +79,27 @@ public:
     void setAvatar(QString avatar) { _avatar = avatar; }
     ///\brief Returns whether the user is a bot.
     std::experimental::optional<bool> bot() const { return _bot; }
-    void setBot(bool bot) { _bot = bot; }
+    void setBot(const std::experimental::optional<bool>& bot) { _bot = bot; }
     void resetBot() { _bot.reset(); }
     std::experimental::optional<bool> mfaEnabled() const { return _mfaEnabled; }
-    void setMfaEnabled(bool mfaEnabled) { _mfaEnabled = mfaEnabled; }
+    void setMfaEnabled(const std::experimental::optional<bool>& mfaEnabled)
+    {
+        _mfaEnabled = mfaEnabled;
+    }
     void resetMfaEnabled() { _mfaEnabled.reset(); }
     ///\brief Returns the user's e-mail, if it can be determined.
     std::experimental::optional<QString> email() const { return _email; }
-    void setEmail(QString email) { _email = email; }
+    void setEmail(const std::experimental::optional<QString>& email)
+    {
+        _email = email;
+    }
     void resetEmail() { _email.reset(); }
     ///\brief Returns whether the user has verified their e-mail.
     std::experimental::optional<bool> verified() const { return _verified; }
-    void setVerified(bool verified) { _verified = verified; }
+    void setVerified(const std::experimental::optional<bool> verified)
+    {
+        _verified = verified;
+    }
     void resetVerified() { _verified.reset(); }
     /*!
      * \brief Returns a string which allows you to mention this user using their

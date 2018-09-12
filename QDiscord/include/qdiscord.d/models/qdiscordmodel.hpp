@@ -60,13 +60,13 @@ template<class T>
 class QDiscordModelBase
 {
 public:
-    void deserializeJson(const QJsonObject& object)
+    Q_INVOKABLE void deserializeJson(const QJsonObject& object)
     {
         QDiscordModel::DeserializeJsonAction deserializeAction(object);
         static_cast<T*>(this)->map(deserializeAction);
     }
 
-    QJsonObject serializeJson() const
+    Q_INVOKABLE QJsonObject serializeJson() const
     {
         QDiscordModel::SerializeJsonAction serializeAction;
         static_cast<const T*>(this)->map(serializeAction);

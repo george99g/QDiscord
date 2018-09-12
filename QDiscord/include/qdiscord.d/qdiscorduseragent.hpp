@@ -22,8 +22,16 @@
 #include <QMetaType>
 #include <QString>
 
-struct QDiscordLibraryVersion
+class QDiscordLibraryVersion
 {
+    Q_GADGET
+
+    Q_PROPERTY(QString version MEMBER version)
+    Q_PROPERTY(quint16 majorVersion MEMBER majorVersion)
+    Q_PROPERTY(quint16 minorVersion MEMBER minorVersion)
+    Q_PROPERTY(quint16 patchVersion MEMBER patchVersion)
+
+public:
     QString version;
     quint16 majorVersion;
     quint16 minorVersion;
@@ -34,8 +42,16 @@ Q_DECLARE_METATYPE(QDiscordLibraryVersion)
 
 class QDiscordUserAgent
 {
+    Q_GADGET
+
+    Q_PROPERTY(QString libraryName READ libraryName WRITE setLibraryName)
+    Q_PROPERTY(QString libraryLink READ libraryLink WRITE setLibraryLink)
+    Q_PROPERTY(QDiscordLibraryVersion libraryVersion READ libraryVersion WRITE
+                   setLibraryVersion)
+    Q_PROPERTY(QString botName READ botName WRITE setBotName)
+
 public:
-    static const QDiscordUserAgent& global();
+    Q_INVOKABLE static const QDiscordUserAgent& global();
     QString libraryName() const { return _libraryName; }
     void setLibraryName(const QString& libraryName)
     {
@@ -53,7 +69,7 @@ public:
     }
     QString botName() const { return _botName; }
     void setBotName(const QString& botName) { _botName = botName; }
-    QString toString() const;
+    Q_INVOKABLE QString toString() const;
 
 private:
     static QDiscordUserAgent makeGlobalInstance();

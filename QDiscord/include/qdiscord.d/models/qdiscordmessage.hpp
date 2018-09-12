@@ -36,6 +36,27 @@ class QDiscordMessage
     : public QDiscordModelBase<QDiscordMessage>
     , public QDiscordModel::CompareById<QDiscordMessage>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordID dId READ id WRITE setId)
+    Q_PROPERTY(QDiscordID channelId READ channelId WRITE setChannelId)
+    Q_PROPERTY(QDiscordUser author READ author WRITE setAuthor)
+    Q_PROPERTY(QString content READ content WRITE setContent)
+    Q_PROPERTY(QDateTime timestamp READ timestamp WRITE setTimestamp)
+    Q_PROPERTY(std::experimental::optional<QDateTime> editedTimestamp READ
+                   editedTimestamp WRITE setEditedTimestamp)
+    Q_PROPERTY(bool tts READ tts WRITE setTts)
+    Q_PROPERTY(
+        bool mentionEveryone READ mentionEveryone WRITE setMentionEveryone)
+    Q_PROPERTY(QList<QDiscordUser> mentions READ mentions WRITE setMentions)
+    Q_PROPERTY(QList<QDiscordAttachment> attachments READ attachments WRITE
+                   setAttachments)
+    Q_PROPERTY(QDiscordID nonce READ nonce WRITE setNonce)
+    Q_PROPERTY(bool pinned READ pinned WRITE setPinned)
+    Q_PROPERTY(
+        QSharedPointer<QDiscordChannel> channel READ channel WRITE setChannel)
+    Q_PROPERTY(QSharedPointer<QDiscordGuild> guild READ guild STORED false)
+
 public:
     static QSharedPointer<QDiscordMessage> fromJson(const QJsonObject& object);
 
@@ -318,7 +339,8 @@ public:
     {
         return _editedTimestamp;
     }
-    void setEditedTimestamp(QDateTime editedTimestamp)
+    void setEditedTimestamp(
+        const std::experimental::optional<QDateTime>& editedTimestamp)
     {
         _editedTimestamp = editedTimestamp;
     }

@@ -40,6 +40,19 @@ class QDiscordMember
     : public QDiscordModelBase<QDiscordMember>
     , public QDiscordModel::CompareById<QDiscordMember>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordID dId READ id WRITE setId STORED false)
+    Q_PROPERTY(QDiscordUser user READ constUser WRITE setUser)
+    Q_PROPERTY(std::experimental::optional<QString> nickname READ nickname WRITE
+                   setNickname)
+    Q_PROPERTY(QDateTime joinedAt READ joinedAt WRITE setJoinedAt)
+    Q_PROPERTY(std::experimental::optional<bool> deaf READ deaf WRITE setDeaf)
+    Q_PROPERTY(std::experimental::optional<bool> mute READ mute WRITE setMute)
+    Q_PROPERTY(QSharedPointer<QDiscordGuild> guild READ guild WRITE setGuild)
+    Q_PROPERTY(QString mentionUsername READ mentionUsername STORED false)
+    Q_PROPERTY(QString mentionNickname READ mentionNickname STORED false)
+
 public:
     static QSharedPointer<QDiscordMember> fromJson(const QJsonObject& object);
     /*!
@@ -59,18 +72,24 @@ public:
     void setUser(const QDiscordUser& user) { _user = user; }
     ///\brief Returns this member's nickname.
     std::experimental::optional<QString> nickname() const { return _nickname; }
-    void setNickname(const QString& nickname) { _nickname = nickname; }
+    void setNickname(const std::experimental::optional<QString>& nickname)
+    {
+        _nickname = nickname;
+    }
     void resetNickname() { _nickname.reset(); }
     ///\brief Returns the date at which the member has joined the guild.
     QDateTime joinedAt() const { return _joinedAt; }
     void setJoinedAt(const QDateTime& joinedAt) { _joinedAt = joinedAt; }
     ///\brief Returns whether the member has disabled their speakers.
     std::experimental::optional<bool> deaf() const { return _deaf; }
-    void setDeaf(bool deaf) { _deaf = deaf; }
+    void setDeaf(const std::experimental::optional<bool>& deaf)
+    {
+        _deaf = deaf;
+    }
     void resetDeaf() { _deaf.reset(); }
     ///\brief Returns whether the member has muted their microphone.
     std::experimental::optional<bool> mute() const { return _mute; }
-    void setMute(bool mute) { _mute = mute; }
+    void setMute(const std::experimental::optional<bool> mute) { _mute = mute; }
     void resetMute() { _mute.reset(); }
     ///\brief Updates the current instance from the provided parameters.
     void update(const QDiscordMember& other);

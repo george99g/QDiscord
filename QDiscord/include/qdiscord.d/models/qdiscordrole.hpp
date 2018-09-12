@@ -31,6 +31,20 @@ class QDiscordRole
     : public QDiscordModelBase<QDiscordRole>
     , public QDiscordModel::CompareById<QDiscordRole>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordID dId READ id WRITE setId)
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(quint32 color READ color WRITE setColor)
+    Q_PROPERTY(bool hoist READ hoist WRITE setHoist)
+    Q_PROPERTY(int position READ position WRITE setPosition)
+    Q_PROPERTY(
+        QDiscordPermission permissions READ permissions WRITE setPermissions)
+    Q_PROPERTY(bool managed READ managed WRITE setManaged)
+    Q_PROPERTY(bool mentionable READ mentionable WRITE setMentionable)
+    Q_PROPERTY(QSharedPointer<QDiscordGuild> guild READ guild WRITE setGuild)
+    Q_PROPERTY(bool isEveryone READ isEveryone STORED false)
+
 public:
     static QSharedPointer<QDiscordRole> fromJson(const QJsonObject& object);
 

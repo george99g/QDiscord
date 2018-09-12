@@ -29,6 +29,69 @@
 
 class QDiscordPermissionOverwrite
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordPermission allow READ allow STORED false)
+    Q_PROPERTY(QDiscordPermission deny READ deny STORED false)
+
+    Q_PROPERTY(
+        std::experimental::optional<bool> createInstantInvite READ
+            createInstantInvite WRITE setCreateInstantInvite STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> kickMembers READ kickMembers
+                   WRITE setKickMembers STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> banMembers READ banMembers
+                   WRITE setBanMembers STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> administrator READ
+                   administrator WRITE setAdministrator STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> manageChannels READ
+                   manageChannels WRITE setManageChannels STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> manageServer READ manageServer
+                   WRITE setManageServer STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> addReactions READ addReactions
+                   WRITE setAddReactions STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> viewAuditLogs READ
+                   viewAuditLogs WRITE setViewAuditLogs STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> readMessages READ readMessages
+                   WRITE setReadMessages STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> sendMessages READ sendMessages
+                   WRITE setSendMessages STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> sendTtsMessages READ
+                   sendTtsMessages WRITE setSendTtsMessages STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> manageMessages READ
+                   manageMessages WRITE setManageMessages STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> embedLinks READ embedLinks
+                   WRITE setEmbedLinks STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> attachFiles READ attachFiles
+                   WRITE setAttachFiles STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> readMessageHistory READ
+                   readMessageHistory WRITE setReadMessageHistory STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> mentionEveryone READ
+                   mentionEveryone WRITE setMentionEveryone STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> externalEmojis READ
+                   externalEmojis WRITE setExternalEmojis STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> connect READ connect WRITE
+                   setConnect STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> speak READ speak WRITE setSpeak
+                   STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> muteMembers READ muteMembers
+                   WRITE setMuteMembers STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> deafenMembers READ
+                   deafenMembers WRITE setDeafenMembers STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> moveMembers READ moveMembers
+                   WRITE setMoveMembers STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> useVoiceActivation READ
+                   useVoiceActivation WRITE setUseVoiceActivation STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> changeNickname READ
+                   changeNickname WRITE setChangeNickname STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> manageNicknames READ
+                   manageNicknames WRITE setManageNicknames STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> manageRoles READ manageRoles
+                   WRITE setManageRoles STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> manageWebhooks READ
+                   manageWebhooks WRITE setManageWebhooks STORED false)
+    Q_PROPERTY(std::experimental::optional<bool> manageEmojis READ manageEmojis
+                   WRITE setManageEmojis STORED false)
+
 public:
     QDiscordPermissionOverwrite() = default;
     QDiscordPermissionOverwrite(QDiscordPermission allow,
@@ -90,6 +153,9 @@ public:
     void setManageWebhooks(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageEmojis() const;
     void setManageEmojis(const std::experimental::optional<bool>& value);
+
+    QDiscordPermission allow() const;
+    QDiscordPermission deny() const;
 
     QPair<QDiscordPermission, QDiscordPermission> pair() const;
     bool isEmpty() const;

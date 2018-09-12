@@ -27,6 +27,17 @@ class QDiscordAttachment
     : public QDiscordModelBase<QDiscordAttachment>
     , public QDiscordModel::CompareById<QDiscordAttachment>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QDiscordID dId READ id WRITE setId)
+    Q_PROPERTY(QString filename READ filename WRITE setFilename)
+    Q_PROPERTY(qint64 size READ size WRITE setSize)
+    Q_PROPERTY(QString url READ url WRITE setUrl)
+    Q_PROPERTY(QString proxyUrl READ proxyUrl WRITE setProxyUrl)
+    Q_PROPERTY(
+        std::experimental::optional<int> height READ height WRITE setHeight)
+    Q_PROPERTY(std::experimental::optional<int> width READ width WRITE setWidth)
+
 public:
     static QSharedPointer<QDiscordAttachment>
     fromJson(const QJsonObject& object);
@@ -48,11 +59,17 @@ public:
     QString proxyUrl() const { return _proxyUrl; }
     void setProxyUrl(const QString& proxyUrl) { _proxyUrl = proxyUrl; }
     std::experimental::optional<int> height() const { return _height; }
-    void setHeight(int height) { _height = height; }
+    void setHeight(const std::experimental::optional<int>& height)
+    {
+        _height = height;
+    }
     void resetHeight() { _height.reset(); }
     std::experimental::optional<int> width() const { return _width; }
-    void setWidth(int width) { _width = width; }
     void resetWidth() { _width.reset(); }
+    void setWidth(const std::experimental::optional<int>& width)
+    {
+        _width = width;
+    }
 
     template<class Action>
     void map(Action& a)

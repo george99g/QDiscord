@@ -39,6 +39,25 @@ class QDiscordRest;
 class QDiscordWs : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(Error error READ error)
+    Q_PROPERTY(QString errorString READ errorString STORED false)
+    Q_PROPERTY(quint8 version READ version WRITE setVersion)
+    Q_PROPERTY(Encoding encoding READ encoding WRITE setEncoding)
+    Q_PROPERTY(
+        int maxReconnectTime READ maxReconnectTime WRITE setMaxReconnectTime)
+    Q_PROPERTY(int reconnectTime READ reconnectTime)
+    Q_PROPERTY(int maxReconnectAttempts READ maxReconnectAttempts WRITE
+                   setMaxReconnectAttempts)
+    Q_PROPERTY(int reconnectAttempt READ reconnectAttempt)
+    Q_PROPERTY(QDiscordToken token READ token WRITE setToken)
+    Q_PROPERTY(QString sessionId READ sessionId)
+    Q_PROPERTY(quint32 latestSequence READ latestSequence)
+    Q_PROPERTY(QDiscordAbstractState* state READ state WRITE setState)
+    Q_PROPERTY(ConnectionState connectionState READ connectionState)
+    Q_PROPERTY(QWebSocket* webSocket READ webSocketPtr)
+    Q_PROPERTY(QDiscordUserAgent userAgent READ userAgent WRITE setUserAgent)
+
 public:
     enum class GatewayOp : int
     {
@@ -55,11 +74,15 @@ public:
         Hello = 10,
         HeartbeatAck = 11
     };
+    Q_ENUM(GatewayOp)
+
     enum class Encoding : quint8
     {
         JSON = 0,
         ETF = 1
     };
+    Q_ENUM(Encoding)
+
     enum class ConnectionState : quint8
     {
         Disconnected = 0,
@@ -72,6 +95,8 @@ public:
         Authenticated = 7,
         Disconnecting = 8
     };
+    Q_ENUM(ConnectionState)
+
     enum class Error : quint8
     {
         NoError = 0,
@@ -82,22 +107,24 @@ public:
         WebSocketError = 5,
         UnknownError = 255
     };
+    Q_ENUM(Error)
 
     static void getGateway(QDiscordRest& rest,
                            const std::function<void(QString)>& callback);
 
     explicit QDiscordWs(QDiscordAbstractState* state = nullptr,
                         QObject* parent = nullptr);
-    bool open(const QString& endpoint,
-              const QDiscordToken& token = QDiscordToken());
-    bool open(QUrl endpoint, const QDiscordToken& token = QDiscordToken());
-    void close(QWebSocketProtocol::CloseCode closeCode =
-                   QWebSocketProtocol::CloseCodeNormal);
-    void abort();
-    void reconnect();
+    Q_INVOKABLE bool open(const QString& endpoint,
+                          const QDiscordToken& token = QDiscordToken());
+    Q_INVOKABLE bool open(QUrl endpoint,
+                          const QDiscordToken& token = QDiscordToken());
+    Q_INVOKABLE void close(QWebSocketProtocol::CloseCode closeCode =
+                               QWebSocketProtocol::CloseCodeNormal);
+    Q_INVOKABLE void abort();
+    Q_INVOKABLE void reconnect();
 
-    qint64 sendTextMessage(const QString& message);
-    qint64 sendBinaryMessage(const QByteArray& data);
+    Q_INVOKABLE qint64 sendTextMessage(const QString& message);
+    Q_INVOKABLE qint64 sendBinaryMessage(const QByteArray& data);
 
     Error error() const { return _error; }
     QString errorString() const;
@@ -125,6 +152,7 @@ public:
     void setState(QDiscordAbstractState* state);
     ConnectionState connectionState() const { return _cState; }
     QWebSocket& webSocket() { return _ws; }
+    QWebSocket* webSocketPtr() { return &_ws; }
 
     QDiscordUserAgent userAgent() const { return _userAgent; }
     void setUserAgent(const QDiscordUserAgent& userAgent)

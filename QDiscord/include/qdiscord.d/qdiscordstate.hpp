@@ -26,6 +26,14 @@ class QDiscordRest;
 class QDiscordState : public QDiscordAbstractState
 {
     Q_OBJECT
+
+    Q_PROPERTY(int protocolVersion READ protocolVersion)
+    Q_PROPERTY(QSharedPointer<QDiscordUser> user READ user WRITE setUser)
+    Q_PROPERTY(QList<QSharedPointer<QDiscordChannel>> dmChannels READ dmChannels
+                   STORED false)
+    Q_PROPERTY(
+        QList<QSharedPointer<QDiscordGuild>> guilds READ guilds STORED false)
+
 public:
     explicit QDiscordState(QObject* parent = nullptr);
     virtual ~QDiscordState() = default;
@@ -83,7 +91,7 @@ public:
     QSharedPointer<QDiscordUser> user() const { return _user; }
     void setUser(QSharedPointer<QDiscordUser> user) { _user = user; }
 
-    QSharedPointer<QDiscordChannel> dmChannel(QDiscordID id) const
+    Q_INVOKABLE QSharedPointer<QDiscordChannel> dmChannel(QDiscordID id) const
     {
         return _dmChannels.value(id);
     }
@@ -95,8 +103,8 @@ public:
     {
         return _dmChannels;
     }
-    QSharedPointer<QDiscordChannel> channel(QDiscordID id) const;
-    QSharedPointer<QDiscordGuild> guild(QDiscordID id) const
+    Q_INVOKABLE QSharedPointer<QDiscordChannel> channel(QDiscordID id) const;
+    Q_INVOKABLE QSharedPointer<QDiscordGuild> guild(QDiscordID id) const
     {
         return _guilds.value(id);
     }

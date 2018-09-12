@@ -26,24 +26,80 @@
 
 class QDiscordPermission
 {
+    Q_GADGET
+
+    Q_PROPERTY(quint64 value READ value WRITE setValue)
+    Q_PROPERTY(bool createInstantInvite READ createInstantInvite WRITE
+                   setCreateInstantInvite STORED false)
+    Q_PROPERTY(
+        bool kickMembers READ kickMembers WRITE setKickMembers STORED false)
+    Q_PROPERTY(bool banMembers READ banMembers WRITE setBanMembers STORED false)
+    Q_PROPERTY(bool administrator READ administrator WRITE setAdministrator
+                   STORED false)
+    Q_PROPERTY(bool manageChannels READ manageChannels WRITE setManageChannels
+                   STORED false)
+    Q_PROPERTY(
+        bool manageServer READ manageServer WRITE setManageServer STORED false)
+    Q_PROPERTY(
+        bool addReactions READ addReactions WRITE setAddReactions STORED false)
+    Q_PROPERTY(bool viewAuditLogs READ viewAuditLogs WRITE setViewAuditLogs
+                   STORED false)
+    Q_PROPERTY(
+        bool readMessages READ readMessages WRITE setReadMessages STORED false)
+    Q_PROPERTY(
+        bool sendMessages READ sendMessages WRITE setSendMessages STORED false)
+    Q_PROPERTY(bool sendTtsMessages READ sendTtsMessages WRITE
+                   setSendTtsMessages STORED false)
+    Q_PROPERTY(bool manageMessages READ manageMessages WRITE setManageMessages
+                   STORED false)
+    Q_PROPERTY(bool embedLinks READ embedLinks WRITE setEmbedLinks STORED false)
+    Q_PROPERTY(
+        bool attachFiles READ attachFiles WRITE setAttachFiles STORED false)
+    Q_PROPERTY(bool readMessageHistory READ readMessageHistory WRITE
+                   setReadMessageHistory STORED false)
+    Q_PROPERTY(bool mentionEveryone READ mentionEveryone WRITE
+                   setMentionEveryone STORED false)
+    Q_PROPERTY(bool externalEmojis READ externalEmojis WRITE setExternalEmojis
+                   STORED false)
+    Q_PROPERTY(bool connect READ connect WRITE setConnect STORED false)
+    Q_PROPERTY(bool speak READ speak WRITE setSpeak STORED false)
+    Q_PROPERTY(
+        bool muteMembers READ muteMembers WRITE setMuteMembers STORED false)
+    Q_PROPERTY(bool deafenMembers READ deafenMembers WRITE setDeafenMembers
+                   STORED false)
+    Q_PROPERTY(
+        bool moveMembers READ moveMembers WRITE setMoveMembers STORED false)
+    Q_PROPERTY(bool useVoiceActivation READ useVoiceActivation WRITE
+                   setUseVoiceActivation STORED false)
+    Q_PROPERTY(bool changeNickname READ changeNickname WRITE setChangeNickname
+                   STORED false)
+    Q_PROPERTY(bool manageNicknames READ manageNicknames WRITE
+                   setManageNicknames STORED false)
+    Q_PROPERTY(
+        bool manageRoles READ manageRoles WRITE setManageRoles STORED false)
+    Q_PROPERTY(bool manageWebhooks READ manageWebhooks WRITE setManageWebhooks
+                   STORED false)
+    Q_PROPERTY(
+        bool manageEmojis READ manageEmojis WRITE setManageEmojis STORED false)
+
     friend class QDiscordPermissionOverwrite;
 
 public:
     static constexpr quint8 bits = 53;
 
-    static QDiscordPermission none();
-    static QDiscordPermission all();
-    static QDiscordPermission allChannel();
-    static QDiscordPermission general();
-    static QDiscordPermission text();
-    static QDiscordPermission voice();
+    Q_INVOKABLE static QDiscordPermission none();
+    Q_INVOKABLE static QDiscordPermission all();
+    Q_INVOKABLE static QDiscordPermission allChannel();
+    Q_INVOKABLE static QDiscordPermission general();
+    Q_INVOKABLE static QDiscordPermission text();
+    Q_INVOKABLE static QDiscordPermission voice();
 
     QDiscordPermission(quint64 value = 0);
 
-    bool isSubset(const QDiscordPermission& other) const;
-    bool isSuperset(const QDiscordPermission& other) const;
-    bool isStrictSubset(const QDiscordPermission& other) const;
-    bool isStrictSuperset(const QDiscordPermission& other) const;
+    Q_INVOKABLE bool isSubset(const QDiscordPermission& other) const;
+    Q_INVOKABLE bool isSuperset(const QDiscordPermission& other) const;
+    Q_INVOKABLE bool isStrictSubset(const QDiscordPermission& other) const;
+    Q_INVOKABLE bool isStrictSuperset(const QDiscordPermission& other) const;
 
     void handleOverwrite(quint64 allow, quint64 deny);
     void handleOverwrite(const QDiscordPermission& allow,
@@ -107,6 +163,7 @@ public:
     void setManageEmojis(bool value);
 
     quint64 value() const;
+    void setValue(const quint64 value);
 
     bool operator==(const QDiscordPermission& other) const;
     bool operator!=(const QDiscordPermission& other) const;

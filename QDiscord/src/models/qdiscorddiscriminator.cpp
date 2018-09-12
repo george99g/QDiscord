@@ -46,6 +46,11 @@ qint16 QDiscordDiscriminator::value() const
     return _discriminator;
 }
 
+void QDiscordDiscriminator::setValue(const qint16 value)
+{
+    _discriminator = value;
+}
+
 bool QDiscordDiscriminator::isNull() const
 {
     return _discriminator == -1;

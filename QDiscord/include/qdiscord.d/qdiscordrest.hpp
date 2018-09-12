@@ -37,6 +37,13 @@
 class QDiscordRest : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(QDiscordToken token READ token WRITE setToken)
+    Q_PROPERTY(
+        QDiscordToken lastAckToken READ lastAckToken WRITE setLastAckToken)
+    Q_PROPERTY(QDiscordUserAgent userAgent READ userAgent WRITE setUserAgent)
+    Q_PROPERTY(QString discordBase READ discordBase WRITE setDiscordBase)
+
 public:
     explicit QDiscordRest(QObject* parent = nullptr);
     ~QDiscordRest();

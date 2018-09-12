@@ -28,14 +28,23 @@
 class QDiscord : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(QDiscordToken token READ token WRITE setToken)
+    Q_PROPERTY(bool isConnecting READ isConnecting STORED false)
+    Q_PROPERTY(bool isConnected READ isConnected STORED false)
+
+    Q_PROPERTY(QDiscordRest* rest READ restPtr)
+    Q_PROPERTY(QDiscordWs* ws READ wsPtr)
+    Q_PROPERTY(QDiscordState* state READ statePtr)
+
 public:
     explicit QDiscord(QObject* parent = 0);
 
-    void login(const QDiscordToken& token);
+    Q_INVOKABLE void login(const QDiscordToken& token);
     void login(const QDiscordToken& token,
                const std::function<void(bool)>& callback);
 
-    void logout();
+    Q_INVOKABLE void logout();
     void logout(const std::function<void()>& callback);
 
     bool isConnecting() const;
@@ -45,8 +54,11 @@ public:
     void setToken(const QDiscordToken& token);
 
     QDiscordRest& rest() { return _rest; }
+    QDiscordRest* restPtr() { return &_rest; }
     QDiscordWs& ws() { return _ws; }
+    QDiscordWs* wsPtr() { return &_ws; }
     QDiscordState& state() { return _state; }
+    QDiscordState* statePtr() { return &_state; }
 signals:
     void loginFailed();
     void loggedIn();

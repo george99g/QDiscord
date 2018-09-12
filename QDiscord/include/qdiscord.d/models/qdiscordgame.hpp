@@ -26,6 +26,12 @@
 ///\brief Represents a game object in the Discord API.
 class QDiscordGame : public QDiscordModelBase<QDiscordGame>
 {
+    Q_GADGET
+
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QString url READ url WRITE setUrl)
+    Q_PROPERTY(QDiscordGame::GameType type READ type WRITE setType)
+
 public:
     static QSharedPointer<QDiscordGame> fromJson(const QJsonObject& object);
     /*!
@@ -40,6 +46,8 @@ public:
         Streaming = 1,
         Unknown = -1
     };
+    Q_ENUM(GameType)
+
     /*!
      * \brief Manual constructor for a game object. Defaults to an empty object.
      * \param name The game you wish to display for the status.

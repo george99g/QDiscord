@@ -21,32 +21,32 @@
 
 QDiscordPermission QDiscordPermission::none()
 {
-    return QDiscordPermission();
+    return {};
 }
 
 QDiscordPermission QDiscordPermission::all()
 {
-    return QDiscordPermission(0x7ff7fcff);
+    return {0x7ff7fcff};
 }
 
 QDiscordPermission QDiscordPermission::allChannel()
 {
-    return QDiscordPermission(0x33f7fc51);
+    return {0x33f7fc51};
 }
 
 QDiscordPermission QDiscordPermission::general()
 {
-    return QDiscordPermission(0x7c0000bf);
+    return {0x7c0000bf};
 }
 
 QDiscordPermission QDiscordPermission::text()
 {
-    return QDiscordPermission(0x7fc40);
+    return {0x7fc40};
 }
 
 QDiscordPermission QDiscordPermission::voice()
 {
-    return QDiscordPermission(0x3f00000);
+    return {0x3f00000};
 }
 
 QDiscordPermission::QDiscordPermission(quint64 value)

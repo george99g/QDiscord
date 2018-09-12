@@ -23,7 +23,7 @@ QDiscordToken::QDiscordToken()
     _type = Type::None;
 }
 
-QDiscordToken::QDiscordToken(QString token, Type type)
+QDiscordToken::QDiscordToken(const QString& token, Type type)
 {
     // The token passed already has a type, so we'll have to use the string.
     if(type == Type::Auto)
@@ -68,7 +68,7 @@ QString QDiscordToken::rawToken() const
     return _token;
 }
 
-void QDiscordToken::setRawToken(QString token)
+void QDiscordToken::setRawToken(const QString& token)
 {
     _token = token;
 }

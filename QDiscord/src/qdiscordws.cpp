@@ -20,7 +20,7 @@
 #include "qdiscord.d/qdiscordrest.hpp"
 
 void QDiscordWs::getGateway(QDiscordRest& rest,
-                            std::function<void(QString)> callback)
+                            const std::function<void(QString)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Self::gateway(),
@@ -57,12 +57,12 @@ QDiscordWs::QDiscordWs(QDiscordAbstractState* state, QObject* parent)
         &_heartbeatTimer, &QTimer::timeout, this, &QDiscordWs::heartbeatTick);
 }
 
-bool QDiscordWs::open(QString endpoint, QDiscordToken token)
+bool QDiscordWs::open(const QString& endpoint, const QDiscordToken& token)
 {
     return open(QUrl(endpoint), token);
 }
 
-bool QDiscordWs::open(QUrl endpoint, QDiscordToken token)
+bool QDiscordWs::open(QUrl endpoint, const QDiscordToken& token)
 {
     if(_ws.state() != QAbstractSocket::UnconnectedState)
     {

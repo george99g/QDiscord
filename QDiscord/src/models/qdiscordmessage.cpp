@@ -30,10 +30,11 @@ QDiscordMessage::fromJson(const QJsonObject& object)
     return message;
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QJsonObject& data,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QJsonObject& data,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Messages::sendMessage(channel),
@@ -52,41 +53,45 @@ void QDiscordMessage::create(QDiscordRest& rest,
                  });
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QString& content,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QString& content,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}};
     create(rest, channel, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QString& content,
-                             const QDiscordID& nonce,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QString& content,
+    const QDiscordID& nonce,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}, {"nonce", nonce.toString()}};
     create(rest, channel, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QString& content,
-                             TTS tts,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QString& content,
+    TTS tts,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}, {"tts", static_cast<bool>(tts)}};
     create(rest, channel, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QString& content,
-                             const QDiscordID& nonce,
-                             TTS tts,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QString& content,
+    const QDiscordID& nonce,
+    TTS tts,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content},
                         {"nonce", nonce.toString()},
@@ -135,13 +140,12 @@ void QDiscordMessage::create(QDiscordRest& rest,
         return;
     }
 
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     fileDevice->setParent(multiPart);
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(file.fileName()) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForFile(file).name());
@@ -151,11 +155,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Messages::sendMessage(channel),
                  multiPart,
-                 [multiPart](QNetworkReply* reply) {
-                     Q_UNUSED(reply);
-
-                     delete multiPart;
-                 });
+                 [multiPart](QNetworkReply*) { delete multiPart; });
 }
 
 void QDiscordMessage::create(QDiscordRest& rest,
@@ -170,8 +170,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
         return;
     }
 
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     fileDevice->setParent(multiPart);
 
     QHttpPart payloadPart;
@@ -184,7 +183,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(file.fileName()) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForFile(file).name());
@@ -231,12 +230,11 @@ void QDiscordMessage::create(QDiscordRest& rest,
                              const QByteArray& file,
                              const QString& filename)
 {
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(filename) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForData(file).name());
@@ -259,8 +257,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
                              const QString& filename,
                              const QJsonObject& data)
 {
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart payloadPart;
     payloadPart.setHeader(QNetworkRequest::ContentDispositionHeader,
@@ -272,7 +269,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(filename) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForData(file).name());
@@ -316,10 +313,11 @@ void QDiscordMessage::create(QDiscordRest& rest,
     QDiscordMessage::create(rest, channel, file, filename, data);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QFileInfo& file,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QFileInfo& file,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QFile* fileDevice = new QFile(file.canonicalFilePath());
     if(!fileDevice->open(QFile::ReadOnly))
@@ -331,13 +329,12 @@ void QDiscordMessage::create(QDiscordRest& rest,
         return;
     }
 
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     fileDevice->setParent(multiPart);
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(file.fileName()) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForFile(file).name());
@@ -361,11 +358,12 @@ void QDiscordMessage::create(QDiscordRest& rest,
                  });
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QFileInfo& file,
-                             const QJsonObject& data,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QFileInfo& file,
+    const QJsonObject& data,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QFile* fileDevice = new QFile(file.canonicalFilePath());
     if(!fileDevice->open(QFile::ReadOnly))
@@ -377,8 +375,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
         return;
     }
 
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     fileDevice->setParent(multiPart);
 
     QHttpPart payloadPart;
@@ -391,7 +388,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(file.fileName()) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForFile(file).name());
@@ -415,23 +412,25 @@ void QDiscordMessage::create(QDiscordRest& rest,
                  });
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QFileInfo& file,
-                             const QString& content,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QFileInfo& file,
+    const QString& content,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}};
 
     QDiscordMessage::create(rest, channel, file, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QFileInfo& file,
-                             const QString& content,
-                             const QDiscordID& nonce,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QFileInfo& file,
+    const QString& content,
+    const QDiscordID& nonce,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {
         {"content", content},
@@ -441,25 +440,27 @@ void QDiscordMessage::create(QDiscordRest& rest,
     QDiscordMessage::create(rest, channel, file, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QFileInfo& file,
-                             const QString& content,
-                             QDiscordMessage::TTS tts,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QFileInfo& file,
+    const QString& content,
+    QDiscordMessage::TTS tts,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}, {"tts", static_cast<bool>(tts)}};
 
     QDiscordMessage::create(rest, channel, file, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QFileInfo& file,
-                             const QString& content,
-                             const QDiscordID& nonce,
-                             QDiscordMessage::TTS tts,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QFileInfo& file,
+    const QString& content,
+    const QDiscordID& nonce,
+    QDiscordMessage::TTS tts,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content},
                         {"nonce", nonce.toString()},
@@ -468,18 +469,18 @@ void QDiscordMessage::create(QDiscordRest& rest,
     QDiscordMessage::create(rest, channel, file, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QByteArray& file,
-                             const QString& filename,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QByteArray& file,
+    const QString& filename,
+    const std::function<void(QDiscordMessage)>& callback)
 {
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(filename) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForData(file).name());
@@ -503,15 +504,15 @@ void QDiscordMessage::create(QDiscordRest& rest,
                  });
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QByteArray& file,
-                             const QString& filename,
-                             const QJsonObject& data,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QByteArray& file,
+    const QString& filename,
+    const QJsonObject& data,
+    const std::function<void(QDiscordMessage)>& callback)
 {
-    QHttpMultiPart* multiPart =
-        new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart payloadPart;
     payloadPart.setHeader(QNetworkRequest::ContentDispositionHeader,
@@ -523,7 +524,7 @@ void QDiscordMessage::create(QDiscordRest& rest,
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                       "form-data; name=\"file\"; filename=\""
+                       R"(form-data; name="file"; filename=")"
                            + QUrl::toPercentEncoding(filename) + "\"");
     filePart.setHeader(QNetworkRequest::ContentTypeHeader,
                        QMimeDatabase().mimeTypeForData(file).name());
@@ -547,52 +548,56 @@ void QDiscordMessage::create(QDiscordRest& rest,
                  });
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QByteArray& file,
-                             const QString& filename,
-                             const QString& content,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QByteArray& file,
+    const QString& filename,
+    const QString& content,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}};
 
     QDiscordMessage::create(rest, channel, file, filename, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QByteArray& file,
-                             const QString& filename,
-                             const QString& content,
-                             const QDiscordID& nonce,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QByteArray& file,
+    const QString& filename,
+    const QString& content,
+    const QDiscordID& nonce,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}, {"nonce", nonce.toString()}};
 
     QDiscordMessage::create(rest, channel, file, filename, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QByteArray& file,
-                             const QString& filename,
-                             const QString& content,
-                             QDiscordMessage::TTS tts,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QByteArray& file,
+    const QString& filename,
+    const QString& content,
+    QDiscordMessage::TTS tts,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content}, {"tts", static_cast<bool>(tts)}};
 
     QDiscordMessage::create(rest, channel, file, filename, data, callback);
 }
 
-void QDiscordMessage::create(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QByteArray& file,
-                             const QString& filename,
-                             const QString& content,
-                             const QDiscordID& nonce,
-                             QDiscordMessage::TTS tts,
-                             std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::create(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QByteArray& file,
+    const QString& filename,
+    const QString& content,
+    const QDiscordID& nonce,
+    QDiscordMessage::TTS tts,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", content},
                         {"nonce", nonce.toString()},
@@ -623,7 +628,7 @@ void QDiscordMessage::send()
     QDiscordMessage::create(*_rest, _channelId, data);
 }
 
-void QDiscordMessage::send(std::function<void(QDiscordMessage)> callback)
+void QDiscordMessage::send(const std::function<void(QDiscordMessage)>& callback)
 {
     if(!_rest || _content.isEmpty())
     {
@@ -674,7 +679,7 @@ void QDiscordMessage::edit(QDiscordRest& rest,
                            const QDiscordID& channel,
                            const QDiscordID& message,
                            const QString& newContent,
-                           std::function<void(QDiscordMessage)> callback)
+                           const std::function<void(QDiscordMessage)>& callback)
 {
     QJsonObject data = {{"content", newContent}};
     edit(rest, channel, message, data, callback);
@@ -684,7 +689,7 @@ void QDiscordMessage::edit(QDiscordRest& rest,
                            const QDiscordID& channel,
                            const QDiscordID& message,
                            const QJsonObject& data,
-                           std::function<void(QDiscordMessage)> callback)
+                           const std::function<void(QDiscordMessage)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Messages::editMessage(channel, message),
@@ -720,7 +725,7 @@ void QDiscordMessage::edit(const QString& newContent)
 }
 
 void QDiscordMessage::edit(const QString& newContent,
-                           std::function<void(QDiscordMessage)> callback)
+                           const std::function<void(QDiscordMessage)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -753,7 +758,7 @@ void QDiscordMessage::remove(QDiscordRest& rest,
 void QDiscordMessage::remove(QDiscordRest& rest,
                              const QDiscordID& channel,
                              const QDiscordID& message,
-                             std::function<void(bool)> callback)
+                             const std::function<void(bool)>& callback)
 {
     rest.request(
         QNetworkRequest(),
@@ -777,7 +782,7 @@ void QDiscordMessage::remove()
     QDiscordMessage::remove(*_rest, _channelId, _id);
 }
 
-void QDiscordMessage::remove(std::function<void(bool)> callback)
+void QDiscordMessage::remove(const std::function<void(bool)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -818,7 +823,7 @@ void QDiscordMessage::bulkRemove(QDiscordRest& rest,
 void QDiscordMessage::bulkRemove(QDiscordRest& rest,
                                  const QDiscordID& channel,
                                  const QList<QDiscordID>& messages,
-                                 std::function<void(bool)> callback)
+                                 const std::function<void(bool)>& callback)
 {
     QJsonObject data;
 
@@ -837,7 +842,7 @@ void QDiscordMessage::bulkRemove(QDiscordRest& rest,
 void QDiscordMessage::get(QDiscordRest& rest,
                           const QDiscordID& channel,
                           const QDiscordID& message,
-                          std::function<void(QDiscordMessage)> callback)
+                          const std::function<void(QDiscordMessage)>& callback)
 {
     rest.request(
         QNetworkRequest(),
@@ -887,7 +892,7 @@ void QDiscordMessage::ack(QDiscordRest& rest,
 void QDiscordMessage::ack(QDiscordRest& rest,
                           const QDiscordID& channel,
                           const QDiscordID& message,
-                          std::function<void(bool)> callback)
+                          const std::function<void(bool)>& callback)
 {
     QJsonObject data;
 
@@ -923,7 +928,7 @@ void QDiscordMessage::ack()
     QDiscordMessage::ack(*_rest, _channelId, _id);
 }
 
-void QDiscordMessage::ack(std::function<void(bool)> callback)
+void QDiscordMessage::ack(const std::function<void(bool)>& callback)
 {
     if(!_rest || !_id || !_channelId)
     {

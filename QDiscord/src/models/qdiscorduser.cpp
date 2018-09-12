@@ -20,8 +20,6 @@
 #include "qdiscord.d/qdiscordrest.hpp"
 #include "qdiscord.d/qdiscordutilities.hpp"
 
-using std::experimental::optional;
-
 QSharedPointer<QDiscordUser> QDiscordUser::fromJson(const QJsonObject& object)
 {
     QSharedPointer<QDiscordUser> user(new QDiscordUser());

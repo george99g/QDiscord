@@ -53,7 +53,7 @@ void QDiscord::login(const QDiscordToken& token)
 }
 
 void QDiscord::login(const QDiscordToken& token,
-                     std::function<void(bool)> callback)
+                     const std::function<void(bool)>& callback)
 {
     if(isConnected() || isConnecting())
         return;
@@ -69,7 +69,7 @@ void QDiscord::logout()
     setToken(QDiscordToken());
 }
 
-void QDiscord::logout(std::function<void()> callback)
+void QDiscord::logout(const std::function<void()>& callback)
 {
     if(!isConnected() && !isConnecting())
         return;

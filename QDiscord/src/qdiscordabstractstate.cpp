@@ -22,5 +22,3 @@ QDiscordAbstractState::QDiscordAbstractState(QObject* parent)
     : QObject(parent)
 {
 }
-
-QDiscordAbstractState::~QDiscordAbstractState() {}

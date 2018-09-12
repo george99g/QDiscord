@@ -33,9 +33,9 @@ public:
         None
     };
     QDiscordToken();
-    QDiscordToken(QString token, Type type = Type::Bot);
+    QDiscordToken(const QString& token, Type type = Type::Bot);
     QString rawToken() const;
-    void setRawToken(QString token);
+    void setRawToken(const QString& token);
     Type type() const;
     void setType(Type type);
     QString fullToken() const;

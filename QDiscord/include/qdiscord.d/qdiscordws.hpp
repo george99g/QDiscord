@@ -84,12 +84,13 @@ public:
     };
 
     static void getGateway(QDiscordRest& rest,
-                           std::function<void(QString)> callback);
+                           const std::function<void(QString)>& callback);
 
     explicit QDiscordWs(QDiscordAbstractState* state = nullptr,
                         QObject* parent = nullptr);
-    bool open(QString endpoint, QDiscordToken token = QDiscordToken());
-    bool open(QUrl endpoint, QDiscordToken token = QDiscordToken());
+    bool open(const QString& endpoint,
+              const QDiscordToken& token = QDiscordToken());
+    bool open(QUrl endpoint, const QDiscordToken& token = QDiscordToken());
     void close(QWebSocketProtocol::CloseCode closeCode =
                    QWebSocketProtocol::CloseCodeNormal);
     void abort();
@@ -151,7 +152,7 @@ private:
     void heartbeatTick();
     void sendIdentify();
     void sendResume();
-    Error _error;
+    Error _error = Error::NoError;
     quint8 _version = 6;
     Encoding _encoding = Encoding::JSON;
     QUrl _endpoint;

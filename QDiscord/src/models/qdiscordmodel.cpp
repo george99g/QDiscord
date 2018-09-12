@@ -167,7 +167,7 @@ void QDiscordModel::field(QDiscordModel::DeserializeJsonAction& action,
                           QStringList& value,
                           const QString& name)
 {
-    for(const QJsonValue& v : action.data()[name].toArray())
+    for(const QJsonValueRef& v : action.data()[name].toArray())
         value.append(v.toString());
 }
 

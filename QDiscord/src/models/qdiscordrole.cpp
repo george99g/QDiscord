@@ -47,9 +47,7 @@ bool QDiscordRole::isEveryone() const
     QSharedPointer<QDiscordGuild> guild = _guild.lock();
     if(!guild)
         return false;
-    if(guild->id() == _id)
-        return true;
-    return false;
+    return guild->id() == _id;
 }
 
 QString QDiscordRole::mention() const

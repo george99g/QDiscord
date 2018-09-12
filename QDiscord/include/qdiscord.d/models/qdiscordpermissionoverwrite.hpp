@@ -30,73 +30,74 @@
 class QDiscordPermissionOverwrite
 {
 public:
-    QDiscordPermissionOverwrite();
+    QDiscordPermissionOverwrite() = default;
     QDiscordPermissionOverwrite(QDiscordPermission allow,
                                 QDiscordPermission deny);
 
     std::experimental::optional<bool> createInstantInvite() const;
-    void setCreateInstantInvite(std::experimental::optional<bool> value);
+    void setCreateInstantInvite(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> kickMembers() const;
-    void setKickMembers(std::experimental::optional<bool> value);
+    void setKickMembers(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> banMembers() const;
-    void setBanMembers(std::experimental::optional<bool> value);
+    void setBanMembers(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> administrator() const;
-    void setAdministrator(std::experimental::optional<bool> value);
+    void setAdministrator(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageChannels() const;
-    void setManageChannels(std::experimental::optional<bool> value);
+    void setManageChannels(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageServer() const;
-    void setManageServer(std::experimental::optional<bool> value);
+    void setManageServer(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> addReactions() const;
-    void setAddReactions(std::experimental::optional<bool> value);
+    void setAddReactions(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> viewAuditLogs() const;
-    void setViewAuditLogs(std::experimental::optional<bool> value);
+    void setViewAuditLogs(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> readMessages() const;
-    void setReadMessages(std::experimental::optional<bool> value);
+    void setReadMessages(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> sendMessages() const;
-    void setSendMessages(std::experimental::optional<bool> value);
+    void setSendMessages(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> sendTtsMessages() const;
-    void setSendTtsMessages(std::experimental::optional<bool> value);
+    void setSendTtsMessages(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageMessages() const;
-    void setManageMessages(std::experimental::optional<bool> value);
+    void setManageMessages(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> embedLinks() const;
-    void setEmbedLinks(std::experimental::optional<bool> value);
+    void setEmbedLinks(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> attachFiles() const;
-    void setAttachFiles(std::experimental::optional<bool> value);
+    void setAttachFiles(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> readMessageHistory() const;
-    void setReadMessageHistory(std::experimental::optional<bool> value);
+    void setReadMessageHistory(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> mentionEveryone() const;
-    void setMentionEveryone(std::experimental::optional<bool> value);
+    void setMentionEveryone(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> externalEmojis() const;
-    void setExternalEmojis(std::experimental::optional<bool> value);
+    void setExternalEmojis(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> connect() const;
-    void setConnect(std::experimental::optional<bool> value);
+    void setConnect(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> speak() const;
-    void setSpeak(std::experimental::optional<bool> value);
+    void setSpeak(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> muteMembers() const;
-    void setMuteMembers(std::experimental::optional<bool> value);
+    void setMuteMembers(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> deafenMembers() const;
-    void setDeafenMembers(std::experimental::optional<bool> value);
+    void setDeafenMembers(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> moveMembers() const;
-    void setMoveMembers(std::experimental::optional<bool> value);
+    void setMoveMembers(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> useVoiceActivation() const;
-    void setUseVoiceActivation(std::experimental::optional<bool> value);
+    void setUseVoiceActivation(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> changeNickname() const;
-    void setChangeNickname(std::experimental::optional<bool> value);
+    void setChangeNickname(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageNicknames() const;
-    void setManageNicknames(std::experimental::optional<bool> value);
+    void setManageNicknames(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageRoles() const;
-    void setManageRoles(std::experimental::optional<bool> value);
+    void setManageRoles(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageWebhooks() const;
-    void setManageWebhooks(std::experimental::optional<bool> value);
+    void setManageWebhooks(const std::experimental::optional<bool>& value);
     std::experimental::optional<bool> manageEmojis() const;
-    void setManageEmojis(std::experimental::optional<bool> value);
+    void setManageEmojis(const std::experimental::optional<bool>& value);
 
     QPair<QDiscordPermission, QDiscordPermission> pair() const;
     bool isEmpty() const;
 
 private:
-    std::experimental::optional<bool> bit(quint8 index) const;
-    void set(quint8 index, std::experimental::optional<bool> value);
+    std::experimental::optional<bool> bit(const quint8 index) const;
+    void set(const quint8 index,
+             const std::experimental::optional<bool>& value);
 
     std::array<std::experimental::optional<bool>, QDiscordPermission::bits>
         _value;

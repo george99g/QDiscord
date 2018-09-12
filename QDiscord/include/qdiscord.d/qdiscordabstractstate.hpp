@@ -30,7 +30,7 @@ class QDiscordAbstractState : public QObject
     Q_OBJECT
 public:
     explicit QDiscordAbstractState(QObject* parent = nullptr);
-    virtual ~QDiscordAbstractState();
+    virtual ~QDiscordAbstractState() = default;
     virtual void readyReceived(int protocolVersion,
                                QSharedPointer<QDiscordUser> user) = 0;
     virtual void

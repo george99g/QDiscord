@@ -17,6 +17,7 @@
  */
 
 #include "qdiscord.d/models/qdiscordgame.hpp"
+#include <utility>
 
 QSharedPointer<QDiscordGame> QDiscordGame::fromJson(const QJsonObject& object)
 {
@@ -28,14 +29,9 @@ QSharedPointer<QDiscordGame> QDiscordGame::fromJson(const QJsonObject& object)
 QDiscordGame::QDiscordGame(QString name,
                            QString url,
                            QDiscordGame::GameType type)
-    : _name(name)
-    , _url(url)
+    : _name(std::move(name))
+    , _url(std::move(url))
     , _type(type)
-{
-}
-
-QDiscordGame::QDiscordGame()
-    : _type(GameType::Unknown)
 {
 }
 

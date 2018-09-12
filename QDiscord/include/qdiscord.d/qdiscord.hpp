@@ -32,10 +32,11 @@ public:
     explicit QDiscord(QObject* parent = 0);
 
     void login(const QDiscordToken& token);
-    void login(const QDiscordToken& token, std::function<void(bool)> callback);
+    void login(const QDiscordToken& token,
+               const std::function<void(bool)>& callback);
 
     void logout();
-    void logout(std::function<void()> callback);
+    void logout(const std::function<void()>& callback);
 
     bool isConnecting() const;
     bool isConnected() const;

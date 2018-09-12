@@ -102,7 +102,7 @@ public:
 private:
     QDiscordID _id;
     QString _name;
-    quint32 _color;
+    quint32 _color = 0;
     bool _hoist = false;
     int _position = -1;
     QDiscordPermission _permissions;

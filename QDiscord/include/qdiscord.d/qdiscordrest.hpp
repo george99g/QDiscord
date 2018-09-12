@@ -44,7 +44,7 @@ public:
     QDiscordToken token() const { return _token; }
     void setToken(QDiscordToken token) { _token = token; }
     QDiscordToken lastAckToken() const { return _token; }
-    void setLastAckToken(QDiscordToken lastAckToken);
+    void setLastAckToken(const QDiscordToken& lastAckToken);
     QDiscordUserAgent userAgent() const { return _userAgent; }
     void setUserAgent(const QDiscordUserAgent& userAgent)
     {
@@ -56,102 +56,37 @@ public:
         _discordBase = discordBase;
     }
 
-    // <spaghetti>
+    template<class T>
+    struct DataType
+    {
+        static constexpr bool isDataType = false;
+        static QString type() { return ""; }
+        static QByteArray extractData(const T& data)
+        {
+            static_assert(DataType<T>::isDataType,
+                          "extractData called for non-data type");
+            return "";
+        }
+    };
 
     template<class Functor>
-    void request(const QNetworkRequest& request,
-                 const QDiscordRoute& route,
-                 Functor&& callback)
+    void
+    request(const QNetworkRequest& request,
+            const QDiscordRoute& route,
+            Functor callback,
+            typename std::enable_if<!DataType<Functor>::isDataType>::type* =
+                nullptr)
     {
-        auto recallLambda = [request, route, callback, this]() {
-            QDiscordRest::request(request, route, callback);
-        };
-
-        QSharedPointer<QDiscordBucket> bucket = getBucket(route.bucketUrl());
-
-        if(bucket->remaining() <= 0)
-        {
-            bucket->enqueue(recallLambda);
-
-            return;
-        }
-
-        bucket->setRemaining(bucket->remaining() - 1);
-        bucket->setActiveRequests(bucket->activeRequests() + 1);
-
-        qCDebug(REST, ) << "making request to" << route.fullUrl()
-                        << "remaining requests:" << bucket->remaining()
-                        << "active requests:" << bucket->activeRequests();
-
-        QNetworkRequest r = request;
-        if(r.url().isEmpty())
-            r.setUrl(QUrl(_discordBase + route.fullUrl()));
-        if(!_token.isEmpty())
-            r.setRawHeader("Authorization", _token.fullToken().toUtf8());
-        r.setHeader(QNetworkRequest::UserAgentHeader, _userAgent.toString());
-
-        QNetworkReply* reply;
-
-        switch(route.method())
-        {
-        case QDiscordRoute::Method::DELETE:
-            reply = _manager.deleteResource(r);
-            break;
-        case QDiscordRoute::Method::GET:
-            reply = _manager.get(r);
-            break;
-        case QDiscordRoute::Method::PATCH:
-        {
-            r.setHeader(QNetworkRequest::ContentLengthHeader, 0);
-            reply = _manager.sendCustomRequest(r, "PATCH", QByteArray());
-        }
-        break;
-        case QDiscordRoute::Method::POST:
-            r.setHeader(QNetworkRequest::ContentLengthHeader, 0);
-            reply = _manager.post(r, QByteArray());
-            break;
-        case QDiscordRoute::Method::PUT:
-            r.setHeader(QNetworkRequest::ContentLengthHeader, 0);
-            reply = _manager.put(r, QByteArray());
-            break;
-        default:
-            return;
-        }
-
-        connect(reply,
-                &QNetworkReply::finished,
-                this,
-                [callback, reply, bucket, recallLambda, this]() {
-                    bucket->setActiveRequests(bucket->activeRequests() - 1);
-
-                    if(reply->rawHeader("X-RateLimit-Global").toLower()
-                       == "true")
-                    {
-                        quint32 waitTime =
-                            reply->rawHeader("Retry-After").toULong();
-
-                        qCInfo(REST, ) << "global ratelimit hit, retrying in"
-                                       << waitTime << "seconds";
-
-                        QTimer::singleShot(waitTime * 1000, recallLambda);
-                    }
-                    else if(!bucket->processHeaders(reply))
-                        bucket->enqueue(recallLambda);
-                    else
-                    {
-                        processBuckets();
-                        callback(reply);
-                    }
-
-                    reply->deleteLater();
-                });
+        QDiscordRest::request(request, route, QByteArray(), callback);
     }
 
     template<class Data, class Functor>
-    void request(const QNetworkRequest& request,
-                 const QDiscordRoute& route,
-                 const Data& data,
-                 Functor callback)
+    void request(
+        const QNetworkRequest& request,
+        const QDiscordRoute& route,
+        const Data& data,
+        Functor callback,
+        typename std::enable_if<DataType<Data>::isDataType>::type* = nullptr)
     {
         auto recallLambda = [request, route, data, callback, this]() {
             QDiscordRest::request(request, route, data, callback);
@@ -190,29 +125,30 @@ public:
             break;
         case QDiscordRoute::Method::PATCH:
         {
-            if(!contentType<Data>().type.isEmpty())
+            if(!DataType<Data>::type().isEmpty())
             {
                 r.setHeader(QNetworkRequest::ContentTypeHeader,
-                            contentType<Data>().type);
+                            DataType<Data>::type());
             }
-            reply = _manager.sendCustomRequest(r, "PATCH", extractData(data));
+            reply = _manager.sendCustomRequest(
+                r, "PATCH", DataType<Data>::extractData(data));
         }
         break;
         case QDiscordRoute::Method::POST:
-            if(!contentType<Data>().type.isEmpty())
+            if(!DataType<Data>::type().isEmpty())
             {
                 r.setHeader(QNetworkRequest::ContentTypeHeader,
-                            contentType<Data>().type);
+                            DataType<Data>::type());
             }
-            reply = _manager.post(r, extractData(data));
+            reply = _manager.post(r, DataType<Data>::extractData(data));
             break;
         case QDiscordRoute::Method::PUT:
-            if(!contentType<Data>().type.isEmpty())
+            if(!DataType<Data>::type().isEmpty())
             {
                 r.setHeader(QNetworkRequest::ContentTypeHeader,
-                            contentType<Data>().type);
+                            DataType<Data>::type());
             }
-            reply = _manager.put(r, extractData(data));
+            reply = _manager.put(r, DataType<Data>::extractData(data));
             break;
         default:
             return;
@@ -246,105 +182,20 @@ public:
                 });
     }
 
-    template<class Functor>
-    void request(const QNetworkRequest& request,
-                 const QDiscordRoute& route,
-                 QHttpMultiPart* data,
-                 Functor&& callback)
+    template<class Data>
+    void request(
+        const QNetworkRequest& request,
+        const QDiscordRoute& route,
+        Data data,
+        typename std::enable_if<DataType<Data>::isDataType>::type* = nullptr)
     {
-        auto recallLambda = [request, route, data, callback, this]() {
-            QDiscordRest::request(request, route, data, callback);
-        };
-
-        QSharedPointer<QDiscordBucket> bucket = getBucket(route.bucketUrl());
-
-        if(bucket->remaining() <= 0)
-        {
-            bucket->enqueue(recallLambda);
-
-            return;
-        }
-
-        bucket->setRemaining(bucket->remaining() - 1);
-        bucket->setActiveRequests(bucket->activeRequests() + 1);
-
-        qCDebug(REST, ) << "making request to" << route.fullUrl()
-                        << "remaining requests:" << bucket->remaining()
-                        << "active requests:" << bucket->activeRequests();
-
-        QNetworkRequest r = request;
-        r.setUrl(QUrl(_discordBase + route.fullUrl()));
-        if(!_token.isEmpty())
-            r.setRawHeader("Authorization", _token.fullToken().toUtf8());
-        r.setHeader(QNetworkRequest::UserAgentHeader, _userAgent.toString());
-        QNetworkReply* reply;
-        switch(route.method())
-        {
-        case QDiscordRoute::Method::DELETE:
-            reply = _manager.deleteResource(r);
-            break;
-        case QDiscordRoute::Method::GET:
-            reply = _manager.get(r);
-            break;
-        case QDiscordRoute::Method::PATCH:
-        {
-            reply = _manager.sendCustomRequest(r, "PATCH", data);
-        }
-        break;
-        case QDiscordRoute::Method::POST:
-            reply = _manager.post(r, data);
-            break;
-        case QDiscordRoute::Method::PUT:
-            reply = _manager.put(r, data);
-            break;
-        default:
-            return;
-        }
-        connect(reply,
-                &QNetworkReply::finished,
-                this,
-                [callback, reply, bucket, recallLambda, this]() {
-                    bucket->setActiveRequests(bucket->activeRequests() - 1);
-
-                    if(reply->rawHeader("X-RateLimit-Global").toLower()
-                       == "true")
-                    {
-                        quint32 waitTime =
-                            reply->rawHeader("Retry-After").toULong();
-
-                        qCInfo(REST, ) << "global ratelimit hit, retrying in"
-                                       << waitTime << "seconds";
-
-                        QTimer::singleShot(waitTime * 1000, recallLambda);
-                    }
-                    else if(!bucket->processHeaders(reply))
-                        bucket->enqueue(recallLambda);
-                    else
-                    {
-                        processBuckets();
-                        callback(reply);
-                    }
-
-                    reply->deleteLater();
-                });
+        QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
     }
 
-    void request(const QNetworkRequest& request,
-                 const QDiscordRoute& route,
-                 QHttpMultiPart* data);
     void request(const QNetworkRequest& request, const QDiscordRoute& route);
 
-    // </spaghetti>
-
 private:
-    template<class T>
-    struct contentType;
-
-    QByteArray extractData(const QJsonObject& object) const;
-    QByteArray extractData(const QJsonArray& array) const;
-    QByteArray extractData(const QByteArray& array) const;
-
-    QSharedPointer<QDiscordBucket> getBucket(QString route);
+    QSharedPointer<QDiscordBucket> getBucket(const QString& route);
 
     void processBuckets();
 
@@ -359,81 +210,41 @@ private:
 };
 
 template<>
-struct QDiscordRest::contentType<QJsonObject>
+struct QDiscordRest::DataType<QJsonObject>
 {
-    const QString type = QStringLiteral("application/json");
+    static const bool isDataType = true;
+    static QString type() { return "application/json"; }
+    static QByteArray extractData(const QJsonObject& data)
+    {
+        return QJsonDocument(data).toJson(QJsonDocument::Compact);
+    }
 };
 
 template<>
-struct QDiscordRest::contentType<QJsonArray>
+struct QDiscordRest::DataType<QJsonArray>
 {
-    const QString type = QStringLiteral("application/json");
+    static const bool isDataType = true;
+    static QString type() { return "application/json"; };
+    static QByteArray extractData(const QJsonArray& data)
+    {
+        return QJsonDocument(data).toJson(QJsonDocument::Compact);
+    }
 };
 
 template<>
-struct QDiscordRest::contentType<QByteArray>
+struct QDiscordRest::DataType<QByteArray>
 {
-    const QString type;
+    static const bool isDataType = true;
+    static QString type() { return ""; };
+    static QByteArray extractData(const QByteArray& data) { return data; }
 };
 
 template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonObject& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonObject&& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonObject& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonObject&& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonArray& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonArray&& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonArray& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonArray&& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QByteArray& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QByteArray&& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QByteArray& data);
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QByteArray&& data);
+struct QDiscordRest::DataType<QHttpMultiPart*>
+{
+    static const bool isDataType = true;
+    static QString type() { return ""; };
+    static QHttpMultiPart* extractData(QHttpMultiPart* data) { return data; }
+};
 
 #endif // QDISCORDREST_HPP

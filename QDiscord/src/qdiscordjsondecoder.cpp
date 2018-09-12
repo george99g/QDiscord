@@ -78,10 +78,10 @@ void QDiscordJsonDecoder::readyReceived(const QJsonObject& object)
             object["v"].toInt(-1),
             QDiscordUser::fromJson(object["user"].toObject()));
 
-    for(const QJsonValue& item : object["guilds"].toArray())
+    for(const QJsonValueRef& item : object["guilds"].toArray())
         guildCreateReceived(item.toObject());
 
-    for(const QJsonValue& item : object["private_channels"].toArray())
+    for(const QJsonValueRef& item : object["private_channels"].toArray())
         channelCreateReceived(item.toObject());
 }
 

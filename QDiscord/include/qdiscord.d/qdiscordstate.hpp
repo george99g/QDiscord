@@ -28,7 +28,7 @@ class QDiscordState : public QDiscordAbstractState
     Q_OBJECT
 public:
     explicit QDiscordState(QObject* parent = nullptr);
-    virtual ~QDiscordState();
+    virtual ~QDiscordState() = default;
     virtual void readyReceived(int protocolVersion,
                                QSharedPointer<QDiscordUser> user) override;
     virtual void

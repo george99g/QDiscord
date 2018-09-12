@@ -18,8 +18,6 @@
 
 #include "qdiscord.d/models/qdiscordpermissionoverwrite.hpp"
 
-QDiscordPermissionOverwrite::QDiscordPermissionOverwrite() {}
-
 QDiscordPermissionOverwrite::QDiscordPermissionOverwrite(
     QDiscordPermission allow,
     QDiscordPermission deny)
@@ -27,9 +25,9 @@ QDiscordPermissionOverwrite::QDiscordPermissionOverwrite(
     for(quint8 i = 0; i < QDiscordPermission::bits; i++)
     {
         if(allow.bit(i))
-            _value[i] = true;
+            _value.at(i) = true;
         if(deny.bit(i))
-            _value[i] = false;
+            _value.at(i) = false;
     }
 }
 
@@ -40,7 +38,7 @@ QDiscordPermissionOverwrite::createInstantInvite() const
 }
 
 void QDiscordPermissionOverwrite::setCreateInstantInvite(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(0, value);
 }
@@ -52,7 +50,7 @@ QDiscordPermissionOverwrite::kickMembers() const
 }
 
 void QDiscordPermissionOverwrite::setKickMembers(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(1, value);
 }
@@ -64,7 +62,7 @@ QDiscordPermissionOverwrite::banMembers() const
 }
 
 void QDiscordPermissionOverwrite::setBanMembers(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(2, value);
 }
@@ -76,7 +74,7 @@ QDiscordPermissionOverwrite::administrator() const
 }
 
 void QDiscordPermissionOverwrite::setAdministrator(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(3, value);
 }
@@ -88,7 +86,7 @@ QDiscordPermissionOverwrite::manageChannels() const
 }
 
 void QDiscordPermissionOverwrite::setManageChannels(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(4, value);
 }
@@ -100,7 +98,7 @@ QDiscordPermissionOverwrite::manageServer() const
 }
 
 void QDiscordPermissionOverwrite::setManageServer(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(5, value);
 }
@@ -112,7 +110,7 @@ QDiscordPermissionOverwrite::addReactions() const
 }
 
 void QDiscordPermissionOverwrite::setAddReactions(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(6, value);
 }
@@ -124,7 +122,7 @@ QDiscordPermissionOverwrite::viewAuditLogs() const
 }
 
 void QDiscordPermissionOverwrite::setViewAuditLogs(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(7, value);
 }
@@ -136,7 +134,7 @@ QDiscordPermissionOverwrite::readMessages() const
 }
 
 void QDiscordPermissionOverwrite::setReadMessages(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(10, value);
 }
@@ -148,7 +146,7 @@ QDiscordPermissionOverwrite::sendMessages() const
 }
 
 void QDiscordPermissionOverwrite::setSendMessages(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(11, value);
 }
@@ -160,7 +158,7 @@ QDiscordPermissionOverwrite::sendTtsMessages() const
 }
 
 void QDiscordPermissionOverwrite::setSendTtsMessages(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(12, value);
 }
@@ -172,7 +170,7 @@ QDiscordPermissionOverwrite::manageMessages() const
 }
 
 void QDiscordPermissionOverwrite::setManageMessages(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(13, value);
 }
@@ -184,7 +182,7 @@ QDiscordPermissionOverwrite::embedLinks() const
 }
 
 void QDiscordPermissionOverwrite::setEmbedLinks(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(14, value);
 }
@@ -196,7 +194,7 @@ QDiscordPermissionOverwrite::attachFiles() const
 }
 
 void QDiscordPermissionOverwrite::setAttachFiles(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(15, value);
 }
@@ -208,7 +206,7 @@ QDiscordPermissionOverwrite::readMessageHistory() const
 }
 
 void QDiscordPermissionOverwrite::setReadMessageHistory(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(16, value);
 }
@@ -220,7 +218,7 @@ QDiscordPermissionOverwrite::mentionEveryone() const
 }
 
 void QDiscordPermissionOverwrite::setMentionEveryone(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(17, value);
 }
@@ -232,7 +230,7 @@ QDiscordPermissionOverwrite::externalEmojis() const
 }
 
 void QDiscordPermissionOverwrite::setExternalEmojis(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(18, value);
 }
@@ -243,7 +241,7 @@ std::experimental::optional<bool> QDiscordPermissionOverwrite::connect() const
 }
 
 void QDiscordPermissionOverwrite::setConnect(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(20, value);
 }
@@ -254,7 +252,7 @@ std::experimental::optional<bool> QDiscordPermissionOverwrite::speak() const
 }
 
 void QDiscordPermissionOverwrite::setSpeak(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(21, value);
 }
@@ -266,7 +264,7 @@ QDiscordPermissionOverwrite::muteMembers() const
 }
 
 void QDiscordPermissionOverwrite::setMuteMembers(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(22, value);
 }
@@ -278,7 +276,7 @@ QDiscordPermissionOverwrite::deafenMembers() const
 }
 
 void QDiscordPermissionOverwrite::setDeafenMembers(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(23, value);
 }
@@ -290,7 +288,7 @@ QDiscordPermissionOverwrite::moveMembers() const
 }
 
 void QDiscordPermissionOverwrite::setMoveMembers(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(24, value);
 }
@@ -302,7 +300,7 @@ QDiscordPermissionOverwrite::useVoiceActivation() const
 }
 
 void QDiscordPermissionOverwrite::setUseVoiceActivation(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(25, value);
 }
@@ -314,7 +312,7 @@ QDiscordPermissionOverwrite::changeNickname() const
 }
 
 void QDiscordPermissionOverwrite::setChangeNickname(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(26, value);
 }
@@ -326,7 +324,7 @@ QDiscordPermissionOverwrite::manageNicknames() const
 }
 
 void QDiscordPermissionOverwrite::setManageNicknames(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(27, value);
 }
@@ -338,7 +336,7 @@ QDiscordPermissionOverwrite::manageRoles() const
 }
 
 void QDiscordPermissionOverwrite::setManageRoles(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(28, value);
 }
@@ -350,7 +348,7 @@ QDiscordPermissionOverwrite::manageWebhooks() const
 }
 
 void QDiscordPermissionOverwrite::setManageWebhooks(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(29, value);
 }
@@ -362,7 +360,7 @@ QDiscordPermissionOverwrite::manageEmojis() const
 }
 
 void QDiscordPermissionOverwrite::setManageEmojis(
-    std::experimental::optional<bool> value)
+    const std::experimental::optional<bool>& value)
 {
     set(30, value);
 }
@@ -375,9 +373,9 @@ QDiscordPermissionOverwrite::pair() const
 
     for(quint8 i = 0; i < QDiscordPermission::bits; i++)
     {
-        if(_value[i].has_value())
+        if(_value.at(i).has_value())
         {
-            if(_value[i].value())
+            if(_value.at(i).value())
                 allow.set(i, true);
             else
                 deny.set(i, true);
@@ -389,7 +387,7 @@ QDiscordPermissionOverwrite::pair() const
 
 bool QDiscordPermissionOverwrite::isEmpty() const
 {
-    for(const std::experimental::optional<bool> value : _value)
+    for(const std::experimental::optional<bool>& value : _value)
     {
         if(value.has_value())
             return false;
@@ -399,13 +397,14 @@ bool QDiscordPermissionOverwrite::isEmpty() const
 }
 
 std::experimental::optional<bool>
-QDiscordPermissionOverwrite::bit(quint8 index) const
+QDiscordPermissionOverwrite::bit(const quint8 index) const
 {
-    return _value[index];
+    return _value.at(index);
 }
 
-void QDiscordPermissionOverwrite::set(quint8 index,
-                                      std::experimental::optional<bool> value)
+void QDiscordPermissionOverwrite::set(
+    const quint8 index,
+    const std::experimental::optional<bool>& value)
 {
-    _value[index] = value;
+    _value.at(index) = value;
 }

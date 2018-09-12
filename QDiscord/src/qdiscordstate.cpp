@@ -24,8 +24,6 @@ QDiscordState::QDiscordState(QObject* parent)
 {
 }
 
-QDiscordState::~QDiscordState() {}
-
 void QDiscordState::readyReceived(int protocolVersion,
                                   QSharedPointer<QDiscordUser> user)
 {
@@ -309,7 +307,7 @@ QSharedPointer<QDiscordChannel> QDiscordState::channel(QDiscordID id) const
     QSharedPointer<QDiscordChannel> channel;
     if((channel = dmChannel(id)))
         return channel;
-    for(QSharedPointer<QDiscordGuild> guild : _guilds.values())
+    for(const QSharedPointer<QDiscordGuild>& guild : _guilds)
     {
         if((channel = guild->channel(id)))
             return channel;

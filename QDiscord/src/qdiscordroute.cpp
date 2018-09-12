@@ -18,7 +18,7 @@
 
 #include "qdiscord.d/qdiscordroute.hpp"
 
-QDiscordRoute::QDiscordRoute(Method method, QString url)
+QDiscordRoute::QDiscordRoute(Method method, const QString& url)
 {
     route(method, url);
 }
@@ -43,7 +43,7 @@ QString QDiscordRoute::routeString(QString url)
     return url;
 }
 
-void QDiscordRoute::route(QDiscordRoute::Method method, QString url)
+void QDiscordRoute::route(QDiscordRoute::Method method, const QString& url)
 {
     _method = method;
     _fullUrl = url;

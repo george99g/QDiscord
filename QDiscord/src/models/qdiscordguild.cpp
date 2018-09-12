@@ -77,7 +77,7 @@ QSharedPointer<QDiscordGuild> QDiscordGuild::fromJson(const QJsonObject& object)
 void QDiscordGuild::listMembers(
     QDiscordRest& rest,
     const QDiscordID& guild,
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     QDiscordGuild::listMembers(rest, guild, 1, QDiscordID(), callback);
 }
@@ -86,7 +86,7 @@ void QDiscordGuild::listMembers(
     QDiscordRest& rest,
     const QDiscordID& guild,
     uint16_t limit,
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     QDiscordGuild::listMembers(rest, guild, limit, QDiscordID(), callback);
 }
@@ -95,27 +95,27 @@ void QDiscordGuild::listMembers(
     QDiscordRest& rest,
     const QDiscordID& guild,
     const QDiscordID& after,
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     QDiscordGuild::listMembers(rest, guild, 1, after, callback);
 }
 
 void QDiscordGuild::listMembers(
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     QDiscordGuild::listMembers(1, QDiscordID(), callback);
 }
 
 void QDiscordGuild::listMembers(
     uint16_t limit,
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     QDiscordGuild::listMembers(limit, QDiscordID(), callback);
 }
 
 void QDiscordGuild::listMembers(
     const QDiscordID& after,
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     QDiscordGuild::listMembers(1, after, callback);
 }
@@ -125,7 +125,7 @@ void QDiscordGuild::listMembers(
     const QDiscordID& guild,
     uint16_t limit,
     const QDiscordID& after,
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Guilds::listGuildMembers(guild, limit, after),
@@ -151,13 +151,13 @@ void QDiscordGuild::listMembers(
 void QDiscordGuild::listMembers(
     uint16_t limit,
     const QDiscordID& after,
-    std::function<void(QList<QDiscordMember>)> callback)
+    const std::function<void(QList<QDiscordMember>)>& callback)
 {
     QDiscordGuild::listMembers(*_rest, _id, limit, after, callback);
 }
 
 QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
-    : QEnableSharedFromThis<QDiscordGuild>()
+    : QEnableSharedFromThis<QDiscordGuild>(other)
     , _id(other._id)
     , _unavailable(other._unavailable)
     , _name(other._name)
@@ -179,14 +179,14 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
     , _joinedAt(other._joinedAt)
     , _applicationId(other._applicationId)
 {
-    for(QSharedPointer<QDiscordRole> item : other.roles())
+    for(const QSharedPointer<QDiscordRole>& item : other.roles())
     {
         QSharedPointer<QDiscordRole> newRole(new QDiscordRole(*item));
         newRole->setGuild(sharedFromThis());
         _roles.insert(newRole->id(), newRole);
     }
 
-    for(QSharedPointer<QDiscordChannel> item : other.channels())
+    for(const QSharedPointer<QDiscordChannel>& item : other.channels())
     {
         QSharedPointer<QDiscordChannel> newChannel =
             QSharedPointer<QDiscordChannel>(new QDiscordChannel(*item));
@@ -194,11 +194,11 @@ QDiscordGuild::QDiscordGuild(const QDiscordGuild& other)
         _channels.insert(newChannel->id(), newChannel);
     }
 
-    for(QSharedPointer<QDiscordMember> item : other.members())
+    for(const QSharedPointer<QDiscordMember>& item : other.members())
     {
         QSharedPointer<QDiscordMember> newMember =
             QSharedPointer<QDiscordMember>(new QDiscordMember(*item));
-        item->setGuild(sharedFromThis());
+        newMember->setGuild(sharedFromThis());
         _members.insert(newMember->user().id(), newMember);
     }
 }
@@ -264,14 +264,14 @@ void QDiscordGuild::update(const QDiscordGuild& other)
     }
 }
 
-void QDiscordGuild::addRole(QSharedPointer<QDiscordRole> role)
+void QDiscordGuild::addRole(const QSharedPointer<QDiscordRole>& role)
 {
     if(!role)
         return;
     _roles.insert(role->id(), role);
 }
 
-bool QDiscordGuild::removeRole(QSharedPointer<QDiscordRole> role)
+bool QDiscordGuild::removeRole(const QSharedPointer<QDiscordRole>& role)
 {
     if(!role)
         return false;
@@ -283,14 +283,15 @@ bool QDiscordGuild::removeRole(QDiscordID role)
     return _roles.remove(role);
 }
 
-void QDiscordGuild::addChannel(QSharedPointer<QDiscordChannel> channel)
+void QDiscordGuild::addChannel(const QSharedPointer<QDiscordChannel>& channel)
 {
     if(!channel)
         return;
     _channels.insert(channel->id(), channel);
 }
 
-bool QDiscordGuild::removeChannel(QSharedPointer<QDiscordChannel> channel)
+bool QDiscordGuild::removeChannel(
+    const QSharedPointer<QDiscordChannel>& channel)
 {
     if(!channel)
         return false;
@@ -302,14 +303,14 @@ bool QDiscordGuild::removeChannel(QDiscordID channel)
     return _channels.remove(channel);
 }
 
-void QDiscordGuild::addMember(QSharedPointer<QDiscordMember> member)
+void QDiscordGuild::addMember(const QSharedPointer<QDiscordMember>& member)
 {
     if(!member)
         return;
     _members.insert(member->user().id(), member);
 }
 
-bool QDiscordGuild::removeMember(QSharedPointer<QDiscordMember> member)
+bool QDiscordGuild::removeMember(const QSharedPointer<QDiscordMember>& member)
 {
     if(!member)
         return false;
@@ -324,10 +325,12 @@ bool QDiscordGuild::removeMember(QDiscordID member)
 void QDiscordGuild::setRest(QDiscordRest* rest)
 {
     _rest = rest;
-    for(QSharedPointer<QDiscordChannel> channel : _channels)
+    for(QSharedPointer<QDiscordChannel>& channel : _channels)
         channel->setRest(rest);
-    for(QSharedPointer<QDiscordMember> member : _members)
+    for(QSharedPointer<QDiscordMember>& member : _members)
         member->setRest(rest);
+    for(QSharedPointer<QDiscordRole>& role : _roles)
+        role->setRest(rest);
 }
 
 void QDiscordGuild::resolveRelationships()

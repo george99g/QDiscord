@@ -41,7 +41,7 @@ public:
         DELETE,
         PATCH
     };
-    QDiscordRoute(Method method, QString url);
+    QDiscordRoute(Method method, const QString& url);
     template<class TFirst, class... TArgs>
     QDiscordRoute(Method method, QString base, TFirst first, TArgs... args)
     {
@@ -77,8 +77,8 @@ private:
             _fullUrl = routeString(base.replace(start, end, first), args...);
         }
     }
-    void route(Method method, QString url);
-    Method _method;
+    void route(Method method, const QString& url);
+    Method _method = Method::GET;
     QString _bucketUrl;
     QString _fullUrl;
 };

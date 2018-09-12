@@ -36,113 +36,10 @@ QDiscordRest::~QDiscordRest()
     _bucketTimer.stop();
 }
 
-void QDiscordRest::setLastAckToken(QDiscordToken lastAckToken)
+void QDiscordRest::setLastAckToken(const QDiscordToken& lastAckToken)
 {
     qCDebug(REST, ) << "setting lastAckToken to" << lastAckToken.rawToken();
     _lastAckToken = lastAckToken;
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonObject& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonObject&& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonObject& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonObject&& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonArray& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QJsonArray&& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonArray& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QJsonArray&& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QByteArray& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           const QByteArray&& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QByteArray& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-template<>
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QByteArray&& data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
-}
-
-void QDiscordRest::request(const QNetworkRequest& request,
-                           const QDiscordRoute& route,
-                           QHttpMultiPart* data)
-{
-    QDiscordRest::request(request, route, data, [](QNetworkReply*) {});
 }
 
 void QDiscordRest::request(const QNetworkRequest& request,
@@ -151,24 +48,9 @@ void QDiscordRest::request(const QNetworkRequest& request,
     QDiscordRest::request(request, route, [](QNetworkReply*) {});
 }
 
-QByteArray QDiscordRest::extractData(const QJsonObject& object) const
+QSharedPointer<QDiscordBucket> QDiscordRest::getBucket(const QString& route)
 {
-    return QJsonDocument(object).toJson(QJsonDocument::Compact);
-}
-
-QByteArray QDiscordRest::extractData(const QJsonArray& array) const
-{
-    return QJsonDocument(array).toJson(QJsonDocument::Compact);
-}
-
-QByteArray QDiscordRest::extractData(const QByteArray& array) const
-{
-    return array;
-}
-
-QSharedPointer<QDiscordBucket> QDiscordRest::getBucket(QString route)
-{
-    if(!_buckets.keys().contains(route))
+    if(!_buckets.contains(route))
     {
         _buckets.insert(route,
                         QSharedPointer<QDiscordBucket>(new QDiscordBucket()));
@@ -185,14 +67,14 @@ void QDiscordRest::processBuckets()
     qCDebug(REST, ) << "processing buckets";
 
     // Process the buckets
-    for(const QSharedPointer<QDiscordBucket>& bucket : _buckets.values())
+    for(const QSharedPointer<QDiscordBucket>& bucket : _buckets)
         bucket->process();
 
     qCDebug(REST, ) << "finished processing buckets";
 
     // Set the timer interval for the next tick
     quint64 minResetTime = std::numeric_limits<quint64>::max();
-    for(const QSharedPointer<QDiscordBucket>& bucket : _buckets.values())
+    for(const QSharedPointer<QDiscordBucket>& bucket : _buckets)
     {
         if(bucket->reset() < minResetTime)
             minResetTime = bucket->reset();

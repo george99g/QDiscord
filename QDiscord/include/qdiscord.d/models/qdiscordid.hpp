@@ -32,6 +32,7 @@ public:
     explicit QDiscordID(quint64 id);
     QDiscordID(const char* id);
     QDiscordID(const QString& id);
+    QDiscordID(const QDiscordID&) = default;
     QString toString() const;
     quint64 value() const;
     QDateTime createdAt() const;
@@ -101,10 +102,10 @@ namespace QDiscordModel {
 
     template<
         typename T,
-        typename std::enable_if<std::is_base_of<QDiscordModelBase<T>, T>::value,
-                                T>::type* = nullptr,
-        typename std::enable_if<std::is_base_of<CompareById<T>, T>::value,
-                                T>::type* = nullptr>
+        typename std::enable_if<
+            std::is_base_of<QDiscordModelBase<T>, T>::value>::type* = nullptr,
+        typename std::enable_if<
+            std::is_base_of<CompareById<T>, T>::value>::type* = nullptr>
     void field(QDiscordModel::DeserializeJsonAction& action,
                QMap<QDiscordID, QSharedPointer<T>>& value,
                const QString& name)
@@ -126,10 +127,10 @@ namespace QDiscordModel {
 
     template<
         typename T,
-        typename std::enable_if<std::is_base_of<QDiscordModelBase<T>, T>::value,
-                                T>::type* = nullptr,
-        typename std::enable_if<std::is_base_of<CompareById<T>, T>::value,
-                                T>::type* = nullptr>
+        typename std::enable_if<
+            std::is_base_of<QDiscordModelBase<T>, T>::value>::type* = nullptr,
+        typename std::enable_if<
+            std::is_base_of<CompareById<T>, T>::value>::type* = nullptr>
     void field(QDiscordModel::SerializeJsonAction& action,
                const QMap<QDiscordID, QSharedPointer<T>>& value,
                const QString& name)

@@ -23,7 +23,7 @@
 
 void QDiscordChannel::get(QDiscordRest& rest,
                           const QDiscordID& channel,
-                          std::function<void(QDiscordChannel)> callback)
+                          const std::function<void(QDiscordChannel)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Channels::getChannel(channel),
@@ -43,7 +43,7 @@ void QDiscordChannel::get(QDiscordRest& rest,
 
 void QDiscordChannel::getPrivateChannels(
     QDiscordRest& rest,
-    std::function<void(QList<QDiscordChannel>)> callback)
+    const std::function<void(QList<QDiscordChannel>)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Self::getPrivateChannels(),
@@ -56,7 +56,7 @@ void QDiscordChannel::getPrivateChannels(
                      }
                      QJsonArray array =
                          QJsonDocument::fromJson(reply->readAll()).array();
-                     for(const QJsonValue& v : array)
+                     for(const QJsonValueRef& v : array)
                      {
                          QDiscordChannel channel(v.toObject());
                          channel.setRest(&rest);
@@ -66,16 +66,18 @@ void QDiscordChannel::getPrivateChannels(
                  });
 }
 
-void QDiscordChannel::getMessage(QDiscordRest& rest,
-                                 const QDiscordID& channel,
-                                 const QDiscordID& message,
-                                 std::function<void(QDiscordMessage)> callback)
+void QDiscordChannel::getMessage(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QDiscordID& message,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     QDiscordMessage::get(rest, channel, message, callback);
 }
 
-void QDiscordChannel::getMessage(const QDiscordID& message,
-                                 std::function<void(QDiscordMessage)> callback)
+void QDiscordChannel::getMessage(
+    const QDiscordID& message,
+    const std::function<void(QDiscordMessage)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -90,7 +92,7 @@ void QDiscordChannel::getMessages(
     QDiscordRest& rest,
     const QDiscordID& channel,
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Messages::getMessageHistory(channel, limit),
@@ -103,7 +105,7 @@ void QDiscordChannel::getMessages(
                      }
                      QJsonArray messageArray =
                          QJsonDocument::fromJson(reply->readAll()).array();
-                     for(const QJsonValue& value : messageArray)
+                     for(const QJsonValueRef& value : messageArray)
                      {
                          QDiscordMessage m(value.toObject());
                          m.setRest(&rest);
@@ -116,14 +118,14 @@ void QDiscordChannel::getMessages(
 void QDiscordChannel::getMessages(
     QDiscordRest& rest,
     const QDiscordID& channel,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessages(rest, channel, 50, callback);
 }
 
 void QDiscordChannel::getMessages(
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -135,7 +137,7 @@ void QDiscordChannel::getMessages(
 }
 
 void QDiscordChannel::getMessages(
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessages(50, callback);
 }
@@ -145,7 +147,7 @@ void QDiscordChannel::getMessagesAfter(
     const QDiscordID& channel,
     const QDiscordID& message,
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Messages::getMessageHistoryAfter(
@@ -159,7 +161,7 @@ void QDiscordChannel::getMessagesAfter(
                      }
                      QJsonArray messageArray =
                          QJsonDocument::fromJson(reply->readAll()).array();
-                     for(const QJsonValue& value : messageArray)
+                     for(const QJsonValueRef& value : messageArray)
                      {
                          QDiscordMessage m(value.toObject());
                          m.setRest(&rest);
@@ -173,7 +175,7 @@ void QDiscordChannel::getMessagesAfter(
     QDiscordRest& rest,
     const QDiscordID& channel,
     const QDiscordID& message,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessagesAfter(rest, channel, message, 50, callback);
 }
@@ -181,7 +183,7 @@ void QDiscordChannel::getMessagesAfter(
 void QDiscordChannel::getMessagesAfter(
     const QDiscordID& message,
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -194,7 +196,7 @@ void QDiscordChannel::getMessagesAfter(
 
 void QDiscordChannel::getMessagesAfter(
     const QDiscordID& message,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessagesAfter(message, 50, callback);
 }
@@ -204,7 +206,7 @@ void QDiscordChannel::getMessagesBefore(
     const QDiscordID& channel,
     const QDiscordID& message,
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Messages::getMessageHistoryBefore(
@@ -218,7 +220,7 @@ void QDiscordChannel::getMessagesBefore(
                      }
                      QJsonArray messageArray =
                          QJsonDocument::fromJson(reply->readAll()).array();
-                     for(const QJsonValue& value : messageArray)
+                     for(const QJsonValueRef& value : messageArray)
                      {
                          QDiscordMessage m(value.toObject());
                          m.setRest(&rest);
@@ -232,7 +234,7 @@ void QDiscordChannel::getMessagesBefore(
     QDiscordRest& rest,
     const QDiscordID& channel,
     const QDiscordID& message,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessagesBefore(rest, channel, message, 50, callback);
 }
@@ -240,7 +242,7 @@ void QDiscordChannel::getMessagesBefore(
 void QDiscordChannel::getMessagesBefore(
     const QDiscordID& message,
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -253,7 +255,7 @@ void QDiscordChannel::getMessagesBefore(
 
 void QDiscordChannel::getMessagesBefore(
     const QDiscordID& message,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessagesBefore(message, 50, callback);
 }
@@ -263,7 +265,7 @@ void QDiscordChannel::getMessagesAround(
     const QDiscordID& channel,
     const QDiscordID& message,
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Messages::getMessageHistoryAround(
@@ -277,7 +279,7 @@ void QDiscordChannel::getMessagesAround(
                      }
                      QJsonArray messageArray =
                          QJsonDocument::fromJson(reply->readAll()).array();
-                     for(const QJsonValue& value : messageArray)
+                     for(const QJsonValueRef& value : messageArray)
                      {
                          QDiscordMessage m(value.toObject());
                          m.setRest(&rest);
@@ -291,7 +293,7 @@ void QDiscordChannel::getMessagesAround(
     QDiscordRest& rest,
     const QDiscordID& channel,
     const QDiscordID& message,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessagesAround(rest, channel, message, 50, callback);
 }
@@ -299,7 +301,7 @@ void QDiscordChannel::getMessagesAround(
 void QDiscordChannel::getMessagesAround(
     const QDiscordID& message,
     int limit,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -312,7 +314,7 @@ void QDiscordChannel::getMessagesAround(
 
 void QDiscordChannel::getMessagesAround(
     const QDiscordID& message,
-    std::function<void(QList<QDiscordMessage>)> callback)
+    const std::function<void(QList<QDiscordMessage>)>& callback)
 {
     getMessagesAround(message, 50, callback);
 }
@@ -326,10 +328,11 @@ void QDiscordChannel::modify(QDiscordRest& rest,
                  data);
 }
 
-void QDiscordChannel::modify(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             const QJsonObject& data,
-                             std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::modify(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QJsonObject& data,
+    const std::function<void(QDiscordChannel)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Channels::modifyChannel(channel),
@@ -357,8 +360,9 @@ void QDiscordChannel::modify(const QJsonObject& data)
     QDiscordChannel::modify(*_rest, _id, data);
 }
 
-void QDiscordChannel::modify(const QJsonObject& data,
-                             std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::modify(
+    const QJsonObject& data,
+    const std::function<void(QDiscordChannel)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -377,10 +381,11 @@ void QDiscordChannel::modifyName(QDiscordRest& rest,
     modify(rest, channel, data);
 }
 
-void QDiscordChannel::modifyName(QDiscordRest& rest,
-                                 const QDiscordID& channel,
-                                 const QString& name,
-                                 std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::modifyName(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QString& name,
+    const std::function<void(QDiscordChannel)>& callback)
 {
     QJsonObject data = {{"name", name}};
     modify(rest, channel, data, callback);
@@ -394,8 +399,9 @@ void QDiscordChannel::modifyName(const QString& name)
     QDiscordChannel::modifyName(*_rest, _id, name);
 }
 
-void QDiscordChannel::modifyName(const QString& name,
-                                 std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::modifyName(
+    const QString& name,
+    const std::function<void(QDiscordChannel)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -418,7 +424,7 @@ void QDiscordChannel::modifyPosition(
     QDiscordRest& rest,
     const QDiscordID& channel,
     int position,
-    std::function<void(QDiscordChannel)> callback)
+    const std::function<void(QDiscordChannel)>& callback)
 {
     QJsonObject data = {{"position", position}};
     modify(rest, channel, data, callback);
@@ -434,7 +440,7 @@ void QDiscordChannel::modifyPosition(int position)
 
 void QDiscordChannel::modifyPosition(
     int position,
-    std::function<void(QDiscordChannel)> callback)
+    const std::function<void(QDiscordChannel)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -453,10 +459,11 @@ void QDiscordChannel::modifyTopic(QDiscordRest& rest,
     modify(rest, channel, data);
 }
 
-void QDiscordChannel::modifyTopic(QDiscordRest& rest,
-                                  const QDiscordID& channel,
-                                  const QString& topic,
-                                  std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::modifyTopic(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const QString& topic,
+    const std::function<void(QDiscordChannel)>& callback)
 {
     QJsonObject data = {{"topic", topic}};
     modify(rest, channel, data, callback);
@@ -470,8 +477,9 @@ void QDiscordChannel::modifyTopic(const QString& topic)
     QDiscordChannel::modifyTopic(*_rest, _id, topic);
 }
 
-void QDiscordChannel::modifyTopic(const QString& topic,
-                                  std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::modifyTopic(
+    const QString& topic,
+    const std::function<void(QDiscordChannel)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -494,7 +502,7 @@ void QDiscordChannel::modifyBitrate(
     QDiscordRest& rest,
     const QDiscordID& channel,
     int bitrate,
-    std::function<void(QDiscordChannel)> callback)
+    const std::function<void(QDiscordChannel)>& callback)
 {
     QJsonObject data = {{"bitrate", bitrate}};
     modify(rest, channel, data, callback);
@@ -510,7 +518,7 @@ void QDiscordChannel::modifyBitrate(int bitrate)
 
 void QDiscordChannel::modifyBitrate(
     int bitrate,
-    std::function<void(QDiscordChannel)> callback)
+    const std::function<void(QDiscordChannel)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -533,7 +541,7 @@ void QDiscordChannel::modifyUserLimit(
     QDiscordRest& rest,
     const QDiscordID& channel,
     int userLimit,
-    std::function<void(QDiscordChannel)> callback)
+    const std::function<void(QDiscordChannel)>& callback)
 {
     QJsonObject data = {{"user_limit", userLimit}};
     modify(rest, channel, data, callback);
@@ -549,7 +557,7 @@ void QDiscordChannel::modifyUserLimit(int userLimit)
 
 void QDiscordChannel::modifyUserLimit(
     int userLimit,
-    std::function<void(QDiscordChannel)> callback)
+    const std::function<void(QDiscordChannel)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -569,7 +577,7 @@ void QDiscordChannel::triggerTyping(QDiscordRest& rest,
 
 void QDiscordChannel::triggerTyping(QDiscordRest& rest,
                                     const QDiscordID& channel,
-                                    std::function<void(bool)> callback)
+                                    const std::function<void(bool)>& callback)
 {
     rest.request(
         QNetworkRequest(),
@@ -585,7 +593,7 @@ void QDiscordChannel::triggerTyping()
     QDiscordChannel::triggerTyping(*_rest, _id);
 }
 
-void QDiscordChannel::triggerTyping(std::function<void(bool)> callback)
+void QDiscordChannel::triggerTyping(const std::function<void(bool)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -602,9 +610,10 @@ void QDiscordChannel::remove(QDiscordRest& rest, const QDiscordID& channel)
                  QDiscordRoutes::Channels::deleteChannel(channel));
 }
 
-void QDiscordChannel::remove(QDiscordRest& rest,
-                             const QDiscordID& channel,
-                             std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::remove(
+    QDiscordRest& rest,
+    const QDiscordID& channel,
+    const std::function<void(QDiscordChannel)>& callback)
 {
     rest.request(QNetworkRequest(),
                  QDiscordRoutes::Channels::deleteChannel(channel),
@@ -631,7 +640,8 @@ void QDiscordChannel::remove()
     QDiscordChannel::remove(*_rest, _id);
 }
 
-void QDiscordChannel::remove(std::function<void(QDiscordChannel)> callback)
+void QDiscordChannel::remove(
+    const std::function<void(QDiscordChannel)>& callback)
 {
     if(!_rest || !_id)
     {
@@ -665,7 +675,7 @@ QJsonObject QDiscordChannel::serialize() const
     return serializeJson();
 }
 
-void QDiscordChannel::setGuild(QSharedPointer<QDiscordGuild> guild)
+void QDiscordChannel::setGuild(const QSharedPointer<QDiscordGuild>& guild)
 {
     _guild = guild;
     if(!_guild)

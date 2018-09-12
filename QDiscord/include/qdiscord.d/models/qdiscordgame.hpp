@@ -51,7 +51,7 @@ public:
     QDiscordGame(QString name,
                  QString url = QString(),
                  GameType type = GameType::Default);
-    QDiscordGame();
+    QDiscordGame() = default;
     ///\brief Creates an instance from the provided JSON object.
     QDiscordGame(const QJsonObject& object);
     void deserialize(const QJsonObject& object);
@@ -93,7 +93,7 @@ public:
 private:
     QString _name;
     QString _url;
-    GameType _type;
+    GameType _type = GameType::Unknown;
 };
 
 Q_DECLARE_METATYPE(QDiscordGame)

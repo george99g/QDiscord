@@ -35,7 +35,6 @@ Q_DECLARE_METATYPE(QDiscordLibraryVersion)
 class QDiscordUserAgent
 {
 public:
-    QDiscordUserAgent();
     static const QDiscordUserAgent& global();
     QString libraryName() const { return _libraryName; }
     void setLibraryName(const QString& libraryName)
@@ -60,7 +59,7 @@ private:
     static QDiscordUserAgent makeGlobalInstance();
     QString _libraryName;
     QString _libraryLink;
-    QDiscordLibraryVersion _libraryVersion;
+    QDiscordLibraryVersion _libraryVersion = {QString(), 0, 0, 0};
     QString _botName;
 };
 

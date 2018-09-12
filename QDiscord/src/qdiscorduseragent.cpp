@@ -19,11 +19,6 @@
 #include "qdiscord.d/qdiscorduseragent.hpp"
 #include "qdiscord.d/qdiscordutilities.hpp"
 
-QDiscordUserAgent::QDiscordUserAgent()
-{
-    _libraryVersion = QDiscordLibraryVersion{0, 0, 0};
-}
-
 const QDiscordUserAgent& QDiscordUserAgent::global()
 {
     static QDiscordUserAgent instance = makeGlobalInstance();
@@ -33,9 +28,7 @@ const QDiscordUserAgent& QDiscordUserAgent::global()
 QString QDiscordUserAgent::toString() const
 {
     return QString("DiscordBot (%1, v%2); %3")
-        .arg(_libraryLink)
-        .arg(_libraryVersion.version)
-        .arg(_botName);
+        .arg(_libraryLink, _libraryVersion.version, _botName);
 }
 
 QDiscordUserAgent QDiscordUserAgent::makeGlobalInstance()

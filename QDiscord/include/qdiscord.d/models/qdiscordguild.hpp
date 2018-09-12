@@ -66,38 +66,42 @@ public:
     static void
     listMembers(QDiscordRest& rest,
                 const QDiscordID& guild,
-                std::function<void(QList<QDiscordMember>)> callback);
+                const std::function<void(QList<QDiscordMember>)>& callback);
 
     static void
     listMembers(QDiscordRest& rest,
                 const QDiscordID& guild,
                 uint16_t limit,
-                std::function<void(QList<QDiscordMember>)> callback);
+                const std::function<void(QList<QDiscordMember>)>& callback);
 
     static void
     listMembers(QDiscordRest& rest,
                 const QDiscordID& guild,
                 uint16_t limit,
                 const QDiscordID& after,
-                std::function<void(QList<QDiscordMember>)> callback);
+                const std::function<void(QList<QDiscordMember>)>& callback);
 
     static void
     listMembers(QDiscordRest& rest,
                 const QDiscordID& guild,
                 const QDiscordID& after,
-                std::function<void(QList<QDiscordMember>)> callback);
+                const std::function<void(QList<QDiscordMember>)>& callback);
 
-    void listMembers(std::function<void(QList<QDiscordMember>)> callback);
+    void
+    listMembers(const std::function<void(QList<QDiscordMember>)>& callback);
 
-    void listMembers(uint16_t limit,
-                     std::function<void(QList<QDiscordMember>)> callback);
+    void
+    listMembers(uint16_t limit,
+                const std::function<void(QList<QDiscordMember>)>& callback);
 
-    void listMembers(uint16_t limit,
-                     const QDiscordID& after,
-                     std::function<void(QList<QDiscordMember>)> callback);
+    void
+    listMembers(uint16_t limit,
+                const QDiscordID& after,
+                const std::function<void(QList<QDiscordMember>)>& callback);
 
-    void listMembers(const QDiscordID& after,
-                     std::function<void(QList<QDiscordMember>)> callback);
+    void
+    listMembers(const QDiscordID& after,
+                const std::function<void(QList<QDiscordMember>)>& callback);
 
     QDiscordGuild(const QDiscordGuild& other);
     QDiscordGuild() = default;
@@ -241,28 +245,28 @@ public:
     {
         return _members.value(id, QSharedPointer<QDiscordMember>());
     }
-    void addRole(QSharedPointer<QDiscordRole> role);
-    bool removeRole(QSharedPointer<QDiscordRole> role);
+    void addRole(const QSharedPointer<QDiscordRole>& role);
+    bool removeRole(const QSharedPointer<QDiscordRole>& role);
     bool removeRole(QDiscordID role);
     ///\brief Adds the provided channel to the guild.
-    void addChannel(QSharedPointer<QDiscordChannel> channel);
+    void addChannel(const QSharedPointer<QDiscordChannel>& channel);
     /*!
      * \brief Removes the provided channel from the guild.
      *
      * Returns `true` if the channel was successfully removed. `false` if
      * `nullptr` was passed or the channel was not found.
      */
-    bool removeChannel(QSharedPointer<QDiscordChannel> channel);
+    bool removeChannel(const QSharedPointer<QDiscordChannel>& channel);
     bool removeChannel(QDiscordID channel);
     ///\brief Adds the provided member to the guild.
-    void addMember(QSharedPointer<QDiscordMember> member);
+    void addMember(const QSharedPointer<QDiscordMember>& member);
     /*!
      * \brief Removes the provided member from the guild.
      *
      * Returns `true` if the member was successfully removed. `false` if
      * `nullptr` was passed or the member was not found.
      */
-    bool removeMember(QSharedPointer<QDiscordMember> member);
+    bool removeMember(const QSharedPointer<QDiscordMember>& member);
     bool removeMember(QDiscordID member);
 
     QDiscordRest* rest() const { return _rest; }
@@ -343,6 +347,7 @@ public:
 private:
     void resolveRelationships();
     void resolveRelationships() const;
+
     QDiscordID _id;
     QString _name;
     QString _icon;

@@ -54,31 +54,31 @@ public:
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QJsonObject& data,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QString& content,
-                       std::function<void(QDiscordMessage)> callback);
-
-    static void create(QDiscordRest& rest,
-                       const QDiscordID& channel,
-                       const QString& content,
-                       const QDiscordID& nonce,
-                       std::function<void(QDiscordMessage)> callback);
-
-    static void create(QDiscordRest& rest,
-                       const QDiscordID& channel,
-                       const QString& content,
-                       TTS tts,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QString& content,
                        const QDiscordID& nonce,
+                       const std::function<void(QDiscordMessage)>& callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QString& content,
                        TTS tts,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       TTS tts,
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
@@ -146,77 +146,61 @@ public:
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QFileInfo& file,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QFileInfo& file,
                        const QJsonObject& data,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QFileInfo& file,
                        const QString& content,
-                       std::function<void(QDiscordMessage)> callback);
-
-    static void create(QDiscordRest& rest,
-                       const QDiscordID& channel,
-                       const QFileInfo& file,
-                       const QString& content,
-                       const QDiscordID& nonce,
-                       std::function<void(QDiscordMessage)> callback);
-
-    static void create(QDiscordRest& rest,
-                       const QDiscordID& channel,
-                       const QFileInfo& file,
-                       const QString& content,
-                       TTS tts,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QFileInfo& file,
                        const QString& content,
                        const QDiscordID& nonce,
+                       const std::function<void(QDiscordMessage)>& callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
                        TTS tts,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QFileInfo& file,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       TTS tts,
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QByteArray& file,
                        const QString& filename,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QByteArray& file,
                        const QString& filename,
                        const QJsonObject& data,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QByteArray& file,
                        const QString& filename,
                        const QString& content,
-                       std::function<void(QDiscordMessage)> callback);
-
-    static void create(QDiscordRest& rest,
-                       const QDiscordID& channel,
-                       const QByteArray& file,
-                       const QString& filename,
-                       const QString& content,
-                       const QDiscordID& nonce,
-                       std::function<void(QDiscordMessage)> callback);
-
-    static void create(QDiscordRest& rest,
-                       const QDiscordID& channel,
-                       const QByteArray& file,
-                       const QString& filename,
-                       const QString& content,
-                       TTS tts,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
 
     static void create(QDiscordRest& rest,
                        const QDiscordID& channel,
@@ -224,12 +208,28 @@ public:
                        const QString& filename,
                        const QString& content,
                        const QDiscordID& nonce,
+                       const std::function<void(QDiscordMessage)>& callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
                        TTS tts,
-                       std::function<void(QDiscordMessage)> callback);
+                       const std::function<void(QDiscordMessage)>& callback);
+
+    static void create(QDiscordRest& rest,
+                       const QDiscordID& channel,
+                       const QByteArray& file,
+                       const QString& filename,
+                       const QString& content,
+                       const QDiscordID& nonce,
+                       TTS tts,
+                       const std::function<void(QDiscordMessage)>& callback);
 
     void send();
 
-    void send(std::function<void(QDiscordMessage)> callback);
+    void send(const std::function<void(QDiscordMessage)>& callback);
 
     static void edit(QDiscordRest& rest,
                      const QDiscordID& channel,
@@ -245,18 +245,18 @@ public:
                      const QDiscordID& channel,
                      const QDiscordID& message,
                      const QString& newContent,
-                     std::function<void(QDiscordMessage)> callback);
+                     const std::function<void(QDiscordMessage)>& callback);
 
     static void edit(QDiscordRest& rest,
                      const QDiscordID& channel,
                      const QDiscordID& message,
                      const QJsonObject& data,
-                     std::function<void(QDiscordMessage)> callback);
+                     const std::function<void(QDiscordMessage)>& callback);
 
     void edit(const QString& newContent);
 
     void edit(const QString& newContent,
-              std::function<void(QDiscordMessage)> callback);
+              const std::function<void(QDiscordMessage)>& callback);
 
     static void remove(QDiscordRest& rest,
                        const QDiscordID& channel,
@@ -265,10 +265,10 @@ public:
     static void remove(QDiscordRest& rest,
                        const QDiscordID& channel,
                        const QDiscordID& message,
-                       std::function<void(bool)> callback);
+                       const std::function<void(bool)>& callback);
 
     void remove();
-    void remove(std::function<void(bool)> callback);
+    void remove(const std::function<void(bool)>& callback);
 
     static void bulkRemove(QDiscordRest& rest,
                            const QDiscordID& channel,
@@ -277,12 +277,12 @@ public:
     static void bulkRemove(QDiscordRest& rest,
                            const QDiscordID& channel,
                            const QList<QDiscordID>& messages,
-                           std::function<void(bool)> callback);
+                           const std::function<void(bool)>& callback);
 
     static void get(QDiscordRest& rest,
                     const QDiscordID& channel,
                     const QDiscordID& message,
-                    std::function<void(QDiscordMessage)> callback);
+                    const std::function<void(QDiscordMessage)>& callback);
 
     static void ack(QDiscordRest& rest,
                     const QDiscordID& channel,
@@ -290,10 +290,10 @@ public:
     static void ack(QDiscordRest& rest,
                     const QDiscordID& channel,
                     const QDiscordID& message,
-                    std::function<void(bool)> callback);
+                    const std::function<void(bool)>& callback);
 
     void ack();
-    void ack(std::function<void(bool)> callback);
+    void ack(const std::function<void(bool)>& callback);
 
     QDiscordMessage(const QJsonObject& object);
     QDiscordMessage() = default;

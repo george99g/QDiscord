@@ -297,6 +297,7 @@ void QDiscordWs::wsDisconnected()
         setCState(ConnectionState::Disconnected);
         qCDebug(WS, ) << "authentication failed";
         emit authFail();
+        return;
     }
     if(_cState == ConnectionState::Disconnecting)
         setCState(ConnectionState::Disconnected);

@@ -33,9 +33,9 @@ class QDiscordLibraryVersion
 
 public:
     QString version;
-    quint16 majorVersion;
-    quint16 minorVersion;
-    quint16 patchVersion;
+    quint16 majorVersion = 0;
+    quint16 minorVersion = 0;
+    quint16 patchVersion = 0;
 };
 
 Q_DECLARE_METATYPE(QDiscordLibraryVersion)
@@ -75,7 +75,7 @@ private:
     static QDiscordUserAgent makeGlobalInstance();
     QString _libraryName;
     QString _libraryLink;
-    QDiscordLibraryVersion _libraryVersion = {QString(), 0, 0, 0};
+    QDiscordLibraryVersion _libraryVersion;
     QString _botName;
 };
 

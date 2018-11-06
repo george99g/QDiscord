@@ -30,8 +30,8 @@ class QDiscord : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QDiscordToken token READ token WRITE setToken)
-    Q_PROPERTY(bool isConnecting READ isConnecting STORED false)
-    Q_PROPERTY(bool isConnected READ isConnected STORED false)
+    Q_PROPERTY(bool isConnecting READ isConnecting)
+    Q_PROPERTY(bool isConnected READ isConnected)
 
     Q_PROPERTY(QDiscordRest* rest READ restPtr)
     Q_PROPERTY(QDiscordWs* ws READ wsPtr)
@@ -46,6 +46,9 @@ public:
 
     Q_INVOKABLE void logout();
     void logout(const std::function<void()>& callback);
+
+    QDiscordUserAgent userAgent() const;
+    void setUserAgent(const QDiscordUserAgent& userAgent);
 
     bool isConnecting() const;
     bool isConnected() const;
@@ -68,8 +71,8 @@ private:
     void wsConnectFailed();
     void wsDisconnected();
     void wsConnectSuccess();
-    bool _tokenSet;
-    bool _connected;
+    bool _connecting = false;
+    bool _connected = false;
     std::function<void(bool)> _loginCallback;
     std::function<void()> _logoutCallback;
     QDiscordRest _rest;

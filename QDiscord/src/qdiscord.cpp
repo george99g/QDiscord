@@ -21,9 +21,6 @@
 QDiscord::QDiscord(QObject* parent)
     : QObject(parent)
 {
-    _tokenSet = false;
-    _connected = false;
-
     _ws.setState(&_state);
     _state.setRest(&_rest);
 
@@ -50,6 +47,7 @@ void QDiscord::login(const QDiscordToken& token)
 
         _ws.open(endpoint);
     });
+    _connecting = true;
 }
 
 void QDiscord::login(const QDiscordToken& token,
@@ -66,7 +64,6 @@ void QDiscord::logout()
     if(!isConnected() && !isConnecting())
         return;
     _ws.close();
-    setToken(QDiscordToken());
 }
 
 void QDiscord::logout(const std::function<void()>& callback)
@@ -77,9 +74,20 @@ void QDiscord::logout(const std::function<void()>& callback)
     logout();
 }
 
+QDiscordUserAgent QDiscord::userAgent() const
+{
+    return _rest.userAgent();
+}
+
+void QDiscord::setUserAgent(const QDiscordUserAgent& userAgent)
+{
+    _rest.setUserAgent(userAgent);
+    _ws.setUserAgent(userAgent);
+}
+
 bool QDiscord::isConnecting() const
 {
-    return _tokenSet && !_connected;
+    return _connecting;
 }
 
 bool QDiscord::isConnected() const
@@ -89,14 +97,13 @@ bool QDiscord::isConnected() const
 
 void QDiscord::setToken(const QDiscordToken& token)
 {
-    _tokenSet = !token.isEmpty();
     _ws.setToken(token);
     _rest.setToken(token);
 }
 
 void QDiscord::wsConnectFailed()
 {
-    setToken(QDiscordToken());
+    _connecting = false;
     _connected = false;
 
     if(_loginCallback)
@@ -112,7 +119,7 @@ void QDiscord::wsConnectFailed()
 
 void QDiscord::wsDisconnected()
 {
-    setToken(QDiscordToken());
+    _connecting = false;
     _connected = false;
 
     if(_logoutCallback)
@@ -128,6 +135,7 @@ void QDiscord::wsDisconnected()
 
 void QDiscord::wsConnectSuccess()
 {
+    _connecting = false;
     _connected = true;
 
     if(_loginCallback)

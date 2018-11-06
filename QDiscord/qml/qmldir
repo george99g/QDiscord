@@ -1,0 +1,2 @@
+module QDiscord
+plugin qdiscord-qml

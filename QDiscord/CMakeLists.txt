@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 
 project(QDiscord)
 
@@ -81,6 +81,8 @@ set_target_properties(qdiscord PROPERTIES
     CXX_STANDARD 11
     CXX_STANDARD_REQUIRED YES
 )
+
+add_subdirectory(qml)
 
 include(config.cmake)
 

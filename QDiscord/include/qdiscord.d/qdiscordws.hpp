@@ -54,7 +54,8 @@ class QDiscordWs : public QObject
     Q_PROPERTY(QString sessionId READ sessionId)
     Q_PROPERTY(quint32 latestSequence READ latestSequence)
     Q_PROPERTY(QDiscordAbstractState* state READ state WRITE setState)
-    Q_PROPERTY(ConnectionState connectionState READ connectionState)
+    Q_PROPERTY(ConnectionState connectionState READ connectionState NOTIFY
+                   connectionStateChanged)
     Q_PROPERTY(QWebSocket* webSocket READ webSocketPtr)
     Q_PROPERTY(QDiscordUserAgent userAgent READ userAgent WRITE setUserAgent)
 

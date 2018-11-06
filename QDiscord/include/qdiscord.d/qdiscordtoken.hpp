@@ -29,6 +29,7 @@ class QDiscordToken
     Q_PROPERTY(QString rawToken READ rawToken WRITE setRawToken)
     Q_PROPERTY(Type type READ type WRITE setType)
     Q_PROPERTY(QString fullToken READ fullToken STORED false)
+    Q_PROPERTY(bool isEmpty READ isEmpty STORED false)
 
 public:
     enum class Type

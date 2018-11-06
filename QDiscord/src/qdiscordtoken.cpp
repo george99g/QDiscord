@@ -109,7 +109,7 @@ void QDiscordToken::clear()
 
 bool QDiscordToken::operator==(const QDiscordToken& other) const
 {
-    return _token == other._token;
+    return _token == other._token && _type == other._type;
 }
 
 bool QDiscordToken::operator!=(const QDiscordToken& other) const
@@ -119,20 +119,20 @@ bool QDiscordToken::operator!=(const QDiscordToken& other) const
 
 bool QDiscordToken::operator<(const QDiscordToken& other) const
 {
-    return _token < other._token;
+    return fullToken() < other.fullToken();
 }
 
 bool QDiscordToken::operator>(const QDiscordToken& other) const
 {
-    return _token > other._token;
+    return fullToken() > other.fullToken();
 }
 
 bool QDiscordToken::operator<=(const QDiscordToken& other) const
 {
-    return _token <= other._token;
+    return fullToken() <= other.fullToken();
 }
 
 bool QDiscordToken::operator>=(const QDiscordToken& other) const
 {
-    return _token >= other._token;
+    return fullToken() >= other.fullToken();
 }
